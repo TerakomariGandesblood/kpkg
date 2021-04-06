@@ -41,12 +41,17 @@ std::int32_t copy_data(struct archive *ar, struct archive *aw) {
 }  // namespace
 
 // https://github.com/libarchive/libarchive/blob/master/examples/minitar/minitar.c
-void compress(const std::string &file_name) {
+void compress(const std::string &file_name, const std::string &out) {
   auto archive = archive_write_new();
-  archive_write_set_format_gnutar(archive);
-  archive_write_add_filter_gzip(archive);
 
-  std::string out = file_name + ".tar.gz";
+  if (out.ends_with("zip")) {
+    archive_write_set_format_zip(archive);
+    archive_write_add_filter_none(archive);
+  } else {
+    archive_write_set_format_gnutar(archive);
+    archive_write_add_filter_gzip(archive);
+  }
+
   archive_write_open_filename(archive, out.c_str());
 
   auto disk = archive_read_disk_new();
@@ -147,7 +152,7 @@ void decompress(const std::string &file_name) {
 }
 
 int main(int argc, char *argv[]) {
-  if (argc != 2) {
+  if (argc < 2) {
     error("need a file name");
   }
 
@@ -161,6 +166,10 @@ int main(int argc, char *argv[]) {
       file_name.ends_with("tgz")) {
     decompress(file_name);
   } else {
-    compress(file_name);
+    if (argc != 3) {
+      error("need a out");
+    }
+    std::string out = argv[2];
+    compress(file_name, out);
   }
 }
