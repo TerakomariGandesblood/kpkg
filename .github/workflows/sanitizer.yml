@@ -1,0 +1,118 @@
+name: Sanitizer
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 0 1 * *"
+
+jobs:
+  address-undefined:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        compiler: ["g++", "clang++"]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: dependencies
+          key: ${{ runner.os }}-dependencies-20210329
+
+      - name: Build and install dependencies
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
+        run: sudo bash script/build-install.sh
+
+      - name: Install dependencies
+        if: steps.cache-dependencies.outputs.cache-hit == 'true'
+        run: sudo bash script/install.sh
+
+      - name: Configure
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+          -DKPKG_BUILD_TEST=ON -DKPKG_SANITIZER="Address;Undefined"
+        env:
+          CXX: ${{ matrix.compiler }}
+
+      - name: Build
+        run: cmake --build build --config RelWithDebInfo -j$(nproc)
+
+      - name: Test
+        run: cd build ; ctest -C RelWithDebInfo -j$(nproc) --output-on-failure
+        env:
+          ASAN_OPTIONS: detect_stack_use_after_return=1
+          UBSAN_OPTIONS: print_stacktrace=1
+
+  memory:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: dependencies
+          key: ${{ runner.os }}-dependencies-memory-20210329
+
+      - name: Build and install dependencies
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
+        run: sudo bash script/build-install.sh -m
+
+      - name: Install dependencies
+        if: steps.cache-dependencies.outputs.cache-hit == 'true'
+        run: sudo bash script/install.sh -m
+
+      - name: Configure
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+          -DKPKG_BUILD_TEST=ON -DKPKG_SANITIZER=Memory -DKPKG_USE_LIBCXX=ON
+        env:
+          CXX: clang++
+
+      - name: Build
+        run: cmake --build build --config RelWithDebInfo -j$(nproc)
+
+      - name: Test
+        run: cd build ; ctest -C RelWithDebInfo -j$(nproc) --output-on-failure
+        env:
+          MSAN_OPTIONS: poison_in_dtor=1
+
+  thread:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: dependencies
+          key: ${{ runner.os }}-dependencies-thread-20210329
+
+      - name: Build and install dependencies
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
+        run: sudo bash script/build-install.sh -t
+
+      - name: Install dependencies
+        if: steps.cache-dependencies.outputs.cache-hit == 'true'
+        run: sudo bash script/install.sh -t
+
+      - name: Configure
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+          -DKPKG_BUILD_TEST=ON -DKPKG_SANITIZER=Thread -DKPKG_USE_LIBCXX=ON
+        env:
+          CXX: clang++
+
+      - name: Build
+        run: cmake --build build --config RelWithDebInfo -j$(nproc)
+
+      - name: Test
+        run: cd build ; ctest -C RelWithDebInfo -j$(nproc) --output-on-failure

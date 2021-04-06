@@ -1,0 +1,71 @@
+name: Release
+
+on:
+  release:
+    types: published
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        compiler: ["g++", "clang++"]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: dependencies
+          key: ${{ runner.os }}-dependencies-20210329
+
+      - name: Build and install dependencies
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
+        run: sudo bash script/build-install.sh
+
+      - name: Install dependencies
+        if: steps.cache-dependencies.outputs.cache-hit == 'true'
+        run: sudo bash script/install.sh
+
+      - name: Set environment variable
+        run: echo "RELEASE_VERSION=${TAG_NAME:1}" >> $GITHUB_ENV
+        env:
+          TAG_NAME: ${{ github.event.release.tag_name }}
+
+      - name: Configure
+        run: cmake -S . -B build
+
+      - name: Build
+        run: cmake --build build --config Release -j$(nproc)
+
+      - name: CPack
+        run: |
+          cd build
+          cpack
+          mv kpkg-${{ env.RELEASE_VERSION }}-Linux.deb \
+          kpkg-${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
+          mv kpkg-${{ env.RELEASE_VERSION }}-Linux.tar.gz \
+          kpkg-${{ env.RELEASE_VERSION }}-ubuntu-20.04.tar.gz
+
+      - name: Install
+        run: |
+          sudo dpkg -i build/kpkg-${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
+          sudo ldconfig
+
+      # TODO
+      - name: Run executable
+        run: |
+          main
+          json
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: ${{ matrix.compiler == 'g++' }}
+        with:
+          files: |
+            build/kpkg-${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
+            build/kpkg-${{ env.RELEASE_VERSION }}-ubuntu-20.04.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

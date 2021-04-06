@@ -1,0 +1,57 @@
+name: Coverage
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 0 1 * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        compiler: ["g++", "clang++"]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: dependencies
+          key: ${{ runner.os }}-dependencies-20210329
+
+      - name: Build and install dependencies
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
+        run: sudo bash script/build-install.sh
+
+      - name: Install dependencies
+        if: steps.cache-dependencies.outputs.cache-hit == 'true'
+        run: sudo bash script/install.sh
+
+      - name: Configure
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug \
+          -DKPKG_BUILD_TEST=ON -DKPKG_BUILD_COVERAGE=ON
+        env:
+          CXX: ${{ matrix.compiler }}
+
+      - name: Build
+        run: cmake --build build --config Debug -j$(nproc) --target coverage
+
+      - name: Coveralls
+        if: ${{ matrix.compiler == 'clang++' }}
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: build/lcov.info
+
+      - name: Upload artifact
+        if: ${{ matrix.compiler == 'g++' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage-lcov
+          path: build/coverage
+          if-no-files-found: error
