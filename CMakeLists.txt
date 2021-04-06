@@ -49,6 +49,8 @@ include(CompilerOptions)
 include(Format)
 include(LTO)
 
+add_subdirectory(test)
+
 #find_package(Boost REQUIRED COMPONENTS json)
 #find_package(CURL REQUIRED)
 #find_package(fmt REQUIRED)
@@ -73,7 +75,7 @@ include(LTO)
 # ---------------------------------------------------------------------------------------
 # Install target
 # ---------------------------------------------------------------------------------------
-if(KPKG_INSTALL)
-  message(STATUS "Generating install")
-  include(Install)
-endif()
+#if(KPKG_INSTALL)
+#  message(STATUS "Generating install")
+#  include(Install)
+#endif()
