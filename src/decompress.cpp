@@ -21,20 +21,20 @@ std::int32_t copy_data(struct archive *ar, struct archive *aw) {
       return ARCHIVE_OK;
     }
     if (status < ARCHIVE_OK) {
-      libkpkg::error("{}", archive_error_string(aw));
+      kpkg::error("{}", archive_error_string(aw));
     }
 
     status = static_cast<std::int32_t>(
         archive_write_data_block(aw, buff, size, offset));
     if (status < ARCHIVE_OK) {
-      libkpkg::error("{}", archive_error_string(aw));
+      kpkg::error("{}", archive_error_string(aw));
     }
   }
 }
 
 }  // namespace
 
-namespace libkpkg {
+namespace kpkg {
 
 std::string decompress(const std::string &file_name) {
   std::int32_t flags = (ARCHIVE_EXTRACT_TIME | ARCHIVE_EXTRACT_PERM |
@@ -94,4 +94,4 @@ std::string decompress(const std::string &file_name) {
   return dir.substr(0, std::size(dir) - 1);
 }
 
-}  // namespace libkpkg
+}  // namespace kpkg

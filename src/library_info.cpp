@@ -12,7 +12,7 @@
 #include "downloader.h"
 #include "error.h"
 
-namespace libkpkg {
+namespace kpkg {
 
 Library::~Library() {
   if (curl_) {
@@ -220,4 +220,4 @@ Curl::Curl(bool use_proxy, Sanitize kind) : Library(use_proxy) {
   command_->add_option("BUILD_TESTING", "OFF");
 }
 
-}  // namespace libkpkg
+}  // namespace kpkg

@@ -9,7 +9,7 @@
 
 #include "error.h"
 
-namespace libkpkg {
+namespace kpkg {
 
 void Command::run(const std::string& dir) const {
   run_command(configuration_, dir);
@@ -58,7 +58,7 @@ void run_command(const std::string& cmd, const std::string& dir) {
 
   auto status = std::system(new_cmd.c_str());
   if (status == -1 || !WIFEXITED(status) || WEXITSTATUS(status)) {
-    libkpkg::error("run cmd error");
+    kpkg::error("run cmd error");
   }
 }
 
@@ -112,4 +112,4 @@ void B2Command::add_flags(std::string_view c_flags,
   fmt::format("{} cflags={} cxxflags={}", build_, c_flags, cxx_flags);
 }
 
-}  // namespace libkpkg
+}  // namespace kpkg

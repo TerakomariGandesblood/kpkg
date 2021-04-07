@@ -9,7 +9,7 @@
 
 #include "command.h"
 
-namespace libkpkg {
+namespace kpkg {
 
 class Library {
  public:
@@ -79,4 +79,4 @@ class Curl : public Library {
 };
 #pragma clang diagnostic pop
 
-}  // namespace libkpkg
+}  // namespace kpkg

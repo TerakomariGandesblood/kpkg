@@ -2,8 +2,8 @@
 
 #include <string>
 
-namespace libkpkg {
+namespace kpkg {
 
 std::string decompress(const std::string &file_name);
 
-}  // namespace libkpkg
+}  // namespace kpkg

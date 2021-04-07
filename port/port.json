@@ -2,9 +2,11 @@
   {
     "name": "Catch2",
     "author_name": "catchorg",
-    "releases": "https://api.github.com/repos/catchorg/Catch2/releases/latest",
-    "tags": "",
+    "tag": "",
+    "releases_url": "https://api.github.com/repos/catchorg/Catch2/releases/latest",
+    "tags_url": "",
     "download_url": "",
+    "cwd": "",
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCATCH_BUILD_TESTING=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",

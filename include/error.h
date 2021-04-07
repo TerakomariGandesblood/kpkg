@@ -5,7 +5,7 @@
 #include <fmt/color.h>
 #include <fmt/format.h>
 
-namespace libkpkg {
+namespace kpkg {
 
 template <typename... Args>
 [[noreturn]] void error(std::string_view format_str, const Args &...args) {
@@ -16,4 +16,4 @@ template <typename... Args>
   std::exit(EXIT_FAILURE);
 }
 
-}  // namespace libkpkg
+}  // namespace kpkg

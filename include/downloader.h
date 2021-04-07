@@ -6,7 +6,7 @@
 
 #include <curl/curl.h>
 
-namespace libkpkg {
+namespace kpkg {
 
 class Downloader {
  public:
@@ -29,4 +29,4 @@ class Downloader {
   CURLM *multi_handle_{};
 };
 
-}  // namespace libkpkg
+}  // namespace kpkg

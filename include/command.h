@@ -3,7 +3,7 @@
 #include <string>
 #include <string_view>
 
-namespace libkpkg {
+namespace kpkg {
 
 enum class Sanitize { None, Memory, Thread };
 
@@ -50,4 +50,4 @@ class B2Command : public Command {
   void add_flags(std::string_view c_flags, std::string_view cxx_flags) override;
 };
 
-}  // namespace libkpkg
+}  // namespace kpkg

@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace libkpkg {
+namespace kpkg {
 
 Downloader::Downloader(bool use_proxy) {
   curl_global_init(CURL_GLOBAL_DEFAULT);
@@ -82,4 +82,4 @@ std::size_t Downloader::write_data(void *ptr, std::size_t size,
   return std::fwrite(ptr, size, nmemb, static_cast<std::FILE *>(stream));
 }
 
-}  // namespace libkpkg
+}  // namespace kpkg
