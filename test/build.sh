@@ -11,7 +11,26 @@ sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-12 400 &&
   sudo update-alternatives --install /usr/bin/lld lld /usr/bin/lld-12 400 &&
   sudo update-alternatives --install /usr/bin/ld.lld ld.lld /usr/bin/ld.lld-12 400
 
-sudo apt install -y libtbb-dev autoconf automake libtool m4 tcl
+sudo apt install -y re2c autoconf automake libtool m4 tcl
+
+# cmake
+# https://cmake.org/install/
+./bootstrap --parallel=$(nproc) -- -DCMAKE_BUILD_TYPE:STRING=Release
+make -j$(nproc)
+sudo make install
+
+# ninja
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release -j$(nproc)
+sudo cmake --build build --config Release --target install
+
+# doxygen
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release -j$(nproc)
+sudo cmake --build build --config Release --target install
+
+# lcov
+sudo make install
 
 # zlib
 ./configure --static
