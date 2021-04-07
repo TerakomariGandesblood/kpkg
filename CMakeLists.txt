@@ -8,7 +8,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 project(
   kpkg
   VERSION 0.1.0
-  LANGUAGES CXX)
+  LANGUAGES ASM CXX)
 
 message(STATUS "Build ${PROJECT_NAME}: ${PROJECT_VERSION}")
 
@@ -59,6 +59,18 @@ find_package(ZLIB REQUIRED)
 find_package(LibArchive REQUIRED)
 
 # ---------------------------------------------------------------------------------------
+# Build port
+# ---------------------------------------------------------------------------------------
+message(STATUS "Build port")
+
+file(GLOB_RECURSE PORT_SRC CONFIGURE_DEPENDS
+     "${CMAKE_CURRENT_SOURCE_DIR}/src/port.s")
+add_library(port STATIC ${PORT_SRC})
+target_compile_options(port PRIVATE "-Wno-unused-command-line-argument")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/port/port.json"
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+# ---------------------------------------------------------------------------------------
 # Build executable
 # ---------------------------------------------------------------------------------------
 add_library(${LIBRARY} STATIC ${LIBRARY_SRC})
@@ -72,7 +84,7 @@ set_target_properties(${LIBRARY} PROPERTIES OUTPUT_NAME ${PROJECT_NAME}
                                             DEBUG_POSTFIX d)
 
 add_executable(${EXECUTABLE} ${EXECUTABLE_SRC})
-target_link_libraries(${EXECUTABLE} PRIVATE ${LIBRARY})
+target_link_libraries(${EXECUTABLE} PRIVATE port ${LIBRARY})
 
 # ---------------------------------------------------------------------------------------
 # Install target
