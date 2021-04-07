@@ -24,7 +24,8 @@ std::int32_t copy_data(struct archive *ar, struct archive *aw) {
       libkpkg::error("{}", archive_error_string(aw));
     }
 
-    status = archive_write_data_block(aw, buff, size, offset);
+    status = static_cast<std::int32_t>(
+        archive_write_data_block(aw, buff, size, offset));
     if (status < ARCHIVE_OK) {
       libkpkg::error("{}", archive_error_string(aw));
     }

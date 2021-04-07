@@ -145,7 +145,7 @@ Boost::Boost(bool use_proxy, Sanitize kind) : Library(use_proxy) {
 
   auto jv = boost::json::parse(result);
 
-  std::int32_t i = 0;
+  std::size_t i = 0;
   boost::json::object latest_tag;
 
   do {

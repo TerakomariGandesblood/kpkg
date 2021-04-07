@@ -51,6 +51,8 @@ class Library {
                                               std::string *s);
 };
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wweak-vtables"
 class Catch2 : public Library {
  public:
   explicit Catch2(bool use_proxy, Sanitize kind = Sanitize::None);
@@ -75,5 +77,6 @@ class Curl : public Library {
  public:
   explicit Curl(bool use_proxy, Sanitize kind = Sanitize::None);
 };
+#pragma clang diagnostic pop
 
 }  // namespace libkpkg
