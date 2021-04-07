@@ -1,4 +1,17 @@
-export CC=gcc-10 && export CXX=g++-10
+sudo apt update
+sudo apt install -y gcc-10 g++-10
+
+sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+sudo apt install -y libc++-12-dev libc++abi-12-dev
+sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-12 400 &&
+  sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-12 400 &&
+  sudo update-alternatives --install /usr/bin/llvm-ar llvm-ar /usr/bin/llvm-ar-12 400 &&
+  sudo update-alternatives --install /usr/bin/llvm-nm llvm-nm /usr/bin/llvm-nm-12 400 &&
+  sudo update-alternatives --install /usr/bin/llvm-ranlib llvm-ranlib /usr/bin/llvm-ranlib-12 400 &&
+  sudo update-alternatives --install /usr/bin/lld lld /usr/bin/lld-12 400 &&
+  sudo update-alternatives --install /usr/bin/ld.lld ld.lld /usr/bin/ld.lld-12 400
+
+sudo apt install -y libtbb-dev autoconf automake libtool m4 tcl
 
 # zlib
 ./configure --static
@@ -91,11 +104,16 @@ sudo cmake --build build --config Release --target install
 ./bootstrap.sh
 sudo ./b2 --with-json --with-program_options toolset=gcc-10 link=static install
 
-# icu
+# tbb(shared)
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release \
+  -DTBB_TEST=OFF
+cmake --build build --config Release -j$(nproc)
+sudo cmake --build build --config Release --target install
+
+# icu(shared)
 # https://unicode-org.github.io/icu/userguide/icu4c/build.html
-# FIXME
-export CPPFLAGS="-DU_STATIC_IMPLEMENTATION"
-./runConfigureICU Linux --disable-shared --enable-static \
-  --disable-tests --disable-samples
+./runConfigureICU Linux --disable-tests --disable-samples
 make -j$(nproc)
 sudo make install
+
+sudo ldconfig
