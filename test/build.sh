@@ -87,6 +87,10 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release \
   -DMAGIC_ENUM_OPT_BUILD_EXAMPLES=OFF -DMAGIC_ENUM_OPT_BUILD_TESTS=OFF
 sudo cmake --build build --config Release --target install
 
+# boost
+./bootstrap.sh
+sudo ./b2 --with-json --with-program_options toolset=gcc-10 link=static install
+
 # icu
 # https://unicode-org.github.io/icu/userguide/icu4c/build.html
 # FIXME
@@ -95,7 +99,3 @@ export CPPFLAGS="-DU_STATIC_IMPLEMENTATION"
   --disable-tests --disable-samples
 make -j$(nproc)
 sudo make install
-
-# boost
-./bootstrap.sh
-sudo ./b2 toolset=gcc-10 install
