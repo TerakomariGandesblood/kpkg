@@ -77,12 +77,14 @@ sudo cmake --build build --config Release --target install
 make -j$(nproc)
 sudo make install
 
-# mysql connector
-# FIXME
+# protobuf(need zlib)
+./configure --disable-shared
+make -j$(nproc)
+sudo make install
+
+# magic enum
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release \
-  -DBUILD_STATIC=ON -DCMAKE_INSTALL_PREFIX=/usr/local \
-  -DCMAKE_INSTALL_LIBDIR=lib
-cmake --build build --config Release -j$(nproc)
+  -DMAGIC_ENUM_OPT_BUILD_EXAMPLES=OFF -DMAGIC_ENUM_OPT_BUILD_TESTS=OFF
 sudo cmake --build build --config Release --target install
 
 # icu
@@ -91,11 +93,6 @@ sudo cmake --build build --config Release --target install
 export CPPFLAGS="-DU_STATIC_IMPLEMENTATION"
 ./runConfigureICU Linux --disable-shared --enable-static \
   --disable-tests --disable-samples
-make -j$(nproc)
-sudo make install
-
-# protobuf(need zlib)
-./configure --disable-shared --enable-static
 make -j$(nproc)
 sudo make install
 
