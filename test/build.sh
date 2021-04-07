@@ -42,10 +42,6 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release \
 cmake --build build --config Release -j$(nproc)
 sudo cmake --build build --config Release --target install
 
-# boost
-./bootstrap.sh
-sudo ./b2 toolset=gcc-10 install
-
 # rocksdb
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release \
   -DWITH_GFLAGS=OFF -DUSE_RTTI=ON -DROCKSDB_BUILD_SHARED=OFF \
@@ -76,6 +72,10 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release \
 cmake --build build --config Release -j$(nproc)
 sudo cmake --build build --config Release --target install
 
+# sqlite
+
+
+
 # mysql connector
 # FIXME
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release \
@@ -97,3 +97,7 @@ sudo make install
 ./configure --disable-shared --enable-static
 make -j$(nproc)
 sudo make install
+
+# boost
+./bootstrap.sh
+sudo ./b2 toolset=gcc-10 install
