@@ -72,9 +72,10 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release \
 cmake --build build --config Release -j$(nproc)
 sudo cmake --build build --config Release --target install
 
-# sqlite
-
-
+# sqlite(need zlib)
+./configure --disable-shared --disable-tcl --disable-readline
+make -j$(nproc)
+sudo make install
 
 # mysql connector
 # FIXME
