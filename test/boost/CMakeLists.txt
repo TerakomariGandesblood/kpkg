@@ -1,2 +1,5 @@
 add_subdirectory(json)
 add_subdirectory(asio)
+add_subdirectory(pool)
+add_subdirectory(algorithm)
+add_subdirectory(program_options)
