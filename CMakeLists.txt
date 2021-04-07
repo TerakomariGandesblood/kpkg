@@ -51,31 +51,24 @@ include(LTO)
 
 add_subdirectory(test)
 
-#find_package(Boost REQUIRED COMPONENTS json)
-#find_package(CURL REQUIRED)
-#find_package(fmt REQUIRED)
-#find_package(spdlog REQUIRED)
-#find_package(LibArchive REQUIRED)
+# find_package(Boost REQUIRED COMPONENTS json) find_package(CURL REQUIRED)
+# find_package(fmt REQUIRED) find_package(spdlog REQUIRED)
+# find_package(LibArchive REQUIRED)
 
 # ---------------------------------------------------------------------------------------
 # Build executable
 # ---------------------------------------------------------------------------------------
-#add_library(${LIBRARY} STATIC ${LIBRARY_SRC})
-#target_include_directories(${LIBRARY}
-#                           PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
-#target_link_libraries(
-#  ${LIBRARY} PRIVATE CURL::libcurl fmt::fmt spdlog::spdlog
-#                     ${LibArchive_LIBRARIES} ${Boost_LIBRARIES})
-#set_target_properties(${LIBRARY} PROPERTIES OUTPUT_NAME ${PROJECT_NAME}
-#                                            DEBUG_POSTFIX d)
+# add_library(${LIBRARY} STATIC ${LIBRARY_SRC})
+# target_include_directories(${LIBRARY} PUBLIC
+# "${CMAKE_CURRENT_SOURCE_DIR}/include") target_link_libraries( ${LIBRARY}
+# PRIVATE CURL::libcurl fmt::fmt spdlog::spdlog ${LibArchive_LIBRARIES}
+# ${Boost_LIBRARIES}) set_target_properties(${LIBRARY} PROPERTIES OUTPUT_NAME
+# ${PROJECT_NAME} DEBUG_POSTFIX d)
 #
-#add_executable(${EXECUTABLE} ${EXECUTABLE_SRC} include/command.h)
-#target_link_libraries(${EXECUTABLE} PRIVATE ${LIBRARY})
+# add_executable(${EXECUTABLE} ${EXECUTABLE_SRC} include/command.h)
+# target_link_libraries(${EXECUTABLE} PRIVATE ${LIBRARY})
 
 # ---------------------------------------------------------------------------------------
 # Install target
 # ---------------------------------------------------------------------------------------
-#if(KPKG_INSTALL)
-#  message(STATUS "Generating install")
-#  include(Install)
-#endif()
+# if(KPKG_INSTALL) message(STATUS "Generating install") include(Install) endif()

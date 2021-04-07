@@ -23,7 +23,8 @@ Downloader::Downloader(bool use_proxy) {
   curl_multi_add_handle(multi_handle_, http_handle_);
 }
 
-bool Downloader::download(const std::string &url, const std::string &file_name) {
+bool Downloader::download(const std::string &url,
+                          const std::string &file_name) {
   std::clog << "download file from: " << url << "\n";
   std::clog << "to: " << file_name << "\n";
 
