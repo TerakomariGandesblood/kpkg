@@ -42,7 +42,7 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release \
 cmake --build build --config Release -j$(nproc)
 sudo cmake --build build --config Release --target install
 
-# boosst
+# boost
 ./bootstrap.sh
 sudo ./b2 toolset=gcc-10 install
 
