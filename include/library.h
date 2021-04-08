@@ -12,10 +12,10 @@ enum class Sanitize { None, Memory, Thread };
 class Library {
  public:
   Library() = default;
-  Library(const std::string& name, const std::string& author_name,
-          const std::string& tag_name, const std::string& releases_url,
-          const std::string& tags_url, const std::string& download_url,
-          const std::string& cwd, const std::vector<std::string>& cmd);
+  Library(const std::string& name, const std::string& releases_url,
+          const std::string& tags_url, const std::string& cwd,
+          const std::vector<std::string>& cmd, const std::string& tag_name,
+          const std::string& download_url);
 
   void init();
 
@@ -26,14 +26,13 @@ class Library {
 
  private:
   std::string name_;
-  std::string author_name_;
-  std::string tag_name_;
   std::string releases_url_;
   std::string tags_url_;
-  std::string download_url_;
   std::string cwd_;
   std::vector<std::string> cmd_;
 
+  std::string tag_name_;
+  std::string download_url_;
   std::string file_name_;
   std::string dir_name_;
 };

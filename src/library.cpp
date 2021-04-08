@@ -1,6 +1,5 @@
 #include "library.h"
 
-#include <cassert>
 #include <filesystem>
 
 #include <fmt/format.h>
@@ -13,55 +12,59 @@
 
 namespace kpkg {
 
-Library::Library(const std::string& name, const std::string& author_name,
-                 const std::string& tag_name, const std::string& releases_url,
-                 const std::string& tags_url, const std::string& download_url,
-                 const std::string& cwd, const std::vector<std::string>& cmd)
+Library::Library(const std::string& name, const std::string& releases_url,
+                 const std::string& tags_url, const std::string& cwd,
+                 const std::vector<std::string>& cmd,
+                 const std::string& tag_name, const std::string& download_url)
     : name_(name),
-      author_name_(author_name),
-      tag_name_(tag_name),
       releases_url_(releases_url),
       tags_url_(tags_url),
-      download_url_(download_url),
       cwd_(cwd),
-      cmd_(cmd) {}
+      cmd_(cmd),
+      tag_name_(tag_name),
+      download_url_(download_url) {}
 
 void Library::init() {
   boost::json::error_code error_code;
   boost::json::monotonic_resource mr;
 
-  if (!std::empty(releases_url_)) {
-    spdlog::info("get info from: {} ", releases_url_);
+  if (std::empty(tag_name_) && std::empty(download_url_)) {
+    if (!std::empty(releases_url_)) {
+      spdlog::info("get info from: {} ", releases_url_);
 
-    auto result = get_page(releases_url_);
-    auto obj = boost::json::parse(result, error_code, &mr).as_object();
-    if (error_code) {
-      error("json parse error");
+      auto result = get_page(releases_url_);
+      auto obj = boost::json::parse(result, error_code, &mr).as_object();
+      if (error_code) {
+        error("json parse error");
+      }
+
+      tag_name_ = obj.at("tag_name").as_string().c_str();
+      download_url_ = obj.at("tarball_url").as_string().c_str();
+    } else if (!std::empty(tags_url_)) {
+      spdlog::info("get info from: {} ", tags_url_);
+
+      auto result = get_page(tags_url_);
+      auto obj = boost::json::parse(result, error_code, &mr)
+                     .as_array()
+                     .front()
+                     .as_object();
+      if (error_code) {
+        error("json parse error");
+      }
+
+      tag_name_ = obj.at("name").as_string().c_str();
+      download_url_ = obj.at("tarball_url").as_string().c_str();
     }
-
-    tag_name_ = obj.at("tag_name").as_string().c_str();
-    download_url_ = obj.at("tarball_url").as_string().c_str();
-  } else if (!std::empty(tags_url_)) {
-    spdlog::info("get info from: {} ", tags_url_);
-
-    auto result = get_page(tags_url_);
-    auto obj = boost::json::parse(result, error_code, &mr)
-                   .as_array()
-                   .front()
-                   .as_object();
-    if (error_code) {
-      error("json parse error");
-    }
-
-    tag_name_ = obj.at("name").as_string().c_str();
-    download_url_ = obj.at("tarball_url").as_string().c_str();
-  } else {
-    assert(false);
   }
 
   dir_name_ = name_ + "-" + tag_name_;
   file_name_ = dir_name_ + ".tar.gz";
-  cwd_ = dir_name_;
+
+  if (std::empty(cwd_)) {
+    cwd_ = dir_name_;
+  } else {
+    cwd_ = dir_name_ + "/" + cwd_;
+  }
 }
 
 void Library::download() const {
@@ -93,13 +96,12 @@ Library tag_invoke(boost::json::value_to_tag<Library>,
                    const boost::json::value& jv) {
   const auto& obj = jv.as_object();
   return Library{value_to<std::string>(obj.at("name")),
-                 value_to<std::string>(obj.at("author_name")),
-                 value_to<std::string>(obj.at("tag_name")),
                  value_to<std::string>(obj.at("releases_url")),
                  value_to<std::string>(obj.at("tags_url")),
-                 value_to<std::string>(obj.at("download_url")),
                  value_to<std::string>(obj.at("cwd")),
-                 value_to<std::vector<std::string>>(obj.at("cmd"))};
+                 value_to<std::vector<std::string>>(obj.at("cmd")),
+                 value_to<std::string>(obj.at("tag_name")),
+                 value_to<std::string>(obj.at("download_url"))};
 }
 
 }  // namespace kpkg

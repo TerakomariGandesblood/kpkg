@@ -5,17 +5,259 @@
   "export_thread_flag": "export CFLAGS=\"-fsanitize=thread\" && export CXXFLAGS=\"-fsanitize=thread -stdlib=libc++\"",
   "port": [
     {
-      "name": "Catch2",
-      "author_name": "catchorg",
+      "name": "CMake",
+      "releases_url": "",
+      "tags_url": "https://api.github.com/repos/Kitware/CMake/tags",
       "tag_name": "",
+      "download_url": "",
+      "cwd": "",
+      "cmd": [
+        "./bootstrap --parallel=\"$(nproc)\" -- -DCMAKE_BUILD_TYPE:STRING=Release",
+        "make -j\"$(nproc)\"",
+        "sudo make install"
+      ]
+    },
+    {
+      "name": "ninja",
+      "releases_url": "https://api.github.com/repos/ninja-build/ninja/releases/latest",
+      "tags_url": "",
+      "tag_name": "",
+      "download_url": "",
+      "cwd": "",
+      "cmd": [
+        "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release",
+        "cmake --build build --config Release -j\"$(nproc)\"",
+        "sudo cmake --build build --config Release --target install"
+      ]
+    },
+    {
+      "name": "doxygen",
+      "releases_url": "",
+      "tags_url": "https://api.github.com/repos/doxygen/doxygen/tags",
+      "tag_name": "",
+      "download_url": "",
+      "cwd": "",
+      "cmd": [
+        "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release",
+        "cmake --build build --config Release -j\"$(nproc)\"",
+        "sudo cmake --build build --config Release --target install"
+      ]
+    },
+    {
+      "name": "lcov",
+      "releases_url": "https://api.github.com/repos/linux-test-project/lcov/releases/latest",
+      "tags_url": "",
+      "tag_name": "",
+      "download_url": "",
+      "cwd": "",
+      "cmd": ["sudo make install"]
+    },
+    {
+      "name": "zlib",
+      "releases_url": "",
+      "tags_url": "https://api.github.com/repos/madler/zlib/tags",
+      "tag_name": "",
+      "download_url": "",
+      "cwd": "",
+      "cmd": [
+        "./configure --static",
+        "make -j\"$(nproc)\"",
+        "sudo make install"
+      ]
+    },
+    {
+      "name": "libarchive",
+      "releases_url": "https://api.github.com/repos/libarchive/libarchive/releases/latest",
+      "tags_url": "",
+      "tag_name": "",
+      "download_url": "",
+      "cwd": "",
+      "cmd": [
+        "sh build/autogen.sh",
+        "./configure --disable-shared --disable-bsdtar --disable-bsdcat --disable-bsdcpio --without-bz2lib --without-libb2 --without-lz4 --without-zstd --without-lzma --without-cng --without-openssl --without-xml2 --without-expat",
+        "make -j\"$(nproc)\"",
+        "sudo make install"
+      ]
+    },
+    {
+      "name": "zstd",
+      "releases_url": "https://api.github.com/repos/facebook/zstd/releases/latest",
+      "tags_url": "",
+      "tag_name": "",
+      "download_url": "",
+      "cwd": "build/cmake",
+      "cmd": [
+        "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DZSTD_BUILD_PROGRAMS=OFF -DZSTD_BUILD_TESTS=OFF -DZSTD_BUILD_SHARED=OFF",
+        "cmake --build build --config Release -j\"$(nproc)\"",
+        "sudo cmake --build build --config Release --target install"
+      ]
+    },
+    {
+      "name": "Catch2",
       "releases_url": "https://api.github.com/repos/catchorg/Catch2/releases/latest",
       "tags_url": "",
+      "tag_name": "",
       "download_url": "",
       "cwd": "",
       "cmd": [
         "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCATCH_BUILD_TESTING=OFF",
         "cmake --build build --config Release -j\"$(nproc)\"",
         "sudo cmake --build build --config Release --target install"
+      ]
+    },
+    {
+      "name": "openssl",
+      "releases_url": "",
+      "tags_url": "",
+      "tag_name": "OpenSSL_1_1_1k",
+      "download_url": "https://api.github.com/repos/openssl/openssl/tarball/refs/tags/OpenSSL_1_1_1k",
+      "cwd": "",
+      "cmd": [
+        "./Configure linux-x86_64 no-tests no-shared",
+        "make -j\"$(nproc)\"",
+        "sudo make install_sw"
+      ]
+    },
+    {
+      "name": "curl",
+      "releases_url": "https://api.github.com/repos/curl/curl/releases/latest",
+      "tags_url": "",
+      "tag_name": "",
+      "download_url": "",
+      "cwd": "",
+      "cmd": [
+        "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_CURL_EXE=OFF -DBUILD_SHARED_LIBS=OFF -DHTTP_ONLY=ON -DBUILD_TESTING=OFF",
+        "cmake --build build --config Release -j\"$(nproc)\"",
+        "sudo cmake --build build --config Release --target install"
+      ]
+    },
+    {
+      "name": "rocksdb",
+      "releases_url": "",
+      "tags_url": "https://api.github.com/repos/facebook/rocksdb/tags",
+      "tag_name": "",
+      "download_url": "",
+      "cwd": "",
+      "cmd": [
+        "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DWITH_GFLAGS=OFF -DUSE_RTTI=ON -DROCKSDB_BUILD_SHARED=OFF -DWITH_TESTS=OFF -DWITH_BENCHMARK_TOOLS=OFF -DWITH_CORE_TOOLS=OFF -DWITH_TOOLS=OFF -DWITH_ALL_TESTS=OFF -DCMAKE_INSTALL_PREFIX=/usr/local",
+        "cmake --build build --config Release -j\"$(nproc)\"",
+        "sudo cmake --build build --config Release --target install"
+      ]
+    },
+    {
+      "name": "fmt",
+      "releases_url": "https://api.github.com/repos/fmtlib/fmt/releases/latest",
+      "tags_url": "",
+      "tag_name": "",
+      "download_url": "",
+      "cwd": "",
+      "cmd": [
+        "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DFMT_TEST=OFF",
+        "cmake --build build --config Release -j\"$(nproc)\"",
+        "sudo cmake --build build --config Release --target install"
+      ]
+    },
+    {
+      "name": "spdlog",
+      "releases_url": "https://api.github.com/repos/gabime/spdlog/releases/latest",
+      "tags_url": "",
+      "tag_name": "",
+      "download_url": "",
+      "cwd": "",
+      "cmd": [
+        "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DSPDLOG_BUILD_EXAMPLE=OFF -DSPDLOG_FMT_EXTERNAL=ON",
+        "cmake --build build --config Release -j\"$(nproc)\"",
+        "sudo cmake --build build --config Release --target install"
+      ]
+    },
+    {
+      "name": "benchmark",
+      "releases_url": "https://api.github.com/repos/google/benchmark/releases/latest",
+      "tags_url": "",
+      "tag_name": "",
+      "download_url": "",
+      "cwd": "",
+      "cmd": [
+        "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_TESTING=OFF",
+        "cmake --build build --config Release -j\"$(nproc)\"",
+        "sudo cmake --build build --config Release --target install"
+      ]
+    },
+    {
+      "name": "sqlite",
+      "releases_url": "",
+      "tags_url": "https://api.github.com/repos/sqlite/sqlite/tags",
+      "tag_name": "",
+      "download_url": "",
+      "cwd": "",
+      "cmd": [
+        "./configure --disable-shared --disable-tcl --disable-readline",
+        "make -j\"$(nproc)\"",
+        "sudo make install"
+      ]
+    },
+    {
+      "name": "protobuf",
+      "releases_url": "https://api.github.com/repos/protocolbuffers/protobuf/releases/latest",
+      "tags_url": "",
+      "tag_name": "",
+      "download_url": "",
+      "cwd": "",
+      "cmd": [
+        "./autogen.sh",
+        "./configure --disable-shared",
+        "make -j\"$(nproc)\"",
+        "sudo make install"
+      ]
+    },
+    {
+      "name": "magic_enum",
+      "releases_url": "https://api.github.com/repos/Neargye/magic_enum/releases/latest",
+      "tags_url": "",
+      "tag_name": "",
+      "download_url": "",
+      "cwd": "",
+      "cmd": [
+        "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DMAGIC_ENUM_OPT_BUILD_EXAMPLES=OFF -DMAGIC_ENUM_OPT_BUILD_TESTS=OFF",
+        "sudo cmake --build build --config Release --target install"
+      ]
+    },
+    {
+      "name": "boost",
+      "releases_url": "",
+      "tags_url": "",
+      "tag_name": "boost-1.75.0",
+      "download_url": "https://dl.bintray.com/boostorg/release/1.75.0/source/boost_1_75_0.tar.gz",
+      "cwd": "",
+      "cmd": [
+        "./bootstrap.sh",
+        "sudo ./b2 --with-json --with-program_options toolset=gcc-10 link=static install"
+      ]
+    },
+    {
+      "name": "oneTBB",
+      "releases_url": "https://api.github.com/repos/oneapi-src/oneTBB/releases/latest",
+      "tags_url": "",
+      "tag_name": "",
+      "download_url": "",
+      "cwd": "",
+      "cmd": [
+        "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DTBB_TEST=OFF",
+        "cmake --build build --config Release -j\"$(nproc)\"",
+        "sudo cmake --build build --config Release --target install"
+      ]
+    },
+    {
+      "name": "icu",
+      "releases_url": "https://api.github.com/repos/unicode-org/icu/releases/latest",
+      "tags_url": "",
+      "tag_name": "",
+      "download_url": "",
+      "cwd": "icu4c/source",
+      "cmd": [
+        "./runConfigureICU Linux --disable-tests --disable-samples",
+        "make -j\"$(nproc)\"",
+        "sudo make install"
       ]
     }
   ]
