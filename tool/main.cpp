@@ -3,11 +3,22 @@
 
 #include <cstdint>
 
+#include <fmt/format.h>
+
 #include "error.h"
 #include "option.h"
 
 int main(int argc, char* argv[]) {
   auto [pre, lib, san] = kpkg::process_option(argc, argv);
+
+  fmt::print("pre: \n");
+  for (const auto& item : pre) {
+    item.print();
+  }
+  fmt::print("lib: \n");
+  for (const auto& item : lib) {
+    item.print();
+  }
 
   for (auto& item : pre) {
     item.init();
