@@ -33,25 +33,37 @@ void Library::init() {
       spdlog::info("get info from: {} ", releases_url_);
 
       auto result = get_page(releases_url_);
-      auto obj = boost::json::parse(result, error_code, &mr).as_object();
+      auto jv = boost::json::parse(result, error_code, &mr);
       if (error_code) {
         error("json parse error");
       }
 
+      if (jv.is_object() && jv.as_object().contains("message")) {
+        error("{}: {}\ndoc: {}", name_,
+              jv.as_object().at("message").as_string().c_str(),
+              jv.as_object().at("documentation_url").as_string().c_str());
+      }
+
+      auto obj = jv.as_object();
       tag_name_ = obj.at("tag_name").as_string().c_str();
       download_url_ = obj.at("tarball_url").as_string().c_str();
     } else if (!std::empty(tags_url_)) {
       spdlog::info("get info from: {} ", tags_url_);
 
       auto result = get_page(tags_url_);
-      auto obj = boost::json::parse(result, error_code, &mr)
-                     .as_array()
-                     .front()
-                     .as_object();
+      auto jv = boost::json::parse(result, error_code, &mr);
+
       if (error_code) {
         error("json parse error");
       }
 
+      if (jv.is_object() && jv.as_object().contains("message")) {
+        error("{}: {}\ndoc: {}", name_,
+              jv.as_object().at("message").as_string().c_str(),
+              jv.as_object().at("documentation_url").as_string().c_str());
+      }
+
+      auto obj = jv.as_array().front().as_object();
       tag_name_ = obj.at("name").as_string().c_str();
       download_url_ = obj.at("tarball_url").as_string().c_str();
     }
@@ -73,6 +85,7 @@ void Library::download() const {
   } else {
     spdlog::info("get file: {} from: {}", file_name_, download_url_);
     get_file(download_url_, file_name_);
+    spdlog::info("download file: {} complete", file_name_);
   }
 }
 

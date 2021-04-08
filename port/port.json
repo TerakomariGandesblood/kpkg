@@ -53,6 +53,19 @@
       "cmd": ["sudo make install"]
     },
     {
+      "name": "libc++",
+      "releases_url": "",
+      "tags_url": "",
+      "tag_name": "llvmorg-12.0.0-rc5",
+      "download_url": "https://api.github.com/repos/llvm/llvm-project/tarball/refs/tags/llvmorg-12.0.0-rc5",
+      "cwd": "",
+      "cmd": [
+        "cmake -S llvm -B build -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_LIBCXX=ON -DLLVM_ENABLE_PROJECTS=\"libcxx;libcxxabi\"",
+        "cmake --build build --config Release -j\"$(nproc)\" --target cxx cxxabi",
+        "sudo cmake --build build --config Release --target install-cxx install-cxxabi"
+      ]
+    },
+    {
       "name": "zlib",
       "releases_url": "",
       "tags_url": "https://api.github.com/repos/madler/zlib/tags",
