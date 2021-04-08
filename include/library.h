@@ -13,11 +13,17 @@ class Library {
  public:
   Library() = default;
   Library(const std::string& name, const std::string& releases_url,
-          const std::string& tags_url, const std::string& cwd,
+          const std::string& tags_url,
+          const std::vector<std::string>& dependency, const std::string& cwd,
           const std::vector<std::string>& cmd, const std::string& tag_name,
           const std::string& download_url);
 
   void init();
+
+  [[nodiscard]] const std::string& get_name() const { return name_; }
+  [[nodiscard]] const std::vector<std::string>& get_dependency() const {
+    return dependency_;
+  }
 
   void download() const;
   void build(Sanitize sanitize = Sanitize::None) const;
@@ -28,6 +34,7 @@ class Library {
   std::string name_;
   std::string releases_url_;
   std::string tags_url_;
+  std::vector<std::string> dependency_;
   std::string cwd_;
   std::vector<std::string> cmd_;
 

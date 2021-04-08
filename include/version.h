@@ -1,0 +1,10 @@
+#pragma once
+
+#define KPKG_VER_MAJOR 0
+
+#define KPKG_VER_MINOR 1
+
+#define KPKG_VER_PATCH 0
+
+#define KPKG_VERSION \
+  (KPKG_VER_MAJOR * 10000 + KPKG_VER_MINOR * 100 + KPKG_VER_PATCH)

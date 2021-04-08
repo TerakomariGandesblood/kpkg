@@ -49,7 +49,7 @@ include(CompilerOptions)
 include(Format)
 include(LTO)
 
-find_package(Boost CONFIG REQUIRED COMPONENTS json)
+find_package(Boost CONFIG REQUIRED COMPONENTS json program_options)
 find_package(CURL CONFIG REQUIRED)
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
@@ -76,13 +76,18 @@ target_include_directories(${LIBRARY}
                            PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
 target_link_libraries(
   ${LIBRARY}
-  PRIVATE CURL::libcurl fmt::fmt spdlog::spdlog ${LibArchive_LIBRARIES}
-          ${ZLIB_LIBRARIES} ${Boost_LIBRARIES})
+  PRIVATE port
+          CURL::libcurl
+          fmt::fmt
+          spdlog::spdlog
+          ${LibArchive_LIBRARIES}
+          ${ZLIB_LIBRARIES}
+          ${Boost_LIBRARIES})
 set_target_properties(${LIBRARY} PROPERTIES OUTPUT_NAME ${PROJECT_NAME}
                                             DEBUG_POSTFIX d)
 
 add_executable(${EXECUTABLE} ${EXECUTABLE_SRC})
-target_link_libraries(${EXECUTABLE} PRIVATE port ${LIBRARY})
+target_link_libraries(${EXECUTABLE} PRIVATE ${LIBRARY})
 
 # ---------------------------------------------------------------------------------------
 # Install target

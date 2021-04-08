@@ -10,6 +10,7 @@
       "tags_url": "https://api.github.com/repos/Kitware/CMake/tags",
       "tag_name": "",
       "download_url": "",
+      "dependency": [],
       "cwd": "",
       "cmd": [
         "./bootstrap --parallel=\"$(nproc)\" -- -DCMAKE_BUILD_TYPE:STRING=Release",
@@ -23,6 +24,7 @@
       "tags_url": "",
       "tag_name": "",
       "download_url": "",
+      "dependency": [],
       "cwd": "",
       "cmd": [
         "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release",
@@ -36,6 +38,7 @@
       "tags_url": "https://api.github.com/repos/doxygen/doxygen/tags",
       "tag_name": "",
       "download_url": "",
+      "dependency": [],
       "cwd": "",
       "cmd": [
         "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release",
@@ -49,6 +52,7 @@
       "tags_url": "",
       "tag_name": "",
       "download_url": "",
+      "dependency": [],
       "cwd": "",
       "cmd": ["sudo make install"]
     },
@@ -58,6 +62,7 @@
       "tags_url": "",
       "tag_name": "llvmorg-12.0.0-rc5",
       "download_url": "https://api.github.com/repos/llvm/llvm-project/tarball/refs/tags/llvmorg-12.0.0-rc5",
+      "dependency": [],
       "cwd": "",
       "cmd": [
         "cmake -S llvm -B build -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_LIBCXX=ON -DLLVM_ENABLE_PROJECTS=\"libcxx;libcxxabi\"",
@@ -71,6 +76,7 @@
       "tags_url": "https://api.github.com/repos/madler/zlib/tags",
       "tag_name": "",
       "download_url": "",
+      "dependency": [],
       "cwd": "",
       "cmd": [
         "./configure --static",
@@ -84,6 +90,7 @@
       "tags_url": "",
       "tag_name": "",
       "download_url": "",
+      "dependency": ["zlib"],
       "cwd": "",
       "cmd": [
         "sh build/autogen.sh",
@@ -98,6 +105,7 @@
       "tags_url": "",
       "tag_name": "",
       "download_url": "",
+      "dependency": [],
       "cwd": "build/cmake",
       "cmd": [
         "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DZSTD_BUILD_PROGRAMS=OFF -DZSTD_BUILD_TESTS=OFF -DZSTD_BUILD_SHARED=OFF",
@@ -111,6 +119,7 @@
       "tags_url": "",
       "tag_name": "",
       "download_url": "",
+      "dependency": [],
       "cwd": "",
       "cmd": [
         "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCATCH_BUILD_TESTING=OFF",
@@ -124,6 +133,7 @@
       "tags_url": "",
       "tag_name": "OpenSSL_1_1_1k",
       "download_url": "https://api.github.com/repos/openssl/openssl/tarball/refs/tags/OpenSSL_1_1_1k",
+      "dependency": [],
       "cwd": "",
       "cmd": [
         "./Configure linux-x86_64 no-tests no-shared",
@@ -137,6 +147,7 @@
       "tags_url": "",
       "tag_name": "",
       "download_url": "",
+      "dependency": ["zlib", "openssl"],
       "cwd": "",
       "cmd": [
         "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_CURL_EXE=OFF -DBUILD_SHARED_LIBS=OFF -DHTTP_ONLY=ON -DBUILD_TESTING=OFF",
@@ -150,6 +161,7 @@
       "tags_url": "https://api.github.com/repos/facebook/rocksdb/tags",
       "tag_name": "",
       "download_url": "",
+      "dependency": [],
       "cwd": "",
       "cmd": [
         "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DWITH_GFLAGS=OFF -DUSE_RTTI=ON -DROCKSDB_BUILD_SHARED=OFF -DWITH_TESTS=OFF -DWITH_BENCHMARK_TOOLS=OFF -DWITH_CORE_TOOLS=OFF -DWITH_TOOLS=OFF -DWITH_ALL_TESTS=OFF -DCMAKE_INSTALL_PREFIX=/usr/local",
@@ -163,6 +175,7 @@
       "tags_url": "",
       "tag_name": "",
       "download_url": "",
+      "dependency": [],
       "cwd": "",
       "cmd": [
         "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DFMT_TEST=OFF",
@@ -176,6 +189,7 @@
       "tags_url": "",
       "tag_name": "",
       "download_url": "",
+      "dependency": ["fmt"],
       "cwd": "",
       "cmd": [
         "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DSPDLOG_BUILD_EXAMPLE=OFF -DSPDLOG_FMT_EXTERNAL=ON",
@@ -189,6 +203,7 @@
       "tags_url": "",
       "tag_name": "",
       "download_url": "",
+      "dependency": [],
       "cwd": "",
       "cmd": [
         "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_TESTING=OFF",
@@ -202,6 +217,7 @@
       "tags_url": "https://api.github.com/repos/sqlite/sqlite/tags",
       "tag_name": "",
       "download_url": "",
+      "dependency": ["zlib"],
       "cwd": "",
       "cmd": [
         "./configure --disable-shared --disable-tcl --disable-readline",
@@ -215,6 +231,7 @@
       "tags_url": "",
       "tag_name": "",
       "download_url": "",
+      "dependency": ["zlib"],
       "cwd": "",
       "cmd": [
         "./autogen.sh",
@@ -229,6 +246,7 @@
       "tags_url": "",
       "tag_name": "",
       "download_url": "",
+      "dependency": [],
       "cwd": "",
       "cmd": [
         "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DMAGIC_ENUM_OPT_BUILD_EXAMPLES=OFF -DMAGIC_ENUM_OPT_BUILD_TESTS=OFF",
@@ -241,6 +259,7 @@
       "tags_url": "",
       "tag_name": "boost-1.75.0",
       "download_url": "https://dl.bintray.com/boostorg/release/1.75.0/source/boost_1_75_0.tar.gz",
+      "dependency": [],
       "cwd": "",
       "cmd": [
         "./bootstrap.sh",
@@ -253,6 +272,7 @@
       "tags_url": "",
       "tag_name": "",
       "download_url": "",
+      "dependency": [],
       "cwd": "",
       "cmd": [
         "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DTBB_TEST=OFF",
@@ -266,6 +286,7 @@
       "tags_url": "",
       "tag_name": "",
       "download_url": "",
+      "dependency": [],
       "cwd": "icu4c/source",
       "cmd": [
         "./runConfigureICU Linux --disable-tests --disable-samples",

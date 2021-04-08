@@ -1,47 +1,24 @@
 #include <unistd.h>
 #include <wait.h>
 
-#include <cstddef>
-#include <string>
-#include <vector>
-
-#include <boost/json.hpp>
+#include <cstdint>
 
 #include "error.h"
-#include "library.h"
-#include "port.h"
+#include "option.h"
 
-int main() {
-  std::string s(port, static_cast<std::size_t>(port_size));
+int main(int argc, char* argv[]) {
+  auto [pre, lib, san] = kpkg::process_option(argc, argv);
 
-  boost::json::error_code error;
-  boost::json::parse_options opt;
-  opt.allow_comments = true;
-  auto jv = boost::json::parse(s.data(), error, {}, opt);
-  if (error) {
-    kpkg::error("json parse error");
+  for (const auto& item : pre) {
+    item.build(san);
   }
 
-  jv = jv.as_object();
-  kpkg::export_gcc = jv.at("export_gcc").as_string().c_str();
-  kpkg::export_clang = jv.at("export_clang").as_string().c_str();
-  kpkg::export_memory_flag = jv.at("export_memory_flag").as_string().c_str();
-  kpkg::export_thread_flag = jv.at("export_thread_flag").as_string().c_str();
-
-  auto library = jv.at("port").as_array();
-  std::vector<kpkg::Library> v;
-
-  for (const auto& item : library) {
-    v.push_back(boost::json::value_to<kpkg::Library>(item));
-  }
-
-  for (auto& item : v) {
+  for (auto& item : lib) {
     auto pid{fork()};
     if (pid < 0) {
       kpkg::error("fork error");
     } else if (pid == 0) {
-      item.init();
-      item.download();
+      item.build(san);
       return EXIT_SUCCESS;
     }
   }
