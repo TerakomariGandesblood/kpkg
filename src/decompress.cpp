@@ -10,24 +10,23 @@
 
 namespace {
 
-std::int32_t copy_data(struct archive *ar, struct archive *aw) {
+void copy_data(struct archive *ar, struct archive *aw) {
   while (true) {
     const void *buff;
     std::size_t size;
     la_int64_t offset;
 
-    std::int32_t status = archive_read_data_block(ar, &buff, &size, &offset);
+    la_ssize_t status = archive_read_data_block(ar, &buff, &size, &offset);
     if (status == ARCHIVE_EOF) {
-      return ARCHIVE_OK;
+      return;
     }
-    if (status < ARCHIVE_OK) {
-      kpkg::error("{}", archive_error_string(aw));
+    if (status != ARCHIVE_OK) {
+      kpkg::error(archive_error_string(aw));
     }
 
-    status = static_cast<std::int32_t>(
-        archive_write_data_block(aw, buff, size, offset));
-    if (status < ARCHIVE_OK) {
-      kpkg::error("{}", archive_error_string(aw));
+    status = archive_write_data_block(aw, buff, size, offset);
+    if (status != ARCHIVE_OK) {
+      kpkg::error(archive_error_string(aw));
     }
   }
 }
@@ -41,8 +40,8 @@ std::string decompress(const std::string &file_name) {
                         ARCHIVE_EXTRACT_ACL | ARCHIVE_EXTRACT_FFLAGS);
 
   auto archive = archive_read_new();
-  archive_read_support_format_all(archive);
-  archive_read_support_filter_all(archive);
+  archive_read_support_format_gnutar(archive);
+  archive_read_support_filter_gzip(archive);
 
   auto extract = archive_write_disk_new();
   archive_write_disk_set_options(extract, flags);
@@ -62,27 +61,24 @@ std::string decompress(const std::string &file_name) {
       break;
     }
     if (status != ARCHIVE_OK) {
-      error("{}", archive_error_string(archive));
+      error(archive_error_string(archive));
+    }
+
+    status = archive_write_header(extract, entry);
+    if (status != ARCHIVE_OK) {
+      error(archive_error_string(archive));
     }
     if (std::empty(dir)) {
       dir = archive_entry_pathname(entry);
     }
 
-    status = archive_write_header(extract, entry);
-    if (status != ARCHIVE_OK) {
-      error("{}", archive_error_string(archive));
-    }
-
     if (archive_entry_size(entry) > 0) {
-      status = copy_data(archive, extract);
-      if (status != ARCHIVE_OK) {
-        error("{}", archive_error_string(archive));
-      }
+      copy_data(archive, extract);
     }
 
     status = archive_write_finish_entry(extract);
     if (status != ARCHIVE_OK) {
-      error("{}", archive_error_string(archive));
+      error(archive_error_string(archive));
     }
   }
 

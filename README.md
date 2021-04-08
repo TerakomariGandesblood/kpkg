@@ -9,7 +9,7 @@
 [![GitHub Downloads](https://img.shields.io/github/downloads/KaiserLancelot/kpkg/total)](https://github.com/KaiserLancelot/kpkg/releases)
 [![Bugs](https://img.shields.io/github/issues/KaiserLancelot/kpkg/bug)](https://github.com/KaiserLancelot/kpkg/issues?q=is%3Aopen+is%3Aissue+label%3Abug)
 
-C++ Library Manager
+C++ LibraryInfo Manager
 
 ## Build
 

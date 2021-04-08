@@ -1,16 +1,22 @@
-[
-  {
-    "name": "Catch2",
-    "author_name": "catchorg",
-    "tag": "",
-    "releases_url": "https://api.github.com/repos/catchorg/Catch2/releases/latest",
-    "tags_url": "",
-    "download_url": "",
-    "cwd": "",
-    "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCATCH_BUILD_TESTING=OFF",
-      "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
-    ]
-  }
-]
+{
+  "export_gcc": "export CC=gcc-10 && export CXX=g++-10",
+  "export_clang": "export CC=clang-12 && export CXX=clang++-12",
+  "export_memory_flag": "export CFLAGS=\"-fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls\" && export CXXFLAGS=\"-fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls -stdlib=libc++\"",
+  "export_thread_flag": "export CFLAGS=\"-fsanitize=thread\" && export CXXFLAGS=\"-fsanitize=thread -stdlib=libc++\"",
+  "port": [
+    {
+      "name": "Catch2",
+      "author_name": "catchorg",
+      "tag_name": "",
+      "releases_url": "https://api.github.com/repos/catchorg/Catch2/releases/latest",
+      "tags_url": "",
+      "download_url": "",
+      "cwd": "",
+      "cmd": [
+        "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCATCH_BUILD_TESTING=OFF",
+        "cmake --build build --config Release -j\"$(nproc)\"",
+        "sudo cmake --build build --config Release --target install"
+      ]
+    }
+  ]
+}
