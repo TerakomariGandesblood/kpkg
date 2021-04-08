@@ -9,7 +9,9 @@
 int main(int argc, char* argv[]) {
   auto [pre, lib, san] = kpkg::process_option(argc, argv);
 
-  for (const auto& item : pre) {
+  for (auto& item : pre) {
+    item.init();
+    item.download();
     item.build(san);
   }
 
@@ -18,6 +20,8 @@ int main(int argc, char* argv[]) {
     if (pid < 0) {
       kpkg::error("fork error");
     } else if (pid == 0) {
+      item.init();
+      item.download();
       item.build(san);
       return EXIT_SUCCESS;
     }

@@ -63,6 +63,9 @@ void get_file(const std::string& url, const std::string& file_name) {
   curl_global_init(CURL_GLOBAL_DEFAULT);
 
   auto http_handle = curl_easy_init();
+  if (!http_handle) {
+    kpkg::error("curl_easy_init() error");
+  }
 
   curl_easy_setopt(http_handle, CURLOPT_FOLLOWLOCATION, 1L);
   curl_easy_setopt(http_handle, CURLOPT_WRITEFUNCTION, write_data);
@@ -76,16 +79,19 @@ void get_file(const std::string& url, const std::string& file_name) {
   curl_multi_add_handle(multi_handle, http_handle);
 
   auto file{std::fopen(file_name.c_str(), "wb")};
-  if (file) {
-    curl_easy_setopt(http_handle, CURLOPT_WRITEDATA, file);
+  if (!file) {
+    error("open file error");
   }
 
+  curl_easy_setopt(http_handle, CURLOPT_WRITEDATA, file);
   curl_easy_setopt(http_handle, CURLOPT_URL, url.c_str());
 
   std::int32_t still_running{};
   std::int32_t repeats{};
 
-  curl_multi_perform(multi_handle, &still_running);
+  if (curl_multi_perform(multi_handle, &still_running) != CURLM_OK) {
+    kpkg::error("curl_multi_perform() error");
+  }
   while (still_running != 0) {
     std::int32_t numfds{};
 
@@ -103,7 +109,9 @@ void get_file(const std::string& url, const std::string& file_name) {
       repeats = 0;
     }
 
-    curl_multi_perform(multi_handle, &still_running);
+    if (curl_multi_perform(multi_handle, &still_running) != CURLM_OK) {
+      kpkg::error("curl_multi_perform() error");
+    }
   }
 
   fclose(file);
