@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="conv" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="kpkg" TARGET_NAME="conv" CONFIG_NAME="Debug-clang" RUN_TARGET_PROJECT_NAME="kpkg" RUN_TARGET_NAME="conv">
+  <configuration default="false" name="conv" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="kpkg" TARGET_NAME="conv" CONFIG_NAME="Debug-clang" RUN_TARGET_PROJECT_NAME="kpkg" RUN_TARGET_NAME="conv">
     <method v="2">
       <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
     </method>
