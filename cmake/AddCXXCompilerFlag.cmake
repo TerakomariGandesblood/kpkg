@@ -1,3 +1,4 @@
+# https://github.com/google/benchmark/blob/master/cmake/AddCXXCompilerFlag.cmake
 include(CheckCXXCompilerFlag)
 
 function(mangle_compiler_flag FLAG OUTPUT)
@@ -6,6 +7,7 @@ function(mangle_compiler_flag FLAG OUTPUT)
   string(REGEX REPLACE "[^A-Za-z_0-9]" "_" SANITIZED_FLAG ${SANITIZED_FLAG})
   string(REGEX REPLACE "_+" "_" SANITIZED_FLAG ${SANITIZED_FLAG})
 
+  # https://stackoverflow.com/questions/22487215/return-a-list-from-the-function-using-out-parameter
   set(${OUTPUT}
       ${SANITIZED_FLAG}
       PARENT_SCOPE)
@@ -14,6 +16,8 @@ endfunction()
 function(add_cxx_compiler_flag FLAG)
   mangle_compiler_flag(${FLAG} MANGLED_FLAG)
 
+  # https://cmake.org/cmake/help/latest/module/CheckCXXCompilerFlag.html
+  # https://cmake.org/cmake/help/latest/module/CheckCXXSourceCompiles.html
   set(OLD_CMAKE_REQUIRED_FLAGS ${CMAKE_REQUIRED_FLAGS})
   set(CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS} ${FLAG}")
   check_cxx_compiler_flag(${FLAG} ${MANGLED_FLAG})

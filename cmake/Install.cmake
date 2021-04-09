@@ -4,37 +4,36 @@ include(GNUInstallDirs)
 # Install executable
 # ---------------------------------------------------------------------------------------
 if(KPKG_BUILD_EXECUTABLE)
-  set(CMAKE_SKIP_BUILD_RPATH FALSE)
-  set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
-  set(CMAKE_INSTALL_RPATH
-      "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR};$\{ORIGIN\}")
-  set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+  # https://stackoverflow.com/questions/30398238/cmake-rpath-not-working-could-not-find-shared-object-file
+  set_target_properties(
+    ${EXECUTABLE} PROPERTIES INSTALL_RPATH "$ORIGIN/../${CMAKE_INSTALL_LIBDIR}"
+                             INSTALL_RPATH_USE_LINK_PATH TRUE)
 
-  list(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES
-       "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}" isSystemDir)
-  if(${isSystemDir} STREQUAL "-1")
-    set(CMAKE_INSTALL_RPATH
-        "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR};$\{ORIGIN\}")
-  endif()
-
-  install(TARGETS ${EXECUTABLE} DESTINATION ${CMAKE_INSTALL_BINDIR})
+  install(
+    TARGETS ${EXECUTABLE}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 endif()
 
 # ---------------------------------------------------------------------------------------
 # Support creation of installable packages
 # ---------------------------------------------------------------------------------------
+# https://cmake.org/cmake/help/latest/module/CPack.html
 set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY OFF)
 set(CPACK_INSTALL_CMAKE_PROJECTS ${KPKG_BINARY_DIR} ${LIBRARY} ALL .)
 
+# https://cmake.org/cmake/help/latest/cpack_gen/deb.html
 set(CPACK_PACKAGE_CONTACT "kaiser <KaiserLancelot123@gmail.com>")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A template for C++ projects using CMake")
 set(CPACK_PACKAGE_VERSION
     ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH})
 
+# https://cmake.org/cmake/help/latest/manual/cpack-generators.7.html
 set(CPACK_GENERATOR "TGZ;DEB")
 
 set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 
+# https://cmake.org/cmake/help/latest/module/InstallRequiredSystemLibraries.html
 set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS "")
 include(InstallRequiredSystemLibraries)
 
