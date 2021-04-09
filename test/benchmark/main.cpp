@@ -39,5 +39,5 @@ void sort_vector(benchmark::State& state) {
 
 BENCHMARK(sort_vector)
     ->RangeMultiplier(2)
-    ->Range(1 << 10, 1 << 18)
+    ->Range(1 << 10, 1 << 12)
     ->Complexity();

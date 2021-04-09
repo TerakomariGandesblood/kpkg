@@ -73,7 +73,6 @@ void get_file(const std::string& url, const std::string& file_name) {
 
   curl_easy_setopt(http_handle, CURLOPT_FOLLOWLOCATION, 1L);
   curl_easy_setopt(http_handle, CURLOPT_WRITEFUNCTION, write_data);
-  curl_easy_setopt(http_handle, CURLOPT_PROXY, "socks5://127.0.0.1:1080");
   curl_easy_setopt(
       http_handle, CURLOPT_USERAGENT,
       "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like "
