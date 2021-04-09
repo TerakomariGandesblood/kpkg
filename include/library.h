@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <utility>
 #include <vector>
 
 #include <boost/json.hpp>
@@ -46,5 +47,7 @@ class Library {
 
 Library tag_invoke(boost::json::value_to_tag<Library>,
                    const boost::json::value& jv);
+
+std::pair<std::vector<Library>, std::vector<std::string>> read_from_port();
 
 }  // namespace kpkg

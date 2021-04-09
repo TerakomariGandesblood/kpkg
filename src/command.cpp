@@ -1,7 +1,5 @@
 #include "command.h"
 
-#include <wait.h>
-
 #include <cassert>
 #include <cstdlib>
 
@@ -19,65 +17,82 @@ void run_cmd(const std::string& cmd) {
 
   auto status = std::system(cmd.c_str());
   if (status == -1 || !WIFEXITED(status) || WEXITSTATUS(status)) {
-    kpkg::error("run cmd error");
+    error("run cmd error");
   }
 }
 
-void run_cmd(const std::vector<std::string>& cmd, const std::string& cwd,
-             Sanitize sanitize) {
-  assert(!std::empty(cmd) && !std::empty(cwd));
+void run_cmds(const std::vector<std::string>& cmds, const std::string& cwd,
+              Sanitize sanitize) {
+  run_cmd(detail::calc_cmd(cmds, cwd, sanitize));
+}
 
-  std::string temp;
+namespace detail {
 
-  // boost
-  if (cmd.front() == "./bootstrap.sh") {
-    temp += "cd " + cwd + " && ";
+std::string combine_cmd(const std::string& cmd1, const std::string& cmd2) {
+  std::string cmd;
 
-    if (sanitize == Sanitize::Memory) {
-      temp += export_clang + " && ";
-      temp += cmd.front() + " && ";
-      temp += cmd[2];
-    } else if (sanitize == Sanitize::Thread) {
-      temp += export_clang + " && ";
-      temp += cmd.front() + " && ";
-      temp += cmd[3];
-    } else {
-      temp += export_gcc + " && ";
-      temp += cmd.front() + " && ";
-      temp += cmd[1];
-    }
-
-    spdlog::info("run cmd: {}", temp);
-
-    auto status = std::system(temp.c_str());
-    if (status == -1 || !WIFEXITED(status) || WEXITSTATUS(status)) {
-      kpkg::error("run cmd error");
-    }
-
-    return;
+  if (!std::empty(cmd1) && !std::empty(cmd2)) {
+    cmd = cmd1 + " && " + cmd2;
+  } else if (std::empty(cmd1) && !std::empty(cmd2)) {
+    cmd = cmd2;
+  } else if (!std::empty(cmd1) && std::empty(cmd2)) {
+    cmd = cmd1;
   }
+
+  return cmd;
+}
+
+std::string deal_with_boost(const std::vector<std::string>& cmds,
+                            const std::string& cwd, Sanitize sanitize) {
+  std::string cmd = "cd " + cwd;
 
   if (sanitize == Sanitize::Memory) {
-    temp += export_clang + " && ";
-    temp += export_flag + " && ";
-    temp += export_memory_flag + " && ";
+    cmd = combine_cmd(cmd, export_clang);
+    cmd = combine_cmd(cmd, cmds.front());
+    cmd = combine_cmd(cmd, cmds[2]);
   } else if (sanitize == Sanitize::Thread) {
-    temp += export_clang + " && ";
-    temp += export_flag + " && ";
-    temp += export_thread_flag + " && ";
+    cmd = combine_cmd(cmd, export_clang);
+    cmd = combine_cmd(cmd, cmds.front());
+    cmd = combine_cmd(cmd, cmds[3]);
   } else {
-    temp += export_gcc + " && ";
-    temp += export_flag + " && ";
+    cmd = combine_cmd(cmd, export_gcc);
+    cmd = combine_cmd(cmd, cmds.front());
+    cmd = combine_cmd(cmd, cmds[1]);
   }
 
-  temp += "cd " + cwd + " && ";
-
-  for (const auto& item : cmd) {
-    temp += (item + " && ");
-  }
-  temp = temp.substr(0, std::size(temp) - std::size(" && "));
-
-  run_cmd(temp);
+  return cmd;
 }
+
+std::string calc_cmd(const std::vector<std::string>& cmds,
+                     const std::string& cwd, Sanitize sanitize) {
+  assert(!std::empty(cmds) && !std::empty(cwd));
+
+  if (cmds.front() == "./bootstrap.sh") {
+    return deal_with_boost(cmds, cwd, sanitize);
+  }
+
+  std::string cmd = "cd " + cwd;
+
+  if (sanitize == Sanitize::Memory) {
+    cmd = combine_cmd(cmd, export_clang);
+    cmd = combine_cmd(cmd, export_flag);
+    cmd = combine_cmd(cmd, export_memory_flag);
+  } else if (sanitize == Sanitize::Thread) {
+    cmd = combine_cmd(cmd, export_clang);
+    cmd = combine_cmd(cmd, export_flag);
+    cmd = combine_cmd(cmd, export_thread_flag);
+  } else {
+    cmd = combine_cmd(cmd, export_gcc);
+    cmd = combine_cmd(cmd, export_flag);
+  }
+
+  for (const auto& item : cmds) {
+    cmd = combine_cmd(cmd, item);
+  }
+
+  return cmd;
+}
+
+}  // namespace detail
 
 }  // namespace kpkg

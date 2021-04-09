@@ -9,7 +9,33 @@ namespace kpkg {
 
 void run_cmd(const std::string& cmd);
 
-void run_cmd(const std::vector<std::string>& cmd, const std::string& cwd,
-             Sanitize sanitize);
+void run_cmds(const std::vector<std::string>& cmds, const std::string& cwd,
+              Sanitize sanitize);
+
+namespace detail {
+
+inline const std::string export_gcc = "export CC=gcc-10 && export CXX=g++-10";
+
+inline const std::string export_clang =
+    "export CC=clang-12 && export CXX=clang++-12";
+
+inline const std::string export_flag =
+    R"(export CFLAGS="-fPIC" && export CXXFLAGS="-fPIC")";
+
+inline const std::string export_memory_flag =
+    R"(export CFLAGS="-fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls" && export CXXFLAGS="-fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls -stdlib=libc++")";
+
+inline const std::string export_thread_flag =
+    R"(export CFLAGS="-fsanitize=thread" && export CXXFLAGS="-fsanitize=thread -stdlib=libc++")";
+
+std::string combine_cmd(const std::string& cmd1, const std::string& cmd2);
+
+std::string deal_with_boost(const std::vector<std::string>& cmds,
+                            const std::string& cwd, kpkg::Sanitize sanitize);
+
+std::string calc_cmd(const std::vector<std::string>& cmds,
+                     const std::string& cwd, Sanitize sanitize);
+
+}  // namespace detail
 
 }  // namespace kpkg

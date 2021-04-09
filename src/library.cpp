@@ -1,5 +1,6 @@
 #include "library.h"
 
+#include <cstddef>
 #include <filesystem>
 
 #include <fmt/format.h>
@@ -9,6 +10,7 @@
 #include "decompress.h"
 #include "download.h"
 #include "error.h"
+#include "port.h"
 
 namespace kpkg {
 
@@ -102,7 +104,7 @@ void Library::build(Sanitize sanitize) const {
     std::filesystem::rename(temp, dir_name_);
   }
 
-  run_cmd(cmd_, cwd_, sanitize);
+  run_cmds(cmd_, cwd_, sanitize);
 }
 
 void Library::print() const { fmt::print("{}\t\t\t{}\n", name_, tag_name_); }
@@ -118,6 +120,33 @@ Library tag_invoke(boost::json::value_to_tag<Library>,
                  value_to<std::vector<std::string>>(obj.at("cmd")),
                  value_to<std::string>(obj.at("tag_name")),
                  value_to<std::string>(obj.at("download_url"))};
+}
+
+std::pair<std::vector<Library>, std::vector<std::string>> read_from_port() {
+  std::string s(port, static_cast<std::size_t>(port_size));
+
+  boost::json::error_code error_code;
+  auto jv = boost::json::parse(s.data(), error_code, {});
+  if (error_code) {
+    error("json parse error");
+  }
+
+  jv = jv.as_object();
+
+  std::vector<std::string> install;
+  auto arr = jv.at("install").as_array();
+  for (const auto& item : arr) {
+    install.emplace_back(item.as_string().c_str());
+  }
+
+  auto ports = jv.at("port").as_array();
+  std::vector<Library> ret;
+
+  for (const auto& item : ports) {
+    ret.push_back(boost::json::value_to<Library>(item));
+  }
+
+  return {ret, install};
 }
 
 }  // namespace kpkg

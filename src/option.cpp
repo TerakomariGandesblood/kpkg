@@ -20,8 +20,9 @@
 
 namespace kpkg {
 
-std::tuple<std::vector<Library>, std::vector<Library>, Sanitize> process_option(
-    std::int32_t argc, char* argv[]) {
+std::tuple<std::vector<Library>, std::vector<Library>, Sanitize,
+           std::vector<std::string>>
+process_option(std::int32_t argc, char* argv[]) {
   boost::program_options::options_description generic("Generic options");
   generic.add_options()("version,v", "print version string")(
       "help,h", "produce help message");
@@ -79,38 +80,12 @@ std::tuple<std::vector<Library>, std::vector<Library>, Sanitize> process_option(
     use_proxy = true;
   }
 
-  std::string s(port, static_cast<std::size_t>(port_size));
-
-  boost::json::error_code error_code;
-  auto jv = boost::json::parse(s.data(), error_code, {});
-  if (error_code) {
-    error("json parse error");
-  }
-
-  jv = jv.as_object();
-
-  auto arr = jv.at("install").as_array();
-  for (const auto& item : arr) {
-    install.emplace_back(item.as_string().c_str());
-  }
-
-  export_gcc = jv.at("export_gcc").as_string().c_str();
-  export_clang = jv.at("export_clang").as_string().c_str();
-  export_flag = jv.at("export_flag").as_string().c_str();
-  export_memory_flag = jv.at("export_memory_flag").as_string().c_str();
-  export_thread_flag = jv.at("export_thread_flag").as_string().c_str();
-
-  auto library = jv.at("port").as_array();
-  std::vector<Library> v;
-
-  for (const auto& item : library) {
-    v.push_back(boost::json::value_to<Library>(item));
-  }
+  auto temp = read_from_port();
 
   std::vector<Library> pre, lib;
 
   auto f = [&](const std::string& name) {
-    for (const auto& item : v) {
+    for (const auto& item : temp.first) {
       if (boost::to_lower_copy(item.get_name()) == boost::to_lower_copy(name)) {
         return item;
       }
@@ -132,7 +107,7 @@ std::tuple<std::vector<Library>, std::vector<Library>, Sanitize> process_option(
     pre.insert(std::begin(pre), f("libc++"));
   }
 
-  return {pre, lib, sanitize};
+  return {pre, lib, sanitize, temp.second};
 }
 
 }  // namespace kpkg

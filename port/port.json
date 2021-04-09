@@ -13,11 +13,6 @@
     "sudo update-alternatives --install /usr/bin/ld.lld ld.lld /usr/bin/ld.lld-12 400",
     "sudo apt install -y re2c autoconf automake libtool m4 tcl"
   ],
-  "export_gcc": "export CC=gcc-10 && export CXX=g++-10",
-  "export_clang": "export CC=clang-12 && export CXX=clang++-12",
-  "export_flag": "export CFLAGS=\"-fPIC\" && export CXXFLAGS=\"-fPIC\"",
-  "export_memory_flag": "export CFLAGS=\"-fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls\" && export CXXFLAGS=\"-fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls -stdlib=libc++\"",
-  "export_thread_flag": "export CFLAGS=\"-fsanitize=thread\" && export CXXFLAGS=\"-fsanitize=thread -stdlib=libc++\"",
   "port": [
     {
       "name": "CMake",

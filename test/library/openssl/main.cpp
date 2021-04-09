@@ -14,7 +14,7 @@ std::string bytes_to_hex_string(const std::vector<uint8_t>& bytes) {
   return stream.str();
 }
 
-std::string sha3_512(const std::string& input) {
+std::string sha3_512_string(const std::string& input) {
   uint32_t digest_length = SHA512_DIGEST_LENGTH;
   const EVP_MD* algorithm = EVP_sha3_512();
   uint8_t* digest = static_cast<uint8_t*>(OPENSSL_malloc(digest_length));

@@ -87,7 +87,11 @@ std::string decompress(const std::string &file_name) {
   archive_write_close(extract);
   archive_write_free(extract);
 
-  return dir.substr(0, std::size(dir) - 1);
+  if (dir.ends_with("/")) {
+    return dir.substr(0, std::size(dir) - 1);
+  }
+
+  return dir;
 }
 
 }  // namespace kpkg

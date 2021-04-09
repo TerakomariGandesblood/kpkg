@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <string>
 #include <tuple>
 #include <vector>
 
@@ -8,7 +9,8 @@
 
 namespace kpkg {
 
-std::tuple<std::vector<Library>, std::vector<Library>, Sanitize> process_option(
-    std::int32_t argc, char* argv[]);
+std::tuple<std::vector<Library>, std::vector<Library>, Sanitize,
+           std::vector<std::string>>
+process_option(std::int32_t argc, char* argv[]);
 
 }  // namespace kpkg
