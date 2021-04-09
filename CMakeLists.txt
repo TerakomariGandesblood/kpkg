@@ -83,8 +83,11 @@ target_link_libraries(
           ${LibArchive_LIBRARIES}
           ${ZLIB_LIBRARIES}
           ${Boost_LIBRARIES})
-set_target_properties(${LIBRARY} PROPERTIES OUTPUT_NAME ${PROJECT_NAME}
-                                            DEBUG_POSTFIX d)
+set_target_properties(
+  ${LIBRARY}
+  PROPERTIES OUTPUT_NAME ${PROJECT_NAME}
+             POSITION_INDEPENDENT_CODE ON
+             DEBUG_POSTFIX d)
 
 add_executable(${EXECUTABLE} ${EXECUTABLE_SRC})
 target_link_libraries(${EXECUTABLE} PRIVATE ${LIBRARY})

@@ -1,6 +1,7 @@
 {
   "export_gcc": "export CC=gcc-10 && export CXX=g++-10",
   "export_clang": "export CC=clang-12 && export CXX=clang++-12",
+  "export_flag": "export CFLAGS=\"-fPIC\" && export CXXFLAGS=\"-fPIC\"",
   "export_memory_flag": "export CFLAGS=\"-fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls\" && export CXXFLAGS=\"-fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls -stdlib=libc++\"",
   "export_thread_flag": "export CFLAGS=\"-fsanitize=thread\" && export CXXFLAGS=\"-fsanitize=thread -stdlib=libc++\"",
   "port": [
@@ -263,7 +264,9 @@
       "cwd": "",
       "cmd": [
         "./bootstrap.sh",
-        "sudo ./b2 --with-json --with-program_options toolset=gcc-10 link=static install"
+        "sudo ./b2 --with-json --with-program_options cflags=\"-fPIC\" cxxflags=\"-fPIC\" toolset=gcc-10 link=static install",
+        "sudo ./b2 --with-json --with-program_options cflags=\"-fPIC -fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls\" cxxflags=\"-fPIC -fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls -stdlib=libc++\" toolset=clang-12 link=static install",
+        "sudo ./b2 --with-json --with-program_options cflags=\"-fPIC -fsanitize=thread\" cxxflags=\"-fPIC -fsanitize=thread -stdlib=libc++\" toolset=clang-12 link=static install"
       ]
     },
     {

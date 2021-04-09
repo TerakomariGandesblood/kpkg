@@ -86,6 +86,7 @@ std::tuple<std::vector<Library>, std::vector<Library>, Sanitize> process_option(
   jv = jv.as_object();
   export_gcc = jv.at("export_gcc").as_string().c_str();
   export_clang = jv.at("export_clang").as_string().c_str();
+  export_flag = jv.at("export_flag").as_string().c_str();
   export_memory_flag = jv.at("export_memory_flag").as_string().c_str();
   export_thread_flag = jv.at("export_thread_flag").as_string().c_str();
 
