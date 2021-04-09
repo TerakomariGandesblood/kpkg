@@ -32,6 +32,7 @@ message(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
 # ---------------------------------------------------------------------------------------
 set(LIBRARY lib${PROJECT_NAME})
 set(EXECUTABLE ${PROJECT_NAME})
+set(TEST_EXECUTABLE catch)
 
 set(KPKG_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(KPKG_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})

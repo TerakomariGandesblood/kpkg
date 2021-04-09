@@ -36,18 +36,17 @@ void run_cmd(const std::vector<std::string>& cmd, const std::string& cwd,
     if (sanitize == Sanitize::Memory) {
       temp += export_clang + " && ";
       temp += cmd.front() + " && ";
-      temp += cmd[2] + " && ";
+      temp += cmd[2];
     } else if (sanitize == Sanitize::Thread) {
       temp += export_clang + " && ";
       temp += cmd.front() + " && ";
-      temp += cmd[3] + " && ";
+      temp += cmd[3];
     } else {
       temp += export_gcc + " && ";
       temp += cmd.front() + " && ";
-      temp += cmd[1] + " && ";
+      temp += cmd[1];
     }
 
-    temp += "sudo ldconfig";
     spdlog::info("run cmd: {}", temp);
 
     auto status = std::system(temp.c_str());
@@ -76,7 +75,7 @@ void run_cmd(const std::vector<std::string>& cmd, const std::string& cwd,
   for (const auto& item : cmd) {
     temp += (item + " && ");
   }
-  temp += "sudo ldconfig";
+  temp = temp.substr(0, std::size(temp) - std::size(" && "));
 
   run_cmd(temp);
 }
