@@ -12,6 +12,17 @@
 
 namespace kpkg {
 
+void run_cmd(const std::string& cmd) {
+  assert(!std::empty(cmd));
+
+  spdlog::info("run cmd: {}", cmd);
+
+  auto status = std::system(cmd.c_str());
+  if (status == -1 || !WIFEXITED(status) || WEXITSTATUS(status)) {
+    kpkg::error("run cmd error");
+  }
+}
+
 void run_cmd(const std::vector<std::string>& cmd, const std::string& cwd,
              Sanitize sanitize) {
   assert(!std::empty(cmd) && !std::empty(cwd));
@@ -67,12 +78,7 @@ void run_cmd(const std::vector<std::string>& cmd, const std::string& cwd,
   }
   temp += "sudo ldconfig";
 
-  spdlog::info("run cmd: {}", temp);
-
-  auto status = std::system(temp.c_str());
-  if (status == -1 || !WIFEXITED(status) || WEXITSTATUS(status)) {
-    kpkg::error("run cmd error");
-  }
+  run_cmd(temp);
 }
 
 }  // namespace kpkg

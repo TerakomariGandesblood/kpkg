@@ -5,11 +5,17 @@
 
 #include <fmt/format.h>
 
+#include "command.h"
 #include "error.h"
 #include "option.h"
+#include "port.h"
 
 int main(int argc, char* argv[]) {
   auto [pre, lib, san] = kpkg::process_option(argc, argv);
+
+  for (const auto& item : kpkg::install) {
+    kpkg::run_cmd(item);
+  }
 
   fmt::print("pre: \n");
   for (const auto& item : pre) {

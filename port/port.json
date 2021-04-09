@@ -1,4 +1,18 @@
 {
+  "install": [
+    "sudo apt update",
+    "sudo apt install -y gcc-10 g++-10",
+    "sudo bash -c \"$(wget -O - https://apt.llvm.org/llvm.sh)\"",
+    "sudo apt install -y libc++-12-dev libc++abi-12-dev",
+    "sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-12 400",
+    "sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-12 400",
+    "sudo update-alternatives --install /usr/bin/llvm-ar llvm-ar /usr/bin/llvm-ar-12 400",
+    "sudo update-alternatives --install /usr/bin/llvm-nm llvm-nm /usr/bin/llvm-nm-12 400",
+    "sudo update-alternatives --install /usr/bin/llvm-ranlib llvm-ranlib /usr/bin/llvm-ranlib-12 400",
+    "sudo update-alternatives --install /usr/bin/lld lld /usr/bin/lld-12 400",
+    "sudo update-alternatives --install /usr/bin/ld.lld ld.lld /usr/bin/ld.lld-12 400",
+    "sudo apt install -y re2c autoconf automake libtool m4 tcl"
+  ],
   "export_gcc": "export CC=gcc-10 && export CXX=g++-10",
   "export_clang": "export CC=clang-12 && export CXX=clang++-12",
   "export_flag": "export CFLAGS=\"-fPIC\" && export CXXFLAGS=\"-fPIC\"",

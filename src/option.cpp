@@ -84,6 +84,12 @@ std::tuple<std::vector<Library>, std::vector<Library>, Sanitize> process_option(
   }
 
   jv = jv.as_object();
+
+  auto arr = jv.at("install").as_array();
+  for (const auto& item : arr) {
+    install.emplace_back(item.as_string().c_str());
+  }
+
   export_gcc = jv.at("export_gcc").as_string().c_str();
   export_clang = jv.at("export_clang").as_string().c_str();
   export_flag = jv.at("export_flag").as_string().c_str();

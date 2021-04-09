@@ -1,11 +1,14 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 extern char port[];
 extern int port_size;
 
 namespace kpkg {
+
+inline std::vector<std::string> install;
 
 inline std::string export_gcc;
 
