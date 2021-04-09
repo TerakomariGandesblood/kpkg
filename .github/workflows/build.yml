@@ -11,26 +11,23 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        compiler: ["g++", "clang++"]
-        build_type: ["Debug", "Release"]
+        compiler: [ "g++", "clang++" ]
+        build_type: [ "Debug", "Release", "MinSizeRel", "RelWithDebInfo" ]
 
     steps:
+      # https://github.com/actions/checkout
       - uses: actions/checkout@v2
 
+      #  https://github.com/actions/cache
       - name: Cache dependencies
         id: cache-dependencies
         uses: actions/cache@v2
         with:
           path: dependencies
-          key: ${{ runner.os }}-dependencies-20210329
-
-      - name: Build and install dependencies
-        if: steps.cache-dependencies.outputs.cache-hit != 'true'
-        run: sudo bash script/build-install.sh
+          key: ${{ runner.os }}-dependencies-20210409
 
       - name: Install dependencies
-        if: steps.cache-dependencies.outputs.cache-hit == 'true'
-        run: sudo bash script/install.sh
+        run: sudo bash script/build.sh
 
       - name: Configure
         run: |
@@ -40,7 +37,18 @@ jobs:
           CXX: ${{ matrix.compiler }}
 
       - name: Build
-        run: cmake --build build --config ${{ matrix.build_type }} -j$(nproc)
+        run: cmake --build build --config ${{ matrix.build_type }} -j"$(nproc)"
 
-      - name: Test
-        run: cd build ; ctest -C ${{ matrix.build_type }} -j$(nproc) --output-on-failure
+      - name: Install
+        if: ${{ matrix.build_type == 'Release' }}
+        run: |
+          sudo cmake --build build --config ${{ matrix.build_type }} --target install
+          sudo ldconfig
+
+      - name: Run executable
+        if: ${{ matrix.build_type == 'Release' }}
+        run: kpkg --help
+
+      - name: Uninstall
+        if: ${{ matrix.build_type == 'Release' }}
+        run: sudo cmake --build build --config ${{ matrix.build_type }} --target uninstall

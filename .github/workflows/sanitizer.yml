@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        compiler: ["g++", "clang++"]
+        compiler: [ "g++", "clang++" ]
 
     steps:
       - uses: actions/checkout@v2
@@ -21,15 +21,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: dependencies
-          key: ${{ runner.os }}-dependencies-20210329
-
-      - name: Build and install dependencies
-        if: steps.cache-dependencies.outputs.cache-hit != 'true'
-        run: sudo bash script/build-install.sh
+          key: ${{ runner.os }}-dependencies-20210409
 
       - name: Install dependencies
-        if: steps.cache-dependencies.outputs.cache-hit == 'true'
-        run: sudo bash script/install.sh
+        run: sudo bash script/build.sh
 
       - name: Configure
         run: |
@@ -39,12 +34,14 @@ jobs:
           CXX: ${{ matrix.compiler }}
 
       - name: Build
-        run: cmake --build build --config RelWithDebInfo -j$(nproc)
+        run: cmake --build build --config RelWithDebInfo -j"$(nproc)"
 
       - name: Test
-        run: cd build ; ctest -C RelWithDebInfo -j$(nproc) --output-on-failure
+        run: cd build ; ctest -C RelWithDebInfo -j"$(nproc)" --output-on-failure
         env:
+          # https://clang.llvm.org/docs/AddressSanitizer.html
           ASAN_OPTIONS: detect_stack_use_after_return=1
+          # # https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html
           UBSAN_OPTIONS: print_stacktrace=1
 
   memory:
@@ -58,15 +55,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: dependencies
-          key: ${{ runner.os }}-dependencies-memory-20210329
-
-      - name: Build and install dependencies
-        if: steps.cache-dependencies.outputs.cache-hit != 'true'
-        run: sudo bash script/build-install.sh -m
+          key: ${{ runner.os }}-dependencies-memory-20210409
 
       - name: Install dependencies
-        if: steps.cache-dependencies.outputs.cache-hit == 'true'
-        run: sudo bash script/install.sh -m
+        run: sudo bash script/build.sh -m
 
       - name: Configure
         run: |
@@ -76,11 +68,12 @@ jobs:
           CXX: clang++
 
       - name: Build
-        run: cmake --build build --config RelWithDebInfo -j$(nproc)
+        run: cmake --build build --config RelWithDebInfo -j"$(nproc)"
 
       - name: Test
-        run: cd build ; ctest -C RelWithDebInfo -j$(nproc) --output-on-failure
+        run: cd build ; ctest -C RelWithDebInfo -j"$(nproc)" --output-on-failure
         env:
+          # https://clang.llvm.org/docs/MemorySanitizer.html
           MSAN_OPTIONS: poison_in_dtor=1
 
   thread:
@@ -94,15 +87,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: dependencies
-          key: ${{ runner.os }}-dependencies-thread-20210329
-
-      - name: Build and install dependencies
-        if: steps.cache-dependencies.outputs.cache-hit != 'true'
-        run: sudo bash script/build-install.sh -t
+          key: ${{ runner.os }}-dependencies-thread-20210409
 
       - name: Install dependencies
-        if: steps.cache-dependencies.outputs.cache-hit == 'true'
-        run: sudo bash script/install.sh -t
+        run: sudo bash script/build.sh -t
 
       - name: Configure
         run: |
@@ -112,7 +100,7 @@ jobs:
           CXX: clang++
 
       - name: Build
-        run: cmake --build build --config RelWithDebInfo -j$(nproc)
+        run: cmake --build build --config RelWithDebInfo -j"$(nproc)"
 
       - name: Test
-        run: cd build ; ctest -C RelWithDebInfo -j$(nproc) --output-on-failure
+        run: cd build ; ctest -C RelWithDebInfo -j"$(nproc)" --output-on-failure

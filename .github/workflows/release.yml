@@ -2,14 +2,15 @@ name: Release
 
 on:
   release:
-    types: published
+    types:
+      - published
 
 jobs:
   build:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        compiler: ["g++", "clang++"]
+        compiler: [ "g++", "clang++" ]
 
     steps:
       - uses: actions/checkout@v2
@@ -19,15 +20,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: dependencies
-          key: ${{ runner.os }}-dependencies-20210329
-
-      - name: Build and install dependencies
-        if: steps.cache-dependencies.outputs.cache-hit != 'true'
-        run: sudo bash script/build-install.sh
+          key: ${{ runner.os }}-dependencies-20210409
 
       - name: Install dependencies
-        if: steps.cache-dependencies.outputs.cache-hit == 'true'
-        run: sudo bash script/install.sh
+        run: sudo bash script/build.sh
 
       - name: Set environment variable
         run: echo "RELEASE_VERSION=${TAG_NAME:1}" >> $GITHUB_ENV
@@ -38,7 +34,7 @@ jobs:
         run: cmake -S . -B build
 
       - name: Build
-        run: cmake --build build --config Release -j$(nproc)
+        run: cmake --build build --config Release -j"$(nproc)"
 
       - name: CPack
         run: |
@@ -54,12 +50,18 @@ jobs:
           sudo dpkg -i build/kpkg-${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
           sudo ldconfig
 
-      # TODO
       - name: Run executable
-        run: |
-          main
-          json
+        run: main
 
+      - name: Build example
+        run: |
+          cd example
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build --config Release -j"$(nproc)"
+        env:
+          CXX: ${{ matrix.compiler }}
+
+      # https://github.com/softprops/action-gh-release
       - name: Release
         uses: softprops/action-gh-release@v1
         if: ${{ matrix.compiler == 'g++' }}

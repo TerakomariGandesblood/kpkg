@@ -18,16 +18,13 @@ jobs:
         uses: actions/cache@v2
         with:
           path: dependencies
-          key: ${{ runner.os }}-dependencies-20210329
-
-      - name: Build and install dependencies
-        if: steps.cache-dependencies.outputs.cache-hit != 'true'
-        run: sudo bash script/build-install.sh
+          key: ${{ runner.os }}-dependencies-20210409
 
       - name: Install dependencies
-        if: steps.cache-dependencies.outputs.cache-hit == 'true'
-        run: sudo bash script/install.sh
+        run: sudo bash script/build.sh
 
+      # https://github.com/github/codeql-action
+      # https://docs.github.com/en/github/finding-security-vulnerabilities-and-errors-in-your-code/configuring-code-scanning
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
         with:
@@ -37,7 +34,7 @@ jobs:
         run: cmake -S . -B build
 
       - name: Build
-        run: cmake --build build --config Release -j$(nproc)
+        run: cmake --build build --config Release -j"$(nproc)"
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1

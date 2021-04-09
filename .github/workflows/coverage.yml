@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        compiler: ["g++", "clang++"]
+        compiler: [ "g++", "clang++" ]
 
     steps:
       - uses: actions/checkout@v2
@@ -21,15 +21,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: dependencies
-          key: ${{ runner.os }}-dependencies-20210329
-
-      - name: Build and install dependencies
-        if: steps.cache-dependencies.outputs.cache-hit != 'true'
-        run: sudo bash script/build-install.sh
+          key: ${{ runner.os }}-dependencies-20210409
 
       - name: Install dependencies
-        if: steps.cache-dependencies.outputs.cache-hit == 'true'
-        run: sudo bash script/install.sh
+        run: sudo bash script/build.sh
 
       - name: Configure
         run: |
@@ -39,19 +34,21 @@ jobs:
           CXX: ${{ matrix.compiler }}
 
       - name: Build
-        run: cmake --build build --config Debug -j$(nproc) --target coverage
+        run: cmake --build build --config Debug -j"$(nproc)" --target coverage
 
+      # https://github.com/coverallsapp/github-action
       - name: Coveralls
         if: ${{ matrix.compiler == 'clang++' }}
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: build/lcov.info
+          path-to-lcov: build/test/unit_test/lcov.info
 
+      # https://github.com/actions/upload-artifact
       - name: Upload artifact
         if: ${{ matrix.compiler == 'g++' }}
         uses: actions/upload-artifact@v2
         with:
           name: coverage-lcov
-          path: build/coverage
+          path: build/test/unit_test/coverage
           if-no-files-found: error

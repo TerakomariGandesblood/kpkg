@@ -3,17 +3,15 @@ include(GNUInstallDirs)
 # ---------------------------------------------------------------------------------------
 # Install executable
 # ---------------------------------------------------------------------------------------
-if(KPKG_BUILD_EXECUTABLE)
-  # https://stackoverflow.com/questions/30398238/cmake-rpath-not-working-could-not-find-shared-object-file
-  set_target_properties(
-    ${EXECUTABLE} PROPERTIES INSTALL_RPATH "$ORIGIN/../${CMAKE_INSTALL_LIBDIR}"
-                             INSTALL_RPATH_USE_LINK_PATH TRUE)
+# https://stackoverflow.com/questions/30398238/cmake-rpath-not-working-could-not-find-shared-object-file
+set_target_properties(
+  ${EXECUTABLE} PROPERTIES INSTALL_RPATH "$ORIGIN/../${CMAKE_INSTALL_LIBDIR}"
+                           INSTALL_RPATH_USE_LINK_PATH TRUE)
 
-  install(
-    TARGETS ${EXECUTABLE}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
-endif()
+install(
+  TARGETS ${EXECUTABLE}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 # ---------------------------------------------------------------------------------------
 # Support creation of installable packages
