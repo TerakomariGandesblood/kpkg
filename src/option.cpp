@@ -28,7 +28,7 @@ std::tuple<std::vector<Library>, std::vector<Library>, Sanitize> process_option(
 
   boost::program_options::options_description config("Configuration");
   config.add_options()("memory,m", "Build with MemorySanitizer")(
-      "thread,t", "Build with ThreadSanitizer");
+      "thread,t", "Build with ThreadSanitizer")("proxy,p", "Use proxy");
 
   boost::program_options::options_description hidden("Hidden options");
   hidden.add_options()(
@@ -73,6 +73,10 @@ std::tuple<std::vector<Library>, std::vector<Library>, Sanitize> process_option(
     sanitize = Sanitize::Memory;
   } else if (vm.contains("thread")) {
     sanitize = Sanitize::Thread;
+  }
+
+  if (vm.contains("proxy")) {
+    use_proxy = true;
   }
 
   std::string s(port, static_cast<std::size_t>(port_size));

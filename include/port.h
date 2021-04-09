@@ -20,4 +20,6 @@ inline std::string export_memory_flag;
 
 inline std::string export_thread_flag;
 
+inline bool use_proxy = false;
+
 }  // namespace kpkg

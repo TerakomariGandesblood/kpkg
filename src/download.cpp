@@ -9,6 +9,7 @@
 #include <curl/curl.h>
 
 #include "error.h"
+#include "port.h"
 
 namespace kpkg {
 
@@ -39,11 +40,14 @@ std::string get_page(const std::string& url) {
 
   curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 1);
   curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 2);
-  curl_easy_setopt(curl, CURLOPT_PROXY, "socks5://127.0.0.1:1080");
   curl_easy_setopt(
       curl, CURLOPT_USERAGENT,
       "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like "
       "Gecko) Chrome/91.0.4437.0 Safari/537.36 Edg/91.0.831.1");
+
+  if (use_proxy) {
+    curl_easy_setopt(curl, CURLOPT_PROXY, "socks5://127.0.0.1:1080");
+  }
 
   curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
   curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
@@ -69,11 +73,14 @@ void get_file(const std::string& url, const std::string& file_name) {
 
   curl_easy_setopt(http_handle, CURLOPT_FOLLOWLOCATION, 1L);
   curl_easy_setopt(http_handle, CURLOPT_WRITEFUNCTION, write_data);
-  curl_easy_setopt(http_handle, CURLOPT_PROXY, "socks5://127.0.0.1:1080");
   curl_easy_setopt(
       http_handle, CURLOPT_USERAGENT,
       "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like "
       "Gecko) Chrome/91.0.4437.0 Safari/537.36 Edg/91.0.831.1");
+
+  if (use_proxy) {
+    curl_easy_setopt(http_handle, CURLOPT_PROXY, "socks5://127.0.0.1:1080");
+  }
 
   auto multi_handle = curl_multi_init();
   curl_multi_add_handle(multi_handle, http_handle);
