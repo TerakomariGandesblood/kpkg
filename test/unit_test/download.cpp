@@ -6,8 +6,10 @@
 #include "sha.h"
 
 TEST_CASE("download") {
+  bool use_proxy = false;
+
 #ifdef KPKG_TEST_USE_PROXY
-  bool use_proxy = true;
+  use_proxy = true;
 #endif
 
   kpkg::get_file(
