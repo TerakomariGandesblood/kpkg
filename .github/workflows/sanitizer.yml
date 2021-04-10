@@ -21,7 +21,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: dependencies
-          key: ${{ runner.os }}-dependencies-20210410-3
+          key: ${{ runner.os }}-dependencies-20210411
 
       - name: Install dependencies
         run: sudo bash script/build.sh
@@ -55,7 +55,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: dependencies
-          key: ${{ runner.os }}-dependencies-memory-20210410-3
+          key: ${{ runner.os }}-dependencies-memory-20210411
 
       - name: Install dependencies
         run: sudo bash script/build.sh -m
@@ -87,7 +87,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: dependencies
-          key: ${{ runner.os }}-dependencies-thread-20210410-3
+          key: ${{ runner.os }}-dependencies-thread-20210411
 
       - name: Install dependencies
         run: sudo bash script/build.sh -t
