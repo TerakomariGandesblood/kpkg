@@ -101,15 +101,8 @@ set_target_properties(
 # ---------------------------------------------------------------------------------------
 # Build executable
 # ---------------------------------------------------------------------------------------
-file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/port/cacert.pem"
-        DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-
 add_executable(${EXECUTABLE} ${EXECUTABLE_SRC})
 target_link_libraries(${EXECUTABLE} PRIVATE ${LIBRARY})
-add_custom_command(
-  TARGET ${EXECUTABLE}
-  POST_BUILD
-  COMMAND ${EXECUTABLE})
 
 # ---------------------------------------------------------------------------------------
 # Build test
