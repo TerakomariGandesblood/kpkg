@@ -28,12 +28,13 @@ if(KPKG_BUILD_COVERAGE)
     # https://github.com/nlohmann/json/blob/develop/test/CMakeLists.txt
     add_custom_target(
       coverage
-      COMMAND ${LCOV_EXECUTABLE} -d . -z
+      COMMAND ${LCOV_EXECUTABLE} -d ${KPKG_BINARY_DIR} -z
       COMMAND ${TEST_EXECUTABLE}
       COMMAND
-        ${LCOV_EXECUTABLE} -d . --include '${KPKG_SOURCE_DIR}/src/*.cpp'
-        --include '${KPKG_SOURCE_DIR}/include/*.h' --gcov-tool
-        ${GCOV_EXECUTABLE} -c -o lcov.info --rc lcov_branch_coverage=1
+        ${LCOV_EXECUTABLE} -d ${KPKG_BINARY_DIR} --include
+        '${KPKG_SOURCE_DIR}/src/*.cpp' --include
+        '${KPKG_SOURCE_DIR}/include/*.h' --gcov-tool ${GCOV_EXECUTABLE} -c -o
+        lcov.info --rc lcov_branch_coverage=1
       COMMAND ${GENHTML_EXECUTABLE} lcov.info -o coverage -s --title
               "${PROJECT_NAME}" --legend --demangle-cpp --branch-coverage
       WORKING_DIRECTORY ${KPKG_BINARY_DIR}/test/unit_test

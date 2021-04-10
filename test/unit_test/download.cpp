@@ -13,10 +13,10 @@ TEST_CASE("download") {
 #endif
 
   kpkg::get_file(
-      "https://github.com/madler/zlib/archive/refs/tags/v1.2.11.tar.gz",
+      "https://api.github.com/repos/madler/zlib/tarball/refs/tags/v1.2.11",
       "zlib-1.2.11.tar.gz", use_proxy);
 
   REQUIRE(std::filesystem::exists("zlib-1.2.11.tar.gz"));
 
-  REQUIRE(std::filesystem::file_size("zlib-1.2.11.tar.gz") == 644492);
+  REQUIRE(std::filesystem::file_size("zlib-1.2.11.tar.gz") == 644596);
 }
