@@ -44,8 +44,8 @@ TEST_CASE("program2") {
 
   auto dependency = program.get_dependency();
   REQUIRE(std::size(dependency) == 2);
-  REQUIRE(dependency.front().get_name() == "fmt");
-  REQUIRE(dependency.back().get_name() == "libc++");
+  REQUIRE(dependency.front().get_name() == "libc++");
+  REQUIRE(dependency.back().get_name() == "fmt");
 
   auto to_be_built = program.get_library_to_be_built();
   REQUIRE(std::size(to_be_built) == 1);
