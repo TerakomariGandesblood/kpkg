@@ -38,3 +38,12 @@ jobs:
 
       - name: Test
         run: cd build ; ctest -C RelWithDebInfo -j"$(nproc)" --output-on-failure
+
+      - name: Archive any crashes as an artifact
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: crashes
+          path: |
+            build/test/unit_test/zlib-1.2.11.tar.gz
+          if-no-files-found: error
