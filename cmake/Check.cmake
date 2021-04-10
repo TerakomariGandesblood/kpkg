@@ -81,6 +81,13 @@ if(KPKG_VALGRIND AND KPKG_SANITIZER)
   message(FATAL_ERROR "Valgrind and sanitizer cannot be used at the same time ")
 endif()
 
-if((KPKG_SANITIZER STREQUAL "Memory") AND CMAKE_COMPILER_IS_GNUCXX)
+if((KPKG_SANITIZER STREQUAL "Memory") AND CMA_COMPILER_IS_GNUCXX)
   message(FATAL_ERROR "GCC does not support MemorySanitizer")
+endif()
+
+if((KPKG_SANITIZER STREQUAL "Memory" OR KPKG_SANITIZER STREQUAL "Thread")
+   AND (NOT KPKG_USE_LIBCXX))
+  message(
+    FATAL_ERROR
+      "When using MemorySanitizer or ThreadSanitizer, libc++ must be used")
 endif()

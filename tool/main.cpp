@@ -1,11 +1,12 @@
+#include "command.h"
+#include "program.h"
+
+#ifdef NDEBUG
 #include <unistd.h>
 #include <wait.h>
-
 #include <cstdint>
-
-#include "command.h"
 #include "error.h"
-#include "program.h"
+#endif
 
 int main(int argc, const char* argv[]) {
   kpkg::Program program(argc, argv);
@@ -25,6 +26,7 @@ int main(int argc, const char* argv[]) {
     item.build(program.get_sanitize());
   }
 
+#ifdef NDEBUG
   for (auto& item : program.get_library_to_be_built()) {
     auto pid{fork()};
     if (pid < 0) {
@@ -44,4 +46,11 @@ int main(int argc, const char* argv[]) {
       kpkg::error("Error");
     }
   }
+#else
+  for (auto& item : program.get_library_to_be_built()) {
+    item.init(program.use_proxy());
+    item.download(program.use_proxy());
+    item.build(program.get_sanitize());
+  }
+#endif
 }
