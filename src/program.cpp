@@ -78,6 +78,14 @@ Program::Program(std::int32_t argc, const char* argv[]) {
       ++iter;
     }
   }
+
+  for (auto iter = std::begin(dependency_); iter != std::end(dependency_);
+       ++iter) {
+    if (iter->get_name() == "libc++") {
+      std::swap(*iter, dependency_.front());
+      break;
+    }
+  }
 }
 
 void Program::print_dependency() const {
