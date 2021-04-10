@@ -87,6 +87,8 @@ void get_file(const std::string& url, const std::string& file_name,
   curl_easy_setopt(http_handle, CURLOPT_VERBOSE, 1);
 #endif
 
+  // FIXME
+  curl_easy_setopt(http_handle, CURLOPT_CAINFO, "cacert.pem");
   curl_easy_setopt(http_handle, CURLOPT_NOPROGRESS, 1);
   curl_easy_setopt(http_handle, CURLOPT_FOLLOWLOCATION, 1);
   curl_easy_setopt(http_handle, CURLOPT_SSL_VERIFYPEER, 1);
