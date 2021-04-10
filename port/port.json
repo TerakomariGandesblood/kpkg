@@ -12,7 +12,7 @@
     "sudo update-alternatives --install /usr/bin/lld lld /usr/bin/lld-12 400",
     "sudo update-alternatives --install /usr/bin/ld.lld ld.lld /usr/bin/ld.lld-12 400",
     "sudo apt install -y re2c autoconf automake libtool m4 tcl",
-    "sudo apt install valgrind clang-tidy-12",
+    "sudo apt install ca-certificates valgrind clang-tidy-12",
     "sudo update-alternatives --install /usr/bin/llvm-profdata llvm-profdata /usr/bin/llvm-profdata-12 400",
     "sudo update-alternatives --install /usr/bin/llvm-cov llvm-cov /usr/bin/llvm-cov-12 400",
     "sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-12 400",
