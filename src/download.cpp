@@ -5,6 +5,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstdio>
+#include <filesystem>
 
 #include <curl/curl.h>
 
@@ -39,6 +40,10 @@ std::string get_page(const std::string& url, bool use_proxy) {
     error("curl_easy_init() error");
   }
 
+#ifndef NDEBUG
+  curl_easy_setopt(http_handle, CURLOPT_VERBOSE, 1);
+#endif
+
   curl_easy_setopt(http_handle, CURLOPT_SSL_VERIFYPEER, 1);
   curl_easy_setopt(http_handle, CURLOPT_SSL_VERIFYHOST, 2);
   curl_easy_setopt(
@@ -63,6 +68,10 @@ std::string get_page(const std::string& url, bool use_proxy) {
   curl_easy_cleanup(http_handle);
   curl_global_cleanup();
 
+  if (std::empty(result)) {
+    error("get page error");
+  }
+
   return result;
 }
 
@@ -80,6 +89,8 @@ void get_file(const std::string& url, const std::string& file_name,
 
   curl_easy_setopt(http_handle, CURLOPT_NOPROGRESS, 1);
   curl_easy_setopt(http_handle, CURLOPT_FOLLOWLOCATION, 1);
+  curl_easy_setopt(http_handle, CURLOPT_SSL_VERIFYPEER, 1);
+  curl_easy_setopt(http_handle, CURLOPT_SSL_VERIFYHOST, 2);
   curl_easy_setopt(
       http_handle, CURLOPT_USERAGENT,
       "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -135,6 +146,10 @@ void get_file(const std::string& url, const std::string& file_name,
   curl_easy_cleanup(http_handle);
   curl_multi_cleanup(multi_handle);
   curl_global_cleanup();
+
+  if (std::filesystem::file_size(file_name) == 0) {
+    error("get file error");
+  }
 }
 
 }  // namespace kpkg

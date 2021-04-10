@@ -3,7 +3,6 @@
 #include <catch2/catch.hpp>
 
 #include "download.h"
-#include "sha.h"
 
 TEST_CASE("download") {
   bool use_proxy = false;
