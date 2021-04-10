@@ -33,8 +33,6 @@ std::size_t write_data(void* ptr, std::size_t size, std::size_t nmemb,
 namespace kpkg {
 
 std::string get_page(const std::string& url, bool use_proxy) {
-  std::string result;
-
   curl_global_init(CURL_GLOBAL_DEFAULT);
   auto http_handle = curl_easy_init();
   if (!http_handle) {
@@ -45,13 +43,14 @@ std::string get_page(const std::string& url, bool use_proxy) {
   curl_easy_setopt(http_handle, CURLOPT_SSL_VERIFYHOST, 2);
   curl_easy_setopt(
       http_handle, CURLOPT_USERAGENT,
-      "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like "
-      "Gecko) Chrome/91.0.4437.0 Safari/537.36 Edg/91.0.831.1");
+      "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
+      "Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2");
 
   if (use_proxy) {
     curl_easy_setopt(http_handle, CURLOPT_PROXY, "socks5://127.0.0.1:1080");
   }
 
+  std::string result;
   curl_easy_setopt(http_handle, CURLOPT_URL, url.c_str());
   curl_easy_setopt(http_handle, CURLOPT_WRITEDATA, &result);
   curl_easy_setopt(http_handle, CURLOPT_WRITEFUNCTION,
@@ -70,33 +69,34 @@ std::string get_page(const std::string& url, bool use_proxy) {
 void get_file(const std::string& url, const std::string& file_name,
               bool use_proxy) {
   curl_global_init(CURL_GLOBAL_DEFAULT);
-
   auto http_handle = curl_easy_init();
   if (!http_handle) {
     error("curl_easy_init() error");
   }
 
-  curl_easy_setopt(http_handle, CURLOPT_SSL_VERIFYPEER, 1);
-  curl_easy_setopt(http_handle, CURLOPT_SSL_VERIFYHOST, 2);
+#ifndef NDEBUG
+  curl_easy_setopt(http_handle, CURLOPT_VERBOSE, 1);
+#endif
+
+  curl_easy_setopt(http_handle, CURLOPT_NOPROGRESS, 1);
+  curl_easy_setopt(http_handle, CURLOPT_FOLLOWLOCATION, 1);
   curl_easy_setopt(
       http_handle, CURLOPT_USERAGENT,
-      "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like "
-      "Gecko) Chrome/91.0.4437.0 Safari/537.36 Edg/91.0.831.1");
+      "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
+      "Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2");
 
   if (use_proxy) {
     curl_easy_setopt(http_handle, CURLOPT_PROXY, "socks5://127.0.0.1:1080");
   }
-
-  curl_easy_setopt(http_handle, CURLOPT_FOLLOWLOCATION, 1L);
-  curl_easy_setopt(http_handle, CURLOPT_WRITEFUNCTION, write_data);
 
   auto file{std::fopen(file_name.c_str(), "wb")};
   if (!file) {
     error("open file error");
   }
 
-  curl_easy_setopt(http_handle, CURLOPT_WRITEDATA, file);
   curl_easy_setopt(http_handle, CURLOPT_URL, url.c_str());
+  curl_easy_setopt(http_handle, CURLOPT_WRITEDATA, file);
+  curl_easy_setopt(http_handle, CURLOPT_WRITEFUNCTION, write_data);
 
   auto multi_handle = curl_multi_init();
   curl_multi_add_handle(multi_handle, http_handle);
@@ -116,7 +116,7 @@ void get_file(const std::string& url, const std::string& file_name,
     }
 
     if (numfds == 0) {
-      repeats++;
+      ++repeats;
       if (repeats > 1) {
         wait(100);
       }
