@@ -3,42 +3,36 @@
 
 #include <cstdint>
 
-#include <fmt/format.h>
-
 #include "command.h"
 #include "error.h"
-#include "option.h"
+#include "program.h"
 
-int main(int argc, char* argv[]) {
-  auto [pre, lib, san, install] = kpkg::process_option(argc, argv);
+int main(int argc, const char* argv[]) {
+  kpkg::Program program(argc, argv);
 
-  for (const auto& item : install) {
-    kpkg::run_cmd(item);
+  program.print_dependency();
+  program.print_library_to_be_built();
+
+  if (program.install_package()) {
+    for (const auto& item : program.get_package_to_be_install()) {
+      kpkg::run_cmd(item);
+    }
   }
 
-  fmt::print("pre: \n");
-  for (const auto& item : pre) {
-    item.print();
-  }
-  fmt::print("lib: \n");
-  for (const auto& item : lib) {
-    item.print();
+  for (auto& item : program.get_dependency()) {
+    item.init(program.use_proxy());
+    item.download(program.use_proxy());
+    item.build(program.get_sanitize());
   }
 
-  for (auto& item : pre) {
-    item.init();
-    item.download();
-    item.build(san);
-  }
-
-  for (auto& item : lib) {
+  for (auto& item : program.get_library_to_be_built()) {
     auto pid{fork()};
     if (pid < 0) {
       kpkg::error("fork error");
     } else if (pid == 0) {
-      item.init();
-      item.download();
-      item.build(san);
+      item.init(program.use_proxy());
+      item.download(program.use_proxy());
+      item.build(program.get_sanitize());
       return EXIT_SUCCESS;
     }
   }

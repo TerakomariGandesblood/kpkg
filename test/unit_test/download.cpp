@@ -5,18 +5,14 @@
 #include "download.h"
 #include "sha.h"
 
-#ifdef KPKG_TEST_USE_PROXY
-#include "port.h"
-#endif
-
 TEST_CASE("download") {
 #ifdef KPKG_TEST_USE_PROXY
-  kpkg::use_proxy = true;
+  bool use_proxy = true;
 #endif
 
   kpkg::get_file(
       "https://github.com/madler/zlib/archive/refs/tags/v1.2.11.tar.gz",
-      "zlib-1.2.11.tar.gz");
+      "zlib-1.2.11.tar.gz", use_proxy);
 
   REQUIRE(std::filesystem::exists("zlib-1.2.11.tar.gz"));
   // https://emn178.github.io/online-tools/sha3_512_checksum.html

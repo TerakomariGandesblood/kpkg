@@ -9,7 +9,6 @@
 #include <curl/curl.h>
 
 #include "error.h"
-#include "port.h"
 
 namespace kpkg {
 
@@ -29,7 +28,7 @@ std::size_t write_data(void* ptr, std::size_t size, std::size_t nmemb,
   return std::fwrite(ptr, size, nmemb, static_cast<std::FILE*>(stream));
 }
 
-std::string get_page(const std::string& url) {
+std::string get_page(const std::string& url, bool use_proxy) {
   std::string result;
 
   curl_global_init(CURL_GLOBAL_DEFAULT);
@@ -63,7 +62,8 @@ std::string get_page(const std::string& url) {
   return result;
 }
 
-void get_file(const std::string& url, const std::string& file_name) {
+void get_file(const std::string& url, const std::string& file_name,
+              bool use_proxy) {
   curl_global_init(CURL_GLOBAL_DEFAULT);
 
   auto http_handle = curl_easy_init();

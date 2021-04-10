@@ -10,7 +10,6 @@
 #include "decompress.h"
 #include "download.h"
 #include "error.h"
-#include "port.h"
 
 namespace kpkg {
 
@@ -28,7 +27,7 @@ Library::Library(const std::string& name, const std::string& releases_url,
       tag_name_(tag_name),
       download_url_(download_url) {}
 
-void Library::init() {
+void Library::init(bool use_proxy) {
   boost::json::error_code error_code;
   boost::json::monotonic_resource mr;
 
@@ -36,7 +35,7 @@ void Library::init() {
     if (!std::empty(releases_url_)) {
       spdlog::info("get info from: {} ", releases_url_);
 
-      auto result = get_page(releases_url_);
+      auto result = get_page(releases_url_, use_proxy);
       auto jv = boost::json::parse(result, error_code, &mr);
       if (error_code) {
         error("json parse error");
@@ -54,7 +53,7 @@ void Library::init() {
     } else if (!std::empty(tags_url_)) {
       spdlog::info("get info from: {} ", tags_url_);
 
-      auto result = get_page(tags_url_);
+      auto result = get_page(tags_url_, use_proxy);
       auto jv = boost::json::parse(result, error_code, &mr);
 
       if (error_code) {
@@ -83,12 +82,12 @@ void Library::init() {
   }
 }
 
-void Library::download() const {
+void Library::download(bool use_proxy) const {
   if (std::filesystem::exists(file_name_)) {
     spdlog::info("use exists file: {}", file_name_);
   } else {
     spdlog::info("get file: {} from: {}", file_name_, download_url_);
-    get_file(download_url_, file_name_);
+    get_file(download_url_, file_name_, use_proxy);
     spdlog::info("download file: {} complete", file_name_);
   }
 }
@@ -120,43 +119,6 @@ Library tag_invoke(boost::json::value_to_tag<Library>,
                  value_to<std::vector<std::string>>(obj.at("cmd")),
                  value_to<std::string>(obj.at("tag_name")),
                  value_to<std::string>(obj.at("download_url"))};
-}
-
-std::pair<std::vector<Library>, std::vector<std::string>> read_from_port() {
-  std::string s(port, static_cast<std::size_t>(port_size));
-
-  boost::json::error_code error_code;
-  auto jv = boost::json::parse(s.data(), error_code, {});
-  if (error_code) {
-    error("json parse error");
-  }
-
-  jv = jv.as_object();
-
-  std::vector<std::string> install;
-  auto arr = jv.at("install").as_array();
-  for (const auto& item : arr) {
-    install.emplace_back(item.as_string().c_str());
-  }
-
-  auto ports = jv.at("port").as_array();
-  std::vector<Library> ret;
-
-  for (const auto& item : ports) {
-    ret.push_back(boost::json::value_to<Library>(item));
-  }
-
-  return {ret, install};
-}
-
-Library get_from_name(const std::vector<Library>& libraries,
-                      const std::string& name) {
-  for (const auto& item : libraries) {
-    if (item.get_name() == name) {
-      return item;
-    }
-  }
-  error("can not find this library");
 }
 
 }  // namespace kpkg

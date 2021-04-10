@@ -6,7 +6,6 @@
 #include <spdlog/spdlog.h>
 
 #include "error.h"
-#include "port.h"
 
 namespace kpkg {
 

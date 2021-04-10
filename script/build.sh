@@ -30,9 +30,9 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   cd dependencies
 
   if $thread; then
-    kpkg fmt spdlog libarchive curl boost catch2 -t
+    kpkg fmt spdlog libarchive curl boost catch2 -i -t
   elif $memory; then
-    kpkg fmt spdlog libarchive curl boost catch2 -m
+    kpkg fmt spdlog libarchive curl boost catch2 -i -m
   else
     kpkg fmt spdlog libarchive curl boost catch2
   fi

@@ -19,14 +19,14 @@ class Library {
           const std::vector<std::string>& cmd, const std::string& tag_name,
           const std::string& download_url);
 
-  void init();
+  void init(bool use_proxy);
 
   [[nodiscard]] const std::string& get_name() const { return name_; }
   [[nodiscard]] const std::vector<std::string>& get_dependency() const {
     return dependency_;
   }
 
-  void download() const;
+  void download(bool use_proxy) const;
   void build(Sanitize sanitize = Sanitize::None) const;
 
   void print() const;
@@ -47,10 +47,5 @@ class Library {
 
 Library tag_invoke(boost::json::value_to_tag<Library>,
                    const boost::json::value& jv);
-
-std::pair<std::vector<Library>, std::vector<std::string>> read_from_port();
-
-Library get_from_name(const std::vector<Library>& libraries,
-                      const std::string& name);
 
 }  // namespace kpkg
