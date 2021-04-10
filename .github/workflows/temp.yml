@@ -1,0 +1,34 @@
+name: Sanitizer
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 0 1 * *"
+
+jobs:
+  memory:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: dependencies
+          key: ${{ runner.os }}-dependencies-memory-20210411
+
+      - name: Install dependencies
+        run: sudo bash script/build.sh -m
+
+      - name: Configure
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+          -DKPKG_SANITIZER=Memory -DKPKG_USE_LIBCXX=ON
+        env:
+          CXX: clang++
+
+      - name: Build
+        run: cmake --build build --config RelWithDebInfo -j"$(nproc)"

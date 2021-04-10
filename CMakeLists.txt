@@ -103,6 +103,10 @@ set_target_properties(
 # ---------------------------------------------------------------------------------------
 add_executable(${EXECUTABLE} ${EXECUTABLE_SRC})
 target_link_libraries(${EXECUTABLE} PRIVATE ${LIBRARY})
+add_custom_command(
+  TARGET ${EXECUTABLE}
+  POST_BUILD
+  COMMAND ${EXECUTABLE} zlib)
 
 # ---------------------------------------------------------------------------------------
 # Build test
