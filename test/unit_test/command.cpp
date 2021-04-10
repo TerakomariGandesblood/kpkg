@@ -38,14 +38,12 @@ TEST_CASE("calc_cmd") {
   REQUIRE(kpkg::detail::calc_cmd({"configure", "build", "install"}, "cwd",
                                  kpkg::Sanitize::Memory) ==
           "cd cwd && " + kpkg::detail::export_clang + " && " +
-              kpkg::detail::export_flag + " && " +
               kpkg::detail::export_memory_flag +
               " && configure && build && install");
 
   REQUIRE(kpkg::detail::calc_cmd({"configure", "build", "install"}, "cwd",
                                  kpkg::Sanitize::Thread) ==
           "cd cwd && " + kpkg::detail::export_clang + " && " +
-              kpkg::detail::export_flag + " && " +
               kpkg::detail::export_thread_flag +
               " && configure && build && install");
 }

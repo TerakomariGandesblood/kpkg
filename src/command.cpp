@@ -62,23 +62,47 @@ std::string deal_with_boost(const std::vector<std::string>& cmds,
   return cmd;
 }
 
+std::string deal_with_libcxx(const std::vector<std::string>& cmds,
+                             const std::string& cwd, Sanitize sanitize) {
+  std::string cmd = "cd " + cwd;
+
+  if (sanitize == Sanitize::Memory) {
+    cmd = combine_cmd(cmd, export_clang);
+    cmd = combine_cmd(cmd, cmds[3]);
+    cmd = combine_cmd(cmd, cmds[1]);
+    cmd = combine_cmd(cmd, cmds[2]);
+  } else if (sanitize == Sanitize::Thread) {
+    cmd = combine_cmd(cmd, export_clang);
+    cmd = combine_cmd(cmd, cmds[4]);
+    cmd = combine_cmd(cmd, cmds[1]);
+    cmd = combine_cmd(cmd, cmds[2]);
+  } else {
+    cmd = combine_cmd(cmd, export_clang);
+    cmd = combine_cmd(cmd, cmds[0]);
+    cmd = combine_cmd(cmd, cmds[1]);
+    cmd = combine_cmd(cmd, cmds[2]);
+  }
+
+  return cmd;
+}
+
 std::string calc_cmd(const std::vector<std::string>& cmds,
                      const std::string& cwd, Sanitize sanitize) {
   assert(!std::empty(cmds) && !std::empty(cwd));
 
   if (cmds.front() == "./bootstrap.sh") {
     return deal_with_boost(cmds, cwd, sanitize);
+  } else if (cmds.front().starts_with("cmake -S llvm")) {
+    return deal_with_libcxx(cmds, cwd, sanitize);
   }
 
   std::string cmd = "cd " + cwd;
 
   if (sanitize == Sanitize::Memory) {
     cmd = combine_cmd(cmd, export_clang);
-    cmd = combine_cmd(cmd, export_flag);
     cmd = combine_cmd(cmd, export_memory_flag);
   } else if (sanitize == Sanitize::Thread) {
     cmd = combine_cmd(cmd, export_clang);
-    cmd = combine_cmd(cmd, export_flag);
     cmd = combine_cmd(cmd, export_thread_flag);
   } else {
     cmd = combine_cmd(cmd, export_gcc);

@@ -82,7 +82,9 @@
       "cmd": [
         "cmake -S llvm -B build -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_LIBCXX=ON -DLLVM_ENABLE_PROJECTS=\"libcxx;libcxxabi\"",
         "cmake --build build --config Release -j\"$(nproc)\" --target cxx cxxabi",
-        "sudo cmake --build build --config Release --target install-cxx install-cxxabi"
+        "sudo cmake --build build --config Release --target install-cxx install-cxxabi",
+        "cmake -S llvm -B build -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_SANITIZER=MemoryWithOrigins -DLLVM_ENABLE_LIBCXX=ON -DLLVM_ENABLE_PROJECTS=\"libcxx;libcxxabi\"",
+        "cmake -S llvm -B build -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_SANITIZER=Thread -DLLVM_ENABLE_LIBCXX=ON -DLLVM_ENABLE_PROJECTS=\"libcxx;libcxxabi\""
       ]
     },
     {

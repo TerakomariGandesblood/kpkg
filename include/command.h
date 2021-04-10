@@ -23,10 +23,10 @@ inline const std::string export_flag =
     R"(export CFLAGS="-fPIC" && export CXXFLAGS="-fPIC")";
 
 inline const std::string export_memory_flag =
-    R"(export CFLAGS="-fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls" && export CXXFLAGS="-fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls -stdlib=libc++")";
+    R"(export CFLAGS="-fPIC -fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls" && export CXXFLAGS="-fPIC -fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls -stdlib=libc++")";
 
 inline const std::string export_thread_flag =
-    R"(export CFLAGS="-fsanitize=thread" && export CXXFLAGS="-fsanitize=thread -stdlib=libc++")";
+    R"(export CFLAGS="-fPIC -fsanitize=thread" && export CXXFLAGS="-fPIC -fsanitize=thread -stdlib=libc++")";
 
 std::string combine_cmd(const std::string& cmd1, const std::string& cmd2);
 

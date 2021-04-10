@@ -47,7 +47,8 @@ std::string get_page(const std::string& url, bool use_proxy) {
   curl_easy_setopt(http_handle, CURLOPT_SSL_VERIFYPEER, 1);
   curl_easy_setopt(http_handle, CURLOPT_SSL_VERIFYHOST, 2);
   curl_easy_setopt(http_handle, CURLOPT_CAPATH, "/etc/ssl/certs");
-  curl_easy_setopt(http_handle, CURLOPT_CAINFO, "/etc/ssl/certs/ca-certificates.crt");
+  curl_easy_setopt(http_handle, CURLOPT_CAINFO,
+                   "/etc/ssl/certs/ca-certificates.crt");
   curl_easy_setopt(
       http_handle, CURLOPT_USERAGENT,
       "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
