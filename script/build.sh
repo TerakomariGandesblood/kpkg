@@ -34,18 +34,13 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   elif $memory; then
     kpkg fmt spdlog libarchive curl boost catch2 -i -m
   else
-    kpkg fmt spdlog libarchive curl boost catch2
+    kpkg fmt spdlog libarchive curl boost catch2 -i
   fi
 
   sudo apt install valgrind clang-tidy-12
 
   sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 400
   sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 400
-
-
-
-
-
 else
   echo "The system does not support: $OSTYPE"
   exit 1
