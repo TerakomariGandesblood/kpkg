@@ -6,3 +6,6 @@ endif()
 
 # add_subdirectory(library)
 add_subdirectory(unit_test)
+
+include(Coverage)
+include(Valgrind)
