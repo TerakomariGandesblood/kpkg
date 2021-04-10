@@ -42,10 +42,10 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 400
   sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 400
 
-  sudo update-alternatives --install /usr/bin/llvm-profdata llvm-profdata /usr/bin/llvm-profdata-12 400
-  sudo update-alternatives --install /usr/bin/llvm-cov llvm-cov /usr/bin/llvm-cov-12 400
-  sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-12 400
-  sudo update-alternatives --install /usr/bin/llvm-symbolizer llvm-symbolizer /usr/bin/llvm-symbolizer-12 400
+
+
+
+
 else
   echo "The system does not support: $OSTYPE"
   exit 1

@@ -15,10 +15,11 @@ TEST_CASE("program") {
   REQUIRE(program.get_sanitize() == kpkg::Sanitize::None);
 
   auto install = program.get_package_to_be_install();
-  REQUIRE(std::size(install) == 12);
+  REQUIRE(std::size(install) == 17);
   REQUIRE(install.front() == "sudo apt update");
   REQUIRE(install.back() ==
-          "sudo apt install -y re2c autoconf automake libtool m4 tcl");
+          "sudo update-alternatives --install /usr/bin/llvm-symbolizer "
+          "llvm-symbolizer /usr/bin/llvm-symbolizer-12 400");
 
   auto dependency = program.get_dependency();
   REQUIRE(std::size(dependency) == 2);
