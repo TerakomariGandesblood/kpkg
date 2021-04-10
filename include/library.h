@@ -50,4 +50,7 @@ Library tag_invoke(boost::json::value_to_tag<Library>,
 
 std::pair<std::vector<Library>, std::vector<std::string>> read_from_port();
 
+Library get_from_name(const std::vector<Library>& libraries,
+                      const std::string& name);
+
 }  // namespace kpkg

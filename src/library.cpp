@@ -149,4 +149,14 @@ std::pair<std::vector<Library>, std::vector<std::string>> read_from_port() {
   return {ret, install};
 }
 
+Library get_from_name(const std::vector<Library>& libraries,
+                      const std::string& name) {
+  for (const auto& item : libraries) {
+    if (item.get_name() == name) {
+      return item;
+    }
+  }
+  error("can not find this library");
+}
+
 }  // namespace kpkg

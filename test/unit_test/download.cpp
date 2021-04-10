@@ -3,11 +3,17 @@
 #include <catch2/catch.hpp>
 
 #include "download.h"
-//#include "port.h"
 #include "sha.h"
 
+#ifdef KPKG_TEST_USE_PROXY
+#include "port.h"
+#endif
+
 TEST_CASE("download") {
-  // kpkg::use_proxy = true;
+#ifdef KPKG_TEST_USE_PROXY
+  kpkg::use_proxy = true;
+#endif
+
   kpkg::get_file(
       "https://github.com/madler/zlib/archive/refs/tags/v1.2.11.tar.gz",
       "zlib-1.2.11.tar.gz");

@@ -35,7 +35,7 @@ std::string get_page(const std::string& url) {
   curl_global_init(CURL_GLOBAL_DEFAULT);
   auto curl = curl_easy_init();
   if (!curl) {
-    kpkg::error("curl_easy_init() error");
+    error("curl_easy_init() error");
   }
 
   curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 1);
@@ -54,7 +54,7 @@ std::string get_page(const std::string& url) {
   curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, callback_func_std_string);
 
   if (curl_easy_perform(curl) != CURLE_OK) {
-    kpkg::error("curl_easy_perform() error");
+    error("curl_easy_perform() error");
   }
 
   curl_easy_cleanup(curl);
@@ -68,7 +68,7 @@ void get_file(const std::string& url, const std::string& file_name) {
 
   auto http_handle = curl_easy_init();
   if (!http_handle) {
-    kpkg::error("curl_easy_init() error");
+    error("curl_easy_init() error");
   }
 
   curl_easy_setopt(http_handle, CURLOPT_FOLLOWLOCATION, 1L);
@@ -97,14 +97,14 @@ void get_file(const std::string& url, const std::string& file_name) {
   std::int32_t repeats{};
 
   if (curl_multi_perform(multi_handle, &still_running) != CURLM_OK) {
-    kpkg::error("curl_multi_perform() error");
+    error("curl_multi_perform() error");
   }
   while (still_running != 0) {
     std::int32_t numfds{};
 
     if (auto mc{curl_multi_wait(multi_handle, nullptr, 0, 1000, &numfds)};
         mc != CURLM_OK) {
-      kpkg::error("curl_multi_wait() failed");
+      error("curl_multi_wait() failed");
     }
 
     if (numfds == 0) {
@@ -117,7 +117,7 @@ void get_file(const std::string& url, const std::string& file_name) {
     }
 
     if (curl_multi_perform(multi_handle, &still_running) != CURLM_OK) {
-      kpkg::error("curl_multi_perform() error");
+      error("curl_multi_perform() error");
     }
   }
 
