@@ -12,5 +12,4 @@ add_executable(catch ${TEST_SRC})
 target_link_libraries(catch PRIVATE ${LIBRARY} Catch2::Catch2WithMain
                                     OpenSSL::Crypto)
 
-#include(Catch)
-#catch_discover_tests(catch REPORTER compact)
+# include(Catch) catch_discover_tests(catch REPORTER compact)
