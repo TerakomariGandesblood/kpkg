@@ -87,7 +87,6 @@ target_include_directories(${LIBRARY}
 target_link_libraries(
   ${LIBRARY}
   PRIVATE port
-          c++abi
           gflags_static
           CURL::libcurl
           fmt::fmt
@@ -95,6 +94,10 @@ target_link_libraries(
           ${Boost_LIBRARIES}
           ${LibArchive_LIBRARIES}
           ${ZLIB_LIBRARIES})
+
+if(KPKG_USE_LIBCXX)
+  target_link_libraries(${LIBRARY} PRIVATE c++abi)
+endif()
 
 set_target_properties(
   ${LIBRARY}
