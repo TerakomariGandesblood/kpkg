@@ -57,7 +57,8 @@ if(KPKG_USE_LIBCXX)
   message(STATUS "Standard library: libc++")
 
   add_cxx_compiler_flag("-stdlib=libc++")
-  add_link_options(-Wl,/usr/local/lib/libc++abi.a /usr/local/lib/libc++.a)
+  add_link_options(-Wl,/usr/local/lib/libc++.a)
+  add_link_options(-Wl,/usr/local/lib/libc++abi.a)
 
   # https://blog.jetbrains.com/clion/2019/10/clion-2019-3-eap-debugger-improvements/
   if((CMAKE_BUILD_TYPE STREQUAL "Debug") OR (CMAKE_BUILD_TYPE STREQUAL
