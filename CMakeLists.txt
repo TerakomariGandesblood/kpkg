@@ -70,15 +70,6 @@ find_package(Boost 1.75.0 CONFIG REQUIRED COMPONENTS json)
 add_definitions(-DSTRIP_FLAG_HELP=1)
 
 # ---------------------------------------------------------------------------------------
-# Build port
-# ---------------------------------------------------------------------------------------
-file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/port/port.json"
-     DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-
-add_library(port STATIC ${PORT_SRC})
-target_compile_options(port PRIVATE "-Wno-unused-command-line-argument")
-
-# ---------------------------------------------------------------------------------------
 # Build static library
 # ---------------------------------------------------------------------------------------
 add_library(${LIBRARY} STATIC ${LIBRARY_SRC})
@@ -86,8 +77,7 @@ target_include_directories(${LIBRARY}
                            PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
 target_link_libraries(
   ${LIBRARY}
-  PRIVATE port
-          gflags_static
+  PRIVATE gflags_static
           CURL::libcurl
           fmt::fmt
           spdlog::spdlog
@@ -107,11 +97,6 @@ set_target_properties(
 # ---------------------------------------------------------------------------------------
 add_executable(${EXECUTABLE} ${EXECUTABLE_SRC})
 target_link_libraries(${EXECUTABLE} PRIVATE ${LIBRARY})
-
-add_custom_command(
-  TARGET ${EXECUTABLE}
-  POST_BUILD
-  COMMAND ${EXECUTABLE} spdlog curl -memory)
 
 # ---------------------------------------------------------------------------------------
 # Build test
