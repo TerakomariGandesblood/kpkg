@@ -1,10 +1,10 @@
 #include <filesystem>
 
-#include <catch2/catch.hpp>
+#include <gtest/gtest.h>
 
 #include "download.h"
 
-TEST_CASE("download") {
+TEST(Download, Download) {
   bool use_proxy = false;
 
 #ifdef KPKG_TEST_USE_PROXY
@@ -15,7 +15,7 @@ TEST_CASE("download") {
       "https://api.github.com/repos/madler/zlib/tarball/refs/tags/v1.2.11",
       "zlib-1.2.11.tar.gz", use_proxy);
 
-  REQUIRE(std::filesystem::exists("zlib-1.2.11.tar.gz"));
+  EXPECT_TRUE(std::filesystem::exists("zlib-1.2.11.tar.gz"));
 
-  REQUIRE(std::filesystem::file_size("zlib-1.2.11.tar.gz") == 644596);
+  EXPECT_EQ(std::filesystem::file_size("zlib-1.2.11.tar.gz"), 644596);
 }

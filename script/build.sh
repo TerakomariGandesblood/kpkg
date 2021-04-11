@@ -30,11 +30,11 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   cd dependencies
 
   if $thread; then
-    kpkg lcov fmt spdlog libarchive curl boost catch2 -i -t
+    kpkg lcov fmt spdlog libarchive curl boost googletest -i -t
   elif $memory; then
-    kpkg lcov fmt spdlog libarchive curl boost catch2 -i -m
+    kpkg lcov fmt spdlog libarchive curl boost googletest -i -m
   else
-    kpkg lcov fmt spdlog libarchive curl boost catch2 -i
+    kpkg lcov fmt spdlog libarchive curl boost googletest -i
   fi
 
   sudo apt install valgrind clang-tidy-12

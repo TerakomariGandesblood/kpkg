@@ -1,53 +1,53 @@
 #include <cstdint>
 
-#include <catch2/catch.hpp>
+#include <gtest/gtest.h>
 
 #include "program.h"
 
-TEST_CASE("program") {
+TEST(Program, Test1) {
   std::int32_t argc = 5;
   const char* argv[] = {"kpkg", "curl", "zstd", "zlib", "-i", nullptr};
 
   kpkg::Program program(argc, argv);
 
-  REQUIRE(program.use_proxy() == false);
-  REQUIRE(program.install_package() == true);
-  REQUIRE(program.get_sanitize() == kpkg::Sanitize::None);
+  EXPECT_FALSE(program.use_proxy());
+  EXPECT_TRUE(program.install_package());
+  EXPECT_EQ(program.get_sanitize(), kpkg::Sanitize::None);
 
   auto install = program.get_package_to_be_install();
-  REQUIRE(std::size(install) == 17);
-  REQUIRE(install.front() == "sudo apt update");
-  REQUIRE(install.back() ==
-          "sudo update-alternatives --install /usr/bin/llvm-symbolizer "
-          "llvm-symbolizer /usr/bin/llvm-symbolizer-12 400");
+  EXPECT_EQ(std::size(install), 17);
+  EXPECT_EQ(install.front(), "sudo apt update");
+  EXPECT_EQ(install.back(),
+            "sudo update-alternatives --install /usr/bin/llvm-symbolizer "
+            "llvm-symbolizer /usr/bin/llvm-symbolizer-12 400");
 
   auto dependency = program.get_dependency();
-  REQUIRE(std::size(dependency) == 2);
-  REQUIRE(dependency.front().get_name() == "openssl");
-  REQUIRE(dependency.back().get_name() == "zlib");
+  EXPECT_EQ(std::size(dependency), 2);
+  EXPECT_EQ(dependency.front().get_name(), "openssl");
+  EXPECT_EQ(dependency.back().get_name(), "zlib");
 
   auto to_be_built = program.get_library_to_be_built();
-  REQUIRE(std::size(to_be_built) == 2);
-  REQUIRE(to_be_built.front().get_name() == "curl");
-  REQUIRE(to_be_built.back().get_name() == "zstd");
+  EXPECT_EQ(std::size(to_be_built), 2);
+  EXPECT_EQ(to_be_built.front().get_name(), "curl");
+  EXPECT_EQ(to_be_built.back().get_name(), "zstd");
 }
 
-TEST_CASE("program2") {
+TEST(Program, Test2) {
   std::int32_t argc = 4;
   const char* argv[] = {"kpkg", "spdlog", "-p", "-m", nullptr};
 
   kpkg::Program program(argc, argv);
 
-  REQUIRE(program.use_proxy() == true);
-  REQUIRE(program.install_package() == false);
-  REQUIRE(program.get_sanitize() == kpkg::Sanitize::Memory);
+  EXPECT_TRUE(program.use_proxy());
+  EXPECT_FALSE(program.install_package());
+  EXPECT_EQ(program.get_sanitize(), kpkg::Sanitize::Memory);
 
   auto dependency = program.get_dependency();
-  REQUIRE(std::size(dependency) == 2);
-  REQUIRE(dependency.front().get_name() == "libc++");
-  REQUIRE(dependency.back().get_name() == "fmt");
+  EXPECT_EQ(std::size(dependency), 2);
+  EXPECT_EQ(dependency.front().get_name(), "libc++");
+  EXPECT_EQ(dependency.back().get_name(), "fmt");
 
   auto to_be_built = program.get_library_to_be_built();
-  REQUIRE(std::size(to_be_built) == 1);
-  REQUIRE(to_be_built.front().get_name() == "spdlog");
+  EXPECT_EQ(std::size(to_be_built), 1);
+  EXPECT_EQ(to_be_built.front().get_name(), "spdlog");
 }

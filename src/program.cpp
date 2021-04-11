@@ -223,7 +223,7 @@ Library Program::get_from_name(const std::vector<Library>& libraries,
       return item;
     }
   }
-  error("can not find this library");
+  error("can not find this library: {}", name);
 }
 
 }  // namespace kpkg
