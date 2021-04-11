@@ -71,7 +71,7 @@ jobs:
         run: cmake --build build --config RelWithDebInfo -j"$(nproc)"
 
       - name: Run
-        run: ./build/test/unit_test/gtest
+        run: ./build/test/unit_test2/catch
 
       - name: Test
         run: cd build ; ctest -C RelWithDebInfo -j"$(nproc)" --output-on-failure

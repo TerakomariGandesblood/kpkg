@@ -327,5 +327,19 @@
         "sudo cmake --build build --config Release --target install"
       ]
     }
+    ,{
+      "name": "Catch2",
+      "releases_url": "https://api.github.com/repos/catchorg/Catch2/releases/latest",
+      "tags_url": "",
+      "tag_name": "",
+      "download_url": "",
+      "dependency": [],
+      "cwd": "",
+      "cmd": [
+        "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCATCH_BUILD_TESTING=OFF -DCATCH_BUILD_STATIC_LIBRARY=ON",
+        "cmake --build build --config Release -j\"$(nproc)\"",
+        "sudo cmake --build build --config Release --target install"
+      ]
+    }
   ]
 }
