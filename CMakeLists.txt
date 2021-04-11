@@ -106,7 +106,8 @@ target_link_libraries(${EXECUTABLE} PRIVATE ${LIBRARY})
 add_custom_command(
   TARGET ${EXECUTABLE}
   POST_BUILD
-  COMMAND ${EXECUTABLE} zlib)
+  COMMAND ${EXECUTABLE} curl zstd zlib -i
+  COMMAND ${EXECUTABLE} spdlog -m)
 
 # ---------------------------------------------------------------------------------------
 # Build test
