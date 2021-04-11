@@ -79,6 +79,14 @@ jobs:
           # https://clang.llvm.org/docs/MemorySanitizer.html
           MSAN_OPTIONS: poison_in_dtor=1
 
+      - name: Archive any crashes as an artifact
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: crashes
+          path: build
+          if-no-files-found: error
+
   thread:
     runs-on: ubuntu-20.04
 
