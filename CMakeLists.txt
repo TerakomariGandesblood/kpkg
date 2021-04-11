@@ -106,7 +106,7 @@ target_link_libraries(${EXECUTABLE} PRIVATE ${LIBRARY})
 add_custom_command(
   TARGET ${EXECUTABLE}
   POST_BUILD
-  COMMAND ${EXECUTABLE})
+  COMMAND ${EXECUTABLE} zlib)
 
 # ---------------------------------------------------------------------------------------
 # Build test
