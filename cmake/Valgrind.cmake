@@ -10,8 +10,8 @@ if(KPKG_VALGRIND)
   add_test(
     NAME ${TEST_EXECUTABLE}-valgrind
     COMMAND
-      ${VALGRIND_EXECUTABLE} --leak-check=full --leak-resolution=med
-      --track-origins=yes --vgdb=no --tool=memcheck --gen-suppressions=all
-      --error-exitcode=1 ./${TEST_EXECUTABLE}
+      ${VALGRIND_EXECUTABLE} --leak-check=full --show-leak-kinds=all
+      --leak-resolution=med --track-origins=yes --vgdb=no --tool=memcheck
+      --gen-suppressions=all --error-exitcode=1 ./${TEST_EXECUTABLE}
     WORKING_DIRECTORY ${KPKG_BINARY_DIR}/test/unit_test)
 endif()
