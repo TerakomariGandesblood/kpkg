@@ -3,7 +3,6 @@
     "sudo apt update",
     "sudo apt install -y gcc-10 g++-10",
     "sudo bash -c \"$(wget -O - https://apt.llvm.org/llvm.sh)\"",
-    "sudo apt install -y libc++-12-dev libc++abi-12-dev",
     "sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-12 400",
     "sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-12 400",
     "sudo update-alternatives --install /usr/bin/llvm-ar llvm-ar /usr/bin/llvm-ar-12 400",
@@ -80,11 +79,11 @@
       "dependency": [],
       "cwd": "",
       "cmd": [
-        "cmake -S llvm -B build -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_LIBCXX=ON -DLLVM_ENABLE_PROJECTS=\"libcxx;libcxxabi\"",
+        "cmake -S llvm -B build -DCMAKE_BUILD_TYPE=Release -DLIBCXX_ENABLE_SHARED=OFF -DLIBCXX_INCLUDE_TESTS=OFF -DLIBCXX_INCLUDE_BENCHMARKS=OFF -DLLVM_ENABLE_PROJECTS=\"libcxx;libcxxabi\"",
         "cmake --build build --config Release -j\"$(nproc)\" --target cxx cxxabi",
         "sudo cmake --build build --config Release --target install-cxx install-cxxabi",
-        "cmake -S llvm -B build -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_SANITIZER=MemoryWithOrigins -DLLVM_ENABLE_LIBCXX=ON -DLLVM_ENABLE_PROJECTS=\"libcxx;libcxxabi\"",
-        "cmake -S llvm -B build -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_SANITIZER=Thread -DLLVM_ENABLE_LIBCXX=ON -DLLVM_ENABLE_PROJECTS=\"libcxx;libcxxabi\""
+        "cmake -S llvm -B build -DCMAKE_BUILD_TYPE=Release -DLIBCXX_ENABLE_SHARED=OFF -DLIBCXX_INCLUDE_TESTS=OFF -DLIBCXX_INCLUDE_BENCHMARKS=OFF -DLLVM_USE_SANITIZER=MemoryWithOrigins -DLLVM_ENABLE_PROJECTS=\"libcxx;libcxxabi\"",
+        "cmake -S llvm -B build -DCMAKE_BUILD_TYPE=Release -DLIBCXX_ENABLE_SHARED=OFF -DLIBCXX_INCLUDE_TESTS=OFF -DLIBCXX_INCLUDE_BENCHMARKS=OFF -DLLVM_USE_SANITIZER=Thread -DLLVM_ENABLE_PROJECTS=\"libcxx;libcxxabi\""
       ]
     },
     {

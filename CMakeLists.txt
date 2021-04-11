@@ -87,6 +87,7 @@ target_include_directories(${LIBRARY}
 target_link_libraries(
   ${LIBRARY}
   PRIVATE port
+          c++abi
           gflags_static
           CURL::libcurl
           fmt::fmt
