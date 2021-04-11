@@ -53,7 +53,6 @@ include(GNUInstallDirs)
 include(Options)
 include(Check)
 include(ClangTidy)
-include(CompilerOptions)
 include(Format)
 
 # ---------------------------------------------------------------------------------------
@@ -68,6 +67,11 @@ find_package(CURL CONFIG REQUIRED)
 find_package(Boost 1.75.0 CONFIG REQUIRED COMPONENTS json)
 
 add_definitions(-DSTRIP_FLAG_HELP=1)
+
+# ---------------------------------------------------------------------------------------
+# Compiler Options
+# ---------------------------------------------------------------------------------------
+include(CompilerOptions)
 
 # ---------------------------------------------------------------------------------------
 # Build port

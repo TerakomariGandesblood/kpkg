@@ -114,7 +114,8 @@ if(KPKG_SANITIZER)
       add_cxx_compiler_flag_no_check("-fsanitize=implicit-conversion")
       add_cxx_compiler_flag_no_check("-fsanitize=local-bounds")
       add_cxx_compiler_flag_no_check("-fsanitize=nullability")
-      add_cxx_compiler_flag_no_check("-fsanitize-recover=unsigned-integer-overflow")
+      add_cxx_compiler_flag_no_check(
+        "-fsanitize-recover=unsigned-integer-overflow")
     endif()
   endmacro()
 
