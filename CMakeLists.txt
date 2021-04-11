@@ -95,10 +95,6 @@ target_link_libraries(
           ${LibArchive_LIBRARIES}
           ${ZLIB_LIBRARIES})
 
-if(KPKG_USE_LIBCXX)
-  target_link_libraries(${LIBRARY} PRIVATE c++abi)
-endif()
-
 set_target_properties(
   ${LIBRARY}
   PROPERTIES DEBUG_POSTFIX d
