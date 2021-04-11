@@ -44,6 +44,8 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
   sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 400
   sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 400
+
+  sudo ldconfig
 else
   echo "The system does not support: $OSTYPE"
   exit 1
