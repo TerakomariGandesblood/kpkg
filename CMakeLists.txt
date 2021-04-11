@@ -97,7 +97,9 @@ target_link_libraries(
           spdlog::spdlog
           ${Boost_LIBRARIES}
           ${LibArchive_LIBRARIES}
-          ${ZLIB_LIBRARIES})
+          ${ZLIB_LIBRARIES}
+          /usr/local/lib/libc++.a
+          /usr/local/lib/libc++abi.a)
 
 set_target_properties(
   ${LIBRARY}
