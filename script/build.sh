@@ -29,6 +29,9 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
   cd dependencies
 
+  sudo apt remove libc++-dev libc++abi-dev
+  sudo apt autoremove
+
   if $thread; then
     kpkg lcov gflags fmt spdlog libarchive curl boost googletest catch2 -install -thread
   elif $memory; then
