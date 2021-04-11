@@ -13,4 +13,4 @@ target_link_libraries(${TEST_EXECUTABLE} PRIVATE ${LIBRARY} GTest::gtest_main
                                                  OpenSSL::Crypto)
 
 # https://cmake.org/cmake/help/latest/module/GoogleTest.html#command:gtest_discover_tests
-# gtest_discover_tests(${TEST_EXECUTABLE})
+gtest_discover_tests(${TEST_EXECUTABLE} DISCOVERY_MODE PRE_TEST)
