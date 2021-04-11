@@ -47,7 +47,7 @@ jobs:
 
       - name: Run executable
         if: ${{ matrix.build_type == 'Release' }}
-        run: kpkg --help
+        run: kpkg -version
 
       - name: Uninstall
         if: ${{ matrix.build_type == 'Release' }}
