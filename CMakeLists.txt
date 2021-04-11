@@ -99,6 +99,11 @@ target_link_libraries(
           ${LibArchive_LIBRARIES}
           ${ZLIB_LIBRARIES})
 
+if(KPKG_USE_LIBCXX)
+  target_link_libraries(${LIBRARY} PUBLIC /usr/local/lib/libc++.a
+                                          /usr/local/lib/libc++abi.a)
+endif()
+
 set_target_properties(
   ${LIBRARY}
   PROPERTIES DEBUG_POSTFIX d

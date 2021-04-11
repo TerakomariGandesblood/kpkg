@@ -62,7 +62,7 @@ jobs:
 
       - name: Configure
         run: |
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+          cmake -G Ninja -S . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo \
           -DKPKG_BUILD_TEST=ON -DKPKG_SANITIZER=Memory -DKPKG_USE_LIBCXX=ON
         env:
           CXX: clang++
