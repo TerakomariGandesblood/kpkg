@@ -280,9 +280,9 @@
       "cwd": "",
       "cmd": [
         "./bootstrap.sh",
-        "sudo ./b2 --with-json --with-program_options cflags=\"-fPIC\" cxxflags=\"-fPIC\" toolset=gcc-10 link=static install",
-        "sudo ./b2 --with-json --with-program_options cflags=\"-fPIC -fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls\" cxxflags=\"-fPIC -fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls -stdlib=libc++\" toolset=clang-12 link=static install",
-        "sudo ./b2 --with-json --with-program_options cflags=\"-fPIC -fsanitize=thread\" cxxflags=\"-fPIC -fsanitize=thread -stdlib=libc++\" toolset=clang-12 link=static install"
+        "sudo ./b2 --with-json cflags=\"-fPIC\" cxxflags=\"-fPIC\" toolset=gcc-10 link=static install",
+        "sudo ./b2 --with-json cflags=\"-fPIC -fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls\" cxxflags=\"-fPIC -fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls -stdlib=libc++\" toolset=clang-12 link=static install",
+        "sudo ./b2 --with-json cflags=\"-fPIC -fsanitize=thread\" cxxflags=\"-fPIC -fsanitize=thread -stdlib=libc++\" toolset=clang-12 link=static install"
       ]
     },
     {
@@ -323,6 +323,20 @@
       "cwd": "",
       "cmd": [
         "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_GMOCK=OFF",
+        "cmake --build build --config Release -j\"$(nproc)\"",
+        "sudo cmake --build build --config Release --target install"
+      ]
+    },
+    {
+      "name": "gflags",
+      "releases_url": "https://api.github.com/repos/gflags/gflags/releases/latest",
+      "tags_url": "",
+      "tag_name": "",
+      "download_url": "",
+      "dependency": [],
+      "cwd": "",
+      "cmd": [
+        "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS=\"-DSTRIP_FLAG_HELP=1\" -DCMAKE_CXX_FLAGS=\"-DSTRIP_FLAG_HELP=1\"",
         "cmake --build build --config Release -j\"$(nproc)\"",
         "sudo cmake --build build --config Release --target install"
       ]

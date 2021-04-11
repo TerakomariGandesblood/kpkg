@@ -8,7 +8,7 @@
 #include "error.h"
 #endif
 
-int main(int argc, const char* argv[]) {
+int main(int argc, char* argv[]) {
   kpkg::Program program(argc, argv);
 
   program.print_dependency();

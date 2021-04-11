@@ -6,9 +6,9 @@
 
 TEST(Program, Test1) {
   std::int32_t argc = 5;
-  const char* argv[] = {"kpkg", "curl", "zstd", "zlib", "-i", nullptr};
+  const char* argv[] = {"kpkg", "curl", "zstd", "zlib", "-install", nullptr};
 
-  kpkg::Program program(argc, argv);
+  kpkg::Program program(argc, const_cast<char**>(argv));
 
   EXPECT_FALSE(program.use_proxy());
   EXPECT_TRUE(program.install_package());
@@ -34,9 +34,9 @@ TEST(Program, Test1) {
 
 TEST(Program, Test2) {
   std::int32_t argc = 4;
-  const char* argv[] = {"kpkg", "spdlog", "-p", "-m", nullptr};
+  const char* argv[] = {"kpkg", "spdlog", "-proxy", "-memory", nullptr};
 
-  kpkg::Program program(argc, argv);
+  kpkg::Program program(argc, const_cast<char**>(argv));
 
   EXPECT_TRUE(program.use_proxy());
   EXPECT_FALSE(program.install_package());

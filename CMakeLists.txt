@@ -59,12 +59,15 @@ include(Format)
 # ---------------------------------------------------------------------------------------
 # Find package
 # ---------------------------------------------------------------------------------------
+find_package(gflags REQUIRED)
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(LibArchive REQUIRED)
 find_package(CURL CONFIG REQUIRED)
-find_package(Boost 1.75.0 CONFIG REQUIRED COMPONENTS json program_options)
+find_package(Boost 1.75.0 CONFIG REQUIRED COMPONENTS json)
+
+add_definitions(-DSTRIP_FLAG_HELP=1)
 
 # ---------------------------------------------------------------------------------------
 # Build port
@@ -84,6 +87,7 @@ target_include_directories(${LIBRARY}
 target_link_libraries(
   ${LIBRARY}
   PRIVATE port
+          gflags_static
           CURL::libcurl
           fmt::fmt
           spdlog::spdlog
@@ -103,11 +107,6 @@ set_target_properties(
 # ---------------------------------------------------------------------------------------
 add_executable(${EXECUTABLE} ${EXECUTABLE_SRC})
 target_link_libraries(${EXECUTABLE} PRIVATE ${LIBRARY})
-add_custom_command(
-  TARGET ${EXECUTABLE}
-  POST_BUILD
-  COMMAND ${EXECUTABLE} curl zstd zlib -i
-  COMMAND ${EXECUTABLE} spdlog -m)
 
 # ---------------------------------------------------------------------------------------
 # Build test
