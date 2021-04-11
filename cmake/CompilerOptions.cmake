@@ -80,6 +80,7 @@ endif()
 # ${LINKER_VERSION}) list(GET LINKER_VERSION 0 LINKER_VERSION)
 
 # message(STATUS "Linker: ${LINKER_VERSION}") endif()
+add_link_options("-fuse-ld=lld")
 execute_process(
   COMMAND ${CMAKE_LINKER} --version
   OUTPUT_VARIABLE LINKER_VERSION
