@@ -29,9 +29,6 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
   cd dependencies
 
-  sudo apt remove libc++-dev libc++abi-dev
-  sudo apt autoremove
-
   if $thread; then
     kpkg lcov gflags fmt spdlog libarchive curl boost googletest catch2 -install -thread
   elif $memory; then
@@ -40,7 +37,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     kpkg lcov gflags fmt spdlog libarchive curl boost googletest catch2 -install
   fi
 
-  sudo apt install valgrind clang-tidy-12 cmake ninja-build
+  sudo apt install valgrind clang-tidy-12 ninja-build
 
   sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 400
   sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 400
