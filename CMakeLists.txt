@@ -32,7 +32,7 @@ message(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
 # ---------------------------------------------------------------------------------------
 set(LIBRARY lib${PROJECT_NAME})
 set(EXECUTABLE ${PROJECT_NAME})
-set(TEST_EXECUTABLE catch)
+set(TEST_EXECUTABLE gtest)
 
 set(KPKG_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(KPKG_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
@@ -107,11 +107,6 @@ set_target_properties(
 # ---------------------------------------------------------------------------------------
 add_executable(${EXECUTABLE} ${EXECUTABLE_SRC})
 target_link_libraries(${EXECUTABLE} PRIVATE ${LIBRARY})
-
-add_custom_command(
-  TARGET ${EXECUTABLE}
-  POST_BUILD
-  COMMAND ${EXECUTABLE} spdlog curl -memory)
 
 # ---------------------------------------------------------------------------------------
 # Build test

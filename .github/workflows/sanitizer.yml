@@ -70,19 +70,14 @@ jobs:
       - name: Build
         run: cmake --build build --config RelWithDebInfo -j"$(nproc)"
 
+      - name: Run
+        run: ./build/test/unit_test/gtest
+
       - name: Test
         run: cd build ; ctest -C RelWithDebInfo -j"$(nproc)" --output-on-failure
         env:
           # https://clang.llvm.org/docs/MemorySanitizer.html
           MSAN_OPTIONS: poison_in_dtor=1
-
-      - name: Archive any crashes as an artifact
-        uses: actions/upload-artifact@v2
-        if: always()
-        with:
-          name: crashes
-          path: build
-          if-no-files-found: error
 
   thread:
     runs-on: ubuntu-20.04
