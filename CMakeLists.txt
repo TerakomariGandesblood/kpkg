@@ -43,8 +43,6 @@ set(KPKG_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
 # https://cmake.org/cmake/help/latest/command/file.html#glob-recurse
 file(GLOB_RECURSE PORT_SRC CONFIGURE_DEPENDS "${KPKG_SOURCE_DIR}/src/port.s")
 file(GLOB_RECURSE LIBRARY_SRC CONFIGURE_DEPENDS "${KPKG_SOURCE_DIR}/src/*.cpp")
-file(GLOB_RECURSE EXECUTABLE_SRC CONFIGURE_DEPENDS
-     "${KPKG_SOURCE_DIR}/tool/*.cpp")
 
 # ---------------------------------------------------------------------------------------
 # Include CMake module
@@ -109,12 +107,7 @@ set_target_properties(
 # ---------------------------------------------------------------------------------------
 # Build executable
 # ---------------------------------------------------------------------------------------
-add_executable(${EXECUTABLE} ${EXECUTABLE_SRC})
-target_link_libraries(${EXECUTABLE} PRIVATE ${LIBRARY})
-
-if(KPKG_USE_LIBCXX)
-  target_link_libraries(${EXECUTABLE} PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})
-endif()
+add_subdirectory(tool)
 
 # ---------------------------------------------------------------------------------------
 # Build test
