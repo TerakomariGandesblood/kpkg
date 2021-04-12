@@ -71,6 +71,18 @@ else()
 endif()
 
 # ---------------------------------------------------------------------------------------
+# Linker
+# ---------------------------------------------------------------------------------------
+execute_process(
+  COMMAND ${CMAKE_LINKER} --version
+  OUTPUT_VARIABLE LINKER_VERSION
+  OUTPUT_STRIP_TRAILING_WHITESPACE)
+string(REPLACE "\n" ";" LINKER_VERSION ${LINKER_VERSION})
+list(GET LINKER_VERSION 0 LINKER_VERSION)
+
+message(STATUS "Linker: ${LINKER_VERSION}")
+
+# ---------------------------------------------------------------------------------------
 # Option
 # ---------------------------------------------------------------------------------------
 if(CMAKE_COMPILER_IS_GNUCXX AND KPKG_USE_LIBCXX)

@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        compiler: [ "g++", "clang++" ]
-        build_type: [ "Debug", "Release", "MinSizeRel", "RelWithDebInfo" ]
+        compiler: ["g++", "clang++"]
+        build_type: ["Debug", "Release", "MinSizeRel", "RelWithDebInfo"]
 
     steps:
       # https://github.com/actions/checkout
@@ -31,7 +31,7 @@ jobs:
 
       - name: Configure
         run: |
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
+          cmake -G Ninja -S . -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
           -DKPKG_BUILD_TEST=ON
         env:
           CXX: ${{ matrix.compiler }}
@@ -47,7 +47,10 @@ jobs:
 
       - name: Run executable
         if: ${{ matrix.build_type == 'Release' }}
-        run: kpkg -version
+        run: kpkg zlib
+
+      - name: Test
+        run: cd build ; ctest -C ${{ matrix.build_type }} -j"$(nproc)" --output-on-failure
 
       - name: Uninstall
         if: ${{ matrix.build_type == 'Release' }}

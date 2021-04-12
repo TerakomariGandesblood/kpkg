@@ -1,4 +1,5 @@
 option(KPKG_BUILD_TEST "Build test" OFF)
+option(KPKG_BUILD_EXTRA_TEST "Build extra test" OFF)
 
 option(KPKG_TEST_USE_PROXY "Use proxy when running test" OFF)
 

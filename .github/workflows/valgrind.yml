@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        compiler: [ "g++", "clang++" ]
+        compiler: ["g++", "clang++"]
 
     steps:
       - uses: actions/checkout@v2
@@ -28,7 +28,7 @@ jobs:
 
       - name: Configure
         run: |
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+          cmake -G Ninja -S . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo \
           -DKPKG_BUILD_TEST=ON -DKPKG_VALGRIND=ON
         env:
           CXX: ${{ matrix.compiler }}
@@ -38,12 +38,3 @@ jobs:
 
       - name: Test
         run: cd build ; ctest -C RelWithDebInfo -j"$(nproc)" --output-on-failure
-
-      - name: Archive any crashes as an artifact
-        uses: actions/upload-artifact@v2
-        if: always()
-        with:
-          name: crashes
-          path: |
-            build/test/unit_test/zlib-1.2.11.tar.gz
-          if-no-files-found: error

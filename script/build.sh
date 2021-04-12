@@ -14,6 +14,7 @@ while getopts 'mt' OPT; do
     thread=true
     ;;
   ?)
+    echo "Unknown option: $OPT"
     exit 1
     ;;
   esac

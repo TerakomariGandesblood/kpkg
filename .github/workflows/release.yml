@@ -31,7 +31,7 @@ jobs:
           TAG_NAME: ${{ github.event.release.tag_name }}
 
       - name: Configure
-        run: cmake -S . -B build
+        run: cmake -G Ninja -S . -B build
 
       - name: Build
         run: cmake --build build --config Release -j"$(nproc)"
@@ -51,12 +51,12 @@ jobs:
           sudo ldconfig
 
       - name: Run executable
-        run: kpkg -version
+        run: kpkg -v
 
       - name: Build example
         run: |
           cd example
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          cmake -G Ninja -S . -B build -DCMAKE_BUILD_TYPE=Release
           cmake --build build --config Release -j"$(nproc)"
         env:
           CXX: ${{ matrix.compiler }}

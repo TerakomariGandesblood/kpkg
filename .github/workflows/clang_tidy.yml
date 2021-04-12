@@ -24,7 +24,7 @@ jobs:
         run: sudo bash script/build.sh
 
       - name: Configure
-        run: cmake -S . -B build -DKPKG_CLANG_TIDY=ON
+        run: cmake -G Ninja -S . -B build -DKPKG_CLANG_TIDY=ON
 
       - name: Build
         run: cmake --build build --config Release -j"$(nproc)"

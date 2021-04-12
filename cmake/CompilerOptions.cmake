@@ -5,6 +5,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+# ---------------------------------------------------------------------------------------
+# Static link
+# ---------------------------------------------------------------------------------------
 add_link_options("-static-libstdc++")
 add_link_options("-static-libgcc")
 
@@ -57,7 +60,6 @@ if(KPKG_USE_LIBCXX)
   message(STATUS "Standard library: libc++")
 
   add_cxx_compiler_flag("-stdlib=libc++")
-
   # https://blog.jetbrains.com/clion/2019/10/clion-2019-3-eap-debugger-improvements/
   if((CMAKE_BUILD_TYPE STREQUAL "Debug") OR (CMAKE_BUILD_TYPE STREQUAL
                                              "RelWithDebInfo"))
@@ -66,29 +68,6 @@ if(KPKG_USE_LIBCXX)
 else()
   message(STATUS "Standard library: libstdc++")
 endif()
-
-# ---------------------------------------------------------------------------------------
-# lld
-# ---------------------------------------------------------------------------------------
-# if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang") execute_process( COMMAND ld.lld
-# --version OUTPUT_VARIABLE LLD_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE)
-# message(STATUS "Linker: ${LLD_VERSION}")
-
-# add_link_options("-fuse-ld=lld") else() execute_process( COMMAND
-# ${CMAKE_LINKER} --version OUTPUT_VARIABLE LINKER_VERSION
-# OUTPUT_STRIP_TRAILING_WHITESPACE) string(REPLACE "\n" ";" LINKER_VERSION
-# ${LINKER_VERSION}) list(GET LINKER_VERSION 0 LINKER_VERSION)
-
-# message(STATUS "Linker: ${LINKER_VERSION}") endif()
-
-execute_process(
-  COMMAND ${CMAKE_LINKER} --version
-  OUTPUT_VARIABLE LINKER_VERSION
-  OUTPUT_STRIP_TRAILING_WHITESPACE)
-string(REPLACE "\n" ";" LINKER_VERSION ${LINKER_VERSION})
-list(GET LINKER_VERSION 0 LINKER_VERSION)
-
-message(STATUS "Linker: ${LINKER_VERSION}")
 
 # ---------------------------------------------------------------------------------------
 # Sanitizer

@@ -1,5 +1,5 @@
 # https://github.com/gabime/spdlog/blob/v1.x/CMakeLists.txt
-cmake_minimum_required(VERSION 3.17)
+cmake_minimum_required(VERSION 3.19)
 message(STATUS "CMake version: ${CMAKE_VERSION}")
 
 # ---------------------------------------------------------------------------------------
@@ -32,11 +32,12 @@ message(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
 # ---------------------------------------------------------------------------------------
 set(LIBRARY lib${PROJECT_NAME})
 set(EXECUTABLE ${PROJECT_NAME})
-set(TEST_EXECUTABLE gtest)
+set(TEST_EXECUTABLE catch2)
 
 set(KPKG_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(KPKG_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
+# https://cmake.org/cmake/help/latest/command/file.html#glob-recurse
 file(GLOB_RECURSE PORT_SRC CONFIGURE_DEPENDS
      "${CMAKE_CURRENT_SOURCE_DIR}/src/port.s")
 file(GLOB_RECURSE LIBRARY_SRC CONFIGURE_DEPENDS
@@ -65,8 +66,6 @@ find_package(LibArchive REQUIRED)
 find_package(CURL CONFIG REQUIRED)
 find_package(Boost 1.75.0 CONFIG REQUIRED COMPONENTS json program_options)
 
-add_definitions(-DSTRIP_FLAG_HELP=1)
-
 # ---------------------------------------------------------------------------------------
 # Compiler Options
 # ---------------------------------------------------------------------------------------
@@ -76,7 +75,7 @@ include(CompilerOptions)
 # Build port
 # ---------------------------------------------------------------------------------------
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/port/port.json"
-     DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+     DESTINATION ${KPKG_BINARY_DIR})
 
 add_library(port STATIC ${PORT_SRC})
 target_compile_options(port PRIVATE "-Wno-unused-command-line-argument")
@@ -128,6 +127,7 @@ endif()
 # ---------------------------------------------------------------------------------------
 include(Install)
 
+# https://gitlab.kitware.com/cmake/community/-/wikis/FAQ#can-i-do-make-uninstall-with-cmake
 configure_file("${KPKG_SOURCE_DIR}/cmake/CMakeUninstall.cmake.in"
                "${KPKG_BINARY_DIR}/CMakeUninstall.cmake" @ONLY)
 add_custom_target(uninstall COMMAND ${CMAKE_COMMAND} -P
