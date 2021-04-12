@@ -51,6 +51,8 @@ jobs:
       - name: Run executable
         if: ${{ matrix.build_type == 'Release' }}
         run: |
+          mkdir lib
+          cd lib
           kpkg boost catch2 curl fmt icu libarchive magic_enum \
           openssl protobuf rocksdb spdlog sqlite onetbb zstd
           sudo ldconfig

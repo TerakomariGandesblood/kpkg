@@ -41,7 +41,7 @@ jobs:
 
       # https://github.com/coverallsapp/github-action
       - name: Coveralls
-        if: ${{ matrix.compiler == 'clang++' }}
+        if: ${{ matrix.compiler.cxx == 'clang++' }}
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -49,7 +49,7 @@ jobs:
 
       # https://github.com/actions/upload-artifact
       - name: Upload artifact
-        if: ${{ matrix.compiler == 'g++' }}
+        if: ${{ matrix.compiler.cxx == 'g++' }}
         uses: actions/upload-artifact@v2
         with:
           name: coverage-lcov
