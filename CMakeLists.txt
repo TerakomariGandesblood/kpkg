@@ -58,7 +58,6 @@ include(Format)
 # ---------------------------------------------------------------------------------------
 # Find package
 # ---------------------------------------------------------------------------------------
-find_package(gflags REQUIRED)
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(ZLIB REQUIRED)
@@ -91,7 +90,6 @@ target_include_directories(${LIBRARY}
 target_link_libraries(
   ${LIBRARY}
   PRIVATE port
-          gflags_static
           CURL::libcurl
           fmt::fmt
           spdlog::spdlog
