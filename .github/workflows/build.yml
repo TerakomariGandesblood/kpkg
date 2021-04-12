@@ -50,10 +50,11 @@ jobs:
 
       - name: Run executable
         if: ${{ matrix.build_type == 'Release' }}
+        # FIXME boost
         run: |
           mkdir lib
           cd lib
-          kpkg boost catch2 curl fmt icu libarchive magic_enum \
+          kpkg catch2 curl fmt icu libarchive magic_enum \
           openssl protobuf rocksdb spdlog sqlite onetbb zstd
           sudo ldconfig
 
