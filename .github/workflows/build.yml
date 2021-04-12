@@ -24,7 +24,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: dependencies
-          key: ${{ runner.os }}-dependencies-20210411-4
+          key: ${{ runner.os }}-dependencies-20210412
 
       - name: Install dependencies
         run: sudo bash script/build.sh

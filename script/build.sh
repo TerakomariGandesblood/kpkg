@@ -30,14 +30,12 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   cd dependencies
 
   if $thread; then
-    kpkg lcov gflags fmt spdlog libarchive curl boost googletest catch2 -install -thread
+    kpkg lcov fmt spdlog libarchive curl boost catch2 -i -t
   elif $memory; then
-    kpkg lcov gflags fmt spdlog libarchive curl boost googletest catch2 -install -memory
+    kpkg lcov fmt spdlog libarchive curl boost catch2 -i -m
   else
-    kpkg lcov gflags fmt spdlog libarchive curl boost googletest catch2 -install
+    kpkg lcov fmt spdlog libarchive curl boost catch2 -i
   fi
-
-  sudo apt install valgrind clang-tidy-12 ninja-build
 
   sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 400
   sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 400

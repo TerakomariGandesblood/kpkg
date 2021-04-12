@@ -5,12 +5,12 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data/zlib-v1.2.11.tar.gz
 
 file(GLOB_RECURSE TEST_SRC CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 
-find_package(GTest REQUIRED)
+find_package(Catch2 REQUIRED)
 find_package(OpenSSL REQUIRED)
 
-add_executable(${TEST_EXECUTABLE} ${TEST_SRC})
-target_link_libraries(${TEST_EXECUTABLE} PRIVATE ${LIBRARY} GTest::gtest_main
-                                                 OpenSSL::Crypto)
+add_executable(catch ${TEST_SRC})
+target_link_libraries(catch PRIVATE ${LIBRARY} Catch2::Catch2WithMain
+                                    OpenSSL::Crypto)
 
-# https://cmake.org/cmake/help/latest/module/GoogleTest.html#command:gtest_discover_tests
-gtest_discover_tests(${TEST_EXECUTABLE} DISCOVERY_MODE PRE_TEST)
+include(Catch)
+catch_discover_tests(catch REPORTER compact)

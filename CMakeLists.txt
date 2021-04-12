@@ -64,7 +64,7 @@ find_package(spdlog REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(LibArchive REQUIRED)
 find_package(CURL CONFIG REQUIRED)
-find_package(Boost 1.75.0 CONFIG REQUIRED COMPONENTS json)
+find_package(Boost 1.75.0 CONFIG REQUIRED COMPONENTS json program_options)
 
 add_definitions(-DSTRIP_FLAG_HELP=1)
 

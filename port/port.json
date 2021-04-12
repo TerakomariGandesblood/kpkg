@@ -10,7 +10,7 @@
     "sudo update-alternatives --install /usr/bin/llvm-ranlib llvm-ranlib /usr/bin/llvm-ranlib-12 400",
     "sudo update-alternatives --install /usr/bin/lld lld /usr/bin/lld-12 400",
     "sudo update-alternatives --install /usr/bin/ld.lld ld.lld /usr/bin/ld.lld-12 400",
-    "sudo apt install -y re2c autoconf automake libtool m4 tcl",
+    "sudo apt install -y make ninja-build re2c autoconf automake libtool m4 tcl",
     "sudo apt install valgrind clang-tidy-12",
     "sudo update-alternatives --install /usr/bin/llvm-profdata llvm-profdata /usr/bin/llvm-profdata-12 400",
     "sudo update-alternatives --install /usr/bin/llvm-cov llvm-cov /usr/bin/llvm-cov-12 400",
@@ -265,9 +265,9 @@
       "cwd": "",
       "cmd": [
         "./bootstrap.sh",
-        "sudo ./b2 --with-json cflags=\"-fPIC -static-libstdc++ -static-libgcc\" cxxflags=\"-fPIC -static-libstdc++ -static-libgcc\" toolset=gcc-10 link=static install",
-        "sudo ./b2 --with-json cflags=\"-fPIC -static-libstdc++ -static-libgcc -fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls\" cxxflags=\"-fPIC -static-libstdc++ -static-libgcc -fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls -stdlib=libc++ -Wno-unused-command-line-argument -Wl,/usr/local/lib/libc++abi.a -Wl,/usr/local/lib/libc++.a\" toolset=clang-12 link=static install",
-        "sudo ./b2 --with-json cflags=\"-fPIC -static-libstdc++ -static-libgcc -fsanitize=thread\" cxxflags=\"-fPIC -static-libstdc++ -static-libgcc -fsanitize=thread -stdlib=libc++ -Wno-unused-command-line-argument -Wl,/usr/local/lib/libc++abi.a -Wl,/usr/local/lib/libc++.a\" toolset=clang-12 link=static install"
+        "sudo ./b2 --with-json --with-program_options cflags=\"-fPIC -static-libstdc++ -static-libgcc\" cxxflags=\"-fPIC -static-libstdc++ -static-libgcc\" toolset=gcc-10 link=static install",
+        "sudo ./b2 --with-json --with-program_options cflags=\"-fPIC -static-libstdc++ -static-libgcc -fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls\" cxxflags=\"-fPIC -static-libstdc++ -static-libgcc -fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls -stdlib=libc++ -Wno-unused-command-line-argument -Wl,/usr/local/lib/libc++abi.a -Wl,/usr/local/lib/libc++.a\" toolset=clang-12 link=static install",
+        "sudo ./b2 --with-json --with-program_options cflags=\"-fPIC -static-libstdc++ -static-libgcc -fsanitize=thread\" cxxflags=\"-fPIC -static-libstdc++ -static-libgcc -fsanitize=thread -stdlib=libc++ -Wno-unused-command-line-argument -Wl,/usr/local/lib/libc++abi.a -Wl,/usr/local/lib/libc++.a\" toolset=clang-12 link=static install"
       ]
     },
     {
@@ -335,7 +335,7 @@
       "dependency": [],
       "cwd": "",
       "cmd": [
-        "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCATCH_BUILD_TESTING=OFF -DCATCH_BUILD_STATIC_LIBRARY=ON",
+        "export CFLAGS=\"$CFLAGS -DCATCH_CONFIG_ENABLE_BENCHMARKING\" && export CXXFLAGS=\"$CXXFLAGS -DCATCH_CONFIG_ENABLE_BENCHMARKING\" && cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCATCH_BUILD_TESTING=OFF -DCATCH_BUILD_STATIC_LIBRARY=ON",
         "cmake --build build --config Release -j\"$(nproc)\"",
         "sudo cmake --build build --config Release --target install"
       ]
