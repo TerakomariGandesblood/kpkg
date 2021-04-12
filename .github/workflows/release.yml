@@ -8,9 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-20.04
-    strategy:
-      matrix:
-        compiler: [ "g++", "clang++" ]
 
     steps:
       - uses: actions/checkout@v2
@@ -51,15 +48,7 @@ jobs:
           sudo ldconfig
 
       - name: Run executable
-        run: kpkg -v
-
-      - name: Build example
-        run: |
-          cd example
-          cmake -G Ninja -S . -B build -DCMAKE_BUILD_TYPE=Release
-          cmake --build build --config Release -j"$(nproc)"
-        env:
-          CXX: ${{ matrix.compiler }}
+        run: kpkg zlib
 
       # https://github.com/softprops/action-gh-release
       - name: Release

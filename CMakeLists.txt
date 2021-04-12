@@ -34,16 +34,17 @@ set(LIBRARY lib${PROJECT_NAME})
 set(EXECUTABLE ${PROJECT_NAME})
 set(TEST_EXECUTABLE catch2)
 
+set(KPKG_LIBCXX "/usr/local/lib/libc++.a")
+set(KPKG_LIBCXXABI "/usr/local/lib/libc++abi.a")
+
 set(KPKG_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(KPKG_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
 # https://cmake.org/cmake/help/latest/command/file.html#glob-recurse
-file(GLOB_RECURSE PORT_SRC CONFIGURE_DEPENDS
-     "${CMAKE_CURRENT_SOURCE_DIR}/src/port.s")
-file(GLOB_RECURSE LIBRARY_SRC CONFIGURE_DEPENDS
-     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+file(GLOB_RECURSE PORT_SRC CONFIGURE_DEPENDS "${KPKG_SOURCE_DIR}/src/port.s")
+file(GLOB_RECURSE LIBRARY_SRC CONFIGURE_DEPENDS "${KPKG_SOURCE_DIR}/src/*.cpp")
 file(GLOB_RECURSE EXECUTABLE_SRC CONFIGURE_DEPENDS
-     "${CMAKE_CURRENT_SOURCE_DIR}/tool/*.cpp")
+     "${KPKG_SOURCE_DIR}/tool/*.cpp")
 
 # ---------------------------------------------------------------------------------------
 # Include CMake module
@@ -74,8 +75,7 @@ include(CompilerOptions)
 # ---------------------------------------------------------------------------------------
 # Build port
 # ---------------------------------------------------------------------------------------
-file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/port/port.json"
-     DESTINATION ${KPKG_BINARY_DIR})
+file(COPY "${KPKG_SOURCE_DIR}/port/port.json" DESTINATION ${KPKG_BINARY_DIR})
 
 add_library(port STATIC ${PORT_SRC})
 target_compile_options(port PRIVATE "-Wno-unused-command-line-argument")
@@ -84,8 +84,7 @@ target_compile_options(port PRIVATE "-Wno-unused-command-line-argument")
 # Build static library
 # ---------------------------------------------------------------------------------------
 add_library(${LIBRARY} STATIC ${LIBRARY_SRC})
-target_include_directories(${LIBRARY}
-                           PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+target_include_directories(${LIBRARY} PUBLIC "${KPKG_SOURCE_DIR}/include")
 target_link_libraries(
   ${LIBRARY}
   PRIVATE port
@@ -97,8 +96,7 @@ target_link_libraries(
           ${ZLIB_LIBRARIES})
 
 if(KPKG_USE_LIBCXX)
-  target_link_libraries(${LIBRARY} PUBLIC /usr/local/lib/libc++.a
-                                          /usr/local/lib/libc++abi.a)
+  target_link_libraries(${LIBRARY} PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})
 endif()
 
 set_target_properties(
@@ -113,6 +111,10 @@ set_target_properties(
 # ---------------------------------------------------------------------------------------
 add_executable(${EXECUTABLE} ${EXECUTABLE_SRC})
 target_link_libraries(${EXECUTABLE} PRIVATE ${LIBRARY})
+
+if(KPKG_USE_LIBCXX)
+  target_link_libraries(${EXECUTABLE} PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})
+endif()
 
 # ---------------------------------------------------------------------------------------
 # Build test

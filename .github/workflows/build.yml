@@ -11,8 +11,10 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        compiler: ["g++", "clang++"]
         build_type: ["Debug", "Release", "MinSizeRel", "RelWithDebInfo"]
+        compiler:
+          - { cc: "gcc", cxx: "g++" }
+          - { cc: "clang", cxx: "clang++" }
 
     steps:
       # https://github.com/actions/checkout
@@ -34,7 +36,8 @@ jobs:
           cmake -G Ninja -S . -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
           -DKPKG_BUILD_TEST=ON
         env:
-          CXX: ${{ matrix.compiler }}
+          CC: ${{ matrix.config.cc }}
+          CXX: ${{ matrix.config.cxx }}
 
       - name: Build
         run: cmake --build build --config ${{ matrix.build_type }} -j"$(nproc)"

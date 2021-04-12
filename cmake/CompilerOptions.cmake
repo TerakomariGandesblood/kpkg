@@ -125,7 +125,7 @@ endif()
 # ---------------------------------------------------------------------------------------
 # Coverage
 # ---------------------------------------------------------------------------------------
-if(KPKG_BUILD_COVERAGE OR KPKG_BUILD_ALL)
+if(KPKG_BUILD_COVERAGE)
   if(CMAKE_COMPILER_IS_GNUCXX)
     add_cxx_compiler_flag("--coverage")
   else()
