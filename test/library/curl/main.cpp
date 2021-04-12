@@ -5,6 +5,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <filesystem>
 #include <iostream>
 #include <string>
 
@@ -36,62 +37,88 @@ std::size_t write_data(void* ptr, std::size_t size, std::size_t nmemb,
 }  // namespace
 
 std::string get_page(const std::string& url) {
-  std::string result;
-
   curl_global_init(CURL_GLOBAL_DEFAULT);
-  auto curl = curl_easy_init();
-  if (!curl) {
+  auto http_handle = curl_easy_init();
+  if (!http_handle) {
     error("curl_easy_init() error");
   }
 
-  curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 1);
-  curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 2);
-  curl_easy_setopt(curl, CURLOPT_PROXY, "socks5://127.0.0.1:1080");
+#ifndef NDEBUG
+  curl_easy_setopt(http_handle, CURLOPT_VERBOSE, 1);
+#endif
+
+  curl_easy_setopt(http_handle, CURLOPT_FOLLOWLOCATION, 1);
+  curl_easy_setopt(http_handle, CURLOPT_SSL_VERIFYPEER, 1);
+  curl_easy_setopt(http_handle, CURLOPT_SSL_VERIFYHOST, 2);
+  curl_easy_setopt(http_handle, CURLOPT_CAPATH, "/etc/ssl/certs");
+  curl_easy_setopt(http_handle, CURLOPT_CAINFO,
+                   "/etc/ssl/certs/ca-certificates.crt");
   curl_easy_setopt(
-      curl, CURLOPT_USERAGENT,
-      "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like "
-      "Gecko) Chrome/91.0.4437.0 Safari/537.36 Edg/91.0.831.1");
+      http_handle, CURLOPT_USERAGENT,
+      "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
+      "Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2");
 
-  curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-  curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
-  curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, callback_func_std_string);
+  std::string result;
+  curl_easy_setopt(http_handle, CURLOPT_URL, url.c_str());
+  curl_easy_setopt(http_handle, CURLOPT_WRITEDATA, &result);
+  curl_easy_setopt(http_handle, CURLOPT_WRITEFUNCTION,
+                   callback_func_std_string);
 
-  if (curl_easy_perform(curl) != CURLE_OK) {
+  if (curl_easy_perform(http_handle) != CURLE_OK) {
     error("curl_easy_perform() error");
   }
 
-  curl_easy_cleanup(curl);
+  curl_easy_cleanup(http_handle);
   curl_global_cleanup();
+
+  if (std::empty(result)) {
+    error("get page error");
+  }
 
   return result;
 }
 
 void get_file(const std::string& url, const std::string& file_name) {
   curl_global_init(CURL_GLOBAL_DEFAULT);
-
   auto http_handle = curl_easy_init();
+  if (!http_handle) {
+    error("curl_easy_init() error");
+  }
 
-  curl_easy_setopt(http_handle, CURLOPT_FOLLOWLOCATION, 1L);
-  curl_easy_setopt(http_handle, CURLOPT_WRITEFUNCTION, write_data);
+#ifndef NDEBUG
+  curl_easy_setopt(http_handle, CURLOPT_VERBOSE, 1);
+#endif
+
+  curl_easy_setopt(http_handle, CURLOPT_NOPROGRESS, 1);
+  curl_easy_setopt(http_handle, CURLOPT_FOLLOWLOCATION, 1);
+  curl_easy_setopt(http_handle, CURLOPT_SSL_VERIFYPEER, 1);
+  curl_easy_setopt(http_handle, CURLOPT_SSL_VERIFYHOST, 2);
+  curl_easy_setopt(http_handle, CURLOPT_CAPATH, "/etc/ssl/certs");
+  curl_easy_setopt(http_handle, CURLOPT_CAINFO,
+                   "/etc/ssl/certs/ca-certificates.crt");
   curl_easy_setopt(
       http_handle, CURLOPT_USERAGENT,
-      "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like "
-      "Gecko) Chrome/91.0.4437.0 Safari/537.36 Edg/91.0.831.1");
+      "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
+      "Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2");
+
+  auto file{std::fopen(file_name.c_str(), "wb")};
+  if (!file) {
+    error("open file error");
+  }
+
+  curl_easy_setopt(http_handle, CURLOPT_URL, url.c_str());
+  curl_easy_setopt(http_handle, CURLOPT_WRITEDATA, file);
+  curl_easy_setopt(http_handle, CURLOPT_WRITEFUNCTION, write_data);
 
   auto multi_handle = curl_multi_init();
   curl_multi_add_handle(multi_handle, http_handle);
 
-  auto file{std::fopen(file_name.c_str(), "wb")};
-  if (file) {
-    curl_easy_setopt(http_handle, CURLOPT_WRITEDATA, file);
-  }
-
-  curl_easy_setopt(http_handle, CURLOPT_URL, url.c_str());
-
   std::int32_t still_running{};
   std::int32_t repeats{};
 
-  curl_multi_perform(multi_handle, &still_running);
+  if (curl_multi_perform(multi_handle, &still_running) != CURLM_OK) {
+    error("curl_multi_perform() error");
+  }
   while (still_running != 0) {
     std::int32_t numfds{};
 
@@ -101,7 +128,7 @@ void get_file(const std::string& url, const std::string& file_name) {
     }
 
     if (numfds == 0) {
-      repeats++;
+      ++repeats;
       if (repeats > 1) {
         wait(100);
       }
@@ -109,7 +136,9 @@ void get_file(const std::string& url, const std::string& file_name) {
       repeats = 0;
     }
 
-    curl_multi_perform(multi_handle, &still_running);
+    if (curl_multi_perform(multi_handle, &still_running) != CURLM_OK) {
+      error("curl_multi_perform() error");
+    }
   }
 
   fclose(file);
@@ -118,6 +147,10 @@ void get_file(const std::string& url, const std::string& file_name) {
   curl_easy_cleanup(http_handle);
   curl_multi_cleanup(multi_handle);
   curl_global_cleanup();
+
+  if (std::filesystem::file_size(file_name) == 0) {
+    error("get file error");
+  }
 }
 
 int main(int argc, char* argv[]) {

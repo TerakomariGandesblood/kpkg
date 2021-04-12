@@ -44,6 +44,7 @@ std::string get_page(const std::string& url, bool use_proxy) {
   curl_easy_setopt(http_handle, CURLOPT_VERBOSE, 1);
 #endif
 
+  curl_easy_setopt(http_handle, CURLOPT_FOLLOWLOCATION, 1);
   curl_easy_setopt(http_handle, CURLOPT_SSL_VERIFYPEER, 1);
   curl_easy_setopt(http_handle, CURLOPT_SSL_VERIFYHOST, 2);
   curl_easy_setopt(http_handle, CURLOPT_CAPATH, "/etc/ssl/certs");
