@@ -20,7 +20,7 @@ inline const std::string export_clang =
     "export CC=clang-12 && export CXX=clang++-12";
 
 inline const std::string export_flag =
-    R"(export CFLAGS="-fPIC -static-libstdc++ -static-libgcc" && export CXXFLAGS="-fPIC -static-libstdc++ -static-libgcc")";
+    R"(export CFLAGS="-fPIC" && export CXXFLAGS="-fPIC")";
 
 inline const std::string export_memory_flag =
     R"(export CFLAGS="-fPIC -fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls" && export CXXFLAGS="-fPIC -fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls -stdlib=libc++ -Wno-unused-command-line-argument -Wl,/usr/local/lib/libc++abi.a -Wl,/usr/local/lib/libc++.a")";

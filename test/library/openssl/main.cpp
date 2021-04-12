@@ -30,6 +30,6 @@ std::string sha3_512_string(const std::string& input) {
 }
 
 int main() {
-  std::string output = sha3_512(std::string("abcdef"));
+  std::string output = sha3_512_string(std::string("abcdef"));
   std::cout << output << "\n";
 }

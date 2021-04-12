@@ -265,9 +265,9 @@
       "cwd": "",
       "cmd": [
         "./bootstrap.sh",
-        "sudo ./b2 --with-json --with-program_options cflags=\"-fPIC -static-libstdc++ -static-libgcc\" cxxflags=\"-fPIC -static-libstdc++ -static-libgcc\" toolset=gcc-10 link=static install",
-        "sudo ./b2 --with-json --with-program_options cflags=\"-fPIC -static-libstdc++ -static-libgcc -fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls\" cxxflags=\"-fPIC -static-libstdc++ -static-libgcc -fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls -stdlib=libc++ -Wno-unused-command-line-argument -Wl,/usr/local/lib/libc++abi.a -Wl,/usr/local/lib/libc++.a\" toolset=clang-12 link=static install",
-        "sudo ./b2 --with-json --with-program_options cflags=\"-fPIC -static-libstdc++ -static-libgcc -fsanitize=thread\" cxxflags=\"-fPIC -static-libstdc++ -static-libgcc -fsanitize=thread -stdlib=libc++ -Wno-unused-command-line-argument -Wl,/usr/local/lib/libc++abi.a -Wl,/usr/local/lib/libc++.a\" toolset=clang-12 link=static install"
+        "sudo ./b2 --with-json --with-program_options cflags=\"-fPIC\" cxxflags=\"-fPIC\" toolset=gcc-10 link=static install",
+        "sudo ./b2 --with-json --with-program_options cflags=\"-fPIC -fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls\" cxxflags=\"-fPIC -fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls -stdlib=libc++ -Wno-unused-command-line-argument -Wl,/usr/local/lib/libc++abi.a -Wl,/usr/local/lib/libc++.a\" toolset=clang-12 link=static install",
+        "sudo ./b2 --with-json --with-program_options cflags=\"-fPIC -fsanitize=thread\" cxxflags=\"-fPIC -fsanitize=thread -stdlib=libc++ -Wno-unused-command-line-argument -Wl,/usr/local/lib/libc++abi.a -Wl,/usr/local/lib/libc++.a\" toolset=clang-12 link=static install"
       ]
     },
     {

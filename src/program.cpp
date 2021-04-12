@@ -144,12 +144,16 @@ boost::program_options::variables_map Program::parse_program_options(
   p.add("install-library", -1);
 
   boost::program_options::variables_map vm;
-  store(boost::program_options::command_line_parser(argc, argv)
-            .options(cmdline_options)
-            .positional(p)
-            .run(),
-        vm);
-  notify(vm);
+  try {
+    store(boost::program_options::command_line_parser(argc, argv)
+              .options(cmdline_options)
+              .positional(p)
+              .run(),
+          vm);
+    notify(vm);
+  } catch (const std::exception& err) {
+    error(err.what());
+  }
 
   if (vm.contains("help")) {
     fmt::print("Usage: {} [options] library...\n\n{}\n", argv[0], visible);

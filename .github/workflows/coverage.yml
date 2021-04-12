@@ -33,8 +33,8 @@ jobs:
           cmake -G Ninja -S . -B build -DCMAKE_BUILD_TYPE=Debug \
           -DKPKG_BUILD_TEST=ON -DKPKG_BUILD_COVERAGE=ON
         env:
-          CC: ${{ matrix.config.cc }}
-          CXX: ${{ matrix.config.cxx }}
+          CC: ${{ matrix.compiler.cc }}
+          CXX: ${{ matrix.compiler.cxx }}
 
       - name: Build
         run: cmake --build build --config Debug -j"$(nproc)" --target coverage
