@@ -18,5 +18,5 @@ set(KPKG_SANITIZER
     ""
     CACHE
       STRING
-      "Build with a sanitizer. Options are: Address, Thread, Memory, Undefined and Address;Undefined"
+      "Build with a sanitizer. Options are: Address, Thread, Memory, Undefined and AddressUndefined"
 )

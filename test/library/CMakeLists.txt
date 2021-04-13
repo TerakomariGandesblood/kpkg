@@ -16,12 +16,15 @@ foreach(SUBDIR ${SUBDIRS})
     NAME ${SUBDIR}_configure
     COMMAND
       ${CMAKE_COMMAND} -S ${CMAKE_CURRENT_SOURCE_DIR}/${SUBDIR} -B
-      ${CMAKE_CURRENT_SOURCE_DIR}/${SUBDIR}/build -DCMAKE_BUILD_TYPE=Release
-      -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER})
+      ${CMAKE_CURRENT_SOURCE_DIR}/${SUBDIR}/build
+      -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+      -DKPKG_USE_LIBCXX=${KPKG_USE_LIBCXX} -DKPKG_SANITIZER=${KPKG_SANITIZER})
 
-  add_test(NAME ${SUBDIR}_build
-           COMMAND ${CMAKE_COMMAND} --build
-                   ${CMAKE_CURRENT_SOURCE_DIR}/${SUBDIR}/build --config Release)
+  add_test(
+    NAME ${SUBDIR}_build
+    COMMAND ${CMAKE_COMMAND} --build
+            ${CMAKE_CURRENT_SOURCE_DIR}/${SUBDIR}/build --config RelWithDebInfo)
 
   add_test(NAME ${SUBDIR}_clean
            COMMAND rm -rf ${CMAKE_CURRENT_SOURCE_DIR}/${SUBDIR}/build)

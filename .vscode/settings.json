@@ -4,7 +4,7 @@
     "-DKPKG_BUILD_EXTRA_TEST=ON",
     "-DKPKG_BUILD_COVERAGE=ON",
     "-DKPKG_FORMAT=ON",
-    "-DKPKG_SANITIZER=Address;Undefined",
+    "-DKPKG_SANITIZER=AddressUndefined",
     "-DKPKG_TEST_USE_PROXY=ON"
   ]
 }
