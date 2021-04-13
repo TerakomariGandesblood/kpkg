@@ -13,7 +13,4 @@ if(KPKG_USE_LIBCXX)
   target_link_libraries(tbb PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})
 endif()
 
-add_custom_command(
-  TARGET tbb
-  POST_BUILD
-  COMMAND tbb)
+# FIXME add_custom_command( TARGET tbb POST_BUILD COMMAND tbb)
