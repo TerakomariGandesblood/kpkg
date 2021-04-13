@@ -10,7 +10,7 @@
 
 ---
 
-C++ LibraryInfo Manager
+C++ Library Manager
 
 ## Build
 
