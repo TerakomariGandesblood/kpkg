@@ -10,7 +10,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 find_package(Protobuf REQUIRED)
 
 add_executable(protobuf main.cpp addressbook.proto)
-target_link_libraries(protobuf ${Protobuf_LIBRARIES})
+target_link_libraries(protobuf PRIVATE ${Protobuf_LIBRARIES})
 
 if(KPKG_USE_LIBCXX)
   target_link_libraries(protobuf PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})

@@ -6,7 +6,7 @@ include(../common.cmake)
 
 find_package(fmt REQUIRED)
 add_executable(fmt main.cpp)
-target_link_libraries(fmt fmt::fmt)
+target_link_libraries(fmt PRIVATE fmt::fmt)
 
 if(KPKG_USE_LIBCXX)
   target_link_libraries(fmt PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})

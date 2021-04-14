@@ -42,10 +42,9 @@ jobs:
 
       - name: Run executable
         run: |
-          cd build/tool
           mkdir lib
           cd lib
-          kpkg boost catch2 curl fmt icu libarchive magic_enum \
+          ../build/tool/kpkg boost catch2 curl fmt icu libarchive magic_enum \
           openssl protobuf rocksdb spdlog sqlite onetbb zstd
           sudo ldconfig
 
@@ -87,10 +86,9 @@ jobs:
 
       - name: Run executable
         run: |
-          cd build/tool
           mkdir lib
           cd lib
-          kpkg boost catch2 curl fmt icu libarchive magic_enum \
+          ../build/tool/kpkg boost catch2 curl fmt icu libarchive magic_enum \
           openssl protobuf rocksdb spdlog sqlite onetbb zstd
           sudo ldconfig
 
@@ -138,10 +136,9 @@ jobs:
 
       - name: Run executable
         run: |
-          cd build/tool
           mkdir lib
           cd lib
-          kpkg boost catch2 curl fmt icu libarchive magic_enum \
+          ../build/tool/kpkg boost catch2 curl fmt icu libarchive magic_enum \
           openssl protobuf rocksdb spdlog sqlite onetbb zstd
           sudo ldconfig
 

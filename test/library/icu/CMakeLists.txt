@@ -11,7 +11,7 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data.txt
 find_package(ICU REQUIRED COMPONENTS data i18n io uc)
 
 add_executable(conv conv.cpp)
-target_link_libraries(conv ${ICU_LIBRARIES})
+target_link_libraries(conv PRIVATE ${ICU_LIBRARIES})
 
 if(KPKG_USE_LIBCXX)
   target_link_libraries(conv PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})
@@ -23,7 +23,7 @@ add_custom_command(
   COMMAND conv)
 
 add_executable(unicode-string unicode_string.cpp)
-target_link_libraries(unicode-string ${ICU_LIBRARIES})
+target_link_libraries(unicode-string PRIVATE ${ICU_LIBRARIES})
 
 if(KPKG_USE_LIBCXX)
   target_link_libraries(unicode-string PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})
@@ -35,7 +35,7 @@ add_custom_command(
   COMMAND unicode-string)
 
 add_executable(transforms transforms.cpp)
-target_link_libraries(transforms ${ICU_LIBRARIES})
+target_link_libraries(transforms PRIVATE ${ICU_LIBRARIES})
 
 if(KPKG_USE_LIBCXX)
   target_link_libraries(transforms PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})

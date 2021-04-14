@@ -9,7 +9,8 @@ find_package(ZLIB REQUIRED)
 find_package(LibArchive REQUIRED)
 
 add_executable(libarchive main.cpp)
-target_link_libraries(libarchive ${LibArchive_LIBRARIES} ${ZLIB_LIBRARIES})
+target_link_libraries(libarchive PRIVATE ${LibArchive_LIBRARIES}
+                                         ${ZLIB_LIBRARIES})
 
 if(KPKG_USE_LIBCXX)
   target_link_libraries(libarchive PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})

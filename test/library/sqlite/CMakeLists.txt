@@ -11,8 +11,8 @@ set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED)
 
 add_executable(sqlite main.cpp)
-target_link_libraries(sqlite ${SQLite3_LIBRARIES} ${CMAKE_DL_LIBS}
-                      ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(sqlite PRIVATE ${SQLite3_LIBRARIES} ${CMAKE_DL_LIBS}
+                                     ${CMAKE_THREAD_LIBS_INIT})
 
 if(KPKG_USE_LIBCXX)
   target_link_libraries(sqlite PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})

@@ -9,7 +9,7 @@ find_package(OpenSSL REQUIRED)
 
 add_executable(openssl main.cpp)
 # OpenSSL::SSL OpenSSL::Crypto OPENSSL_LIBRARIES
-target_link_libraries(openssl OpenSSL::Crypto)
+target_link_libraries(openssl PRIVATE OpenSSL::Crypto)
 
 if(KPKG_USE_LIBCXX)
   target_link_libraries(openssl PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})

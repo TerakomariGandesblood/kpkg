@@ -6,7 +6,7 @@ include(../common.cmake)
 
 find_package(RocksDB REQUIRED)
 add_executable(rocksdb main.cpp)
-target_link_libraries(rocksdb RocksDB::rocksdb)
+target_link_libraries(rocksdb PRIVATE RocksDB::rocksdb)
 
 if(KPKG_USE_LIBCXX)
   target_link_libraries(rocksdb PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})
