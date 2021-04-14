@@ -45,7 +45,7 @@ jobs:
           mkdir lib
           cd lib
           ../build/tool/kpkg boost catch2 curl fmt icu libarchive magic_enum \
-          openssl protobuf rocksdb spdlog sqlite zstd
+          openssl rocksdb spdlog sqlite zstd
           sudo ldconfig
 
       - name: Test
@@ -89,7 +89,7 @@ jobs:
           mkdir lib
           cd lib
           ../build/tool/kpkg boost catch2 curl fmt icu libarchive magic_enum \
-          openssl protobuf rocksdb spdlog sqlite zstd -m
+          openssl rocksdb spdlog sqlite zstd -m
           sudo ldconfig
 
       - name: Test
@@ -139,7 +139,7 @@ jobs:
           mkdir lib
           cd lib
           ../build/tool/kpkg boost catch2 curl fmt icu libarchive magic_enum \
-          openssl protobuf rocksdb spdlog sqlite zstd -t
+          openssl rocksdb spdlog sqlite zstd -t
           sudo ldconfig
 
       - name: Test
