@@ -1,21 +1,25 @@
+#include <spdlog/async.h>
+#include <spdlog/async_logger.h>
 #include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 
+// https://github.com/gabime/spdlog
 int main() {
+  spdlog::init_thread_pool(8192, 1);
+
+  auto stdout_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+  auto basic_file_sink =
+      std::make_shared<spdlog::sinks::basic_file_sink_mt>("log.txt");
+
+  std::vector<spdlog::sink_ptr> sinks{stdout_sink, basic_file_sink};
+  auto logger = std::make_shared<spdlog::async_logger>(
+      "async_logger", std::begin(sinks), std::end(sinks),
+      spdlog::thread_pool());
+  spdlog::register_logger(logger);
+  spdlog::set_default_logger(logger);
+
+  spdlog::set_level(spdlog::level::debug);
   spdlog::info("Welcome to spdlog!");
-  spdlog::error("Some error message with arg: {}", 1);
-
-  // Set the default logger to file logger
-  auto file_logger = spdlog::basic_logger_mt("basic_logger", "logs/basic.txt");
-  spdlog::set_default_logger(file_logger);
-
-  spdlog::warn("Easy padding in numbers like {:08d}", 12);
-  spdlog::critical(
-      "Support for int: {0:d};  hex: {0:x};  oct: {0:o}; bin: {0:b}", 42);
-  spdlog::info("Support for floats {:03.2f}", 1.23456);
-  spdlog::info("Positional args are {1} {0}..", "too", "supported");
-  spdlog::info("{:<30}", "left aligned");
-
-  spdlog::set_level(spdlog::level::debug);  // Set global log level to debug
-  spdlog::debug("This message should be displayed..");
+  spdlog::debug("Some debug message");
 }
