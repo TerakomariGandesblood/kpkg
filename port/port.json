@@ -308,6 +308,7 @@
       "download_url": "",
       "dependency": [],
       "cwd": "icu4c/source",
+      // https://unicode-org.github.io/icu/userguide/icu4c/build.html#how-to-build-and-install-on-unix
       "cmd": [
         "./runConfigureICU Linux --disable-tests --disable-samples",
         "make -j\"$(nproc)\"",
