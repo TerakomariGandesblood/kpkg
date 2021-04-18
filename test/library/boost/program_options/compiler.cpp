@@ -11,7 +11,7 @@
 
 #include "error.h"
 
-// https://www.boost.org/doc/libs/1_75_0/doc/html/program_options.html
+// https://www.boost.org/doc/libs/1_76_0/doc/html/program_options.html
 class ProgramOptions {
  public:
   ProgramOptions(std::int32_t argc, const char* argv[]) {

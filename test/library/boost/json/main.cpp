@@ -24,7 +24,7 @@ Foo tag_invoke(boost::json::value_to_tag<Foo>, const boost::json::value& jv) {
              value_to<std::string>(obj.at("name"))};
 }
 
-// https://www.boost.org/doc/libs/1_75_0/libs/json/doc/html/index.html
+// https://www.boost.org/doc/libs/1_76_0/libs/json/doc/html/index.html
 int main() {
   boost::json::object obj;
   obj["pi"] = 3.141;

@@ -4,7 +4,7 @@
 
 #include "error.h"
 
-// https://www.boost.org/doc/libs/1_75_0/libs/pool/doc/html/index.html
+// https://www.boost.org/doc/libs/1_76_0/libs/pool/doc/html/index.html
 class Test {
  public:
   explicit Test(const std::string& str) : str_(str) {}

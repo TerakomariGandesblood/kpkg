@@ -5,7 +5,7 @@
 
 #include "error.h"
 
-// https://www.boost.org/doc/libs/1_75_0/doc/html/string_algo.html
+// https://www.boost.org/doc/libs/1_76_0/doc/html/string_algo.html
 int main() {
   std::string str = " HELLO WORLD! ";
 
