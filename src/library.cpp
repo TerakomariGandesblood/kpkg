@@ -1,6 +1,5 @@
 #include "library.h"
 
-#include <cstddef>
 #include <filesystem>
 
 #include <fmt/format.h>
@@ -33,7 +32,7 @@ void Library::init(bool use_proxy) {
 
   if (std::empty(tag_name_) && std::empty(download_url_)) {
     if (!std::empty(releases_url_)) {
-      spdlog::info("get info from: {} ", releases_url_);
+      spdlog::debug("get info from: {} ", releases_url_);
 
       auto result = get_page(releases_url_, use_proxy);
       auto jv = boost::json::parse(result, error_code, &mr);
@@ -51,7 +50,7 @@ void Library::init(bool use_proxy) {
       tag_name_ = obj.at("tag_name").as_string().c_str();
       download_url_ = obj.at("tarball_url").as_string().c_str();
     } else if (!std::empty(tags_url_)) {
-      spdlog::info("get info from: {} ", tags_url_);
+      spdlog::debug("get info from: {} ", tags_url_);
 
       auto result = get_page(tags_url_, use_proxy);
       auto jv = boost::json::parse(result, error_code, &mr);
@@ -84,29 +83,29 @@ void Library::init(bool use_proxy) {
 
 void Library::download(bool use_proxy) const {
   if (std::filesystem::exists(file_name_)) {
-    spdlog::info("use exists file: {}", file_name_);
+    spdlog::debug("use exists file: {}", file_name_);
   } else {
-    spdlog::info("get file: {} from: {}", file_name_, download_url_);
+    spdlog::debug("get file: {} from: {}", file_name_, download_url_);
     get_file(download_url_, file_name_, use_proxy);
-    spdlog::info("download file: {} complete", file_name_);
+    spdlog::debug("download file: {} complete", file_name_);
   }
 }
 
 void Library::build(Sanitize sanitize) const {
   if (std::filesystem::exists(dir_name_)) {
-    spdlog::info("use exists folder: {}", dir_name_);
+    spdlog::debug("use exists folder: {}", dir_name_);
   } else {
     auto temp = decompress(file_name_);
-    spdlog::info("decompress file: {}, to {}", file_name_, temp);
+    spdlog::debug("decompress file: {}, to {}", file_name_, temp);
 
-    spdlog::info("rename folder from {} to {}", temp, dir_name_);
+    spdlog::debug("rename folder from {} to {}", temp, dir_name_);
     std::filesystem::rename(temp, dir_name_);
   }
 
   run_cmds(cmd_, cwd_, sanitize);
 }
 
-void Library::print() const { fmt::print("{}\t\t\t{}\n", name_, tag_name_); }
+void Library::print() const { fmt::print("{:<25} {:<25}\n", name_, tag_name_); }
 
 Library tag_invoke(boost::json::value_to_tag<Library>,
                    const boost::json::value& jv) {

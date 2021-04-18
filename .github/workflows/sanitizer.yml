@@ -23,7 +23,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: dependencies
-          key: ${{ runner.os }}-dependencies-20210418
+          key: ${{ runner.os }}-dependencies-20210418-2
 
       - name: Install dependencies
         run: sudo bash script/build.sh
@@ -44,7 +44,7 @@ jobs:
         run: |
           mkdir lib
           cd lib
-          ../build/tool/kpkg boost catch2 curl fmt icu libarchive magic_enum \
+          ../build/tool/kpkg install boost catch2 curl fmt icu libarchive magic_enum \
           openssl rocksdb spdlog sqlite zstd
           sudo ldconfig
 
@@ -67,7 +67,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: dependencies
-          key: ${{ runner.os }}-dependencies-memory-20210418
+          key: ${{ runner.os }}-dependencies-memory-20210418-2
 
       - name: Install dependencies
         run: sudo bash script/build.sh -m
@@ -88,7 +88,7 @@ jobs:
         run: |
           mkdir lib
           cd lib
-          ../build/tool/kpkg boost catch2 curl fmt icu libarchive magic_enum \
+          ../build/tool/kpkg install boost catch2 curl fmt icu libarchive magic_enum \
           openssl rocksdb spdlog sqlite zstd -m
           sudo ldconfig
 
@@ -117,7 +117,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: dependencies
-          key: ${{ runner.os }}-dependencies-thread-20210418
+          key: ${{ runner.os }}-dependencies-thread-20210418-2
 
       - name: Install dependencies
         run: sudo bash script/build.sh -t
@@ -138,7 +138,7 @@ jobs:
         run: |
           mkdir lib
           cd lib
-          ../build/tool/kpkg boost catch2 curl fmt icu libarchive magic_enum \
+          ../build/tool/kpkg install boost catch2 curl fmt icu libarchive magic_enum \
           openssl rocksdb spdlog sqlite zstd -t
           sudo ldconfig
 

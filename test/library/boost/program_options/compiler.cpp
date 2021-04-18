@@ -88,7 +88,7 @@ int main() try {
   EXPECT((options.get_include_path() ==
           std::vector<std::string>{"/usr", "/usr/local"}));
   EXPECT((options.get_input_file() == std::vector<std::string>{"b", "a"}));
-} catch (const std::exception& err) {
+} catch (const boost::program_options::error& err) {
   std::cerr << err.what() << "\n";
   return EXIT_FAILURE;
 }

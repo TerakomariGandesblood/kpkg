@@ -12,7 +12,7 @@ namespace kpkg {
 void run_cmd(const std::string& cmd) {
   assert(!std::empty(cmd));
 
-  spdlog::info("run cmd: {}", cmd);
+  spdlog::debug("run cmd: {}", cmd);
 
   auto status = std::system(cmd.c_str());
   if (status == -1 || !WIFEXITED(status) || WEXITSTATUS(status)) {

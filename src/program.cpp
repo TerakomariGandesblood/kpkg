@@ -10,6 +10,7 @@
 #include <boost/program_options/options_description.hpp>
 #include <boost/program_options/parsers.hpp>
 #include <boost/program_options/positional_options.hpp>
+#include <boost/program_options/variables_map.hpp>
 
 #include "error.h"
 #include "version.h"
@@ -20,10 +21,13 @@ extern int port_size;
 namespace kpkg {
 
 Program::Program(std::int32_t argc, char* argv[]) {
-  auto vm = parse_program_options(argc, argv);
-  auto input_library = deal_with_program_options(vm);
+  auto input_library = parse_program_options(argc, argv);
 
   std::tie(libraries_, package_to_be_install_) = read_from_port();
+
+  if (type_ == Type::List) {
+    return;
+  }
 
   for (const auto& item : input_library) {
     auto library = get_from_name(libraries_, item);
@@ -116,80 +120,112 @@ void Program::print_library_to_be_built() const {
   fmt::print("\n");
 }
 
-boost::program_options::variables_map Program::parse_program_options(
-    std::int32_t argc, char* argv[]) {
-  boost::program_options::options_description generic("Generic options");
-  generic.add_options()("version,v", "print version string")(
-      "help,h", "produce help message");
-
-  boost::program_options::options_description config("Configuration");
-  config.add_options()("memory,m", "Build with MemorySanitizer")(
-      "thread,t", "Build with ThreadSanitizer")("proxy,p",
-                                                "Use proxy")("install,i",
-                                                             "Install package");
-
-  boost::program_options::options_description hidden("Hidden options");
-  hidden.add_options()(
-      "install-library",
-      boost::program_options::value<std::vector<std::string>>(),
-      "install library");
-
-  boost::program_options::options_description cmdline_options;
-  cmdline_options.add(generic).add(config).add(hidden);
-
-  boost::program_options::options_description visible("Allowed options");
-  visible.add(generic).add(config);
-
-  boost::program_options::positional_options_description p;
-  p.add("install-library", -1);
-
-  boost::program_options::variables_map vm;
+std::vector<std::string> Program::parse_program_options(std::int32_t argc,
+                                                        char* argv[]) {
   try {
-    store(boost::program_options::command_line_parser(argc, argv)
-              .options(cmdline_options)
-              .positional(p)
+    std::string command;
+
+    boost::program_options::options_description generic("Generic options");
+    generic.add_options()("version,v", "print version string");
+
+    boost::program_options::options_description config("Configuration");
+    config.add_options()("proxy,p", "Use proxy");
+
+    boost::program_options::options_description hidden("Hidden options");
+    hidden.add_options()("command",
+                         boost::program_options::value<std::string>(&command))(
+        "sub_args", boost::program_options::value<std::vector<std::string>>());
+
+    boost::program_options::options_description cmdline_options;
+    cmdline_options.add(generic).add(config).add(hidden);
+
+    boost::program_options::options_description visible("Allowed options");
+    visible.add(generic).add(config);
+
+    boost::program_options::positional_options_description p;
+    p.add("command", 1).add("sub_args", -1);
+
+    boost::program_options::variables_map vm;
+    auto parsed = boost::program_options::command_line_parser(argc, argv)
+                      .options(cmdline_options)
+                      .positional(p)
+                      .allow_unregistered()
+                      .run();
+    store(parsed, vm);
+    notify(vm);
+
+    if (vm.contains("version")) {
+      fmt::print("{} version: {}.{}.{}\n", argv[0], KPKG_VER_MAJOR,
+                 KPKG_VER_MINOR, KPKG_VER_PATCH);
+      std::exit(EXIT_SUCCESS);
+    }
+
+    if (vm.contains("proxy")) {
+      use_proxy_ = true;
+    }
+
+    if (command == "install") {
+      type_ = Type::Install;
+
+      boost::program_options::options_description install_config(
+          "Install configuration");
+      install_config.add_options()("memory,m", "Use memory")("thread,t",
+                                                             "Use thread");
+
+      boost::program_options::options_description install_hidden(
+          "Hidden options");
+      install_hidden.add_options()(
+          "install-libraries",
+          boost::program_options::value<std::vector<std::string>>());
+
+      boost::program_options::options_description install_cmdline_options;
+      install_cmdline_options.add(install_config).add(install_hidden);
+
+      boost::program_options::options_description install_visible(
+          "Allowed options");
+      install_visible.add(install_config);
+
+      boost::program_options::positional_options_description install_pos;
+      install_pos.add("install-libraries", -1);
+
+      auto opts = boost::program_options::collect_unrecognized(
+          parsed.options, boost::program_options::include_positional);
+      opts.erase(opts.begin());
+
+      boost::program_options::store(
+          boost::program_options::command_line_parser(opts)
+              .options(install_cmdline_options)
+              .positional(install_pos)
               .run(),
           vm);
-    notify(vm);
-  } catch (const std::exception& err) {
+      notify(vm);
+
+      if (vm.contains("install")) {
+        install_ = true;
+      }
+
+      if (vm.contains("memory")) {
+        sanitize_ = Sanitize::Memory;
+      } else if (vm.contains("thread")) {
+        sanitize_ = Sanitize::Thread;
+      }
+
+      if (!vm.contains("install-libraries")) {
+        error("need a library name");
+      }
+
+      return vm["install-libraries"].as<std::vector<std::string>>();
+    } else if (command == "list") {
+      type_ = Type::List;
+      return {};
+    } else if (std::empty(command)) {
+      error("need a library name");
+    } else {
+      throw boost::program_options::invalid_option_value(command);
+    }
+  } catch (const boost::program_options::error& err) {
     error(err.what());
   }
-
-  if (vm.contains("help")) {
-    fmt::print("Usage: {} [options] library...\n\n{}\n", argv[0], visible);
-    std::exit(EXIT_SUCCESS);
-  }
-
-  if (vm.contains("version")) {
-    fmt::print("{} version: {}.{}.{}\n", argv[0], KPKG_VER_MAJOR,
-               KPKG_VER_MINOR, KPKG_VER_PATCH);
-    std::exit(EXIT_SUCCESS);
-  }
-
-  return vm;
-}
-
-std::vector<std::string> Program::deal_with_program_options(
-    const boost::program_options::variables_map& vm) {
-  if (vm.contains("proxy")) {
-    use_proxy_ = true;
-  }
-
-  if (vm.contains("install")) {
-    install_ = true;
-  }
-
-  if (vm.contains("memory")) {
-    sanitize_ = Sanitize::Memory;
-  } else if (vm.contains("thread")) {
-    sanitize_ = Sanitize::Thread;
-  }
-
-  if (!vm.contains("install-library")) {
-    kpkg::error("need a library name");
-  }
-
-  return vm["install-library"].as<std::vector<std::string>>();
 }
 
 std::pair<std::vector<Library>, std::vector<std::string>>

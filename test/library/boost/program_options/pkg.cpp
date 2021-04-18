@@ -118,7 +118,7 @@ class ProgramOptions {
   std::vector<std::string> install_libraries_;
 };
 
-int main() {
+int main() try {
   {
     const char* argv[] = {"0", "install", "a", "b", "d", "c"};
     std::int32_t argc = std::size(argv);
@@ -148,4 +148,7 @@ int main() {
     ProgramOptions options(argc, argv);
     EXPECT(options.get_type() == ProgramOptions::Type::List);
   }
+} catch (const boost::program_options::error& err) {
+  std::cerr << err.what() << "\n";
+  return EXIT_FAILURE;
 }

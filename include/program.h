@@ -4,19 +4,21 @@
 #include <string>
 #include <vector>
 
-#include <boost/program_options/variables_map.hpp>
-
 #include "library.h"
 
 namespace kpkg {
 
 class Program {
  public:
+  enum class Type { Install, List };
+
   Program(std::int32_t argc, char* argv[]);
 
   void print_dependency() const;
 
   void print_library_to_be_built() const;
+
+  [[nodiscard]] std::vector<Library>& get_libraries() { return libraries_; }
 
   [[nodiscard]] bool use_proxy() const { return use_proxy_; }
 
@@ -35,12 +37,11 @@ class Program {
 
   [[nodiscard]] Sanitize get_sanitize() const { return sanitize_; }
 
- private:
-  static boost::program_options::variables_map parse_program_options(
-      std::int32_t argc, char* argv[]);
+  [[nodiscard]] Type get_type() const { return type_; }
 
-  std::vector<std::string> deal_with_program_options(
-      const boost::program_options::variables_map& vm);
+ private:
+  std::vector<std::string> parse_program_options(std::int32_t argc,
+                                                 char* argv[]);
 
   static std::pair<std::vector<Library>, std::vector<std::string>>
   read_from_port();
@@ -50,6 +51,7 @@ class Program {
 
   bool use_proxy_ = false;
   bool install_ = false;
+  Type type_;
 
   std::vector<std::string> package_to_be_install_;
   std::vector<Library> libraries_;
