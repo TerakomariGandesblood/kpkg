@@ -5,6 +5,7 @@ project(test_library_install LANGUAGES CXX)
 include(../common.cmake)
 
 find_package(CURL CONFIG REQUIRED)
+
 add_executable(curl main.cpp)
 target_link_libraries(curl PRIVATE CURL::libcurl)
 

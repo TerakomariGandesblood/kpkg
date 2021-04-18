@@ -3,7 +3,36 @@
 
 #include <catch2/catch.hpp>
 
-SCENARIO("vectors can be sized and resized", "[vector]") {
+std::uint64_t factorial(std::uint64_t number) {
+  return number > 1 ? factorial(number - 1) * number : 1;
+}
+
+// https://github.com/catchorg/Catch2/blob/devel/docs/tutorial.md
+// https://github.com/catchorg/Catch2/blob/devel/docs/benchmarks.md
+TEST_CASE("factorial") {
+  // 失败则终止 test case
+  REQUIRE(factorial(0) == 1);
+  // 失败也继续执行
+  CHECK(factorial(0) == 1);
+
+  REQUIRE(factorial(1) == 1);
+  REQUIRE(factorial(2) == 2);
+  REQUIRE(factorial(3) == 6);
+  REQUIRE(factorial(10) == 3628800);
+
+  BENCHMARK("factorial 10") { return factorial(10); };
+
+  BENCHMARK_ADVANCED("factorial 10 advanced")
+  (Catch::Benchmark::Chronometer meter) {
+    meter.measure([] { return factorial(10); });
+  };
+}
+
+TEST_CASE("float") {
+  REQUIRE([] { return 0.5 + 0.8; }() == Approx(1.3));
+}
+
+SCENARIO("vectors can be sized and resized") {
   GIVEN("A vector with some items") {
     std::vector<std::int32_t> v(5);
 

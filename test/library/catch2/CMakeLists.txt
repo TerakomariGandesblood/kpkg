@@ -6,7 +6,10 @@ include(../common.cmake)
 
 enable_testing()
 
+# https://github.com/catchorg/Catch2/blob/devel/docs/cmake-integration.md
 find_package(Catch2 REQUIRED)
+add_definitions(-DCATCH_CONFIG_ENABLE_BENCHMARKING)
+
 add_executable(catch2 main.cpp)
 target_link_libraries(catch2 PRIVATE Catch2::Catch2WithMain)
 

@@ -20,4 +20,7 @@ if(KPKG_USE_LIBCXX)
   target_link_libraries(pkg PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})
 endif()
 
-# add_custom_command( TARGET pkg POST_BUILD COMMAND pkg)
+add_custom_command(
+  TARGET pkg
+  POST_BUILD
+  COMMAND pkg)

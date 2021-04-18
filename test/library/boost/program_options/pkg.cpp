@@ -15,6 +15,7 @@
 class ProgramOptions {
  public:
   enum class Type { Install, List };
+  enum class Sanitize { None, Memory, Thread };
 
   ProgramOptions(std::int32_t argc, const char* argv[]) {
     std::string command;
@@ -89,9 +90,14 @@ class ProgramOptions {
               .run(),
           vm);
       notify(vm);
-    }
 
-    else if (command == "list") {
+      if (vm.contains("memory")) {
+        sanitize_ = Sanitize::Memory;
+      }
+      if (vm.contains("thread")) {
+        sanitize_ = Sanitize::Thread;
+      }
+    } else if (command == "list") {
       type_ = Type::List;
     } else {
       throw boost::program_options::invalid_option_value(command);
@@ -100,12 +106,15 @@ class ProgramOptions {
 
   [[nodiscard]] Type get_type() const { return type_; }
 
+  [[nodiscard]] Sanitize get_sanitize() const { return sanitize_; }
+
   [[nodiscard]] const std::vector<std::string>& get_install_libraries() const {
     return install_libraries_;
   }
 
  private:
   Type type_;
+  Sanitize sanitize_ = Sanitize::None;
   std::vector<std::string> install_libraries_;
 };
 
@@ -116,6 +125,18 @@ int main() {
 
     ProgramOptions options(argc, argv);
     EXPECT(options.get_type() == ProgramOptions::Type::Install);
+    EXPECT(options.get_sanitize() == ProgramOptions::Sanitize::None);
+    EXPECT((options.get_install_libraries() ==
+            std::vector<std::string>{"a", "b", "d", "c"}));
+  }
+
+  {
+    const char* argv[] = {"0", "install", "-m", "a", "b", "d", "c"};
+    std::int32_t argc = std::size(argv);
+
+    ProgramOptions options(argc, argv);
+    EXPECT(options.get_type() == ProgramOptions::Type::Install);
+    EXPECT(options.get_sanitize() == ProgramOptions::Sanitize::Memory);
     EXPECT((options.get_install_libraries() ==
             std::vector<std::string>{"a", "b", "d", "c"}));
   }

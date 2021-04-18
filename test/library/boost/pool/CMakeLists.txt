@@ -1,4 +1,5 @@
 find_package(Boost CONFIG REQUIRED)
+
 add_executable(pool main.cpp)
 
 if(KPKG_USE_LIBCXX)

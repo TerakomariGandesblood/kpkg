@@ -31,8 +31,7 @@ class ProgramOptions {
     boost::program_options::options_description hidden("Hidden options");
     hidden.add_options()(
         "input-file",
-        boost::program_options::value<std::vector<std::string>>(&input_file_),
-        "input file");
+        boost::program_options::value<std::vector<std::string>>(&input_file_));
 
     boost::program_options::options_description cmdline_options;
     cmdline_options.add(generic).add(config).add(hidden);
