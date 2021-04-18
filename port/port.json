@@ -8,10 +8,8 @@
     "sudo update-alternatives --install /usr/bin/llvm-ar llvm-ar /usr/bin/llvm-ar-12 400",
     "sudo update-alternatives --install /usr/bin/llvm-nm llvm-nm /usr/bin/llvm-nm-12 400",
     "sudo update-alternatives --install /usr/bin/llvm-ranlib llvm-ranlib /usr/bin/llvm-ranlib-12 400",
-    "sudo update-alternatives --install /usr/bin/lld lld /usr/bin/lld-12 400",
-    "sudo update-alternatives --install /usr/bin/ld.lld ld.lld /usr/bin/ld.lld-12 400",
     "sudo apt install -y make ninja-build re2c autoconf automake libtool m4 tcl",
-    "sudo apt install valgrind clang-tidy-12",
+    "sudo apt install -y valgrind clang-tidy-12",
     "sudo update-alternatives --install /usr/bin/llvm-profdata llvm-profdata /usr/bin/llvm-profdata-12 400",
     "sudo update-alternatives --install /usr/bin/llvm-cov llvm-cov /usr/bin/llvm-cov-12 400",
     "sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-12 400",
@@ -137,6 +135,7 @@
       "download_url": "https://api.github.com/repos/openssl/openssl/tarball/refs/tags/OpenSSL_1_1_1k",
       "dependency": [],
       "cwd": "",
+      // https://github.com/openssl/openssl/blob/master/INSTALL.md
       "cmd": [
         "./Configure linux-x86_64 no-tests no-shared no-asm",
         "make -j\"$(nproc)\"",
