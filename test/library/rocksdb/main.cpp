@@ -1,19 +1,21 @@
-#include <cassert>
 #include <cstdlib>
 #include <iostream>
 #include <memory>
 #include <string>
 
 #include <rocksdb/db.h>
+#include <rocksdb/iterator.h>
 #include <rocksdb/write_batch.h>
 
+#include "error.h"
+
 int main() {
-  rocksdb::DB* p;
+  rocksdb::DB* p = nullptr;
   rocksdb::Options options;
   options.create_if_missing = true;
   // options.error_if_exists = true;
-  auto status{rocksdb::DB::Open(options, "testdb", &p)};
-  std::unique_ptr<rocksdb::DB> db{p};
+  auto status = rocksdb::DB::Open(options, "testdb", &p);
+  std::unique_ptr<rocksdb::DB> db(p);
 
   if (!status.ok()) {
     std::cerr << status.ToString() << '\n';
@@ -34,7 +36,15 @@ int main() {
     std::cerr << status.ToString() << '\n';
     return EXIT_FAILURE;
   }
+  EXPECT(value == "kaiser");
 
-  assert(value == "kaiser");
-  std::cout << value << '\n';
+  status = db->Delete(rocksdb::WriteOptions(), "name");
+  if (!status.ok()) {
+    std::cerr << status.ToString() << '\n';
+    return EXIT_FAILURE;
+  }
+
+  auto iter = db->NewIterator(rocksdb::ReadOptions());
+  iter->SeekToFirst();
+  EXPECT(!iter->Valid());
 }
