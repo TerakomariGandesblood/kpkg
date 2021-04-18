@@ -5,14 +5,14 @@
 #include "program.h"
 
 TEST_CASE("program") {
-  const char* argv[] = {"0", "install", "spdlog", "curl", "-p", "-m"};
+  const char* argv[] = {"0", "install", "spdlog", "curl", "-p", "-m", "-i"};
   std::int32_t argc = std::size(argv);
 
   kpkg::Program program(argc, const_cast<char**>(argv));
 
-  REQUIRE(program.use_proxy() == true);
+  REQUIRE(program.use_proxy());
+  REQUIRE(program.install_package());
   REQUIRE(program.get_type() == kpkg::Program::Type::Install);
-  REQUIRE(program.install_package() == false);
   REQUIRE(program.get_sanitize() == kpkg::Sanitize::Memory);
 
   auto dependency = program.get_dependency();

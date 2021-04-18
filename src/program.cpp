@@ -169,8 +169,8 @@ std::vector<std::string> Program::parse_program_options(std::int32_t argc,
 
       boost::program_options::options_description install_config(
           "Install configuration");
-      install_config.add_options()("memory,m", "Use memory")("thread,t",
-                                                             "Use thread");
+      install_config.add_options()("install,i", "Install package")(
+          "memory,m", "Use memory")("thread,t", "Use thread");
 
       boost::program_options::options_description install_hidden(
           "Hidden options");
