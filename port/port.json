@@ -165,6 +165,7 @@
       "download_url": "",
       "dependency": [],
       "cwd": "",
+      // https://github.com/jemalloc/jemalloc/blob/dev/INSTALL.md
       "cmd": [
         "autoconf",
         "./configure --disable-shared --enable-autogen",
@@ -178,10 +179,11 @@
       "tags_url": "https://api.github.com/repos/facebook/rocksdb/tags",
       "tag_name": "",
       "download_url": "",
-      "dependency": ["jemalloc"],
+      "dependency": ["jemalloc", "zstd"],
       "cwd": "",
+      // https://github.com/facebook/rocksdb/blob/master/INSTALL.md
       "cmd": [
-        "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DWITH_JEMALLOC=ON -DWITH_GFLAGS=OFF -DUSE_RTTI=ON -DROCKSDB_BUILD_SHARED=OFF -DWITH_TESTS=OFF -DWITH_BENCHMARK_TOOLS=OFF -DWITH_CORE_TOOLS=OFF -DWITH_TOOLS=OFF -DWITH_ALL_TESTS=OFF -DCMAKE_INSTALL_PREFIX=/usr/local",
+        "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DWITH_JEMALLOC=ON -DWITH_ZSTD=ON -DWITH_GFLAGS=OFF -DUSE_RTTI=ON -DROCKSDB_BUILD_SHARED=OFF -DWITH_TESTS=OFF -DWITH_BENCHMARK_TOOLS=OFF -DWITH_CORE_TOOLS=OFF -DWITH_TOOLS=OFF -DWITH_ALL_TESTS=OFF -DCMAKE_INSTALL_PREFIX=/usr/local",
         "cmake --build build --config Release -j\"$(nproc)\"",
         "sudo cmake --build build --config Release --target install"
       ]

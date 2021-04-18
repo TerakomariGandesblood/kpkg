@@ -6,8 +6,8 @@
 
 #include <zstd.h>
 
-std::string read_file(const std::string& filename) {
-  std::ifstream ifs{filename, std::ifstream::binary};
+std::string read_file(const std::string& file_name) {
+  std::ifstream ifs(file_name, std::ifstream::binary);
   std::string data;
 
   data.resize(static_cast<std::string::size_type>(
@@ -18,8 +18,8 @@ std::string read_file(const std::string& filename) {
   return data;
 }
 
-void write_file(const std::string& filename, const std::string& data) {
-  std::ofstream ofs{filename, std::ofstream::binary};
+void write_file(const std::string& file_name, const std::string& data) {
+  std::ofstream ofs(file_name, std::ofstream::binary);
   ofs << data << std::flush;
 }
 
@@ -30,11 +30,12 @@ void check_zstd(std::size_t error) {
   }
 }
 
+// https://github.com/facebook/zstd/blob/dev/examples/simple_compression.c
 void compress(const std::string& filename) {
-  auto data{read_file(filename)};
-  auto size{std::size(data)};
+  auto data = read_file(filename);
+  auto size = std::size(data);
 
-  auto compress_size{ZSTD_compressBound(size)};
+  auto compress_size = ZSTD_compressBound(size);
   std::string compress_data;
   compress_data.resize(compress_size);
 
@@ -46,11 +47,12 @@ void compress(const std::string& filename) {
   write_file(filename + ".zst", compress_data);
 }
 
+// https://github.com/facebook/zstd/blob/dev/examples/simple_decompression.c
 void decompress(const std::string& filename) {
-  auto data{read_file(filename)};
-  auto size{std::size(data)};
+  auto data = read_file(filename);
+  auto size = std::size(data);
 
-  auto decompress_size{ZSTD_getFrameContentSize(data.data(), size)};
+  auto decompress_size = ZSTD_getFrameContentSize(data.data(), size);
   if (decompress_size == ZSTD_CONTENTSIZE_ERROR) {
     std::cerr << filename << ": not compressed by zstd!\n";
     std::exit(EXIT_FAILURE);
@@ -61,8 +63,8 @@ void decompress(const std::string& filename) {
 
   std::string decompress_data;
   decompress_data.resize(decompress_size);
-  auto decompress_size_new{ZSTD_decompress(decompress_data.data(),
-                                           decompress_size, data.data(), size)};
+  auto decompress_size_new = ZSTD_decompress(
+      decompress_data.data(), decompress_size, data.data(), size);
   check_zstd(decompress_size_new);
 
   if (decompress_size != decompress_size_new) {
@@ -75,11 +77,11 @@ void decompress(const std::string& filename) {
 
 int main(int argc, char* argv[]) {
   if (argc != 2) {
-    std::cerr << "need filename\n";
+    std::cerr << "need file name\n";
     std::exit(EXIT_FAILURE);
   }
 
-  std::string filename{argv[1]};
+  std::string filename(argv[1]);
   if (filename.ends_with(".zst")) {
     decompress(filename);
   } else {

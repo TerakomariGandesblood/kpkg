@@ -9,6 +9,7 @@
 
 #include "error.h"
 
+// https://rocksdb.org/docs/getting-started.html
 int main() {
   rocksdb::DB* p = nullptr;
   rocksdb::Options options;

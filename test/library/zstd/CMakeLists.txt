@@ -5,6 +5,7 @@ project(test_library_install LANGUAGES CXX)
 include(../common.cmake)
 
 find_package(zstd REQUIRED)
+
 add_executable(zstd main.cpp)
 target_link_libraries(zstd PRIVATE zstd::libzstd_static)
 
