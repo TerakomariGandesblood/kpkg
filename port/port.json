@@ -107,7 +107,7 @@
       "dependency": ["zlib"],
       "cwd": "",
       "cmd": [
-        "sh build/autogen.sh",
+        "bash build/autogen.sh",
         "./configure --disable-shared --disable-bsdtar --disable-bsdcat --disable-bsdcpio --without-bz2lib --without-libb2 --without-lz4 --without-zstd --without-lzma --without-cng --without-openssl --without-xml2 --without-expat",
         "make -j\"$(nproc)\"",
         "sudo make install"

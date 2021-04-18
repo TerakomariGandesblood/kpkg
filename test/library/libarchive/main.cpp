@@ -1,7 +1,6 @@
-#include <fcntl.h>
-
 #include <cstddef>
 #include <cstdint>
+#include <cstdio>
 #include <cstdlib>
 #include <filesystem>
 #include <iostream>
@@ -17,7 +16,7 @@ namespace {
   std::exit(EXIT_FAILURE);
 }
 
-std::int32_t copy_data(struct archive *ar, struct archive *aw) {
+void copy_data(struct archive *ar, struct archive *aw) {
   while (true) {
     const void *buff;
     std::size_t size;
@@ -25,7 +24,7 @@ std::int32_t copy_data(struct archive *ar, struct archive *aw) {
 
     la_ssize_t status = archive_read_data_block(ar, &buff, &size, &offset);
     if (status == ARCHIVE_EOF) {
-      return ARCHIVE_OK;
+      return;
     }
     if (status != ARCHIVE_OK) {
       error(archive_error_string(aw));
@@ -52,44 +51,52 @@ void compress(const std::string &file_name, const std::string &out) {
     archive_write_add_filter_gzip(archive);
   }
 
-  archive_write_open_filename(archive, out.c_str());
+  auto status = archive_write_open_filename(archive, out.c_str());
+  if (status != ARCHIVE_OK) {
+    error(archive_error_string(archive));
+  }
 
   auto disk = archive_read_disk_new();
   archive_read_disk_set_standard_lookup(disk);
-  auto r = archive_read_disk_open(disk, file_name.c_str());
-  if (r != ARCHIVE_OK) {
+  status = archive_read_disk_open(disk, file_name.c_str());
+  if (status != ARCHIVE_OK) {
     error(archive_error_string(disk));
   }
 
   while (true) {
     auto entry = archive_entry_new();
-    r = archive_read_next_header2(disk, entry);
-    if (r == ARCHIVE_EOF) {
+    status = archive_read_next_header2(disk, entry);
+    if (status == ARCHIVE_EOF) {
       archive_entry_free(entry);
       break;
     }
-    if (r != ARCHIVE_OK) {
+    if (status != ARCHIVE_OK) {
       error(archive_error_string(disk));
     }
 
     archive_read_disk_descend(disk);
 
-    r = archive_write_header(archive, entry);
-    if (r != ARCHIVE_OK) {
+    status = archive_write_header(archive, entry);
+    if (status != ARCHIVE_OK) {
       error(archive_error_string(disk));
     }
 
     char buff[16384];
-    auto fd = open(archive_entry_sourcepath(entry), O_RDONLY);
-    auto len = read(fd, buff, sizeof(buff));
-    while (len > 0) {
-      archive_write_data(archive, buff, static_cast<std::size_t>(len));
-      len = read(fd, buff, sizeof(buff));
+    auto file = std::fopen(archive_entry_sourcepath(entry), "rb");
+    if (!file) {
+      error("open file error");
     }
 
-    close(fd);
+    auto len = std::fread(buff, 1, sizeof(buff), file);
+    while (len > 0) {
+      archive_write_data(archive, buff, static_cast<std::size_t>(len));
+      len = std::fread(buff, 1, sizeof(buff), file);
+    }
+
+    std::fclose(file);
     archive_entry_free(entry);
   }
+
   archive_read_close(disk);
   archive_read_free(disk);
 
@@ -133,10 +140,7 @@ void decompress(const std::string &file_name) {
     }
 
     if (archive_entry_size(entry) > 0) {
-      status = copy_data(archive, extract);
-      if (status != ARCHIVE_OK) {
-        error(archive_error_string(archive));
-      }
+      copy_data(archive, extract);
     }
 
     status = archive_write_finish_entry(extract);
