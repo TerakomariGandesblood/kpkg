@@ -48,4 +48,5 @@ int main() {
   auto iter = db->NewIterator(rocksdb::ReadOptions());
   iter->SeekToFirst();
   EXPECT(!iter->Valid());
+  delete iter;
 }

@@ -197,7 +197,10 @@ Program::read_from_port() {
   std::string s(port, static_cast<std::size_t>(port_size));
 
   boost::json::error_code error_code;
-  auto jv = boost::json::parse(s.data(), error_code, {});
+  boost::json::monotonic_resource mr;
+  boost::json::parse_options options;
+  options.allow_comments = true;
+  auto jv = boost::json::parse(s.data(), error_code, &mr, options);
   if (error_code) {
     error("json parse error");
   }
