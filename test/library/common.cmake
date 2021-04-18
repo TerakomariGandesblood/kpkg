@@ -77,3 +77,5 @@ endif()
 
 set(KPKG_LIBCXX "/usr/local/lib/libc++.a")
 set(KPKG_LIBCXXABI "/usr/local/lib/libc++abi.a")
+
+include_directories(../)

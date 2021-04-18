@@ -1,8 +1,10 @@
-#include <iostream>
 #include <string>
 
-#include <boost/pool/object_pool.hpp>
+#include <boost/pool/pool_alloc.hpp>
 
+#include "error.h"
+
+// https://www.boost.org/doc/libs/1_75_0/libs/pool/doc/html/index.html
 class Test {
  public:
   explicit Test(const std::string& str) : str_(str) {}
@@ -13,12 +15,12 @@ class Test {
 };
 
 int main() {
-  boost::object_pool<Test> pool;
-  // 返回的对象可以通过调用 destroy() 销毁, 也可以由 pool 析构时自动销毁
-  // destroy() 相当与 p->~ElementType(); this->free(p);
-  auto ptr = pool.construct("string");
+  boost::fast_pool_allocator<Test> pool;
+  auto p = pool.allocate(1);
+  pool.construct(p, "str");
 
-  if (ptr != nullptr) {
-    std::cout << ptr->get_string() << '\n';
-  }
+  EXPECT(p->get_string() == "str");
+
+  pool.destroy(p);
+  pool.deallocate(p, 1);
 }

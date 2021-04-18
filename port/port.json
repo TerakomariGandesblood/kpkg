@@ -72,10 +72,10 @@
     },
     {
       "name": "libc++",
-      "releases_url": "",
+      "releases_url": "https://api.github.com/repos/llvm/llvm-project/releases/latest",
       "tags_url": "",
-      "tag_name": "llvmorg-12.0.0-rc5",
-      "download_url": "https://api.github.com/repos/llvm/llvm-project/tarball/refs/tags/llvmorg-12.0.0-rc5",
+      "tag_name": "",
+      "download_url": "",
       "dependency": [],
       "cwd": "",
       "cmd": [

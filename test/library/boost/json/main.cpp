@@ -1,8 +1,14 @@
-#include <cassert>
-#include <iostream>
+#include <boost/json/error.hpp>
+#include <boost/json/monotonic_resource.hpp>
+#include <boost/json/object.hpp>
+#include <boost/json/parse.hpp>
+#include <boost/json/parse_options.hpp>
+#include <boost/json/serialize.hpp>
+#include <boost/json/value.hpp>
 
-#include <boost/json.hpp>
+#include "error.h"
 
+// https://www.boost.org/doc/libs/1_75_0/libs/json/doc/html/index.html
 int main() {
   boost::json::object obj;
   obj["pi"] = 3.141;
@@ -20,14 +26,13 @@ int main() {
                            {"answer", {{"everything", 42}}},
                            {"list", {1, 0, 2}},
                            {"object", {{"currency", "USD"}, {"value", 42.99}}}};
-  assert(obj == jv);
+  EXPECT(obj == jv);
 
   boost::json::error_code error;
   boost::json::monotonic_resource mr;
   boost::json::parse_options opt;
   opt.allow_comments = true;
   jv = boost::json::parse(boost::json::serialize(obj), error, &mr, opt);
-  assert(!error && obj == jv);
 
-  std::cout << obj << '\n';
+  EXPECT(!error && obj == jv);
 }
