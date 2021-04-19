@@ -23,7 +23,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: dependencies
-          key: ${{ runner.os }}-dependencies-20210419
+          key: address-undefined-sanitizer-dependencies-20210419
 
       - name: Install dependencies
         run: sudo bash script/build.sh
@@ -67,7 +67,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: dependencies
-          key: ${{ runner.os }}-dependencies-memory-20210419
+          key: memory-sanitizer-dependencies-memory-20210419
 
       - name: Install dependencies
         run: sudo bash script/build.sh -m
@@ -117,7 +117,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: dependencies
-          key: ${{ runner.os }}-dependencies-thread-20210419
+          key: thread-sanitizer-dependencies-thread-20210419
 
       - name: Install dependencies
         run: sudo bash script/build.sh -t
