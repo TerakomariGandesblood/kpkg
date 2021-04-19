@@ -21,12 +21,10 @@ while getopts 'mt' OPT; do
 done
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  #  curl -L https://github.com/KaiserLancelot/kpkg/releases/download/v0.1.1/kpkg-0.1.1-ubuntu-20.04.deb \
-  #    -o kpkg.deb
-  #
-  #  sudo dpkg -i *.deb
+  curl -L https://github.com/KaiserLancelot/kpkg/releases/download/v0.1.2/kpkg-0.1.2-ubuntu-20.04.deb \
+    -o kpkg.deb
 
-  sudo dpkg -i temp/*.deb
+  sudo dpkg -i kpkg.deb
 
   if [ ! -d "dependencies" ]; then
     echo "mkdir dependencies"

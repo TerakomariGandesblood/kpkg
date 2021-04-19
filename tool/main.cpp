@@ -4,13 +4,14 @@
 #include <cstdint>
 #include <cstdlib>
 
-#include <spdlog/spdlog.h>
-
 #include "command.h"
 #include "error.h"
+#include "log.h"
 #include "program.h"
 
 int main(int argc, char* argv[]) {
+  kpkg::init_logger();
+
   kpkg::Program program(argc, argv);
 
   if (program.get_type() == kpkg::Program::Type::List) {
@@ -35,7 +36,7 @@ int main(int argc, char* argv[]) {
     return EXIT_SUCCESS;
   }
 
-  spdlog::set_level(spdlog::level::debug);
+  kpkg::set_logger_debug();
 
   program.print_dependency();
   program.print_library_to_be_built();
