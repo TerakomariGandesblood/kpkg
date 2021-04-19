@@ -3,9 +3,9 @@
 #include <algorithm>
 #include <cstdlib>
 
-#include <fmt/format.h>
+#include <fmt/core.h>
 #include <fmt/ostream.h>
-
+#include <spdlog/spdlog.h>
 #include <boost/algorithm/string.hpp>
 #include <boost/program_options/options_description.hpp>
 #include <boost/program_options/parsers.hpp>
@@ -97,13 +97,11 @@ void Program::print_dependency() const {
     return;
   }
 
-  fmt::print("The following dependent libraries will be installed: ");
+  spdlog::debug("The following dependent libraries will be installed: ");
 
   for (const auto& item : dependency_) {
-    fmt::print("{} ", item.get_name());
+    spdlog::debug("{}", item.get_name());
   }
-
-  fmt::print("\n");
 }
 
 void Program::print_library_to_be_built() const {
@@ -111,13 +109,11 @@ void Program::print_library_to_be_built() const {
     error("library_to_be_built_ is empty");
   }
 
-  fmt::print("The following libraries will be installed: ");
+  spdlog::debug("The following libraries will be installed: ");
 
   for (const auto& item : library_to_be_built_) {
-    fmt::print("{} ", item.get_name());
+    spdlog::debug("{}", item.get_name());
   }
-
-  fmt::print("\n");
 }
 
 std::vector<std::string> Program::parse_program_options(std::int32_t argc,

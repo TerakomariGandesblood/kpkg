@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) {
 
     while (waitpid(-1, &status, 0) > 0) {
       if (!WIFEXITED(status) || WEXITSTATUS(status)) {
-        kpkg::error("Error");
+        kpkg::error("waitpid error");
       }
     }
     return EXIT_SUCCESS;
@@ -70,7 +70,7 @@ int main(int argc, char* argv[]) {
 
   while (waitpid(-1, &status, 0) > 0) {
     if (!WIFEXITED(status) || WEXITSTATUS(status)) {
-      kpkg::error("Error");
+      kpkg::error("waitpid error");
     }
   }
 #else
