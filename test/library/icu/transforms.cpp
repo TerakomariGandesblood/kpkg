@@ -4,6 +4,7 @@
 #include <string>
 
 #include <unicode/translit.h>
+#include <unicode/uclean.h>
 #include <unicode/unistr.h>
 #include <unicode/ustream.h>
 #include <unicode/utypes.h>
@@ -37,4 +38,5 @@ int main() {
   std::cout << str << '\n';
 
   delete trans;
+  u_cleanup();
 }
