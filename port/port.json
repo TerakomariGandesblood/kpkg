@@ -279,7 +279,7 @@
       "releases_url": "",
       "tags_url": "",
       "tag_name": "boost-1.76.0",
-      "download_url": "https://dl.bintray.com/boostorg/release/1.76.0/source/boost_1_76_0.tar.gz",
+      "download_url": "https://boostorg.jfrog.io/artifactory/main/release/1.76.0/source/boost_1_76_0.tar.gz",
       "dependency": [],
       "cwd": "",
       "cmd": [
