@@ -14,7 +14,7 @@ void run_cmds(const std::vector<std::string>& cmds, const std::string& cwd,
 
 namespace detail {
 
-inline const std::string export_gcc = "export CC=gcc-10 && export CXX=g++-10";
+inline const std::string export_gcc = "export CC=gcc-11 && export CXX=g++-11";
 
 inline const std::string export_clang =
     "export CC=clang-12 && export CXX=clang++-12";
