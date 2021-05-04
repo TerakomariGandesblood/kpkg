@@ -21,7 +21,7 @@ while getopts 'mt' OPT; do
 done
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  curl -L https://github.com/KaiserLancelot/kpkg/releases/download/v0.1.2/kpkg-0.1.2-ubuntu-20.04.deb \
+  curl -L https://github.com/KaiserLancelot/kpkg/releases/download/v0.1.4/kpkg-0.1.4-ubuntu-20.04.deb \
     -o kpkg.deb
 
   sudo dpkg -i kpkg.deb

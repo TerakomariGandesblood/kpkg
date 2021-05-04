@@ -50,7 +50,7 @@ std::string decompress(const std::string &file_name) {
   std::int32_t status =
       archive_read_open_filename(archive, file_name.c_str(), 10240);
   if (status != ARCHIVE_OK) {
-    error("archive_read_open_filename error");
+    error("archive_read_open_filename error: {}", file_name);
   }
 
   std::string dir;
