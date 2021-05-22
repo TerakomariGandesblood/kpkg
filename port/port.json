@@ -1,22 +1,13 @@
 {
   "install": [
-    "sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test",
-    "sudo apt update",
-    "sudo apt install -y gcc-11 g++-11",
+    "sudo apt install -y make cmake re2c autoconf automake libtool m4 tcl",
     "sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 400",
     "sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 400",
-    "sudo bash -c \"$(wget -O - https://apt.llvm.org/llvm.sh)\"",
     "sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-12 400",
     "sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-12 400",
     "sudo update-alternatives --install /usr/bin/llvm-ar llvm-ar /usr/bin/llvm-ar-12 400",
     "sudo update-alternatives --install /usr/bin/llvm-nm llvm-nm /usr/bin/llvm-nm-12 400",
-    "sudo update-alternatives --install /usr/bin/llvm-ranlib llvm-ranlib /usr/bin/llvm-ranlib-12 400",
-    "sudo apt install -y make cmake ninja-build re2c autoconf automake libtool m4 tcl",
-    "sudo apt install -y valgrind clang-tidy-12",
-    "sudo update-alternatives --install /usr/bin/llvm-profdata llvm-profdata /usr/bin/llvm-profdata-12 400",
-    "sudo update-alternatives --install /usr/bin/llvm-cov llvm-cov /usr/bin/llvm-cov-12 400",
-    "sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-12 400",
-    "sudo update-alternatives --install /usr/bin/llvm-symbolizer llvm-symbolizer /usr/bin/llvm-symbolizer-12 400"
+    "sudo update-alternatives --install /usr/bin/llvm-ranlib llvm-ranlib /usr/bin/llvm-ranlib-12 400"
   ],
   "port": [
     {
@@ -356,6 +347,34 @@
       "cwd": "",
       "cmd": [
         "export CFLAGS=\"$CFLAGS -DCATCH_CONFIG_ENABLE_BENCHMARKING\" && export CXXFLAGS=\"$CXXFLAGS -DCATCH_CONFIG_ENABLE_BENCHMARKING\" && cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCATCH_BUILD_TESTING=OFF -DCATCH_BUILD_STATIC_LIBRARY=ON -DCATCH_INSTALL_DOCS=OFF",
+        "cmake --build build --config Release -j\"$(nproc)\"",
+        "sudo cmake --build build --config Release --target install"
+      ]
+    },
+    {
+      "name": "tidy-html5",
+      "releases_url": "https://api.github.com/repos/htacg/tidy-html5/releases/latest",
+      "tags_url": "",
+      "tag_name": "",
+      "download_url": "",
+      "dependency": [],
+      "cwd": "",
+      "cmd": [
+        "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIB=OFF -DSUPPORT_CONSOLE_APP=OFF",
+        "cmake --build build --config Release -j\"$(nproc)\"",
+        "sudo cmake --build build --config Release --target install"
+      ]
+    },
+    {
+      "name": "pugixml",
+      "releases_url": "https://api.github.com/repos/zeux/pugixml/releases/latest",
+      "tags_url": "",
+      "tag_name": "",
+      "download_url": "",
+      "dependency": [],
+      "cwd": "",
+      "cmd": [
+        "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF",
         "cmake --build build --config Release -j\"$(nproc)\"",
         "sudo cmake --build build --config Release --target install"
       ]

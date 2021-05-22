@@ -45,7 +45,7 @@ jobs:
           mkdir lib
           cd lib
           ../build/tool/kpkg install boost catch2 curl fmt icu libarchive magic_enum \
-          openssl rocksdb spdlog sqlite zstd
+          openssl rocksdb spdlog sqlite zstd tidy-html5 pugixml
           sudo ldconfig
 
       - name: Test
@@ -89,7 +89,7 @@ jobs:
           mkdir lib
           cd lib
           ../build/tool/kpkg install boost catch2 curl fmt icu libarchive magic_enum \
-          openssl rocksdb spdlog sqlite zstd -m
+          openssl rocksdb spdlog sqlite zstd tidy-html5 pugixml -m
           sudo ldconfig
 
       - name: Test
@@ -139,7 +139,7 @@ jobs:
           mkdir lib
           cd lib
           ../build/tool/kpkg install boost catch2 curl fmt icu libarchive magic_enum \
-          openssl rocksdb spdlog sqlite zstd -t
+          openssl rocksdb spdlog sqlite zstd tidy-html5 pugixml -t
           sudo ldconfig
 
       - name: Test
