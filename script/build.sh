@@ -26,7 +26,8 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
   sudo dpkg -i temp/kpkg-0.1.5-Linux.deb
 
-  sudo apt install -y valgrind clang-tidy-12 ninja-build
+  sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+  sudo apt install -y clang-tidy-12 ninja-build valgrind
 
   sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-12 400
   sudo update-alternatives --install /usr/bin/llvm-profdata llvm-profdata /usr/bin/llvm-profdata-12 400
