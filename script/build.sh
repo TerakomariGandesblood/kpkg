@@ -24,7 +24,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   #  curl -L https://github.com/KaiserLancelot/kpkg/releases/download/v0.1.4/kpkg-0.1.4-ubuntu-20.04.deb \
   #    -o kpkg.deb
 
-  sudo dpkg -i temp/kpkg.deb
+  sudo dpkg -i temp/kpkg-0.1.5-Linux.deb
 
   sudo apt install -y valgrind clang-tidy-12 ninja-build
 
