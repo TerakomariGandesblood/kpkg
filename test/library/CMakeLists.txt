@@ -26,6 +26,11 @@ foreach(SUBDIR ${SUBDIRS})
     COMMAND ${CMAKE_COMMAND} --build
             ${CMAKE_CURRENT_SOURCE_DIR}/${SUBDIR}/build --config RelWithDebInfo)
 
+  add_test(NAME ${SUBDIR}_copy
+           COMMAND cp -r ${CMAKE_CURRENT_SOURCE_DIR}/${SUBDIR}/build
+                   ${KPKG_BINARY_DIR}/test/library/${SUBDIR})
+
   set_tests_properties(${SUBDIR}_configure PROPERTIES FIXTURES_SETUP ${SUBDIR})
   set_tests_properties(${SUBDIR}_build PROPERTIES FIXTURES_REQUIRED ${SUBDIR})
+  set_tests_properties(${SUBDIR}_copy PROPERTIES FIXTURES_CLEANUP ${SUBDIR})
 endforeach()
