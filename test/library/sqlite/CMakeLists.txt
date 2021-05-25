@@ -14,10 +14,6 @@ add_executable(sqlite main.cpp)
 target_link_libraries(sqlite PRIVATE ${SQLite3_LIBRARIES} ${CMAKE_DL_LIBS}
                                      ${CMAKE_THREAD_LIBS_INIT})
 
-if(KPKG_USE_LIBCXX)
-  target_link_libraries(sqlite PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})
-endif()
-
 add_custom_command(
   TARGET sqlite
   POST_BUILD

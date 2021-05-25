@@ -34,9 +34,6 @@ set(LIBRARY lib${PROJECT_NAME})
 set(EXECUTABLE ${PROJECT_NAME})
 set(TEST_EXECUTABLE catch2)
 
-set(KPKG_LIBCXX "/usr/local/lib/libc++.a")
-set(KPKG_LIBCXXABI "/usr/local/lib/libc++abi.a")
-
 set(KPKG_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(KPKG_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
@@ -54,6 +51,7 @@ include(Options)
 include(Check)
 include(ClangTidy)
 include(Format)
+include(CompilerOptions)
 
 # ---------------------------------------------------------------------------------------
 # Find package
@@ -64,11 +62,6 @@ find_package(ZLIB REQUIRED)
 find_package(LibArchive REQUIRED)
 find_package(CURL CONFIG REQUIRED)
 find_package(Boost 1.75.0 CONFIG REQUIRED COMPONENTS json program_options)
-
-# ---------------------------------------------------------------------------------------
-# Compiler Options
-# ---------------------------------------------------------------------------------------
-include(CompilerOptions)
 
 # ---------------------------------------------------------------------------------------
 # Build port
@@ -92,10 +85,6 @@ target_link_libraries(
           ${Boost_LIBRARIES}
           ${LibArchive_LIBRARIES}
           ${ZLIB_LIBRARIES})
-
-if(KPKG_USE_LIBCXX)
-  target_link_libraries(${LIBRARY} PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})
-endif()
 
 set_target_properties(
   ${LIBRARY}

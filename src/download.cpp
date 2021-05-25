@@ -107,7 +107,7 @@ void get_file(const std::string& url, const std::string& file_name,
     curl_easy_setopt(http_handle, CURLOPT_PROXY, "socks5://127.0.0.1:1080");
   }
 
-  auto file{std::fopen(file_name.c_str(), "wb")};
+  auto file = std::fopen(file_name.c_str(), "wb");
   if (!file) {
     error("open file error");
   }
@@ -119,8 +119,8 @@ void get_file(const std::string& url, const std::string& file_name,
   auto multi_handle = curl_multi_init();
   curl_multi_add_handle(multi_handle, http_handle);
 
-  std::int32_t still_running{};
-  std::int32_t repeats{};
+  std::int32_t still_running = 0;
+  std::int32_t repeats = 0;
 
   if (curl_multi_perform(multi_handle, &still_running) != CURLM_OK) {
     error("curl_multi_perform() error");

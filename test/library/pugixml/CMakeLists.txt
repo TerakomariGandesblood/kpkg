@@ -12,10 +12,6 @@ find_package(pugixml REQUIRED)
 add_executable(pugixml-test main.cpp)
 target_link_libraries(pugixml-test PRIVATE pugixml::pugixml)
 
-if(KPKG_USE_LIBCXX)
-  target_link_libraries(pugixml-test PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})
-endif()
-
 add_custom_command(
   TARGET pugixml-test
   POST_BUILD

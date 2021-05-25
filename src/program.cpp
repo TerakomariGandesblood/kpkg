@@ -39,11 +39,6 @@ Program::Program(std::int32_t argc, char* argv[]) {
         get_from_name(libraries_, library.get_name()));
   }
 
-  if (sanitize_ != Sanitize::None) {
-    dependency_.insert(std::begin(dependency_),
-                       get_from_name(libraries_, "libc++"));
-  }
-
   std::sort(std::begin(libraries_), std::end(libraries_),
             [](const Library& lhs, const Library& rhs) {
               return lhs.get_name() < rhs.get_name();
@@ -106,7 +101,7 @@ void Program::print_dependency() const {
 
 void Program::print_library_to_be_built() const {
   if (std::empty(library_to_be_built_)) {
-    error("library_to_be_built_ is empty");
+    error("library to be built is empty");
   }
 
   spdlog::debug("The following libraries will be installed: ");
@@ -200,12 +195,6 @@ std::vector<std::string> Program::parse_program_options(std::int32_t argc,
         install_ = true;
       }
 
-      if (vm.contains("memory")) {
-        sanitize_ = Sanitize::Memory;
-      } else if (vm.contains("thread")) {
-        sanitize_ = Sanitize::Thread;
-      }
-
       if (!vm.contains("install-libraries")) {
         error("need a library name");
       }
@@ -234,7 +223,7 @@ Program::read_from_port() {
   options.allow_comments = true;
   auto jv = boost::json::parse(s.data(), error_code, &mr, options);
   if (error_code) {
-    error("json parse error");
+    error("json parse error: {}", error_code.message());
   }
 
   jv = jv.as_object();

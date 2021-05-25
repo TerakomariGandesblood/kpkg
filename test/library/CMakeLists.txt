@@ -19,18 +19,17 @@ foreach(SUBDIR ${SUBDIRS})
       ${CMAKE_CURRENT_SOURCE_DIR}/${SUBDIR}/build
       -DCMAKE_BUILD_TYPE=RelWithDebInfo
       -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
-      -DKPKG_USE_LIBCXX=${KPKG_USE_LIBCXX} -DKPKG_SANITIZER=${KPKG_SANITIZER})
+      -DKPKG_SANITIZER=${KPKG_SANITIZER})
 
   add_test(
     NAME ${SUBDIR}_build
     COMMAND ${CMAKE_COMMAND} --build
             ${CMAKE_CURRENT_SOURCE_DIR}/${SUBDIR}/build --config RelWithDebInfo)
 
-  add_test(NAME ${SUBDIR}_copy
-           COMMAND cp -r ${CMAKE_CURRENT_SOURCE_DIR}/${SUBDIR}/build
-                   ${KPKG_BINARY_DIR}/test/library/${SUBDIR})
+  add_test(NAME ${SUBDIR}_clean
+           COMMAND rm -rf ${CMAKE_CURRENT_SOURCE_DIR}/${SUBDIR}/build)
 
   set_tests_properties(${SUBDIR}_configure PROPERTIES FIXTURES_SETUP ${SUBDIR})
   set_tests_properties(${SUBDIR}_build PROPERTIES FIXTURES_REQUIRED ${SUBDIR})
-  set_tests_properties(${SUBDIR}_copy PROPERTIES FIXTURES_CLEANUP ${SUBDIR})
+  set_tests_properties(${SUBDIR}_clean PROPERTIES FIXTURES_CLEANUP ${SUBDIR})
 endforeach()

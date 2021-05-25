@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <cstdlib>
+#include <fstream>
 
 #include "command.h"
 #include "error.h"
@@ -50,7 +51,7 @@ int main(int argc, char* argv[]) {
   for (auto& item : program.get_dependency()) {
     item.init(program.use_proxy());
     item.download(program.use_proxy());
-    item.build(program.get_sanitize());
+    item.build();
   }
 
 #ifdef NDEBUG
@@ -61,7 +62,7 @@ int main(int argc, char* argv[]) {
     } else if (pid == 0) {
       item.init(program.use_proxy());
       item.download(program.use_proxy());
-      item.build(program.get_sanitize());
+      item.build();
       return EXIT_SUCCESS;
     }
   }
@@ -77,7 +78,7 @@ int main(int argc, char* argv[]) {
   for (auto& item : program.get_library_to_be_built()) {
     item.init(program.use_proxy());
     item.download(program.use_proxy());
-    item.build(program.get_sanitize());
+    item.build();
   }
 #endif
 }

@@ -35,8 +35,6 @@ class Program {
     return library_to_be_built_;
   }
 
-  [[nodiscard]] Sanitize get_sanitize() const { return sanitize_; }
-
   [[nodiscard]] Type get_type() const { return type_; }
 
  private:
@@ -57,7 +55,6 @@ class Program {
   std::vector<Library> libraries_;
   std::vector<Library> dependency_;
   std::vector<Library> library_to_be_built_;
-  Sanitize sanitize_ = Sanitize::None;
 };
 
 }  // namespace kpkg

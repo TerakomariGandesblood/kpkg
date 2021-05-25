@@ -8,10 +8,6 @@ find_package(magic_enum REQUIRED)
 
 add_executable(magic-enum main.cpp)
 
-if(KPKG_USE_LIBCXX)
-  target_link_libraries(magic-enum PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})
-endif()
-
 add_custom_command(
   TARGET magic-enum
   POST_BUILD

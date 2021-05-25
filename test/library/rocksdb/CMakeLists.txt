@@ -13,10 +13,6 @@ add_executable(rocksdb main.cpp)
 target_link_libraries(rocksdb PRIVATE RocksDB::rocksdb ${CMAKE_DL_LIBS}
                                       ${CMAKE_THREAD_LIBS_INIT})
 
-if(KPKG_USE_LIBCXX)
-  target_link_libraries(rocksdb PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})
-endif()
-
 add_custom_command(
   TARGET rocksdb
   POST_BUILD

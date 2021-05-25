@@ -14,10 +14,6 @@ find_package(fmt REQUIRED)
 add_executable(openssl main.cpp)
 target_link_libraries(openssl PRIVATE ${OPENSSL_LIBRARIES} fmt::fmt)
 
-if(KPKG_USE_LIBCXX)
-  target_link_libraries(openssl PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})
-endif()
-
 add_custom_command(
   TARGET openssl
   POST_BUILD

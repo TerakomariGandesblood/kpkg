@@ -63,19 +63,17 @@
       "cmd": ["sudo make install"]
     },
     {
-      "name": "libc++",
-      "releases_url": "",
+      "name": "llvm",
+      "releases_url": "https://api.github.com/repos/llvm/llvm-project/releases/latest",
       "tags_url": "",
-      "tag_name": "llvmorg-12.0.1",
-      "download_url": "https://codeload.github.com/llvm/llvm-project/tar.gz/refs/heads/release/12.x",
+      "tag_name": "",
+      "download_url": "",
       "dependency": [],
       "cwd": "",
       "cmd": [
         "cmake -S llvm -B build -DCMAKE_BUILD_TYPE=Release -DLIBCXX_ENABLE_SHARED=OFF -DLIBCXX_INCLUDE_TESTS=OFF -DLIBCXX_INCLUDE_BENCHMARKS=OFF -DLIBCXXABI_ENABLE_SHARED=OFF -DLLVM_ENABLE_PROJECTS=\"libcxx;libcxxabi\"",
         "cmake --build build --config Release -j\"$(nproc)\" --target cxx cxxabi",
-        "sudo cmake --build build --config Release --target install-cxx install-cxxabi",
-        "cmake -S llvm -B build -DCMAKE_BUILD_TYPE=Release -DLIBCXX_ENABLE_SHARED=OFF -DLIBCXX_INCLUDE_TESTS=OFF -DLIBCXX_INCLUDE_BENCHMARKS=OFF -DLIBCXXABI_ENABLE_SHARED=OFF -DLLVM_USE_SANITIZER=MemoryWithOrigins -DLLVM_ENABLE_PROJECTS=\"libcxx;libcxxabi\"",
-        "cmake -S llvm -B build -DCMAKE_BUILD_TYPE=Release -DLIBCXX_ENABLE_SHARED=OFF -DLIBCXX_INCLUDE_TESTS=OFF -DLIBCXX_INCLUDE_BENCHMARKS=OFF -DLIBCXXABI_ENABLE_SHARED=OFF -DLLVM_USE_SANITIZER=Thread -DLLVM_ENABLE_PROJECTS=\"libcxx;libcxxabi\""
+        "sudo cmake --build build --config Release --target install-cxx install-cxxabi"
       ]
     },
     {
@@ -275,9 +273,7 @@
       "cwd": "",
       "cmd": [
         "./bootstrap.sh",
-        "sudo ./b2 --with-json --with-program_options cflags=\"-fPIC\" cxxflags=\"-fPIC\" toolset=gcc-11 link=static install",
-        "sudo ./b2 --with-json --with-program_options cflags=\"-fPIC -fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls\" cxxflags=\"-fPIC -fsanitize=memory -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls -stdlib=libc++ -Wno-unused-command-line-argument -Wl,/usr/local/lib/libc++abi.a -Wl,/usr/local/lib/libc++.a\" toolset=clang-12 link=static install",
-        "sudo ./b2 --with-json --with-program_options cflags=\"-fPIC -fsanitize=thread\" cxxflags=\"-fPIC -fsanitize=thread -stdlib=libc++ -Wno-unused-command-line-argument -Wl,/usr/local/lib/libc++abi.a -Wl,/usr/local/lib/libc++.a\" toolset=clang-12 link=static install"
+        "sudo ./b2 --with-json --with-program_options cflags=\"-fPIC\" cxxflags=\"-fPIC\" toolset=gcc-11 link=static install"
       ]
     },
     {

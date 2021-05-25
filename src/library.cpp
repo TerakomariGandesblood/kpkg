@@ -91,7 +91,7 @@ void Library::download(bool use_proxy) const {
   }
 }
 
-void Library::build(Sanitize sanitize) const {
+void Library::build() const {
   if (std::filesystem::exists(dir_name_)) {
     spdlog::debug("use exists folder: {}", dir_name_);
   } else {
@@ -102,7 +102,7 @@ void Library::build(Sanitize sanitize) const {
     std::filesystem::rename(temp, dir_name_);
   }
 
-  run_cmds(cmd_, cwd_, sanitize);
+  run_cmds(cmd_, cwd_);
 }
 
 void Library::print() const { fmt::print("{:<25} {:<25}\n", name_, tag_name_); }

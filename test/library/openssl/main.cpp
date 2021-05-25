@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include <fmt/compile.h>
 #include <fmt/format.h>
 #include <openssl/evp.h>
 #include <openssl/sha.h>
@@ -15,7 +16,7 @@
 std::string bytes_to_hex_string(const std::vector<std::uint8_t>& bytes) {
   std::string str;
   for (auto byte : bytes) {
-    str += fmt::format("{:02x}", static_cast<int>(byte));
+    str += fmt::format(FMT_COMPILE("{:02x}"), static_cast<int>(byte));
   }
 
   return str;

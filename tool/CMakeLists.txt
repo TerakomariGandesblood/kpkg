@@ -3,7 +3,3 @@ file(GLOB_RECURSE EXECUTABLE_SRC CONFIGURE_DEPENDS
 
 add_executable(${EXECUTABLE} ${EXECUTABLE_SRC})
 target_link_libraries(${EXECUTABLE} PRIVATE ${LIBRARY})
-
-if(KPKG_USE_LIBCXX)
-  target_link_libraries(${EXECUTABLE} PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})
-endif()

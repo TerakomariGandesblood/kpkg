@@ -8,8 +8,6 @@
 
 namespace kpkg {
 
-enum class Sanitize { None, Memory, Thread };
-
 class Library {
  public:
   Library() = default;
@@ -27,7 +25,7 @@ class Library {
   }
 
   void download(bool use_proxy) const;
-  void build(Sanitize sanitize = Sanitize::None) const;
+  void build() const;
 
   void print() const;
 

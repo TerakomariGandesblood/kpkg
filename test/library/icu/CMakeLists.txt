@@ -13,10 +13,6 @@ find_package(ICU REQUIRED COMPONENTS data i18n io uc)
 add_executable(unicode-string unicode_string.cpp)
 target_link_libraries(unicode-string PRIVATE ${ICU_LIBRARIES})
 
-if(KPKG_USE_LIBCXX)
-  target_link_libraries(unicode-string PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})
-endif()
-
 add_custom_command(
   TARGET unicode-string
   POST_BUILD
@@ -24,10 +20,6 @@ add_custom_command(
 
 add_executable(transforms transforms.cpp)
 target_link_libraries(transforms PRIVATE ${ICU_LIBRARIES})
-
-if(KPKG_USE_LIBCXX)
-  target_link_libraries(transforms PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})
-endif()
 
 add_custom_command(
   TARGET transforms

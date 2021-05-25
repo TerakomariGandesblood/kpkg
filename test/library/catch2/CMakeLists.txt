@@ -13,10 +13,6 @@ add_definitions(-DCATCH_CONFIG_ENABLE_BENCHMARKING)
 add_executable(catch2 main.cpp)
 target_link_libraries(catch2 PRIVATE Catch2::Catch2WithMain)
 
-if(KPKG_USE_LIBCXX)
-  target_link_libraries(catch2 PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})
-endif()
-
 add_custom_command(
   TARGET catch2
   POST_BUILD

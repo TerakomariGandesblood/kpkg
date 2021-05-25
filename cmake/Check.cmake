@@ -71,35 +71,8 @@ else()
 endif()
 
 # ---------------------------------------------------------------------------------------
-# Linker
-# ---------------------------------------------------------------------------------------
-execute_process(
-  COMMAND ${CMAKE_LINKER} --version
-  OUTPUT_VARIABLE LINKER_VERSION
-  OUTPUT_STRIP_TRAILING_WHITESPACE)
-string(REPLACE "\n" ";" LINKER_VERSION ${LINKER_VERSION})
-list(GET LINKER_VERSION 0 LINKER_VERSION)
-
-message(STATUS "Linker: ${LINKER_VERSION}")
-
-# ---------------------------------------------------------------------------------------
 # Option
 # ---------------------------------------------------------------------------------------
-if(CMAKE_COMPILER_IS_GNUCXX AND KPKG_USE_LIBCXX)
-  message(FATAL_ERROR "GCC does not support libc++")
-endif()
-
 if(KPKG_VALGRIND AND KPKG_SANITIZER)
   message(FATAL_ERROR "Valgrind and sanitizer cannot be used at the same time ")
-endif()
-
-if((KPKG_SANITIZER STREQUAL "Memory") AND CMAKE_COMPILER_IS_GNUCXX)
-  message(FATAL_ERROR "GCC does not support MemorySanitizer")
-endif()
-
-if((KPKG_SANITIZER STREQUAL "Memory" OR KPKG_SANITIZER STREQUAL "Thread")
-   AND (NOT KPKG_USE_LIBCXX))
-  message(
-    FATAL_ERROR
-      "When using MemorySanitizer or ThreadSanitizer, libc++ must be used")
 endif()

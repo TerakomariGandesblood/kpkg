@@ -15,7 +15,6 @@
 class ProgramOptions {
  public:
   enum class Type { Install, List };
-  enum class Sanitize { None, Memory, Thread };
 
   ProgramOptions(std::int32_t argc, const char* argv[]) {
     std::string command;
@@ -59,8 +58,6 @@ class ProgramOptions {
 
       boost::program_options::options_description install_config(
           "Install configuration");
-      install_config.add_options()("memory,m", "Use memory")("thread,t",
-                                                             "Use thread");
 
       boost::program_options::options_description install_hidden(
           "Hidden options");
@@ -90,13 +87,6 @@ class ProgramOptions {
               .run(),
           vm);
       notify(vm);
-
-      if (vm.contains("memory")) {
-        sanitize_ = Sanitize::Memory;
-      }
-      if (vm.contains("thread")) {
-        sanitize_ = Sanitize::Thread;
-      }
     } else if (command == "list") {
       type_ = Type::List;
     } else {
@@ -106,15 +96,12 @@ class ProgramOptions {
 
   [[nodiscard]] Type get_type() const { return type_; }
 
-  [[nodiscard]] Sanitize get_sanitize() const { return sanitize_; }
-
   [[nodiscard]] const std::vector<std::string>& get_install_libraries() const {
     return install_libraries_;
   }
 
  private:
   Type type_;
-  Sanitize sanitize_ = Sanitize::None;
   std::vector<std::string> install_libraries_;
 };
 
@@ -125,18 +112,16 @@ int main() try {
 
     ProgramOptions options(argc, argv);
     EXPECT(options.get_type() == ProgramOptions::Type::Install);
-    EXPECT(options.get_sanitize() == ProgramOptions::Sanitize::None);
     EXPECT((options.get_install_libraries() ==
             std::vector<std::string>{"a", "b", "d", "c"}));
   }
 
   {
-    const char* argv[] = {"0", "install", "-m", "a", "b", "d", "c"};
+    const char* argv[] = {"0", "install", "a", "b", "d", "c"};
     std::int32_t argc = std::size(argv);
 
     ProgramOptions options(argc, argv);
     EXPECT(options.get_type() == ProgramOptions::Type::Install);
-    EXPECT(options.get_sanitize() == ProgramOptions::Sanitize::Memory);
     EXPECT((options.get_install_libraries() ==
             std::vector<std::string>{"a", "b", "d", "c"}));
   }

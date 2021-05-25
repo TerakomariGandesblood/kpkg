@@ -3,22 +3,22 @@
 #include <cstdint>
 #include <cstdlib>
 #include <fstream>
-#include <iomanip>
 #include <iostream>
-#include <sstream>
+#include <string>
 #include <vector>
 
+#include <fmt/compile.h>
+#include <fmt/format.h>
 #include <openssl/evp.h>
 #include <openssl/sha.h>
 
 std::string bytes_to_hex_string(const std::vector<std::uint8_t>& bytes) {
-  std::ostringstream stream;
-  for (std::uint8_t b : bytes) {
-    stream << std::setw(2) << std::setfill('0') << std::hex
-           << static_cast<int>(b);
+  std::string str;
+  for (auto byte : bytes) {
+    str += fmt::format(FMT_COMPILE("{:02x}"), static_cast<int>(byte));
   }
 
-  return stream.str();
+  return str;
 }
 
 std::string sha3_512_string(const std::string& input) {

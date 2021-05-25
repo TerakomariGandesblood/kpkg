@@ -9,10 +9,6 @@ find_package(zstd REQUIRED)
 add_executable(zstd main.cpp)
 target_link_libraries(zstd PRIVATE zstd::libzstd_static)
 
-if(KPKG_USE_LIBCXX)
-  target_link_libraries(zstd PRIVATE ${KPKG_LIBCXX} ${KPKG_LIBCXXABI})
-endif()
-
 add_custom_command(
   TARGET zstd
   POST_BUILD
