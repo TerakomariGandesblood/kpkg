@@ -63,20 +63,6 @@
       "cmd": ["sudo make install"]
     },
     {
-      "name": "llvm",
-      "releases_url": "https://api.github.com/repos/llvm/llvm-project/releases/latest",
-      "tags_url": "",
-      "tag_name": "",
-      "download_url": "",
-      "dependency": [],
-      "cwd": "",
-      "cmd": [
-        "cmake -S llvm -B build -DCMAKE_BUILD_TYPE=Release -DLIBCXX_ENABLE_SHARED=OFF -DLIBCXX_INCLUDE_TESTS=OFF -DLIBCXX_INCLUDE_BENCHMARKS=OFF -DLIBCXXABI_ENABLE_SHARED=OFF -DLLVM_ENABLE_PROJECTS=\"libcxx;libcxxabi\"",
-        "cmake --build build --config Release -j\"$(nproc)\" --target cxx cxxabi",
-        "sudo cmake --build build --config Release --target install-cxx install-cxxabi"
-      ]
-    },
-    {
       "name": "zlib",
       "releases_url": "",
       "tags_url": "https://api.github.com/repos/madler/zlib/tags",
