@@ -5,6 +5,8 @@
     "sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 400",
     "sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-12 400",
     "sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-12 400",
+    "sudo update-alternatives --install /usr/bin/lld lld /usr/bin/lld-12 400",
+    "sudo update-alternatives --install /usr/bin/ld.lld ld.lld /usr/bin/ld.lld-12 400",
     "sudo update-alternatives --install /usr/bin/llvm-ar llvm-ar /usr/bin/llvm-ar-12 400",
     "sudo update-alternatives --install /usr/bin/llvm-nm llvm-nm /usr/bin/llvm-nm-12 400",
     "sudo update-alternatives --install /usr/bin/llvm-ranlib llvm-ranlib /usr/bin/llvm-ranlib-12 400"
