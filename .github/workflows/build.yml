@@ -43,9 +43,7 @@ jobs:
         run: cmake --build build --config ${{ matrix.build_type }} -j"$(nproc)"
 
       - name: Install
-        run: |
-          sudo cmake --build build --config ${{ matrix.build_type }} --target install
-          sudo ldconfig
+        run: sudo cmake --build build --config ${{ matrix.build_type }} --target install
 
       - name: Run executable
         run: kpkg install zlib

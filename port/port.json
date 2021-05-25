@@ -290,7 +290,8 @@
       "cmd": [
         "./runConfigureICU Linux --disable-tests --disable-samples",
         "make -j\"$(nproc)\"",
-        "sudo make install"
+        "sudo make install",
+        "sudo ldconfig"
       ]
     },
     {

@@ -23,9 +23,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
   cd dependencies
 
-  kpkg install lcov fmt spdlog libarchive curl boost catch2 -i
-
-  sudo ldconfig
+  kpkg install lcov fmt spdlog libarchive openssl curl boost catch2 -i
 else
   echo "The system does not support: $OSTYPE"
   exit 1

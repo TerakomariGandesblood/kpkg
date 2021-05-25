@@ -45,7 +45,6 @@ jobs:
           cd build/tool
           ./kpkg install boost catch2 curl fmt icu libarchive magic_enum \
           openssl rocksdb spdlog sqlite zstd tidy-html5 pugixml
-          sudo ldconfig
 
       - name: Test
         run: cd build ; ctest -C RelWithDebInfo -j"$(nproc)" --output-on-failure

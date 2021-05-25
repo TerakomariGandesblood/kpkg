@@ -43,9 +43,7 @@ jobs:
           kpkg-${{ env.RELEASE_VERSION }}-ubuntu-20.04.tar.gz
 
       - name: Install
-        run: |
-          sudo dpkg -i build/kpkg-${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
-          sudo ldconfig
+        run: sudo dpkg -i build/kpkg-${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
 
       - name: Run executable
         run: kpkg install zlib
