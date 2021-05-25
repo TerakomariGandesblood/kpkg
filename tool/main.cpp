@@ -3,7 +3,6 @@
 
 #include <cstdint>
 #include <cstdlib>
-#include <fstream>
 
 #include "command.h"
 #include "error.h"
@@ -27,7 +26,7 @@ int main(int argc, char* argv[]) {
       }
     }
 
-    std::int32_t status{};
+    std::int32_t status = 0;
 
     while (waitpid(-1, &status, 0) > 0) {
       if (!WIFEXITED(status) || WEXITSTATUS(status)) {
