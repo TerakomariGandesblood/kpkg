@@ -12,6 +12,20 @@
 
 C++ Library Manager
 
+## Environment:
+
+- Linux(Ubuntu 20.04)
+- gcc/clang(Request to support C++20)
+
+## Libraries:
+
+- fmt
+- spdlog
+- zlib
+- libarchive
+- curl
+- Boost
+
 ## Build
 
 ```bash
