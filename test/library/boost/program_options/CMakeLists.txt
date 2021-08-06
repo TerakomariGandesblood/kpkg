@@ -8,11 +8,3 @@ add_custom_command(
   TARGET compiler
   POST_BUILD
   COMMAND compiler)
-
-add_executable(pkg pkg.cpp)
-target_link_libraries(pkg PRIVATE ${Boost_LIBRARIES})
-
-add_custom_command(
-  TARGET pkg
-  POST_BUILD
-  COMMAND pkg)

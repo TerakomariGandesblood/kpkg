@@ -50,7 +50,7 @@ void build_libraries(std::vector<kpkg::Library>& libraries,
   }
 }
 
-int main(int argc, const char* argv[]) {
+int main(int argc, const char* argv[]) try {
   kpkg::init_logger();
 
   kpkg::Program program(argc, argv);
@@ -64,4 +64,8 @@ int main(int argc, const char* argv[]) {
 
   print_libraries(program.libraries_to_be_built());
   build_libraries(program.libraries_to_be_built(), program.proxy());
+} catch (const std::exception& err) {
+  kpkg::error(err.what());
+} catch (...) {
+  kpkg::error("Unknown exception");
 }
