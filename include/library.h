@@ -16,14 +16,14 @@ class Library {
           const std::vector<std::string>& cmd, const std::string& tag_name,
           const std::string& download_url);
 
-  void init(bool use_proxy);
+  void init(const std::string& proxy);
 
   [[nodiscard]] const std::string& get_name() const { return name_; }
   [[nodiscard]] const std::vector<std::string>& get_dependency() const {
     return dependency_;
   }
 
-  void download(bool use_proxy) const;
+  void download(const std::string& proxy) const;
   void build() const;
 
   void print() const;

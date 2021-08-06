@@ -6,7 +6,6 @@ TEST_CASE("combine_command") {
   REQUIRE(kpkg::detail::combine_command("a", "b") == "a && b");
   REQUIRE(kpkg::detail::combine_command("", "b") == "b");
   REQUIRE(kpkg::detail::combine_command("a", "") == "a");
-  REQUIRE(std::empty(kpkg::detail::combine_command("", "")));
 }
 
 TEST_CASE("calc_command") {

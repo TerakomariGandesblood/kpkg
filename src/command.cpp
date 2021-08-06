@@ -10,7 +10,7 @@ namespace kpkg {
 void run_commands(const std::vector<std::string>& commands,
                   const std::string& cwd) {
   auto cmd = detail::calc_command(commands, cwd);
-  spdlog::info("Run command: {}");
+  spdlog::info("Run command: {}", cmd);
   klib::util::execute_command(cmd);
 }
 

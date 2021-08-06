@@ -40,7 +40,8 @@ set(KPKG_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(KPKG_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
 # https://cmake.org/cmake/help/latest/command/file.html#glob-recurse
-file(GLOB_RECURSE PORT_SRC CONFIGURE_DEPENDS "${KPKG_SOURCE_DIR}/src/port.s")
+file(GLOB_RECURSE LIBRARY_JSON_SRC CONFIGURE_DEPENDS
+     "${KPKG_SOURCE_DIR}/src/library.s")
 file(GLOB_RECURSE LIBRARY_SRC CONFIGURE_DEPENDS "${KPKG_SOURCE_DIR}/src/*.cpp")
 
 # ---------------------------------------------------------------------------------------
@@ -59,7 +60,6 @@ include(CompilerOptions)
 # Find package
 # ---------------------------------------------------------------------------------------
 find_package(klib REQUIRED)
-
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(Boost 1.75.0 CONFIG REQUIRED COMPONENTS json program_options)
@@ -67,10 +67,11 @@ find_package(Boost 1.75.0 CONFIG REQUIRED COMPONENTS json program_options)
 # ---------------------------------------------------------------------------------------
 # Build port
 # ---------------------------------------------------------------------------------------
-file(COPY "${KPKG_SOURCE_DIR}/port/port.json" DESTINATION ${KPKG_BINARY_DIR})
+file(COPY "${KPKG_SOURCE_DIR}/library/library.json"
+     DESTINATION ${KPKG_BINARY_DIR})
 
-add_library(port STATIC ${PORT_SRC})
-target_compile_options(port PRIVATE "-Wno-unused-command-line-argument")
+add_library(library_json STATIC ${LIBRARY_JSON_SRC})
+target_compile_options(library_json PRIVATE "-Wno-unused-command-line-argument")
 
 # ---------------------------------------------------------------------------------------
 # Build static library
@@ -85,7 +86,7 @@ set_target_properties(
              POSITION_INDEPENDENT_CODE ON
              INTERPROCEDURAL_OPTIMIZATION FALSE)
 
-target_link_libraries(${LIBRARY} PRIVATE port klib::klib fmt::fmt
+target_link_libraries(${LIBRARY} PRIVATE library_json klib::klib fmt::fmt
                                          spdlog::spdlog ${Boost_LIBRARIES})
 
 # ---------------------------------------------------------------------------------------

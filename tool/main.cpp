@@ -3,80 +3,65 @@
 
 #include <cstdint>
 #include <cstdlib>
+#include <string>
+#include <vector>
 
-#include <klib/util.h>
+#include <spdlog/spdlog.h>
+#include <boost/algorithm/string.hpp>
 
 #include "error.h"
+#include "library.h"
 #include "log.h"
 #include "program.h"
 
-int main(int argc, char* argv[]) {
-  kpkg::init_logger();
-
-  kpkg::Program program(argc, argv);
-
-  if (program.get_type() == kpkg::Program::Type::List) {
-    for (auto& item : program.get_libraries()) {
-      auto pid = fork();
-      if (pid < 0) {
-        kpkg::error("fork error");
-      } else if (pid == 0) {
-        item.init(program.use_proxy());
-        item.print();
-        return EXIT_SUCCESS;
-      }
-    }
-
-    std::int32_t status = 0;
-
-    while (waitpid(-1, &status, 0) > 0) {
-      if (!WIFEXITED(status) || WEXITSTATUS(status)) {
-        kpkg::error("waitpid error");
-      }
-    }
-    return EXIT_SUCCESS;
+void print_libraries(const std::vector<kpkg::Library>& libraries) {
+  if (std::empty(libraries)) {
+    return;
   }
 
-  program.print_dependency();
-  program.print_library_to_be_built();
-
-  if (program.install_package()) {
-    for (const auto& item : program.get_package_to_be_install()) {
-      klib::util::execute_command(item);
-    }
+  std::vector<std::string> names;
+  for (const auto& library : libraries) {
+    names.push_back(library.get_name());
   }
 
-  for (auto& item : program.get_dependency()) {
-    item.init(program.use_proxy());
-    item.download(program.use_proxy());
-    item.build();
-  }
+  spdlog::info("The following libraries will be installed: {}",
+               boost::join(names, " "));
+}
 
-#ifdef NDEBUG
-  for (auto& item : program.get_library_to_be_built()) {
-    auto pid{fork()};
+void build_libraries(std::vector<kpkg::Library>& libraries,
+                     const std::string& proxy) {
+  for (auto& item : libraries) {
+    auto pid = fork();
     if (pid < 0) {
       kpkg::error("fork error");
     } else if (pid == 0) {
-      item.init(program.use_proxy());
-      item.download(program.use_proxy());
+      item.init(proxy);
+      item.download(proxy);
       item.build();
-      return EXIT_SUCCESS;
+      std::exit(EXIT_SUCCESS);
     }
   }
 
-  std::int32_t status{};
-
+  std::int32_t status = 0;
   while (waitpid(-1, &status, 0) > 0) {
     if (!WIFEXITED(status) || WEXITSTATUS(status)) {
       kpkg::error("waitpid error");
     }
   }
-#else
-  for (auto& item : program.get_library_to_be_built()) {
-    item.init(program.use_proxy());
-    item.download(program.use_proxy());
+}
+
+int main(int argc, const char* argv[]) {
+  kpkg::init_logger();
+
+  kpkg::Program program(argc, argv);
+
+  print_libraries(program.dependencies());
+  for (auto& item : program.dependencies()) {
+    item.init(program.proxy());
+    item.download(program.proxy());
     item.build();
   }
-#endif
+
+  print_libraries(program.libraries_to_be_built());
+  build_libraries(program.libraries_to_be_built(), program.proxy());
 }

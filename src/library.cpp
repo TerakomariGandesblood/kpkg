@@ -26,7 +26,7 @@ Library::Library(const std::string& name, const std::string& releases_url,
       tag_name_(tag_name),
       download_url_(download_url) {}
 
-void Library::init(bool use_proxy) {
+void Library::init(const std::string& proxy) {
   if (std::empty(tag_name_) && std::empty(download_url_)) {
     std::string url;
     if (!std::empty(releases_url_)) {
@@ -39,8 +39,9 @@ void Library::init(bool use_proxy) {
     spdlog::info("Get info from: {} ", url);
 
     klib::http::Request request;
-    if (use_proxy) {
-      request.set_proxy("socks5://127.0.0.1:1080");
+    if (!std::empty(proxy)) {
+      spdlog::info("Use proxy: {}", proxy);
+      request.set_proxy(proxy);
     }
     auto response = request.get(url);
     if (response.status_code() != klib::http::Response::StatusCode::Ok) {
@@ -79,15 +80,16 @@ void Library::init(bool use_proxy) {
   }
 }
 
-void Library::download(bool use_proxy) const {
+void Library::download(const std::string& proxy) const {
   if (std::filesystem::is_regular_file(file_name_)) {
     spdlog::info("Use exists file: {}", file_name_);
   } else {
     spdlog::info("Get file: {} from: {}", file_name_, download_url_);
 
     klib::http::Request request;
-    if (use_proxy) {
-      request.set_proxy("socks5://127.0.0.1:1080");
+    if (!std::empty(proxy)) {
+      spdlog::info("Use proxy: {}", proxy);
+      request.set_proxy(proxy);
     }
     auto response = request.get(download_url_);
     if (response.status_code() != klib::http::Response::StatusCode::Ok) {

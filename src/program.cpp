@@ -1,13 +1,17 @@
 #include "program.h"
 
+#include <wait.h>
+
 #include <algorithm>
-#include <cstddef>
+#include <cassert>
 #include <cstdlib>
+#include <cstring>
 
 #include <fmt/core.h>
 #include <fmt/ostream.h>
 #include <spdlog/spdlog.h>
 #include <boost/algorithm/string.hpp>
+#include <boost/json.hpp>
 #include <boost/program_options/options_description.hpp>
 #include <boost/program_options/parsers.hpp>
 #include <boost/program_options/positional_options.hpp>
@@ -16,235 +20,224 @@
 #include "error.h"
 #include "version.h"
 
-extern char port[];
-extern int port_size;
+extern char library[];
+extern int library_size;
 
 namespace kpkg {
 
-Program::Program(std::int32_t argc, char* argv[]) {
-  auto input_library = parse_program_options(argc, argv);
+Program::Program(std::int32_t argc, const char* argv[])
+    : libraries_(Program::read_from_json()) {
+  for (const auto& library_name : parse_program_options(argc, argv)) {
+    auto library = get_from_name(library_name);
 
-  std::tie(libraries_, package_to_be_install_) = read_from_port();
-
-  if (type_ == Type::List) {
-    return;
-  }
-
-  for (const auto& item : input_library) {
-    auto library = get_from_name(libraries_, item);
-    auto dep = library.get_dependency();
-    for (const auto& i : dep) {
-      dependency_.push_back(get_from_name(libraries_, i));
+    for (const auto& dependency_name : library.get_dependency()) {
+      dependencies_.push_back(get_from_name(dependency_name));
     }
-    library_to_be_built_.push_back(
-        get_from_name(libraries_, library.get_name()));
+    libraries_to_be_built_.push_back(get_from_name(library.get_name()));
   }
 
-  std::sort(std::begin(libraries_), std::end(libraries_),
+  Program::unique(dependencies_);
+  Program::unique(libraries_to_be_built_);
+
+  std::erase_if(libraries_to_be_built_, [this](const Library& item) {
+    return Program::contains(dependencies_, item.get_name());
+  });
+
+  auto iter = std::find_if(
+      std::begin(dependencies_), std::end(dependencies_),
+      [](const Library& item) { return item.get_name() == "nghttp2"; });
+  if (iter != std::end(dependencies_)) {
+    std::swap(*iter, dependencies_.back());
+    std::sort(std::begin(dependencies_), std::end(dependencies_) - 1,
+              [](const Library& lhs, const Library& rhs) {
+                return lhs.get_name() < rhs.get_name();
+              });
+  }
+}
+
+void Program::unique(std::vector<Library>& libraries) {
+  std::sort(std::begin(libraries), std::end(libraries),
             [](const Library& lhs, const Library& rhs) {
               return lhs.get_name() < rhs.get_name();
             });
 
-  std::sort(std::begin(dependency_), std::end(dependency_),
-            [](const Library& lhs, const Library& rhs) {
-              return lhs.get_name() < rhs.get_name();
-            });
-  dependency_.erase(std::unique(std::begin(dependency_), std::end(dependency_),
-                                [](const Library& lhs, const Library& rhs) {
-                                  return lhs.get_name() == rhs.get_name();
-                                }),
-                    std::end(dependency_));
-
-  std::sort(std::begin(library_to_be_built_), std::end(library_to_be_built_),
-            [](const Library& lhs, const Library& rhs) {
-              return lhs.get_name() < rhs.get_name();
-            });
-  library_to_be_built_.erase(
-      std::unique(std::begin(library_to_be_built_),
-                  std::end(library_to_be_built_),
-                  [](const Library& lhs, const Library& rhs) {
-                    return lhs.get_name() == rhs.get_name();
-                  }),
-      std::end(library_to_be_built_));
-
-  for (auto iter = std::begin(library_to_be_built_);
-       iter != std::end(library_to_be_built_);) {
-    if (std::find_if(std::begin(dependency_), std::end(dependency_),
-                     [iter](const Library& item) {
-                       return item.get_name() == iter->get_name();
-                     }) != std::end(dependency_)) {
-      iter = library_to_be_built_.erase(iter);
-    } else {
-      ++iter;
-    }
-  }
+  libraries.erase(std::unique(std::begin(libraries), std::end(libraries),
+                              [](const Library& lhs, const Library& rhs) {
+                                return lhs.get_name() == rhs.get_name();
+                              }),
+                  std::end(libraries));
 }
 
-void Program::print_dependency() const {
-  if (std::empty(dependency_)) {
-    return;
+bool Program::contains(const std::vector<Library>& libraries,
+                       const std::string& name) {
+  for (const auto& library : libraries) {
+    if (library.get_name() == name) {
+      return true;
+    }
   }
-
-  spdlog::info("The following dependent libraries will be installed: ");
-
-  for (const auto& item : dependency_) {
-    spdlog::info("{}", item.get_name());
-  }
+  return false;
 }
 
-void Program::print_library_to_be_built() const {
-  if (std::empty(library_to_be_built_)) {
-    error("library to be built is empty");
-  }
-
-  spdlog::info("The following libraries will be installed: ");
-
-  for (const auto& item : library_to_be_built_) {
-    spdlog::info("{}", item.get_name());
-  }
-}
-
-std::vector<std::string> Program::parse_program_options(std::int32_t argc,
-                                                        char* argv[]) {
-  try {
-    std::string command;
-
-    boost::program_options::options_description generic("Generic options");
-    generic.add_options()("version,v", "print version string");
-
-    boost::program_options::options_description config("Configuration");
-    config.add_options()("proxy,p", "Use proxy");
-
-    boost::program_options::options_description hidden("Hidden options");
-    hidden.add_options()("command",
-                         boost::program_options::value<std::string>(&command))(
-        "sub_args", boost::program_options::value<std::vector<std::string>>());
-
-    boost::program_options::options_description cmdline_options;
-    cmdline_options.add(generic).add(config).add(hidden);
-
-    boost::program_options::options_description visible("Allowed options");
-    visible.add(generic).add(config);
-
-    boost::program_options::positional_options_description p;
-    p.add("command", 1).add("sub_args", -1);
-
-    boost::program_options::variables_map vm;
-    auto parsed = boost::program_options::command_line_parser(argc, argv)
-                      .options(cmdline_options)
-                      .positional(p)
-                      .allow_unregistered()
-                      .run();
-    store(parsed, vm);
-    notify(vm);
-
-    if (vm.contains("version")) {
-      fmt::print("{} version: {}.{}.{}\n", argv[0], KPKG_VER_MAJOR,
-                 KPKG_VER_MINOR, KPKG_VER_PATCH);
-      std::exit(EXIT_SUCCESS);
-    }
-
-    if (vm.contains("proxy")) {
-      use_proxy_ = true;
-    }
-
-    if (command == "install") {
-      type_ = Type::Install;
-
-      boost::program_options::options_description install_config(
-          "Install configuration");
-      install_config.add_options()("install,i", "Install package")(
-          "memory,m", "Use memory")("thread,t", "Use thread");
-
-      boost::program_options::options_description install_hidden(
-          "Hidden options");
-      install_hidden.add_options()(
-          "install-libraries",
-          boost::program_options::value<std::vector<std::string>>());
-
-      boost::program_options::options_description install_cmdline_options;
-      install_cmdline_options.add(install_config).add(install_hidden);
-
-      boost::program_options::options_description install_visible(
-          "Allowed options");
-      install_visible.add(install_config);
-
-      boost::program_options::positional_options_description install_pos;
-      install_pos.add("install-libraries", -1);
-
-      auto opts = boost::program_options::collect_unrecognized(
-          parsed.options, boost::program_options::include_positional);
-      opts.erase(opts.begin());
-
-      boost::program_options::store(
-          boost::program_options::command_line_parser(opts)
-              .options(install_cmdline_options)
-              .positional(install_pos)
-              .run(),
-          vm);
-      notify(vm);
-
-      if (vm.contains("install")) {
-        install_ = true;
-      }
-
-      if (!vm.contains("install-libraries")) {
-        error("need a library name");
-      }
-
-      return vm["install-libraries"].as<std::vector<std::string>>();
-    } else if (command == "list") {
-      type_ = Type::List;
-      return {};
-    } else if (std::empty(command)) {
-      error("need a library name");
-    } else {
-      throw boost::program_options::invalid_option_value(command);
-    }
-  } catch (const boost::program_options::error& err) {
-    error(err.what());
-  }
-}
-
-std::pair<std::vector<Library>, std::vector<std::string>>
-Program::read_from_port() {
-  std::string s(port, static_cast<std::size_t>(port_size));
+std::vector<Library> Program::read_from_json() {
+  std::string json_str(library, library_size);
 
   boost::json::error_code error_code;
   boost::json::monotonic_resource mr;
-  boost::json::parse_options options;
-  options.allow_comments = true;
-  auto jv = boost::json::parse(s.data(), error_code, &mr, options);
+  auto jv = boost::json::parse(json_str.data(), error_code, &mr);
   if (error_code) {
     error("json parse error: {}", error_code.message());
   }
 
-  jv = jv.as_object();
-
-  std::vector<std::string> install;
-  auto arr = jv.at("install").as_array();
-  for (const auto& item : arr) {
-    install.emplace_back(item.as_string().c_str());
-  }
-
-  auto ports = jv.at("port").as_array();
   std::vector<Library> ret;
-
-  for (const auto& item : ports) {
+  for (const auto& item : jv.as_array()) {
     ret.push_back(boost::json::value_to<Library>(item));
   }
 
-  return {ret, install};
+  return ret;
 }
 
-Library Program::get_from_name(const std::vector<Library>& libraries,
-                               const std::string& name) {
-  for (const auto& item : libraries) {
-    if (boost::to_lower_copy(item.get_name()) == boost::to_lower_copy(name)) {
-      return item;
+void Program::show_libraries() {
+  auto backup = spdlog::get_level();
+  spdlog::set_level(spdlog::level::err);
+
+  for (auto& library : libraries_) {
+    auto pid = fork();
+    if (pid < 0) {
+      error("fork error");
+    } else if (pid == 0) {
+      library.init(proxy_);
+      library.print();
+      std::exit(EXIT_SUCCESS);
     }
   }
+
+  std::int32_t status = 0;
+
+  while (waitpid(-1, &status, 0) > 0) {
+    if (!WIFEXITED(status) || WEXITSTATUS(status)) {
+      error("waitpid error");
+    }
+  }
+
+  spdlog::set_level(backup);
+}
+
+Library Program::get_from_name(const std::string& name) {
+  for (const auto& library : libraries_) {
+    if (boost::to_lower_copy(library.get_name()) ==
+        boost::to_lower_copy(name)) {
+      return library;
+    }
+  }
+
   error("can not find this library: {}", name);
+}
+
+std::vector<std::string> Program::parse_program_options(std::int32_t argc,
+                                                        const char* argv[]) {
+  if (argc == 1) {
+    fmt::print(R"(kpkg list
+kpkg install <some library>)");
+    std::exit(EXIT_SUCCESS);
+  } else if (argc > 1) {
+    if (std::strcmp(argv[1], "list") == 0) {
+      boost::program_options::options_description generic("Generic options");
+      generic.add_options()("version,v", "print version string")(
+          "help,h", "produce help message");
+
+      boost::program_options::options_description config("Configuration");
+      config.add_options()(
+          "proxy,p",
+          boost::program_options::value<std::string>(&proxy_)->implicit_value(
+              "socks5://127.0.0.1:1080"),
+          "Use proxy");
+
+      boost::program_options::options_description visible("Allowed options");
+      visible.add(generic).add(config);
+
+      boost::program_options::variables_map vm;
+      try {
+        store(boost::program_options::command_line_parser(argc - 1, argv + 1)
+                  .options(visible)
+                  .run(),
+              vm);
+        notify(vm);
+      } catch (const boost::program_options::error& err) {
+        error(err.what());
+      }
+
+      if (vm.contains("version")) {
+        fmt::print("{} version: {}\n", argv[0], kpkg_version());
+        std::exit(EXIT_SUCCESS);
+      }
+
+      if (vm.contains("help")) {
+        fmt::print("{}\n", visible);
+        std::exit(EXIT_SUCCESS);
+      }
+
+      show_libraries();
+      std::exit(EXIT_SUCCESS);
+    } else if (std::strcmp(argv[1], "install") == 0) {
+      std::vector<std::string> input_libraries;
+
+      boost::program_options::options_description generic("Generic options");
+      generic.add_options()("version,v", "print version string")(
+          "help,h", "produce help message");
+
+      boost::program_options::options_description config("Configuration");
+      config.add_options()(
+          "proxy,p",
+          boost::program_options::value<std::string>(&proxy_)->implicit_value(
+              "socks5://127.0.0.1:1080"),
+          "Use proxy");
+
+      boost::program_options::options_description hidden("Hidden options");
+      hidden.add_options()(
+          "input-libraries",
+          boost::program_options::value<std::vector<std::string>>(
+              &input_libraries)
+              ->required());
+
+      boost::program_options::options_description cmdline_options;
+      cmdline_options.add(generic).add(config).add(hidden);
+
+      boost::program_options::options_description visible("Allowed options");
+      visible.add(generic).add(config);
+
+      boost::program_options::positional_options_description p;
+      p.add("input-libraries", -1);
+
+      boost::program_options::variables_map vm;
+      try {
+        store(boost::program_options::command_line_parser(argc - 1, argv + 1)
+                  .options(cmdline_options)
+                  .positional(p)
+                  .run(),
+              vm);
+        notify(vm);
+      } catch (const boost::program_options::error& err) {
+        error(err.what());
+      }
+
+      if (vm.contains("version")) {
+        fmt::print("{} version: {}\n", argv[0], kpkg_version());
+        std::exit(EXIT_SUCCESS);
+      }
+
+      if (vm.contains("help")) {
+        fmt::print("{}\n", visible);
+        std::exit(EXIT_SUCCESS);
+      }
+
+      return input_libraries;
+    } else {
+      error("Unknown command: {}", argv[1]);
+    }
+  } else {
+    assert(false);
+    return {};
+  }
 }
 
 }  // namespace kpkg

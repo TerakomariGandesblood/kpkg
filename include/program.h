@@ -10,51 +10,33 @@ namespace kpkg {
 
 class Program {
  public:
-  enum class Type { Install, List };
+  Program(std::int32_t argc, const char* argv[]);
 
-  Program(std::int32_t argc, char* argv[]);
+  [[nodiscard]] std::string proxy() const { return proxy_; }
 
-  void print_dependency() const;
-
-  void print_library_to_be_built() const;
-
-  [[nodiscard]] std::vector<Library>& get_libraries() { return libraries_; }
-
-  [[nodiscard]] bool use_proxy() const { return use_proxy_; }
-
-  [[nodiscard]] bool install_package() const { return install_; }
-
-  [[nodiscard]] const std::vector<std::string>& get_package_to_be_install()
-      const {
-    return package_to_be_install_;
+  [[nodiscard]] std::vector<Library>& libraries() { return libraries_; }
+  [[nodiscard]] std::vector<Library>& dependencies() { return dependencies_; }
+  [[nodiscard]] std::vector<Library>& libraries_to_be_built() {
+    return libraries_to_be_built_;
   }
-
-  [[nodiscard]] std::vector<Library>& get_dependency() { return dependency_; }
-
-  [[nodiscard]] std::vector<Library>& get_library_to_be_built() {
-    return library_to_be_built_;
-  }
-
-  [[nodiscard]] Type get_type() const { return type_; }
 
  private:
+  static void unique(std::vector<Library>& libraries);
+  static bool contains(const std::vector<Library>& libraries,
+                       const std::string& name);
+  static std::vector<Library> read_from_json();
+
+  void show_libraries();
+  Library get_from_name(const std::string& name);
+
   std::vector<std::string> parse_program_options(std::int32_t argc,
-                                                 char* argv[]);
+                                                 const char* argv[]);
 
-  static std::pair<std::vector<Library>, std::vector<std::string>>
-  read_from_port();
+  std::string proxy_;
 
-  static Library get_from_name(const std::vector<Library>& libraries,
-                               const std::string& name);
-
-  bool use_proxy_ = false;
-  bool install_ = false;
-  Type type_;
-
-  std::vector<std::string> package_to_be_install_;
   std::vector<Library> libraries_;
-  std::vector<Library> dependency_;
-  std::vector<Library> library_to_be_built_;
+  std::vector<Library> dependencies_;
+  std::vector<Library> libraries_to_be_built_;
 };
 
 }  // namespace kpkg
