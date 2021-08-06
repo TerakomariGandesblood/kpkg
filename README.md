@@ -1,8 +1,9 @@
 # kpkg
 
+[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/KaiserLancelot/kpkg)
 [![Build](https://github.com/KaiserLancelot/kpkg/actions/workflows/build.yml/badge.svg)](https://github.com/KaiserLancelot/kpkg/actions/workflows/build.yml)
 [![Coverage Status](https://coveralls.io/repos/github/KaiserLancelot/kpkg/badge.svg?branch=main)](https://coveralls.io/github/KaiserLancelot/kpkg?branch=main)
-[![GitHub License](https://img.shields.io/github/license/KaiserLancelot/kpkg)](https://raw.githubusercontent.com/KaiserLancelot/kpkg/master/LICENSE)
+[![GitHub License](https://img.shields.io/github/license/KaiserLancelot/kpkg)](https://github.com/KaiserLancelot/kpkg/blob/main/LICENSE)
 [![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
 [![GitHub Releases](https://img.shields.io/github/release/KaiserLancelot/kpkg)](https://github.com/KaiserLancelot/kpkg/releases/latest)
 [![GitHub Downloads](https://img.shields.io/github/downloads/KaiserLancelot/kpkg/total)](https://github.com/KaiserLancelot/kpkg/releases)
@@ -12,19 +13,17 @@
 
 C++ Library Manager
 
-## Environment:
+## Environment
 
 - Linux(Ubuntu 20.04)
 - gcc/clang(Request to support C++20)
 
-## Libraries:
+## Dependency
 
 - fmt
 - spdlog
-- zlib
-- libarchive
-- curl
 - Boost
+- klib
 
 ## Build
 
@@ -44,3 +43,7 @@ sudo cmake --build build --config Release --target install
 ```bash
 sudo cmake --build build --config Release --target uninstall
 ```
+
+---
+
+Thanks to [JetBrains](https://www.jetbrains.com/) for donating product licenses to help develop this project <a href="https://www.jetbrains.com/"><img src="logo/jetbrains.svg" width="94" align="center" /></a>
