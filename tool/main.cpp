@@ -45,7 +45,7 @@ void build_libraries(std::vector<kpkg::Library>& libraries,
   std::int32_t status = 0;
   while (waitpid(-1, &status, 0) > 0) {
     if (!WIFEXITED(status) || WEXITSTATUS(status)) {
-      kpkg::error("waitpid error");
+      kpkg::error("waitpid error: {}", status);
     }
   }
 }

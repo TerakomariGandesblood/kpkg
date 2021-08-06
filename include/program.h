@@ -14,7 +14,6 @@ class Program {
 
   [[nodiscard]] std::string proxy() const { return proxy_; }
 
-  [[nodiscard]] std::vector<Library>& libraries() { return libraries_; }
   [[nodiscard]] std::vector<Library>& dependencies() { return dependencies_; }
   [[nodiscard]] std::vector<Library>& libraries_to_be_built() {
     return libraries_to_be_built_;

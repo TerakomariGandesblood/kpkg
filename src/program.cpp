@@ -5,7 +5,6 @@
 #include <algorithm>
 #include <cassert>
 #include <cstdlib>
-#include <cstring>
 
 #include <fmt/core.h>
 #include <fmt/ostream.h>
@@ -39,6 +38,8 @@ Program::Program(std::int32_t argc, const char* argv[])
     return Program::contains(dependencies_, item.get_name());
   });
 
+  // NOTE
+  // for nghttp2
   auto iter = std::find_if(
       std::begin(dependencies_), std::end(dependencies_),
       [](const Library& item) { return item.get_name() == "nghttp2"; });
@@ -71,6 +72,7 @@ bool Program::contains(const std::vector<Library>& libraries,
       return true;
     }
   }
+
   return false;
 }
 
@@ -90,10 +92,9 @@ void Program::show_libraries() {
   }
 
   std::int32_t status = 0;
-
   while (waitpid(-1, &status, 0) > 0) {
     if (!WIFEXITED(status) || WEXITSTATUS(status)) {
-      error("waitpid error");
+      error("waitpid error: {}", status);
     }
   }
 
@@ -113,12 +114,18 @@ Library Program::get_from_name(const std::string& name) {
 
 std::vector<std::string> Program::parse_program_options(std::int32_t argc,
                                                         const char* argv[]) {
+  std::vector<std::string> input_libraries;
+
+  std::string help_msg = R"(kpkg list [options]
+kpkg install <some library> [options])";
+
   if (argc == 1) {
-    fmt::print(R"(kpkg list
-kpkg install <some library>)");
+    fmt::print("{}", help_msg);
     std::exit(EXIT_SUCCESS);
   } else if (argc > 1) {
-    if (std::strcmp(argv[1], "list") == 0) {
+    std::string command = argv[1];
+
+    if (command == "list") {
       boost::program_options::options_description generic("Generic options");
       generic.add_options()("version,v", "print version string")(
           "help,h", "produce help message");
@@ -156,9 +163,7 @@ kpkg install <some library>)");
 
       show_libraries();
       std::exit(EXIT_SUCCESS);
-    } else if (std::strcmp(argv[1], "install") == 0) {
-      std::vector<std::string> input_libraries;
-
+    } else if (command == "install") {
       boost::program_options::options_description generic("Generic options");
       generic.add_options()("version,v", "print version string")(
           "help,h", "produce help message");
@@ -174,8 +179,7 @@ kpkg install <some library>)");
       hidden.add_options()(
           "input-libraries",
           boost::program_options::value<std::vector<std::string>>(
-              &input_libraries)
-              ->required());
+              &input_libraries));
 
       boost::program_options::options_description cmdline_options;
       cmdline_options.add(generic).add(config).add(hidden);
@@ -209,13 +213,20 @@ kpkg install <some library>)");
       }
 
       return input_libraries;
+    } else if (command == "-v" || command == "--version") {
+      fmt::print("{} version: {}\n", argv[0], kpkg_version());
+      std::exit(EXIT_SUCCESS);
+    } else if (command == "-h" || command == "--help") {
+      fmt::print("{}", help_msg);
+      std::exit(EXIT_SUCCESS);
     } else {
-      error("Unknown command: {}", argv[1]);
+      error("Unknown command: {}", command);
     }
   } else {
     assert(false);
-    return {};
   }
+
+  return input_libraries;
 }
 
 }  // namespace kpkg
