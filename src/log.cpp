@@ -10,7 +10,7 @@ namespace kpkg {
 void init_logger() {
   auto stdout_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
   auto basic_file_sink =
-      std::make_shared<spdlog::sinks::basic_file_sink_mt>(".log.txt");
+      std::make_shared<spdlog::sinks::basic_file_sink_mt>(".kpkg-log.txt");
 
   std::vector<spdlog::sink_ptr> sinks{stdout_sink, basic_file_sink};
   auto logger = std::make_shared<spdlog::logger>("kpkg", std::begin(sinks),
