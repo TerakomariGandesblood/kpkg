@@ -115,11 +115,24 @@
       "download_url": "https://api.github.com/repos/openssl/openssl/tarball/refs/tags/OpenSSL_1_1_1k",
       "dependency": [],
       "cwd": "",
-      // https://github.com/openssl/openssl/blob/master/INSTALL.md
       "cmd": [
         "./Configure linux-x86_64 no-tests no-shared no-asm",
         "make -j\"$(nproc)\"",
         "sudo make install_sw"
+      ]
+    },
+    {
+      "name": "nghttp2",
+      "releases_url": "",
+      "tags_url": "",
+      "tag_name": "v1.44.0",
+      "download_url": "https://github.com/nghttp2/nghttp2/releases/download/v1.44.0/nghttp2-1.44.0.tar.gz",
+      "dependency": ["zlib", "openssl"],
+      "cwd": "",
+      "cmd": [
+        "./configure --disable-failmalloc --enable-lib-only --disable-shared --without-libxml2 --without-jansson --with-zlib --without-libevent-openssl --without-libcares --with-openssl --without-libev --without-cunit --without-jemalloc --without-systemd",
+        "make -j\"$(nproc)\"",
+        "sudo make install"
       ]
     },
     {
@@ -128,10 +141,10 @@
       "tags_url": "",
       "tag_name": "",
       "download_url": "",
-      "dependency": ["zlib", "openssl"],
+      "dependency": ["zlib", "openssl", "nghttp2"],
       "cwd": "",
       "cmd": [
-        "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_CURL_EXE=OFF -DBUILD_SHARED_LIBS=OFF -DHTTP_ONLY=ON -DENABLE_MANUAL=OFF -DBUILD_TESTING=OFF",
+        "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_CURL_EXE=OFF -DBUILD_SHARED_LIBS=OFF -DHTTP_ONLY=ON -DUSE_NGHTTP2=ON -DENABLE_MANUAL=OFF -DBUILD_TESTING=OFF",
         "cmake --build build --config Release -j\"$(nproc)\"",
         "sudo cmake --build build --config Release --target install"
       ]
@@ -144,7 +157,6 @@
       "download_url": "",
       "dependency": [],
       "cwd": "",
-      // https://github.com/jemalloc/jemalloc/blob/dev/INSTALL.md
       "cmd": [
         "autoconf",
         "./configure --disable-shared --enable-autogen",
@@ -160,7 +172,6 @@
       "download_url": "",
       "dependency": ["jemalloc", "zstd"],
       "cwd": "",
-      // https://github.com/facebook/rocksdb/blob/master/INSTALL.md
       "cmd": [
         "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DWITH_JEMALLOC=ON -DWITH_ZSTD=ON -DWITH_GFLAGS=OFF -DUSE_RTTI=ON -DROCKSDB_BUILD_SHARED=OFF -DWITH_TESTS=OFF -DWITH_BENCHMARK_TOOLS=OFF -DWITH_CORE_TOOLS=OFF -DWITH_TOOLS=OFF -DWITH_ALL_TESTS=OFF -DCMAKE_INSTALL_PREFIX=/usr/local",
         "cmake --build build --config Release -j\"$(nproc)\"",
@@ -286,7 +297,6 @@
       "download_url": "",
       "dependency": [],
       "cwd": "icu4c/source",
-      // https://unicode-org.github.io/icu/userguide/icu4c/build.html#how-to-build-and-install-on-unix
       "cmd": [
         "./runConfigureICU Linux --disable-tests --disable-samples",
         "make -j\"$(nproc)\"",

@@ -3,11 +3,11 @@
 #include <filesystem>
 
 #include <fmt/format.h>
+#include <klib/archive.h>
+#include <klib/http.h>
 #include <spdlog/spdlog.h>
 
 #include "command.h"
-#include "decompress.h"
-#include "download.h"
 #include "error.h"
 
 namespace kpkg {
@@ -30,11 +30,16 @@ void Library::init(bool use_proxy) {
   boost::json::error_code error_code;
   boost::json::monotonic_resource mr;
 
+  klib::http::Request request;
+  if (use_proxy) {
+    request.set_proxy("socks5://127.0.0.1:1080");
+  }
+
   if (std::empty(tag_name_) && std::empty(download_url_)) {
     if (!std::empty(releases_url_)) {
       spdlog::debug("get info from: {} ", releases_url_);
 
-      auto result = get_page(releases_url_, use_proxy);
+      auto result = request.get(releases_url_).text();
       auto jv = boost::json::parse(result, error_code, &mr);
       if (error_code) {
         error("json parse error");
@@ -52,7 +57,7 @@ void Library::init(bool use_proxy) {
     } else if (!std::empty(tags_url_)) {
       spdlog::debug("get info from: {} ", tags_url_);
 
-      auto result = get_page(tags_url_, use_proxy);
+      auto result = request.get(tags_url_).text();
       auto jv = boost::json::parse(result, error_code, &mr);
 
       if (error_code) {
@@ -86,7 +91,13 @@ void Library::download(bool use_proxy) const {
     spdlog::debug("use exists file: {}", file_name_);
   } else {
     spdlog::debug("get file: {} from: {}", file_name_, download_url_);
-    get_file(download_url_, file_name_, use_proxy);
+
+    klib::http::Request request;
+    if (use_proxy) {
+      request.set_proxy("socks5://127.0.0.1:1080");
+    }
+    request.get(download_url_).save_to_file(file_name_, true);
+
     spdlog::debug("download file: {} complete", file_name_);
   }
 }
@@ -95,11 +106,11 @@ void Library::build() const {
   if (std::filesystem::exists(dir_name_)) {
     spdlog::debug("use exists folder: {}", dir_name_);
   } else {
-    auto temp = decompress(file_name_);
-    spdlog::debug("decompress file: {}, to {}", file_name_, temp);
+    auto temp = klib::archive::decompress(file_name_);
+    spdlog::debug("decompress file: {}, to {}", file_name_, *temp);
 
-    spdlog::debug("rename folder from {} to {}", temp, dir_name_);
-    std::filesystem::rename(temp, dir_name_);
+    spdlog::debug("rename folder from {} to {}", *temp, dir_name_);
+    std::filesystem::rename(*temp, dir_name_);
   }
 
   run_cmds(cmd_, cwd_);

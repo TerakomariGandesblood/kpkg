@@ -1,5 +1,7 @@
-# https://github.com/gabime/spdlog/blob/v1.x/CMakeLists.txt
-cmake_minimum_required(VERSION 3.19)
+# ---------------------------------------------------------------------------------------
+# CMake version
+# ---------------------------------------------------------------------------------------
+cmake_minimum_required(VERSION 3.20)
 message(STATUS "CMake version: ${CMAKE_VERSION}")
 
 # ---------------------------------------------------------------------------------------
@@ -23,7 +25,7 @@ message(STATUS "${PROJECT_NAME} version: ${KPKG_VERSION}")
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE
       "Release"
-      CACHE STRING "Choose Debug, Release, MinSizeRel or RelWithDebInfo" FORCE)
+      CACHE STRING "Choose Debug, Release, RelWithDebInfo or MinSizeRel" FORCE)
 endif()
 message(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
 
@@ -32,7 +34,7 @@ message(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
 # ---------------------------------------------------------------------------------------
 set(LIBRARY lib${PROJECT_NAME})
 set(EXECUTABLE ${PROJECT_NAME})
-set(TEST_EXECUTABLE catch2)
+set(TEST_EXECUTABLE ${EXECUTABLE}-test)
 
 set(KPKG_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(KPKG_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
@@ -56,11 +58,10 @@ include(CompilerOptions)
 # ---------------------------------------------------------------------------------------
 # Find package
 # ---------------------------------------------------------------------------------------
+find_package(klib REQUIRED)
+
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
-find_package(ZLIB REQUIRED)
-find_package(LibArchive REQUIRED)
-find_package(CURL CONFIG REQUIRED)
 find_package(Boost 1.75.0 CONFIG REQUIRED COMPONENTS json program_options)
 
 # ---------------------------------------------------------------------------------------
@@ -75,23 +76,17 @@ target_compile_options(port PRIVATE "-Wno-unused-command-line-argument")
 # Build static library
 # ---------------------------------------------------------------------------------------
 add_library(${LIBRARY} STATIC ${LIBRARY_SRC})
+
 target_include_directories(${LIBRARY} PUBLIC "${KPKG_SOURCE_DIR}/include")
-target_link_libraries(
-  ${LIBRARY}
-  PRIVATE port
-          CURL::libcurl
-          fmt::fmt
-          spdlog::spdlog
-          ${Boost_LIBRARIES}
-          ${LibArchive_LIBRARIES}
-          ${ZLIB_LIBRARIES})
 
 set_target_properties(
   ${LIBRARY}
-  PROPERTIES DEBUG_POSTFIX d
-             OUTPUT_NAME ${PROJECT_NAME}
+  PROPERTIES OUTPUT_NAME ${PROJECT_NAME}
              POSITION_INDEPENDENT_CODE ON
              INTERPROCEDURAL_OPTIMIZATION FALSE)
+
+target_link_libraries(${LIBRARY} PRIVATE port klib::klib fmt::fmt
+                                         spdlog::spdlog ${Boost_LIBRARIES})
 
 # ---------------------------------------------------------------------------------------
 # Build executable
@@ -113,6 +108,6 @@ include(Install)
 
 # https://gitlab.kitware.com/cmake/community/-/wikis/FAQ#can-i-do-make-uninstall-with-cmake
 configure_file("${KPKG_SOURCE_DIR}/cmake/CMakeUninstall.cmake.in"
-               "${KPKG_BINARY_DIR}/CMakeUninstall.cmake" @ONLY)
+               "${KPKG_BINARY_DIR}/CMakeUninstall.cmake" IMMEDIATE @ONLY)
 add_custom_target(uninstall COMMAND ${CMAKE_COMMAND} -P
                                     ${KPKG_BINARY_DIR}/CMakeUninstall.cmake)

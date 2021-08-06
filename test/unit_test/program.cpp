@@ -15,10 +15,11 @@ TEST_CASE("program") {
   REQUIRE(program.get_type() == kpkg::Program::Type::Install);
 
   auto dependency = program.get_dependency();
-  REQUIRE(std::size(dependency) == 3);
+  REQUIRE(std::size(dependency) == 4);
   REQUIRE(dependency.at(0).get_name() == "fmt");
-  REQUIRE(dependency.at(1).get_name() == "openssl");
-  REQUIRE(dependency.back().get_name() == "zlib");
+  REQUIRE(dependency.at(1).get_name() == "nghttp2");
+  REQUIRE(dependency.at(2).get_name() == "openssl");
+  REQUIRE(dependency.at(3).get_name() == "zlib");
 
   auto to_be_built = program.get_library_to_be_built();
   REQUIRE(std::size(to_be_built) == 2);

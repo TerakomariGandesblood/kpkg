@@ -12,6 +12,7 @@ std::string html_tidy(const std::string &html) {
   tidyOptSetBool(doc, TidyShowWarnings, no);
   tidyOptSetInt(doc, TidyWrapLen, 0);
   tidyOptSetBool(doc, TidyHideComments, yes);
+  tidyOptSetBool(doc, TidyMark, no);
 
   auto rc = tidyParseString(doc, html.c_str());
 
@@ -41,7 +42,6 @@ int main() {
   EXPECT(html_tidy("<title>Foo</title><p>Foo!") == R"(<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.7.28" />
 <title>Foo</title>
 </head>
 <body>
