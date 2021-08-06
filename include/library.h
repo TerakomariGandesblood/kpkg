@@ -42,6 +42,8 @@ class Library {
   std::string dir_name_;
 };
 
+std::vector<Library> read_from_json();
+
 Library tag_invoke(boost::json::value_to_tag<Library>,
                    const boost::json::value& jv);
 

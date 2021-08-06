@@ -1,5 +1,6 @@
 #include "library.h"
 
+#include <cassert>
 #include <filesystem>
 
 #include <fmt/format.h>
@@ -9,6 +10,9 @@
 
 #include "command.h"
 #include "error.h"
+
+extern char library[];
+extern int library_size;
 
 namespace kpkg {
 
@@ -49,12 +53,11 @@ void Library::init(const std::string& proxy) {
     }
 
     auto result = response.text();
-
     boost::json::error_code error_code;
     boost::json::monotonic_resource mr;
     auto jv = boost::json::parse(result, error_code, &mr);
     if (error_code) {
-      error("Json parse error: {}", result);
+      error("Json parse error: {}", error_code.message());
     }
 
     if (!std::empty(releases_url_)) {
@@ -119,6 +122,24 @@ void Library::build() const {
 }
 
 void Library::print() const { fmt::print("{:<25} {:<25}\n", name_, tag_name_); }
+
+std::vector<Library> read_from_json() {
+  std::string json_str(library, library_size);
+
+  boost::json::error_code error_code;
+  boost::json::monotonic_resource mr;
+  auto jv = boost::json::parse(json_str.data(), error_code, &mr);
+  if (error_code) {
+    error("Json parse error: {}", error_code.message());
+  }
+
+  std::vector<Library> ret;
+  for (const auto& item : jv.as_array()) {
+    ret.push_back(boost::json::value_to<Library>(item));
+  }
+
+  return ret;
+}
 
 Library tag_invoke(boost::json::value_to_tag<Library>,
                    const boost::json::value& jv) {

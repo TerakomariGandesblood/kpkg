@@ -11,7 +11,6 @@
 #include <fmt/ostream.h>
 #include <spdlog/spdlog.h>
 #include <boost/algorithm/string.hpp>
-#include <boost/json.hpp>
 #include <boost/program_options/options_description.hpp>
 #include <boost/program_options/parsers.hpp>
 #include <boost/program_options/positional_options.hpp>
@@ -20,13 +19,10 @@
 #include "error.h"
 #include "version.h"
 
-extern char library[];
-extern int library_size;
-
 namespace kpkg {
 
 Program::Program(std::int32_t argc, const char* argv[])
-    : libraries_(Program::read_from_json()) {
+    : libraries_(read_from_json()) {
   for (const auto& library_name : parse_program_options(argc, argv)) {
     auto library = get_from_name(library_name);
 
@@ -76,24 +72,6 @@ bool Program::contains(const std::vector<Library>& libraries,
     }
   }
   return false;
-}
-
-std::vector<Library> Program::read_from_json() {
-  std::string json_str(library, library_size);
-
-  boost::json::error_code error_code;
-  boost::json::monotonic_resource mr;
-  auto jv = boost::json::parse(json_str.data(), error_code, &mr);
-  if (error_code) {
-    error("json parse error: {}", error_code.message());
-  }
-
-  std::vector<Library> ret;
-  for (const auto& item : jv.as_array()) {
-    ret.push_back(boost::json::value_to<Library>(item));
-  }
-
-  return ret;
 }
 
 void Program::show_libraries() {

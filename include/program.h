@@ -24,7 +24,6 @@ class Program {
   static void unique(std::vector<Library>& libraries);
   static bool contains(const std::vector<Library>& libraries,
                        const std::string& name);
-  static std::vector<Library> read_from_json();
 
   void show_libraries();
   Library get_from_name(const std::string& name);
