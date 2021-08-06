@@ -32,8 +32,8 @@ if(KPKG_BUILD_COVERAGE)
       COMMAND
         ${LCOV_EXECUTABLE} -d ${KPKG_BINARY_DIR} --include
         '${KPKG_SOURCE_DIR}/src/*.cpp' --include
-        '${KPKG_SOURCE_DIR}/include/kpkg/*.h' --gcov-tool ${GCOV_EXECUTABLE} -c
-        -o lcov.info --rc lcov_branch_coverage=1
+        '${KPKG_SOURCE_DIR}/include/*.h' --gcov-tool ${GCOV_EXECUTABLE} -c -o
+        lcov.info --rc lcov_branch_coverage=1
       COMMAND ${GENHTML_EXECUTABLE} lcov.info -o coverage -s --title
               "${PROJECT_NAME}" --legend --demangle-cpp --branch-coverage
       COMMAND mv lcov.info ${KPKG_BINARY_DIR}/lcov.info
