@@ -1,56 +1,48 @@
 #include "command.h"
 
 #include <cassert>
-#include <cstdlib>
 
+#include <klib/util.h>
 #include <spdlog/spdlog.h>
-
-#include "error.h"
 
 namespace kpkg {
 
-void run_cmd(const std::string& cmd) {
-  assert(!std::empty(cmd));
-
-  spdlog::debug("run cmd: {}", cmd);
-
-  auto status = std::system(cmd.c_str());
-  if (status == -1 || !WIFEXITED(status) || WEXITSTATUS(status)) {
-    error("run cmd error");
-  }
-}
-
-void run_cmds(const std::vector<std::string>& cmds, const std::string& cwd) {
-  run_cmd(detail::calc_cmd(cmds, cwd));
+void run_commands(const std::vector<std::string>& commands,
+                  const std::string& cwd) {
+  auto cmd = detail::calc_command(commands, cwd);
+  spdlog::info("Run command: {}");
+  klib::util::execute_command(cmd);
 }
 
 namespace detail {
 
-std::string combine_cmd(const std::string& cmd1, const std::string& cmd2) {
+std::string combine_command(const std::string& lhs, const std::string& rhs) {
   std::string cmd;
 
-  if (!std::empty(cmd1) && !std::empty(cmd2)) {
-    cmd = cmd1 + " && " + cmd2;
-  } else if (std::empty(cmd1) && !std::empty(cmd2)) {
-    cmd = cmd2;
-  } else if (!std::empty(cmd1) && std::empty(cmd2)) {
-    cmd = cmd1;
+  if (!std::empty(lhs) && !std::empty(rhs)) {
+    cmd = lhs + " && " + rhs;
+  } else if (std::empty(lhs) && !std::empty(rhs)) {
+    cmd = rhs;
+  } else if (!std::empty(lhs) && std::empty(rhs)) {
+    cmd = lhs;
+  } else {
+    assert(false);
   }
 
   return cmd;
 }
 
-std::string calc_cmd(const std::vector<std::string>& cmds,
-                     const std::string& cwd) {
-  assert(!std::empty(cmds) && !std::empty(cwd));
+std::string calc_command(const std::vector<std::string>& commands,
+                         const std::string& cwd) {
+  assert(!std::empty(commands) && !std::empty(cwd));
 
   std::string cmd = "cd " + cwd;
 
-  cmd = combine_cmd(cmd, export_gcc);
-  cmd = combine_cmd(cmd, export_flag);
+  cmd = combine_command(cmd, export_gcc);
+  cmd = combine_command(cmd, export_flag);
 
-  for (const auto& item : cmds) {
-    cmd = combine_cmd(cmd, item);
+  for (const auto& item : commands) {
+    cmd = combine_command(cmd, item);
   }
 
   return cmd;

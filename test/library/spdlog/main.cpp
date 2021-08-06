@@ -20,6 +20,6 @@ int main() {
   spdlog::set_default_logger(logger);
 
   spdlog::set_level(spdlog::level::debug);
-  spdlog::debug("Welcome to spdlog!");
-  spdlog::debug("Some debug message");
+  spdlog::info("Welcome to spdlog!");
+  spdlog::info("Some debug message");
 }

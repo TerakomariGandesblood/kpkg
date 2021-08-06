@@ -4,7 +4,8 @@
 #include <cstdint>
 #include <cstdlib>
 
-#include "command.h"
+#include <klib/util.h>
+
 #include "error.h"
 #include "log.h"
 #include "program.h"
@@ -36,14 +37,12 @@ int main(int argc, char* argv[]) {
     return EXIT_SUCCESS;
   }
 
-  kpkg::set_logger_debug();
-
   program.print_dependency();
   program.print_library_to_be_built();
 
   if (program.install_package()) {
     for (const auto& item : program.get_package_to_be_install()) {
-      kpkg::run_cmd(item);
+      klib::util::execute_command(item);
     }
   }
 

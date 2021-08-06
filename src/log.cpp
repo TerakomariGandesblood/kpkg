@@ -1,5 +1,7 @@
 #include "log.h"
 
+#include <memory>
+
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
@@ -12,13 +14,11 @@ void init_logger() {
       std::make_shared<spdlog::sinks::basic_file_sink_mt>(".log.txt");
 
   std::vector<spdlog::sink_ptr> sinks{stdout_sink, basic_file_sink};
-  auto logger = std::make_shared<spdlog::logger>("logger", std::begin(sinks),
+  auto logger = std::make_shared<spdlog::logger>("kpkg", std::begin(sinks),
                                                  std::end(sinks));
 
   spdlog::register_logger(logger);
   spdlog::set_default_logger(logger);
 }
-
-void set_logger_debug() { spdlog::set_level(spdlog::level::debug); }
 
 }  // namespace kpkg

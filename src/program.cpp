@@ -1,6 +1,7 @@
 #include "program.h"
 
 #include <algorithm>
+#include <cstddef>
 #include <cstdlib>
 
 #include <fmt/core.h>
@@ -84,10 +85,10 @@ void Program::print_dependency() const {
     return;
   }
 
-  spdlog::debug("The following dependent libraries will be installed: ");
+  spdlog::info("The following dependent libraries will be installed: ");
 
   for (const auto& item : dependency_) {
-    spdlog::debug("{}", item.get_name());
+    spdlog::info("{}", item.get_name());
   }
 }
 
@@ -96,10 +97,10 @@ void Program::print_library_to_be_built() const {
     error("library to be built is empty");
   }
 
-  spdlog::debug("The following libraries will be installed: ");
+  spdlog::info("The following libraries will be installed: ");
 
   for (const auto& item : library_to_be_built_) {
-    spdlog::debug("{}", item.get_name());
+    spdlog::info("{}", item.get_name());
   }
 }
 
