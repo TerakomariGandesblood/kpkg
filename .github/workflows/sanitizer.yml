@@ -47,6 +47,12 @@ jobs:
       - name: Build
         run: cmake --build build --config ${{ matrix.build_type }} -j"$(nproc)"
 
+      - name: Run executable
+        run: |
+          ./kpkg install boost catch2 curl fmt icu libarchive magic_enum \
+          openssl rocksdb spdlog sqlite zstd tidy-html5 pugixml
+        working-directory: build/tool
+
       - name: Test
         run: ctest -C ${{ matrix.build_type }} -j"$(nproc)" --output-on-failure
         working-directory: build
@@ -55,9 +61,3 @@ jobs:
           ASAN_OPTIONS: detect_stack_use_after_return=1
           # https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html
           UBSAN_OPTIONS: print_stacktrace=1
-
-      - name: Run executable
-        run: |
-          ./kpkg install boost catch2 curl fmt icu libarchive magic_enum \
-          openssl rocksdb spdlog sqlite zstd tidy-html5 pugixml
-        working-directory: build/tool

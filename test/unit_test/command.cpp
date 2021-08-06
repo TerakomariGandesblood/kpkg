@@ -2,15 +2,8 @@
 
 #include "command.h"
 
-TEST_CASE("combine_command") {
-  REQUIRE(kpkg::detail::combine_command("a", "b") == "a && b");
-  REQUIRE(kpkg::detail::combine_command("", "b") == "b");
-  REQUIRE(kpkg::detail::combine_command("a", "") == "a");
-}
-
 TEST_CASE("calc_command") {
   REQUIRE(
       kpkg::detail::calc_command({"configure", "build", "install"}, "cwd") ==
-      "cd cwd && " + kpkg::detail::export_gcc + " && " +
-          kpkg::detail::export_flag + " && configure && build && install");
+      R"(cd cwd && export CC=gcc-11 && export CXX=g++-11 && export CFLAGS="-fPIC" && export CXXFLAGS="-fPIC" && configure && build && install)");
 }

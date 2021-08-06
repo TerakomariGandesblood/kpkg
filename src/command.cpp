@@ -7,14 +7,7 @@
 
 namespace kpkg {
 
-void run_commands(const std::vector<std::string>& commands,
-                  const std::string& cwd) {
-  auto cmd = detail::calc_command(commands, cwd);
-  spdlog::info("Run command: {}", cmd);
-  klib::util::execute_command(cmd);
-}
-
-namespace detail {
+namespace {
 
 std::string combine_command(const std::string& lhs, const std::string& rhs) {
   std::string cmd;
@@ -32,14 +25,28 @@ std::string combine_command(const std::string& lhs, const std::string& rhs) {
   return cmd;
 }
 
+}  // namespace
+
+void run_commands(const std::vector<std::string>& commands,
+                  const std::string& cwd) {
+  auto cmd = detail::calc_command(commands, cwd);
+  spdlog::info("Run commands: {}", cmd);
+  klib::util::execute_command(cmd);
+}
+
+namespace detail {
+
 std::string calc_command(const std::vector<std::string>& commands,
                          const std::string& cwd) {
   assert(!std::empty(commands) && !std::empty(cwd));
 
   std::string cmd = "cd " + cwd;
 
-  cmd = combine_command(cmd, export_gcc);
-  cmd = combine_command(cmd, export_flag);
+  // NOTE
+  // Change the compiler version here
+  cmd = combine_command(cmd, "export CC=gcc-11 && export CXX=g++-11");
+  cmd = combine_command(cmd,
+                        R"(export CFLAGS="-fPIC" && export CXXFLAGS="-fPIC")");
 
   for (const auto& item : commands) {
     cmd = combine_command(cmd, item);

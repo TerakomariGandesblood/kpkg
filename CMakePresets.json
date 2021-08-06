@@ -15,7 +15,6 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "KPKG_BUILD_TEST": "ON",
-        "KPKG_BUILD_EXTRA_TEST": "ON",
         "KPKG_FORMAT": "ON",
         "KPKG_SANITIZER": "ON",
         "KPKG_BUILD_COVERAGE": "ON"
@@ -35,7 +34,6 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
         "KPKG_BUILD_TEST": "ON",
-        "KPKG_BUILD_EXTRA_TEST": "ON",
         "KPKG_FORMAT": "ON"
       },
       "vendor": {
@@ -53,7 +51,6 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "KPKG_BUILD_TEST": "ON",
-        "KPKG_BUILD_EXTRA_TEST": "ON",
         "KPKG_FORMAT": "ON",
         "KPKG_SANITIZER": "ON",
         "KPKG_BUILD_COVERAGE": "ON"
@@ -73,7 +70,6 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
         "KPKG_BUILD_TEST": "ON",
-        "KPKG_BUILD_EXTRA_TEST": "ON",
         "KPKG_FORMAT": "ON"
       },
       "vendor": {
