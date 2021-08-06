@@ -1,36 +1,43 @@
 name: Sanitizer
 
-on:
-  push:
-  pull_request:
-  schedule:
-    - cron: "0 0 1 * *"
+on: [push, pull_request]
 
 jobs:
   build:
+    # https://docs.github.com/cn/actions/reference/workflow-syntax-for-github-actions
+    # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-README.md
     runs-on: ubuntu-20.04
     strategy:
       matrix:
+        # https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html
+        build_type: ["Debug", "Release", "RelWithDebInfo", "MinSizeRel"]
         compiler:
           - { cc: "gcc", cxx: "g++" }
           - { cc: "clang", cxx: "clang++" }
 
     steps:
-      - uses: actions/checkout@v2
+      # https://github.com/actions/checkout
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # https://github.com/actions/cache
+      - name: Get date
+        id: get-date
+        run: echo "::set-output name=date::$(/bin/date -u "+%Y%m")"
+        shell: bash
 
       - name: Cache dependencies
-        id: cache-dependencies
         uses: actions/cache@v2
         with:
           path: dependencies
-          key: sanitizer-dependencies-20210524
+          key: ${{ runner.os }}-${{ steps.get-date.outputs.date }}
 
       - name: Install dependencies
         run: sudo bash script/build.sh
 
       - name: Configure
         run: |
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
           -DKPKG_BUILD_TEST=ON -DKPKG_BUILD_EXTRA_TEST=ON \
           -DKPKG_SANITIZER=ON
         env:
@@ -38,18 +45,19 @@ jobs:
           CXX: ${{ matrix.compiler.cxx }}
 
       - name: Build
-        run: cmake --build build --config RelWithDebInfo -j"$(nproc)"
-
-      - name: Run executable
-        run: |
-          cd build/tool
-          ./kpkg install boost catch2 curl fmt icu libarchive magic_enum \
-          openssl rocksdb spdlog sqlite zstd tidy-html5 pugixml
+        run: cmake --build build --config ${{ matrix.build_type }} -j"$(nproc)"
 
       - name: Test
-        run: cd build ; ctest -C RelWithDebInfo -j"$(nproc)" --output-on-failure
+        run: ctest -C ${{ matrix.build_type }} -j"$(nproc)" --output-on-failure
+        working-directory: build
         env:
           # https://clang.llvm.org/docs/AddressSanitizer.html
           ASAN_OPTIONS: detect_stack_use_after_return=1
-          # # https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html
+          # https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html
           UBSAN_OPTIONS: print_stacktrace=1
+
+      - name: Run executable
+        run: |
+          ./kpkg install boost catch2 curl fmt icu libarchive magic_enum \
+          openssl rocksdb spdlog sqlite zstd tidy-html5 pugixml
+        working-directory: build/tool

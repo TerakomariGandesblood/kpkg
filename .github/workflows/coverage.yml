@@ -1,13 +1,11 @@
 name: Coverage
 
-on:
-  push:
-  pull_request:
-  schedule:
-    - cron: "0 0 1 * *"
+on: [push, pull_request]
 
 jobs:
   build:
+    # https://docs.github.com/cn/actions/reference/workflow-syntax-for-github-actions
+    # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-README.md
     runs-on: ubuntu-20.04
     strategy:
       matrix:
@@ -16,14 +14,21 @@ jobs:
           - { cc: "clang", cxx: "clang++" }
 
     steps:
-      - uses: actions/checkout@v2
+      # https://github.com/actions/checkout
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # https://github.com/actions/cache
+      - name: Get date
+        id: get-date
+        run: echo "::set-output name=date::$(/bin/date -u "+%Y%m")"
+        shell: bash
 
       - name: Cache dependencies
-        id: cache-dependencies
         uses: actions/cache@v2
         with:
           path: dependencies
-          key: coverage-dependencies-20210524
+          key: ${{ runner.os }}-${{ steps.get-date.outputs.date }}
 
       - name: Install dependencies
         run: sudo bash script/build.sh
@@ -45,7 +50,7 @@ jobs:
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: build/test/unit_test/lcov.info
+          path-to-lcov: build/lcov.info
 
       # https://github.com/actions/upload-artifact
       - name: Upload artifact
@@ -53,5 +58,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: coverage-lcov
-          path: build/test/unit_test/coverage
+          path: build/coverage
           if-no-files-found: error
