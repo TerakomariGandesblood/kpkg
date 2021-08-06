@@ -11,7 +11,7 @@ TEST_CASE("read_from_json") {
 
   std::random_device rd;
   std::default_random_engine gen(rd());
-  std::uniform_int_distribution<std::size_t> dis(0, std::size(libraries));
+  std::uniform_int_distribution<std::size_t> dis(0, std::size(libraries) - 1);
 
   auto library = libraries[dis(gen)];
 
