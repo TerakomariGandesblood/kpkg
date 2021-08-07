@@ -59,10 +59,10 @@ include(CompilerOptions)
 # ---------------------------------------------------------------------------------------
 # Find package
 # ---------------------------------------------------------------------------------------
-find_package(klib REQUIRED)
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(Boost 1.75.0 CONFIG REQUIRED COMPONENTS json program_options)
+find_package(klib REQUIRED)
 
 # ---------------------------------------------------------------------------------------
 # Build port
@@ -86,8 +86,8 @@ set_target_properties(
              POSITION_INDEPENDENT_CODE ON
              INTERPROCEDURAL_OPTIMIZATION FALSE)
 
-target_link_libraries(${LIBRARY} PRIVATE library_json klib::klib fmt::fmt
-                                         spdlog::spdlog ${Boost_LIBRARIES})
+target_link_libraries(${LIBRARY} PRIVATE library_json fmt::fmt spdlog::spdlog
+                                         ${Boost_LIBRARIES} klib::klib)
 
 # ---------------------------------------------------------------------------------------
 # Build executable
