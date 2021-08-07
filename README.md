@@ -22,7 +22,7 @@ C++ Library Manager
 
 - [fmt](https://github.com/fmtlib/fmt)
 - [spdlog](https://github.com/gabime/spdlog)
-- [Boost](https://www.boost.org/)
+- [boost](https://www.boost.org/)
 - [klib](https://github.com/KaiserLancelot/klib)
 
 ## Build
