@@ -15,15 +15,15 @@ C++ Library Manager
 
 ## Environment
 
-- Linux(Ubuntu 20.04)
-- gcc/clang(Request to support C++20)
+- Ubuntu 20.04
+- GCC 11 or Clang 12
 
 ## Dependency
 
-- fmt
-- spdlog
-- Boost
-- klib
+- [fmt](https://github.com/fmtlib/fmt)
+- [spdlog](https://github.com/gabime/spdlog)
+- [Boost](https://www.boost.org/)
+- [klib](https://github.com/KaiserLancelot/klib)
 
 ## Build
 
