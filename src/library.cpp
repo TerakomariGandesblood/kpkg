@@ -49,7 +49,7 @@ void Library::init(const std::string& proxy) {
     }
     auto response = request.get(url);
     if (response.status_code() != klib::http::Response::StatusCode::Ok) {
-      error("Status code is not ok: {}", response.status_code());
+      error("Status code is not ok: {}, url: {}", response.status_code(), url);
     }
 
     auto result = response.text();
@@ -96,7 +96,8 @@ void Library::download(const std::string& proxy) const {
     }
     auto response = request.get(download_url_);
     if (response.status_code() != klib::http::Response::StatusCode::Ok) {
-      error("Status code is not ok: {}", response.status_code());
+      error("Status code is not ok: {}, url: {}", response.status_code(),
+            download_url_);
     }
     response.save_to_file(file_name_, true);
 
