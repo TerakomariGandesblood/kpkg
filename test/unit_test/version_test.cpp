@@ -2,4 +2,6 @@
 
 #include "version.h"
 
-TEST_CASE("kpkg_version") { REQUIRE(kpkg::kpkg_version() == "v0.3.4"); }
+TEST_CASE("kpkg_version", "[version]") {
+  REQUIRE(kpkg::kpkg_version() == "v0.3.5");
+}

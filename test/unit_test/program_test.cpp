@@ -4,7 +4,7 @@
 
 #include "program.h"
 
-TEST_CASE("program") {
+TEST_CASE("program", "[program]") {
   const char* argv[] = {"kpkg", "install", "spdlog", "curl", "-p"};
   std::int32_t argc = std::size(argv);
 

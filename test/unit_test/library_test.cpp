@@ -5,7 +5,7 @@
 
 #include "library.h"
 
-TEST_CASE("read_from_json") {
+TEST_CASE("read_from_json", "[library]") {
   auto libraries = kpkg::read_from_json();
   REQUIRE(std::size(libraries) == 22);
 
