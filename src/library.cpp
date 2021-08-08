@@ -42,7 +42,7 @@ void Library::init(const std::string& proxy) {
     }
     spdlog::info("Get info from: {} ", url);
 
-    klib::http::Request request;
+    klib::Request request;
     if (!std::empty(proxy)) {
       spdlog::info("Use proxy: {}", proxy);
       request.set_proxy(proxy);
@@ -53,7 +53,7 @@ void Library::init(const std::string& proxy) {
 #endif
 
     auto response = request.get(url);
-    if (response.status_code() != klib::http::Response::StatusCode::Ok) {
+    if (response.status_code() != klib::Response::StatusCode::Ok) {
       error("Status code is not ok: {}, url: {}", response.status_code(), url);
     }
 
@@ -94,7 +94,7 @@ void Library::download(const std::string& proxy) const {
   } else {
     spdlog::info("Get file: {} from: {}", file_name_, download_url_);
 
-    klib::http::Request request;
+    klib::Request request;
     request.set_user_agent("curl/7.78.0");
 
     if (!std::empty(proxy)) {
@@ -107,7 +107,7 @@ void Library::download(const std::string& proxy) const {
 #endif
 
     auto response = request.get(download_url_);
-    if (response.status_code() != klib::http::Response::StatusCode::Ok) {
+    if (response.status_code() != klib::Response::StatusCode::Ok) {
       error("Status code is not ok: {}, url: {}", response.status_code(),
             download_url_);
     }
@@ -121,7 +121,7 @@ void Library::build() const {
   if (std::filesystem::is_directory(dir_name_)) {
     spdlog::info("Use exists folder: {}", dir_name_);
   } else {
-    auto temp = klib::archive::decompress(file_name_);
+    auto temp = klib::decompress(file_name_);
     if (!temp.has_value()) {
       error("decompress error");
     }
