@@ -6,7 +6,7 @@
 
 #define KPKG_VER_MINOR 3
 
-#define KPKG_VER_PATCH 6
+#define KPKG_VER_PATCH 7
 
 #define STRINGIZE2(s) #s
 #define STRINGIZE(s) STRINGIZE2(s)
