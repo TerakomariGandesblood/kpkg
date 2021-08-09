@@ -6,10 +6,10 @@
 #include <string>
 #include <vector>
 
+#include <klib/error.h>
 #include <spdlog/spdlog.h>
 #include <boost/algorithm/string.hpp>
 
-#include "error.h"
 #include "library.h"
 #include "log.h"
 #include "program.h"
@@ -33,7 +33,7 @@ void build_libraries(std::vector<kpkg::Library>& libraries,
   for (auto& item : libraries) {
     auto pid = fork();
     if (pid < 0) {
-      kpkg::error("fork error");
+      klib::error("fork error");
     } else if (pid == 0) {
       item.init(proxy);
       item.download(proxy);
@@ -45,7 +45,7 @@ void build_libraries(std::vector<kpkg::Library>& libraries,
   std::int32_t status = 0;
   while (waitpid(-1, &status, 0) > 0) {
     if (!WIFEXITED(status) || WEXITSTATUS(status)) {
-      kpkg::error("waitpid error: {}", status);
+      klib::error("waitpid error: {}", status);
     }
   }
 }
@@ -65,7 +65,7 @@ int main(int argc, const char* argv[]) try {
   print_libraries(program.libraries_to_be_built());
   build_libraries(program.libraries_to_be_built(), program.proxy());
 } catch (const std::exception& err) {
-  kpkg::error(err.what());
+  klib::error(err.what());
 } catch (...) {
-  kpkg::error("Unknown exception");
+  klib::error("Unknown exception");
 }

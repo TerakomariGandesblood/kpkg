@@ -5,11 +5,11 @@
 
 #include <fmt/format.h>
 #include <klib/archive.h>
+#include <klib/error.h>
 #include <klib/http.h>
 #include <spdlog/spdlog.h>
 
 #include "command.h"
-#include "error.h"
 
 extern char library[];
 extern int library_size;
@@ -54,7 +54,8 @@ void Library::init(const std::string& proxy) {
 
     auto response = request.get(url);
     if (response.status_code() != klib::Response::StatusCode::Ok) {
-      error("Status code is not ok: {}, url: {}", response.status_code(), url);
+      klib::error("Status code is not ok: {}, url: {}", response.status_code(),
+                  url);
     }
 
     auto result = response.text();
@@ -62,7 +63,7 @@ void Library::init(const std::string& proxy) {
     boost::json::monotonic_resource mr;
     auto jv = boost::json::parse(result, error_code, &mr);
     if (error_code) {
-      error("Json parse error: {}", error_code.message());
+      klib::error("Json parse error: {}", error_code.message());
     }
 
     if (!std::empty(releases_url_)) {
@@ -108,8 +109,8 @@ void Library::download(const std::string& proxy) const {
 
     auto response = request.get(download_url_);
     if (response.status_code() != klib::Response::StatusCode::Ok) {
-      error("Status code is not ok: {}, url: {}", response.status_code(),
-            download_url_);
+      klib::error("Status code is not ok: {}, url: {}", response.status_code(),
+                  download_url_);
     }
     response.save_to_file(file_name_, true);
 
@@ -123,7 +124,7 @@ void Library::build() const {
   } else {
     auto temp = klib::decompress(file_name_);
     if (!temp.has_value()) {
-      error("decompress error");
+      klib::error("decompress error");
     }
 
     spdlog::info("Decompress file: {}, to {}", file_name_, *temp);
@@ -143,7 +144,7 @@ std::vector<Library> read_from_json() {
   boost::json::monotonic_resource mr;
   auto jv = boost::json::parse(json_str.data(), error_code, &mr);
   if (error_code) {
-    error("Json parse error: {}", error_code.message());
+    klib::error("Json parse error: {}", error_code.message());
   }
 
   std::vector<Library> ret;

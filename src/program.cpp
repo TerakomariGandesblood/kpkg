@@ -8,6 +8,7 @@
 
 #include <fmt/core.h>
 #include <fmt/ostream.h>
+#include <klib/error.h>
 #include <spdlog/spdlog.h>
 #include <boost/algorithm/string.hpp>
 #include <boost/program_options/options_description.hpp>
@@ -15,7 +16,6 @@
 #include <boost/program_options/positional_options.hpp>
 #include <boost/program_options/variables_map.hpp>
 
-#include "error.h"
 #include "version.h"
 
 namespace kpkg {
@@ -83,7 +83,7 @@ void Program::show_libraries() {
   for (auto& library : libraries_) {
     auto pid = fork();
     if (pid < 0) {
-      error("fork error");
+      klib::error("fork error");
     } else if (pid == 0) {
       library.init(proxy_);
       library.print();
@@ -94,7 +94,7 @@ void Program::show_libraries() {
   std::int32_t status = 0;
   while (waitpid(-1, &status, 0) > 0) {
     if (!WIFEXITED(status) || WEXITSTATUS(status)) {
-      error("waitpid error: {}", status);
+      klib::error("waitpid error: {}", status);
     }
   }
 
@@ -109,7 +109,7 @@ Library Program::get_from_name(const std::string& name) {
     }
   }
 
-  error("can not find this library: {}", name);
+  klib::error("can not find this library: {}", name);
 }
 
 std::vector<std::string> Program::parse_program_options(std::int32_t argc,
@@ -148,7 +148,7 @@ kpkg install <some library> [options])";
               vm);
         notify(vm);
       } catch (const boost::program_options::error& err) {
-        error(err.what());
+        klib::error(err.what());
       }
 
       if (vm.contains("version")) {
@@ -199,7 +199,7 @@ kpkg install <some library> [options])";
               vm);
         notify(vm);
       } catch (const boost::program_options::error& err) {
-        error(err.what());
+        klib::error(err.what());
       }
 
       if (vm.contains("version")) {
@@ -220,7 +220,7 @@ kpkg install <some library> [options])";
       fmt::print("{}", help_msg);
       std::exit(EXIT_SUCCESS);
     } else {
-      error("Unknown command: {}", command);
+      klib::error("Unknown command: {}", command);
     }
   } else {
     assert(false);

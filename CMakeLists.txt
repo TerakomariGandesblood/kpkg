@@ -40,8 +40,6 @@ set(KPKG_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(KPKG_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
 # https://cmake.org/cmake/help/latest/command/file.html#glob-recurse
-file(GLOB_RECURSE LIBRARY_JSON_SRC CONFIGURE_DEPENDS
-     "${KPKG_SOURCE_DIR}/src/library.s")
 file(GLOB_RECURSE LIBRARY_SRC CONFIGURE_DEPENDS "${KPKG_SOURCE_DIR}/src/*.cpp")
 
 # ---------------------------------------------------------------------------------------
@@ -65,12 +63,12 @@ find_package(Boost 1.75.0 CONFIG REQUIRED COMPONENTS json program_options)
 find_package(klib REQUIRED)
 
 # ---------------------------------------------------------------------------------------
-# Build port
+# Build library json file
 # ---------------------------------------------------------------------------------------
 file(COPY "${KPKG_SOURCE_DIR}/library/library.json"
      DESTINATION ${KPKG_BINARY_DIR})
 
-add_library(library_json STATIC ${LIBRARY_JSON_SRC})
+add_library(library_json STATIC "${KPKG_SOURCE_DIR}/src/library.s")
 target_compile_options(library_json PRIVATE "-Wno-unused-command-line-argument")
 
 # ---------------------------------------------------------------------------------------
