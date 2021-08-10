@@ -69,7 +69,6 @@ file(COPY "${KPKG_SOURCE_DIR}/library/library.json"
      DESTINATION ${KPKG_BINARY_DIR})
 
 add_library(library_json STATIC "${KPKG_SOURCE_DIR}/src/library.s")
-target_compile_options(library_json PRIVATE "-Wno-unused-command-line-argument")
 
 # ---------------------------------------------------------------------------------------
 # Build static library
@@ -77,13 +76,6 @@ target_compile_options(library_json PRIVATE "-Wno-unused-command-line-argument")
 add_library(${LIBRARY} STATIC ${LIBRARY_SRC})
 
 target_include_directories(${LIBRARY} PUBLIC "${KPKG_SOURCE_DIR}/include")
-
-set_target_properties(
-  ${LIBRARY}
-  PROPERTIES OUTPUT_NAME ${PROJECT_NAME}
-             POSITION_INDEPENDENT_CODE ON
-             INTERPROCEDURAL_OPTIMIZATION FALSE)
-
 target_link_libraries(${LIBRARY} PRIVATE library_json fmt::fmt spdlog::spdlog
                                          ${Boost_LIBRARIES} klib::klib)
 

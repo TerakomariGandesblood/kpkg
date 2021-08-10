@@ -10,8 +10,9 @@ set_target_properties(
 
 install(
   TARGETS ${EXECUTABLE}
-  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 # ---------------------------------------------------------------------------------------
 # Support creation of installable packages
@@ -19,7 +20,7 @@ install(
 # https://cmake.org/cmake/help/latest/cpack_gen/deb.html
 # https://cmake.org/cmake/help/latest/module/CPack.html
 set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY OFF)
-set(CPACK_INSTALL_CMAKE_PROJECTS ${KPKG_BINARY_DIR} ${LIBRARY} ALL .)
+set(CPACK_INSTALL_CMAKE_PROJECTS ${KPKG_BINARY_DIR} ${PROJECT_NAME} ALL .)
 
 # https://cmake.org/cmake/help/latest/cpack_gen/deb.html
 set(CPACK_PACKAGE_CONTACT "kaiser <KaiserLancelot123@gmail.com>")
