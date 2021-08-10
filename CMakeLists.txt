@@ -78,6 +78,7 @@ add_library(${LIBRARY} STATIC ${LIBRARY_SRC})
 target_include_directories(${LIBRARY} PUBLIC "${KPKG_SOURCE_DIR}/include")
 target_link_libraries(${LIBRARY} PRIVATE library_json fmt::fmt spdlog::spdlog
                                          ${Boost_LIBRARIES} klib::klib)
+set_target_properties(${LIBRARY} PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
 
 # ---------------------------------------------------------------------------------------
 # Build executable
