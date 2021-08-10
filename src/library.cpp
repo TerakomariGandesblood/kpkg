@@ -43,11 +43,11 @@ void Library::init(const std::string& proxy) {
     spdlog::info("Get info from: {} ", url);
 
     klib::Request request;
+    request.set_browser_user_agent();
     if (!std::empty(proxy)) {
       spdlog::info("Use proxy: {}", proxy);
       request.set_proxy(proxy);
     }
-
 #ifndef NDEBUG
     request.verbose(true);
 #endif
@@ -96,13 +96,10 @@ void Library::download(const std::string& proxy) const {
     spdlog::info("Get file: {} from: {}", file_name_, download_url_);
 
     klib::Request request;
-    request.set_user_agent("curl/7.78.0");
-
     if (!std::empty(proxy)) {
       spdlog::info("Use proxy: {}", proxy);
       request.set_proxy(proxy);
     }
-
 #ifndef NDEBUG
     request.verbose(true);
 #endif
