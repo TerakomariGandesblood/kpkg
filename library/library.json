@@ -80,12 +80,12 @@
     "name": "openssl",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "OpenSSL_1_1_1k",
-    "download_url": "https://api.github.com/repos/openssl/openssl/tarball/refs/tags/OpenSSL_1_1_1k",
+    "tag_name": "openssl-3.0.0",
+    "download_url": "https://github.com/openssl/openssl/archive/refs/tags/openssl-3.0.0.tar.gz",
     "dependency": [],
     "cwd": "",
     "cmd": [
-      "./Configure linux-x86_64 no-tests no-shared no-asm",
+      "./Configure linux-x86_64 no-tests no-shared",
       "make -j\"$(nproc)\"",
       "sudo make install_sw"
     ]
