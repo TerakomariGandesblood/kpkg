@@ -222,7 +222,7 @@
     "releases_url": "",
     "tags_url": "",
     "tag_name": "boost-1.77.0",
-    "download_url": "https://boostorg.jfrog.io/artifactory/main/release/1.77.0/source/boost_1_77_0.tar.gz",
+    "download_url": "https://sourceforge.net/projects/boost/files/boost/1.77.0/boost_1_77_0.tar.gz/download",
     "dependency": [],
     "cwd": "",
     "cmd": [

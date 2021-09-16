@@ -99,7 +99,7 @@ void Library::download(const std::string& proxy) const {
 
     // NOTE
     // for boost
-    if (!download_url_.starts_with("https://boostorg")) {
+    if (!download_url_.starts_with("https://sourceforge.net/projects/boost")) {
       request.set_browser_user_agent();
     }
 
