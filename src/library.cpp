@@ -47,6 +47,8 @@ void Library::init(const std::string& proxy) {
     if (!std::empty(proxy)) {
       spdlog::info("Use proxy: {}", proxy);
       request.set_proxy(proxy);
+    } else {
+      request.set_no_proxy();
     }
 #ifndef NDEBUG
     request.verbose(true);
@@ -99,13 +101,17 @@ void Library::download(const std::string& proxy) const {
 
     // NOTE
     // for boost
-    if (!download_url_.starts_with("https://sourceforge.net/projects/boost")) {
+    if (!download_url_.starts_with("https://boostorg.jfrog.io")) {
       request.set_browser_user_agent();
+    } else {
+      request.set_curl_user_agent();
     }
 
     if (!std::empty(proxy)) {
       spdlog::info("Use proxy: {}", proxy);
       request.set_proxy(proxy);
+    } else {
+      request.set_no_proxy();
     }
 #ifndef NDEBUG
     request.verbose(true);
