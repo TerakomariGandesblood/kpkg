@@ -97,12 +97,6 @@ void Library::download(const std::string& proxy) const {
 
     static klib::Request request;
 
-    // NOTE
-    // for boost
-    if (!download_url_.starts_with("https://boostorg")) {
-      request.set_browser_user_agent();
-    }
-
     if (!std::empty(proxy)) {
       spdlog::info("Use proxy: {}", proxy);
       request.set_proxy(proxy);
