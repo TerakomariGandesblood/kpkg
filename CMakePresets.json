@@ -15,6 +15,7 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "KPKG_BUILD_TEST": "ON",
+        "KPKG_BUILD_EXTRA_TEST": "ON",
         "KPKG_TEST_USE_PROXY": "ON",
         "KPKG_FORMAT": "ON",
         "KPKG_SANITIZER": "ON",
@@ -35,6 +36,7 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
         "KPKG_BUILD_TEST": "ON",
+        "KPKG_BUILD_EXTRA_TEST": "ON",
         "KPKG_TEST_USE_PROXY": "ON",
         "KPKG_FORMAT": "ON"
       },
@@ -53,6 +55,7 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "KPKG_BUILD_TEST": "ON",
+        "KPKG_BUILD_EXTRA_TEST": "ON",
         "KPKG_TEST_USE_PROXY": "ON",
         "KPKG_FORMAT": "ON",
         "KPKG_SANITIZER": "ON",
@@ -73,6 +76,7 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
         "KPKG_BUILD_TEST": "ON",
+        "KPKG_BUILD_EXTRA_TEST": "ON",
         "KPKG_TEST_USE_PROXY": "ON",
         "KPKG_FORMAT": "ON"
       },

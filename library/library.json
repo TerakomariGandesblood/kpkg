@@ -80,8 +80,8 @@
     "name": "openssl",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "openssl-3.0.0",
-    "download_url": "https://github.com/openssl/openssl/archive/refs/tags/openssl-3.0.0.tar.gz",
+    "tag_name": "OpenSSL_1_1_1l",
+    "download_url": "https://github.com/openssl/openssl/archive/refs/tags/OpenSSL_1_1_1l.tar.gz",
     "dependency": [],
     "cwd": "",
     "cmd": [
