@@ -44,6 +44,26 @@ sudo cmake --build build --config Release --target install
 sudo cmake --build build --config Release --target uninstall
 ```
 
+## Usage
+
+### List installable libraries
+
+```bash
+kpkg list
+```
+
+### Install libraries
+
+```bash
+kpkg install boost
+```
+
+### Valid command line parameters
+
+```bash
+-p [ --proxy ] [=arg(=socks5://127.0.0.1:1080)] Use proxy
+```
+
 ---
 
 Thanks to [JetBrains](https://www.jetbrains.com/) for donating product licenses to help develop this project <a href="https://www.jetbrains.com/"><img src="logo/jetbrains.svg" width="94" align="center" /></a>
