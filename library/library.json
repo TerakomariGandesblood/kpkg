@@ -119,30 +119,15 @@
     ]
   },
   {
-    "name": "jemalloc",
-    "releases_url": "https://api.github.com/repos/jemalloc/jemalloc/releases/latest",
-    "tags_url": "",
-    "tag_name": "",
-    "download_url": "",
-    "dependency": [],
-    "cwd": "",
-    "cmd": [
-      "autoconf",
-      "./configure --disable-shared --enable-autogen",
-      "make -j\"$(nproc)\"",
-      "sudo make install"
-    ]
-  },
-  {
     "name": "rocksdb",
     "releases_url": "",
     "tags_url": "https://api.github.com/repos/facebook/rocksdb/tags",
     "tag_name": "",
     "download_url": "",
-    "dependency": ["jemalloc", "zstd"],
+    "dependency": ["zstd"],
     "cwd": "",
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DWITH_JEMALLOC=ON -DWITH_ZSTD=ON -DWITH_GFLAGS=OFF -DUSE_RTTI=ON -DROCKSDB_BUILD_SHARED=OFF -DWITH_TESTS=OFF -DWITH_BENCHMARK_TOOLS=OFF -DWITH_CORE_TOOLS=OFF -DWITH_TOOLS=OFF -DWITH_ALL_TESTS=OFF -DCMAKE_INSTALL_PREFIX=/usr/local",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DWITH_JEMALLOC=OFF -DWITH_ZSTD=ON -DWITH_GFLAGS=OFF -DUSE_RTTI=ON -DROCKSDB_BUILD_SHARED=OFF -DWITH_TESTS=OFF -DWITH_BENCHMARK_TOOLS=OFF -DWITH_CORE_TOOLS=OFF -DWITH_TOOLS=OFF -DWITH_ALL_TESTS=OFF -DCMAKE_INSTALL_PREFIX=/usr/local",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
