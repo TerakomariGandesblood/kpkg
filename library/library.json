@@ -80,12 +80,12 @@
     "name": "openssl",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "OpenSSL_1_1_1l",
-    "download_url": "https://github.com/openssl/openssl/archive/refs/tags/OpenSSL_1_1_1l.tar.gz",
+    "tag_name": "openssl-3.0.0",
+    "download_url": "https://github.com/openssl/openssl/archive/refs/tags/openssl-3.0.0.tar.gz",
     "dependency": [],
     "cwd": "",
     "cmd": [
-      "./Configure linux-x86_64 no-tests no-shared",
+      "./Configure linux-x86_64 --libdir=lib no-legacy no-tests no-shared",
       "make -j\"$(nproc)\"",
       "sudo make install_sw"
     ]
@@ -94,12 +94,12 @@
     "name": "nghttp2",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "v1.44.0",
-    "download_url": "https://github.com/nghttp2/nghttp2/releases/download/v1.44.0/nghttp2-1.44.0.tar.gz",
+    "tag_name": "v1.45.0",
+    "download_url": "https://github.com/nghttp2/nghttp2/releases/download/v1.45.0/nghttp2-1.45.0.tar.gz",
     "dependency": ["zlib", "openssl"],
     "cwd": "",
     "cmd": [
-      "./configure --disable-failmalloc --enable-lib-only --disable-shared --without-libxml2 --without-jansson --with-zlib --without-libevent-openssl --without-libcares --with-openssl --without-libev --without-cunit --without-jemalloc --without-systemd",
+      "./configure --disable-failmalloc --enable-lib-only --disable-shared --without-libxml2 --without-jansson --with-zlib --without-libevent-openssl --without-libcares --with-openssl --without-libev --without-cunit --without-jemalloc --without-systemd --without-libngtcp2 --without-libnghttp3",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
