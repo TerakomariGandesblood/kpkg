@@ -94,8 +94,8 @@
     "name": "nghttp2",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "v1.45.0",
-    "download_url": "https://github.com/nghttp2/nghttp2/releases/download/v1.45.0/nghttp2-1.45.0.tar.gz",
+    "tag_name": "v1.45.1",
+    "download_url": "https://github.com/nghttp2/nghttp2/releases/download/v1.45.1/nghttp2-1.45.1.tar.gz",
     "dependency": ["zlib", "openssl"],
     "cwd": "",
     "cmd": [
@@ -170,21 +170,6 @@
     "cwd": "",
     "cmd": [
       "./configure --disable-shared --disable-tcl --disable-readline",
-      "make -j\"$(nproc)\"",
-      "sudo make install"
-    ]
-  },
-  {
-    "name": "protobuf",
-    "releases_url": "https://api.github.com/repos/protocolbuffers/protobuf/releases/latest",
-    "tags_url": "",
-    "tag_name": "",
-    "download_url": "",
-    "dependency": ["zlib"],
-    "cwd": "",
-    "cmd": [
-      "./autogen.sh",
-      "./configure --disable-shared",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
