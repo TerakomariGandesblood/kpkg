@@ -1,12 +1,11 @@
 #include <unistd.h>
-#include <wait.h>
 
-#include <cstdint>
 #include <cstdlib>
 #include <string>
 #include <vector>
 
 #include <klib/error.h>
+#include <klib/util.h>
 #include <spdlog/spdlog.h>
 #include <boost/algorithm/string.hpp>
 
@@ -33,7 +32,7 @@ void build_libraries(std::vector<kpkg::Library>& libraries,
   for (auto& item : libraries) {
     auto pid = fork();
     if (pid < 0) {
-      klib::error("fork error");
+      klib::error("Fork error");
     } else if (pid == 0) {
       item.init(proxy);
       item.download(proxy);
@@ -42,12 +41,7 @@ void build_libraries(std::vector<kpkg::Library>& libraries,
     }
   }
 
-  std::int32_t status = 0;
-  while (waitpid(-1, &status, 0) > 0) {
-    if (!WIFEXITED(status) || WEXITSTATUS(status)) {
-      klib::error("waitpid error: {}", status);
-    }
-  }
+  klib::wait_for_child_process();
 }
 
 int main(int argc, const char* argv[]) try {

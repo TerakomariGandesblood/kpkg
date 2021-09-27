@@ -117,7 +117,7 @@ void Library::download(const std::string& proxy) const {
     request.verbose(true);
 #endif
 
-    auto response = request.get(download_url_);
+    auto response = request.get(download_url_, {}, {}, true);
     if (response.status_code() != klib::Response::StatusCode::Ok) {
       klib::error("Status code is not ok: {}, url: {}", response.status_code(),
                   download_url_);
