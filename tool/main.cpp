@@ -34,10 +34,13 @@ void build_libraries(const std::vector<kpkg::Library>& libraries,
     group.run([&item, &proxy] {
       item.init(proxy);
       item.download(proxy);
-      item.build();
     });
   }
   group.wait();
+
+  for (auto& item : copy) {
+    item.build();
+  }
 }
 
 int main(int argc, const char* argv[]) try {
