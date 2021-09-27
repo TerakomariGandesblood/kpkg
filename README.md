@@ -20,6 +20,7 @@ C++ Library Manager
 
 ## Dependency
 
+- [oneTBB](https://github.com/oneapi-src/oneTBB)
 - [fmt](https://github.com/fmtlib/fmt)
 - [spdlog](https://github.com/gabime/spdlog)
 - [boost](https://www.boost.org/)
