@@ -85,6 +85,8 @@ if(KPKG_SANITIZER)
     add_cxx_compiler_flag("-fsanitize=local-bounds")
     add_cxx_compiler_flag("-fsanitize=nullability")
     add_cxx_compiler_flag("-fsanitize-recover=unsigned-integer-overflow")
+    # FIXME
+    add_cxx_compiler_flag("-fsanitize-recover=implicit-conversion")
   endif()
 endif()
 
