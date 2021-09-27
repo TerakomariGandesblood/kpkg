@@ -8,6 +8,7 @@
 #include <fmt/core.h>
 #include <fmt/ostream.h>
 #include <klib/error.h>
+#include <oneapi/tbb.h>
 #include <spdlog/spdlog.h>
 #include <boost/algorithm/string.hpp>
 #include <boost/program_options/options_description.hpp>
@@ -79,10 +80,17 @@ void Program::show_libraries() {
   auto backup = spdlog::get_level();
   spdlog::set_level(spdlog::level::err);
 
-  for (auto& library : libraries_) {
-    library.init(proxy_);
-    library.print();
+  tbb::concurrent_vector<kpkg::Library> copy(std::begin(libraries_),
+                                             std::end(libraries_));
+
+  tbb::task_group group;
+  for (auto& library : copy) {
+    group.run([&library, this] {
+      library.init(proxy_);
+      library.print();
+    });
   }
+  group.wait();
 
   spdlog::set_level(backup);
 }

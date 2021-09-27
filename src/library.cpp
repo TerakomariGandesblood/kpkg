@@ -42,13 +42,11 @@ void Library::init(const std::string& proxy) {
     }
     spdlog::info("Get info from: {} ", url);
 
-    static klib::Request request;
+    klib::Request request;
     request.set_browser_user_agent();
     if (!std::empty(proxy)) {
       spdlog::info("Use proxy: {}", proxy);
       request.set_proxy(proxy);
-    } else {
-      request.set_no_proxy();
     }
 #ifndef NDEBUG
     request.verbose(true);
@@ -97,16 +95,12 @@ void Library::download(const std::string& proxy) const {
   } else {
     spdlog::info("Get file: {} from: {}", file_name_, download_url_);
 
-    static klib::Request request;
-
+    klib::Request request;
     // NOTE
     // for boost
     if (!download_url_.starts_with("https://boostorg.jfrog.io")) {
       request.set_browser_user_agent();
-    } else {
-      request.set_curl_user_agent();
     }
-
     if (!std::empty(proxy)) {
       spdlog::info("Use proxy: {}", proxy);
       request.set_proxy(proxy);
@@ -117,7 +111,7 @@ void Library::download(const std::string& proxy) const {
     request.verbose(true);
 #endif
 
-    auto response = request.get(download_url_, {}, {}, true);
+    auto response = request.get(download_url_);
     if (response.status_code() != klib::Response::StatusCode::Ok) {
       klib::error("Status code is not ok: {}, url: {}", response.status_code(),
                   download_url_);

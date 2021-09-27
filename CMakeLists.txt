@@ -57,6 +57,7 @@ include(CompilerOptions)
 # ---------------------------------------------------------------------------------------
 # Find package
 # ---------------------------------------------------------------------------------------
+find_package(TBB REQUIRED)
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(Boost 1.75.0 CONFIG REQUIRED COMPONENTS json program_options)
@@ -76,8 +77,9 @@ add_library(library_json STATIC "${KPKG_SOURCE_DIR}/src/library.s")
 add_library(${LIBRARY} STATIC ${LIBRARY_SRC})
 
 target_include_directories(${LIBRARY} PUBLIC "${KPKG_SOURCE_DIR}/include")
-target_link_libraries(${LIBRARY} PRIVATE library_json fmt::fmt spdlog::spdlog
-                                         ${Boost_LIBRARIES} klib::klib)
+target_link_libraries(
+  ${LIBRARY} PRIVATE library_json TBB::tbb fmt::fmt spdlog::spdlog
+                     ${Boost_LIBRARIES} klib::klib)
 set_target_properties(${LIBRARY} PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
 
 # ---------------------------------------------------------------------------------------

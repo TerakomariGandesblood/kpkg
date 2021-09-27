@@ -33,4 +33,8 @@ set(CPACK_GENERATOR "TGZ;DEB")
 
 set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 
+# https://cmake.org/cmake/help/latest/module/InstallRequiredSystemLibraries.html
+set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS "/usr/local/lib/libtbb.so.12")
+include(InstallRequiredSystemLibraries)
+
 include(CPack)
