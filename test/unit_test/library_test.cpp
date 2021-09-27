@@ -7,7 +7,7 @@
 
 TEST_CASE("read_from_json", "[library]") {
   auto libraries = kpkg::read_from_json();
-  REQUIRE(std::size(libraries) == 21);
+  REQUIRE(std::size(libraries) == 20);
 
   std::random_device rd;
   std::default_random_engine gen(rd());
