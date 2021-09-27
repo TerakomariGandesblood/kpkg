@@ -3,7 +3,6 @@
 #include <wait.h>
 
 #include <algorithm>
-#include <cassert>
 #include <cstdlib>
 
 #include <fmt/core.h>
@@ -81,21 +80,8 @@ void Program::show_libraries() {
   spdlog::set_level(spdlog::level::err);
 
   for (auto& library : libraries_) {
-    auto pid = fork();
-    if (pid < 0) {
-      klib::error("fork error");
-    } else if (pid == 0) {
-      library.init(proxy_);
-      library.print();
-      std::exit(EXIT_SUCCESS);
-    }
-  }
-
-  std::int32_t status = 0;
-  while (waitpid(-1, &status, 0) > 0) {
-    if (!WIFEXITED(status) || WEXITSTATUS(status)) {
-      klib::error("waitpid error: {}", status);
-    }
+    library.init(proxy_);
+    library.print();
   }
 
   spdlog::set_level(backup);
@@ -222,8 +208,6 @@ kpkg install <some library> [options])";
     } else {
       klib::error("Unknown command: {}", command);
     }
-  } else {
-    assert(false);
   }
 
   return input_libraries;
