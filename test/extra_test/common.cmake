@@ -40,8 +40,6 @@ if(KPKG_SANITIZER)
     add_cxx_compiler_flag_no_check("-fsanitize=nullability")
     add_cxx_compiler_flag_no_check(
       "-fsanitize-recover=unsigned-integer-overflow")
-    # FIXME
-    add_cxx_compiler_flag_no_check("-fsanitize-recover=implicit-conversion")
   endif()
 endif()
 
