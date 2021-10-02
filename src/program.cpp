@@ -1,14 +1,12 @@
 #include "program.h"
 
-#include <wait.h>
-
 #include <algorithm>
 #include <cstdlib>
 
 #include <fmt/core.h>
 #include <fmt/ostream.h>
 #include <klib/error.h>
-#include <oneapi/tbb.h>
+#include <klib/util.h>
 #include <spdlog/spdlog.h>
 #include <boost/algorithm/string.hpp>
 #include <boost/program_options/options_description.hpp>
@@ -80,17 +78,18 @@ void Program::show_libraries() {
   auto backup = spdlog::get_level();
   spdlog::set_level(spdlog::level::err);
 
-  tbb::concurrent_vector<kpkg::Library> copy(std::begin(libraries_),
-                                             std::end(libraries_));
-
-  tbb::task_group group;
-  for (auto& library : copy) {
-    group.run([&library, this] {
+  for (auto& library : libraries_) {
+    auto pid = fork();
+    if (pid < 0) {
+      klib::error("fork error");
+    } else if (pid == 0) {
       library.init(proxy_);
       library.print();
-    });
+      std::exit(EXIT_SUCCESS);
+    }
   }
-  group.wait();
+
+  klib::wait_for_child_process();
 
   spdlog::set_level(backup);
 }

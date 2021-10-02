@@ -1,8 +1,11 @@
+#include <unistd.h>
+
+#include <cstdlib>
 #include <string>
 #include <vector>
 
 #include <klib/error.h>
-#include <oneapi/tbb.h>
+#include <klib/util.h>
 #include <spdlog/spdlog.h>
 #include <boost/algorithm/string.hpp>
 
@@ -24,23 +27,21 @@ void print_libraries(const std::vector<kpkg::Library>& libraries) {
                boost::join(names, " "));
 }
 
-void build_libraries(const std::vector<kpkg::Library>& libraries,
+void build_libraries(std::vector<kpkg::Library>& libraries,
                      const std::string& proxy) {
-  tbb::concurrent_vector<kpkg::Library> copy(std::begin(libraries),
-                                             std::end(libraries));
-
-  tbb::task_group group;
-  for (auto& item : copy) {
-    group.run([&item, &proxy] {
+  for (auto& item : libraries) {
+    auto pid = fork();
+    if (pid < 0) {
+      klib::error("fork error");
+    } else if (pid == 0) {
       item.init(proxy);
       item.download(proxy);
-    });
+      item.build();
+      std::exit(EXIT_SUCCESS);
+    }
   }
-  group.wait();
 
-  for (auto& item : copy) {
-    item.build();
-  }
+  klib::wait_for_child_process();
 }
 
 int main(int argc, const char* argv[]) try {

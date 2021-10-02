@@ -104,14 +104,12 @@ void Library::download(const std::string& proxy) const {
     if (!std::empty(proxy)) {
       spdlog::info("Use proxy: {}", proxy);
       request.set_proxy(proxy);
-    } else {
-      request.set_no_proxy();
     }
 #ifndef NDEBUG
     request.verbose(true);
 #endif
 
-    auto response = request.get(download_url_);
+    auto response = request.get(download_url_, {}, {}, true);
     if (response.status_code() != klib::Response::StatusCode::Ok) {
       klib::error("Status code is not ok: {}, url: {}", response.status_code(),
                   download_url_);

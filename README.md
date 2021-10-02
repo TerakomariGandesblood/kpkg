@@ -16,11 +16,10 @@ C++ Library Manager
 ## Environment
 
 - Ubuntu 20.04
-- GCC 11 or Clang 12
+- GCC 11 or Clang 13
 
 ## Dependency
 
-- [oneTBB](https://github.com/oneapi-src/oneTBB)
 - [fmt](https://github.com/fmtlib/fmt)
 - [spdlog](https://github.com/gabime/spdlog)
 - [boost](https://www.boost.org/)
