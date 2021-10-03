@@ -13,8 +13,9 @@ class Library {
   Library(const std::string& name, const std::string& releases_url,
           const std::string& tags_url,
           const std::vector<std::string>& dependency, const std::string& cwd,
-          const std::vector<std::string>& cmd, const std::string& tag_name,
-          const std::string& download_url);
+          const std::vector<std::string>& cmd,
+          const std::vector<std::string>& cmd_install,
+          const std::string& tag_name, const std::string& download_url);
 
   void init(const std::string& proxy);
 
@@ -35,6 +36,7 @@ class Library {
   std::vector<std::string> dependency_;
   std::string cwd_;
   std::vector<std::string> cmd_;
+  std::vector<std::string> cmd_install_;
 
   std::string tag_name_;
   std::string download_url_;

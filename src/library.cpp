@@ -20,6 +20,7 @@ Library::Library(const std::string& name, const std::string& releases_url,
                  const std::string& tags_url,
                  const std::vector<std::string>& dependency,
                  const std::string& cwd, const std::vector<std::string>& cmd,
+                 const std::vector<std::string>& cmd_install,
                  const std::string& tag_name, const std::string& download_url)
     : name_(name),
       releases_url_(releases_url),
@@ -27,6 +28,7 @@ Library::Library(const std::string& name, const std::string& releases_url,
       dependency_(dependency),
       cwd_(cwd),
       cmd_(cmd),
+      cmd_install_(cmd_install),
       tag_name_(tag_name),
       download_url_(download_url) {}
 
@@ -123,6 +125,7 @@ void Library::download(const std::string& proxy) const {
 void Library::build() const {
   if (std::filesystem::is_directory(dir_name_)) {
     spdlog::info("Use exists folder: {}", dir_name_);
+    run_commands(cmd_install_, cwd_);
   } else {
     auto temp = klib::decompress(file_name_);
     if (!temp.has_value()) {
@@ -132,9 +135,9 @@ void Library::build() const {
     spdlog::info("Decompress file: {}, to {}", file_name_, *temp);
     spdlog::info("Rename folder from {} to {}", *temp, dir_name_);
     std::filesystem::rename(*temp, dir_name_);
-  }
 
-  run_commands(cmd_, cwd_);
+    run_commands(cmd_, cwd_);
+  }
 }
 
 void Library::print() const { fmt::print("{:<25} {:<25}\n", name_, tag_name_); }
@@ -166,6 +169,7 @@ Library tag_invoke(boost::json::value_to_tag<Library>,
                  value_to<std::vector<std::string>>(obj.at("dependency")),
                  value_to<std::string>(obj.at("cwd")),
                  value_to<std::vector<std::string>>(obj.at("cmd")),
+                 value_to<std::vector<std::string>>(obj.at("cmd_install")),
                  value_to<std::string>(obj.at("tag_name")),
                  value_to<std::string>(obj.at("download_url"))};
 }
