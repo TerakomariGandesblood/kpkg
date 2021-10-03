@@ -10,7 +10,6 @@
 #include <boost/algorithm/string.hpp>
 
 #include "library.h"
-#include "log.h"
 #include "program.h"
 
 void print_libraries(const std::vector<kpkg::Library>& libraries) {
@@ -45,8 +44,6 @@ void build_libraries(std::vector<kpkg::Library>& libraries,
 }
 
 int main(int argc, const char* argv[]) try {
-  kpkg::init_logger();
-
   kpkg::Program program(argc, argv);
 
   print_libraries(program.dependencies());
