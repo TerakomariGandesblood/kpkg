@@ -6,6 +6,8 @@ include(../common.cmake)
 # FIXME
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   add_cxx_compiler_flag_no_check("-fsanitize-recover=implicit-conversion")
+else()
+  add_cxx_compiler_flag_no_check("-fsanitize-recover=alignment")
 endif()
 
 find_package(TBB REQUIRED)
