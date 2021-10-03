@@ -30,7 +30,4 @@ int main() {
 
   auto out = fmt::output_file("guide.txt");
   out.print("Don't {}!\n", "Panic");
-
-  // TODO Syntax
-  // https://fmt.dev/latest/syntax.html
 }

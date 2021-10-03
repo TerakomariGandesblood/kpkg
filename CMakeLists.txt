@@ -59,8 +59,10 @@ include(CompilerOptions)
 # ---------------------------------------------------------------------------------------
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
-find_package(Boost 1.75.0 CONFIG REQUIRED COMPONENTS json program_options)
 find_package(klib REQUIRED)
+
+find_package(Boost 1.75.0 CONFIG REQUIRED COMPONENTS json program_options)
+add_definitions(-DBOOST_JSON_STANDALONE)
 
 # ---------------------------------------------------------------------------------------
 # Build library json file

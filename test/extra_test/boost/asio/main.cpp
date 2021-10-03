@@ -5,7 +5,6 @@
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/steady_timer.hpp>
 
-// TODO
 int main() {
   using namespace std::chrono_literals;
 

@@ -1,8 +1,7 @@
-find_package(Boost CONFIG REQUIRED)
-
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED)
 
+find_package(Boost CONFIG REQUIRED)
 add_definitions(-DBOOST_ASIO_NO_DEPRECATED -DBOOST_ASIO_STANDALONE)
 
 add_executable(asio main.cpp)

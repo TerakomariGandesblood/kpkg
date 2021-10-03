@@ -9,8 +9,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_link_options("-static-libstdc++")
-add_link_options("-static-libgcc")
+if(${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
+  add_link_options("-fuse-ld=lld")
+endif()
 
 add_cxx_compiler_flag_no_check("-Wall")
 add_cxx_compiler_flag_no_check("-Wextra")
