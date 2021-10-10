@@ -7,7 +7,6 @@
 
 TEST_CASE("read_from_json", "[library]") {
   auto libraries = kpkg::read_from_json();
-  REQUIRE(std::size(libraries) == 21);
 
   std::random_device rd;
   std::default_random_engine gen(rd());
@@ -17,8 +16,11 @@ TEST_CASE("read_from_json", "[library]") {
 
   REQUIRE(!std::empty(library.get_name()));
 
+  std::string proxy;
 #ifdef KPKG_TEST_USE_PROXY
-  library.init("socks5://127.0.0.1:1080");
-  library.download("socks5://127.0.0.1:1080");
+  proxy = "socks5://127.0.0.1:1080";
 #endif
+
+  library.init(proxy);
+  library.download(proxy);
 }
