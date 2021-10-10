@@ -3,6 +3,7 @@
 
 #include <CLI/CLI.hpp>
 
+// https://cliutils.github.io/CLI11/book/
 int main(int argc, char *argv[]) {
   CLI::App app("kpkg, a C++ library manager");
   app.set_version_flag("-v,--version", "version 0.1.0");
