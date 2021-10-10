@@ -217,15 +217,16 @@
     "cmd_install": ["sudo make install"]
   },
   {
-    "name": "magic_enum",
-    "releases_url": "https://api.github.com/repos/Neargye/magic_enum/releases/latest",
+    "name": "nameof",
+    "releases_url": "https://api.github.com/repos/Neargye/nameof/releases/latest",
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
     "dependency": [],
     "cwd": "",
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DMAGIC_ENUM_OPT_BUILD_EXAMPLES=OFF -DMAGIC_ENUM_OPT_BUILD_TESTS=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DNAMEOF_OPT_BUILD_EXAMPLES=OFF -DNAMEOF_OPT_BUILD_TESTS=OFF",
+      "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ],
     "cmd_install": [

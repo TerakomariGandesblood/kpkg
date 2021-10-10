@@ -4,11 +4,12 @@ project(test_library_install LANGUAGES CXX)
 
 include(../common.cmake)
 
-find_package(magic_enum REQUIRED)
+find_package(nameof REQUIRED)
 
-add_executable(magic-enum main.cpp)
+add_executable(nameof main.cpp)
+target_link_libraries(nameof nameof::nameof)
 
 add_custom_command(
-  TARGET magic-enum
+  TARGET nameof
   POST_BUILD
-  COMMAND magic-enum)
+  COMMAND nameof)
