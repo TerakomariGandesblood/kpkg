@@ -50,9 +50,11 @@ jobs:
       - name: Run executable
         run: |
           ./kpkg install boost catch2 curl fmt icu libarchive magic_enum \
-          openssl rocksdb spdlog sqlite zstd tidy-html5 pugixml onetbb cli11
+          openssl rocksdb spdlog sqlite zstd tidy-html5 pugixml onetbb cli11 \
+          indicators
           ./kpkg install boost catch2 curl fmt icu libarchive magic_enum \
-          openssl rocksdb spdlog sqlite zstd tidy-html5 pugixml onetbb cli11
+          openssl rocksdb spdlog sqlite zstd tidy-html5 pugixml onetbb cli11 \
+          indicators
         working-directory: build/tool
 
       - name: Test
