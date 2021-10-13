@@ -3,24 +3,17 @@
 #include <algorithm>
 #include <cstdlib>
 
-#include <fmt/core.h>
-#include <fmt/ostream.h>
 #include <klib/error.h>
 #include <klib/util.h>
 #include <spdlog/spdlog.h>
 #include <boost/algorithm/string.hpp>
-#include <boost/program_options/options_description.hpp>
-#include <boost/program_options/parsers.hpp>
-#include <boost/program_options/positional_options.hpp>
-#include <boost/program_options/variables_map.hpp>
-
-#include "version.h"
 
 namespace kpkg {
 
-Program::Program(std::int32_t argc, const char* argv[])
-    : libraries_(read_from_json()) {
-  for (const auto& library_name : parse_program_options(argc, argv)) {
+Program::Program(const std::vector<std::string>& libraries,
+                 const std::string& proxy)
+    : proxy_(proxy), libraries_(read_from_json()) {
+  for (const auto& library_name : libraries) {
     auto library = get_from_name(library_name);
 
     for (const auto& dependency_name : library.get_dependency()) {
@@ -103,121 +96,6 @@ Library Program::get_from_name(const std::string& name) {
   }
 
   klib::error("can not find this library: {}", name);
-}
-
-std::vector<std::string> Program::parse_program_options(std::int32_t argc,
-                                                        const char* argv[]) {
-  std::vector<std::string> input_libraries;
-
-  std::string help_msg = R"(kpkg list [options]
-kpkg install <some library> [options])";
-
-  if (argc == 1) {
-    fmt::print("{}", help_msg);
-    std::exit(EXIT_SUCCESS);
-  } else if (argc > 1) {
-    std::string command = argv[1];
-
-    if (command == "list") {
-      boost::program_options::options_description generic("Generic options");
-      generic.add_options()("version,v", "print version string")(
-          "help,h", "produce help message");
-
-      boost::program_options::options_description config("Configuration");
-      config.add_options()(
-          "proxy,p",
-          boost::program_options::value<std::string>(&proxy_)->implicit_value(
-              "socks5://127.0.0.1:1080"),
-          "Use proxy");
-
-      boost::program_options::options_description visible("Allowed options");
-      visible.add(generic).add(config);
-
-      boost::program_options::variables_map vm;
-      try {
-        store(boost::program_options::command_line_parser(argc - 1, argv + 1)
-                  .options(visible)
-                  .run(),
-              vm);
-        notify(vm);
-      } catch (const boost::program_options::error& err) {
-        klib::error(err.what());
-      }
-
-      if (vm.contains("version")) {
-        fmt::print("{} version: {}\n", argv[0], kpkg_version());
-        std::exit(EXIT_SUCCESS);
-      }
-
-      if (vm.contains("help")) {
-        fmt::print("{}\n", visible);
-        std::exit(EXIT_SUCCESS);
-      }
-
-      show_libraries();
-      std::exit(EXIT_SUCCESS);
-    } else if (command == "install") {
-      boost::program_options::options_description generic("Generic options");
-      generic.add_options()("version,v", "print version string")(
-          "help,h", "produce help message");
-
-      boost::program_options::options_description config("Configuration");
-      config.add_options()(
-          "proxy,p",
-          boost::program_options::value<std::string>(&proxy_)->implicit_value(
-              "socks5://127.0.0.1:1080"),
-          "Use proxy");
-
-      boost::program_options::options_description hidden("Hidden options");
-      hidden.add_options()(
-          "input-libraries",
-          boost::program_options::value<std::vector<std::string>>(
-              &input_libraries));
-
-      boost::program_options::options_description cmdline_options;
-      cmdline_options.add(generic).add(config).add(hidden);
-
-      boost::program_options::options_description visible("Allowed options");
-      visible.add(generic).add(config);
-
-      boost::program_options::positional_options_description p;
-      p.add("input-libraries", -1);
-
-      boost::program_options::variables_map vm;
-      try {
-        store(boost::program_options::command_line_parser(argc - 1, argv + 1)
-                  .options(cmdline_options)
-                  .positional(p)
-                  .run(),
-              vm);
-        notify(vm);
-      } catch (const boost::program_options::error& err) {
-        klib::error(err.what());
-      }
-
-      if (vm.contains("version")) {
-        fmt::print("{} version: {}\n", argv[0], kpkg_version());
-        std::exit(EXIT_SUCCESS);
-      }
-
-      if (vm.contains("help")) {
-        fmt::print("{}\n", visible);
-        std::exit(EXIT_SUCCESS);
-      }
-
-      return input_libraries;
-    } else if (command == "-v" || command == "--version") {
-      fmt::print("{} version: {}\n", argv[0], kpkg_version());
-      std::exit(EXIT_SUCCESS);
-    } else if (command == "-h" || command == "--help") {
-      fmt::print("{}", help_msg);
-      std::exit(EXIT_SUCCESS);
-    } else {
-      klib::error("Unknown command: {}", command);
-    }
-  }
-
-  return input_libraries;
 }
 
 }  // namespace kpkg

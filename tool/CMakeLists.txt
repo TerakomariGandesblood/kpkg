@@ -2,5 +2,6 @@ file(GLOB_RECURSE EXECUTABLE_SRC CONFIGURE_DEPENDS
      "${KPKG_SOURCE_DIR}/tool/*.cpp")
 
 add_executable(${EXECUTABLE} ${EXECUTABLE_SRC})
-target_link_libraries(${EXECUTABLE} PRIVATE ${LIBRARY} spdlog::spdlog
-                                            ${Boost_LIBRARIES} klib::klib)
+target_link_libraries(
+  ${EXECUTABLE} PRIVATE ${LIBRARY} spdlog::spdlog CLI11::CLI11
+                        ${Boost_LIBRARIES} klib::klib)

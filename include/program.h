@@ -10,7 +10,7 @@ namespace kpkg {
 
 class Program {
  public:
-  Program(std::int32_t argc, const char* argv[]);
+  Program(const std::vector<std::string>& libraries, const std::string& proxy);
 
   [[nodiscard]] std::string proxy() const { return proxy_; }
 
@@ -19,16 +19,14 @@ class Program {
     return libraries_to_be_built_;
   }
 
+  void show_libraries();
+
  private:
   static void unique(std::vector<Library>& libraries);
   static bool contains(const std::vector<Library>& libraries,
                        const std::string& name);
 
-  void show_libraries();
   Library get_from_name(const std::string& name);
-
-  std::vector<std::string> parse_program_options(std::int32_t argc,
-                                                 const char* argv[]);
 
   std::string proxy_;
 

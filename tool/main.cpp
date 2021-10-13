@@ -4,13 +4,16 @@
 #include <string>
 #include <vector>
 
+#include <fmt/format.h>
 #include <klib/error.h>
 #include <klib/util.h>
 #include <spdlog/spdlog.h>
+#include <CLI/CLI.hpp>
 #include <boost/algorithm/string.hpp>
 
 #include "library.h"
 #include "program.h"
+#include "version.h"
 
 void print_libraries(const std::vector<kpkg::Library>& libraries) {
   if (std::empty(libraries)) {
@@ -31,7 +34,7 @@ void build_libraries(std::vector<kpkg::Library>& libraries,
   for (auto& item : libraries) {
     auto pid = fork();
     if (pid < 0) {
-      klib::error("fork error");
+      klib::error("Fork error");
     } else if (pid == 0) {
       item.init(proxy);
       item.download(proxy);
@@ -44,7 +47,36 @@ void build_libraries(std::vector<kpkg::Library>& libraries,
 }
 
 int main(int argc, const char* argv[]) try {
-  kpkg::Program program(argc, argv);
+  CLI::App app("kpkg, a C++ library manager");
+  app.set_version_flag("-v,--version", fmt::format("{} version: {}", argv[0],
+                                                   kpkg::kpkg_version()));
+  app.require_subcommand(1);
+
+  auto install = app.add_subcommand("install", "Install library");
+
+  std::string proxy;
+  install
+      ->add_flag("-p{socks5://127.0.0.1:1080},--proxy{socks5://127.0.0.1:1080}",
+                 proxy, "Use proxy")
+      ->expected(0, 1);
+
+  std::vector<std::string> libraries;
+  install->add_option("library", libraries, "The library to be installed")
+      ->required();
+
+  auto list = app.add_subcommand("list", "Show all libraries");
+  list->add_flag("-p{socks5://127.0.0.1:1080},--proxy{socks5://127.0.0.1:1080}",
+                 proxy, "Use proxy")
+      ->expected(0, 1);
+
+  CLI11_PARSE(app, argc, argv);
+
+  kpkg::Program program(libraries, proxy);
+
+  if (list->parsed()) {
+    program.show_libraries();
+    return EXIT_SUCCESS;
+  }
 
   print_libraries(program.dependencies());
   for (auto& item : program.dependencies()) {

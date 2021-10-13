@@ -1,14 +1,15 @@
-#include <cstdint>
+#include <string>
+#include <vector>
 
 #include <catch2/catch.hpp>
 
 #include "program.h"
 
 TEST_CASE("program", "[program]") {
-  const char* argv[] = {"kpkg", "install", "spdlog", "curl", "-p"};
-  std::int32_t argc = std::size(argv);
+  std::vector<std::string> libraries = {"spdlog", "curl"};
+  std::string proxy = "socks5://127.0.0.1:1080";
 
-  kpkg::Program program(argc, argv);
+  kpkg::Program program(libraries, proxy);
 
   REQUIRE(program.proxy() == "socks5://127.0.0.1:1080");
 
