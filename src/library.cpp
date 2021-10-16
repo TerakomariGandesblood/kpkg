@@ -46,7 +46,7 @@ void Library::init(const std::string& proxy) {
 
     klib::Request request;
     request.set_browser_user_agent();
-#ifndef KLIB_VALGRIND
+#ifndef KPKG_VALGRIND
     request.set_doh_url("https://dns.google/dns-query");
 #endif
     if (!std::empty(proxy)) {
@@ -101,7 +101,7 @@ void Library::download(const std::string& proxy) const {
     spdlog::info("Get file: {} from: {}", file_name_, download_url_);
 
     klib::Request request;
-#ifndef KLIB_VALGRIND
+#ifndef KPKG_VALGRIND
     request.set_doh_url("https://dns.google/dns-query");
 #endif
     // NOTE
