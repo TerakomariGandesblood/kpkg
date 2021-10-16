@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 
-#include <fmt/format.h>
 #include <klib/error.h>
 #include <klib/util.h>
 #include <spdlog/spdlog.h>
@@ -47,9 +46,8 @@ void build_libraries(std::vector<kpkg::Library>& libraries,
 }
 
 int main(int argc, const char* argv[]) try {
-  CLI::App app("kpkg, a C++ library manager");
-  app.set_version_flag("-v,--version", fmt::format("{} version: {}", argv[0],
-                                                   kpkg::kpkg_version()));
+  CLI::App app;
+  app.set_version_flag("-v,--version", kpkg::version_str(argv[0]));
   app.require_subcommand(1);
 
   auto install = app.add_subcommand("install", "Install library");
