@@ -46,13 +46,14 @@ void Library::init(const std::string& proxy) {
 
     klib::Request request;
     request.set_browser_user_agent();
-#ifndef KPKG_VALGRIND
-    request.set_doh_url("https://dns.google/dns-query");
-#endif
     if (!std::empty(proxy)) {
       spdlog::info("Use proxy: {}", proxy);
       request.set_proxy(proxy);
     }
+    // FIXME
+#ifndef KPKG_VALGRIND
+    request.set_doh_url("https://dns.google/dns-query");
+#endif
 #ifndef NDEBUG
     request.verbose(true);
 #endif
@@ -101,9 +102,6 @@ void Library::download(const std::string& proxy) const {
     spdlog::info("Get file: {} from: {}", file_name_, download_url_);
 
     klib::Request request;
-#ifndef KPKG_VALGRIND
-    request.set_doh_url("https://dns.google/dns-query");
-#endif
     // NOTE
     // for boost
     if (!download_url_.starts_with("https://boostorg.jfrog.io")) {
@@ -113,6 +111,10 @@ void Library::download(const std::string& proxy) const {
       spdlog::info("Use proxy: {}", proxy);
       request.set_proxy(proxy);
     }
+    // FIXME
+#ifndef KPKG_VALGRIND
+    request.set_doh_url("https://dns.google/dns-query");
+#endif
 #ifndef NDEBUG
     request.verbose(true);
 #endif

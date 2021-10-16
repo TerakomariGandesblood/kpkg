@@ -61,7 +61,7 @@ kpkg install boost
 ### Valid command line parameters
 
 ```bash
--p [ --proxy ] [=arg(=socks5://127.0.0.1:1080)] Use proxy
+-p{socks5://127.0.0.1:1080},--proxy{socks5://127.0.0.1:1080} Use proxy
 ```
 
 ---
