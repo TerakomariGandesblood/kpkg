@@ -240,12 +240,11 @@
     "dependency": [],
     "cwd": "icu4c/source",
     "cmd": [
-      "./runConfigureICU Linux --disable-tests --disable-samples",
+      "./configure --disable-shared --enable-static --enable-auto-cleanup --disable-draft --disable-dyload --disable-tests --disable-samples --with-data-packaging=static",
       "make -j\"$(nproc)\"",
-      "sudo make install",
-      "sudo ldconfig"
+      "sudo make install"
     ],
-    "cmd_install": ["sudo make install", "sudo ldconfig"]
+    "cmd_install": ["sudo make install"]
   },
   {
     "name": "Catch2",

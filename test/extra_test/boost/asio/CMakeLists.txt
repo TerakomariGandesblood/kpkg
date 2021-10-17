@@ -5,7 +5,7 @@ find_package(Boost CONFIG REQUIRED)
 add_definitions(-DBOOST_ASIO_NO_DEPRECATED -DBOOST_ASIO_STANDALONE)
 
 add_executable(asio main.cpp)
-target_link_libraries(asio PRIVATE ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(asio PRIVATE ${Boost_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 
 add_custom_command(
   TARGET asio

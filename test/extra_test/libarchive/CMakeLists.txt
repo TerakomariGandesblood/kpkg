@@ -4,13 +4,11 @@ project(test_library_install LANGUAGES CXX)
 
 include(../common.cmake)
 
-# https://cmake.org/cmake/help/latest/module/FindLibArchive.html
-find_package(ZLIB REQUIRED)
-find_package(LibArchive REQUIRED)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(libarchive REQUIRED IMPORTED_TARGET libarchive)
 
 add_executable(libarchive main.cpp)
-target_link_libraries(libarchive PRIVATE ${LibArchive_LIBRARIES}
-                                         ${ZLIB_LIBRARIES})
+target_link_libraries(libarchive PRIVATE PkgConfig::libarchive)
 
 add_custom_command(
   TARGET libarchive
