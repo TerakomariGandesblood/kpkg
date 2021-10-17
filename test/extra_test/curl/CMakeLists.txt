@@ -4,10 +4,11 @@ project(test_library_install LANGUAGES CXX)
 
 include(../common.cmake)
 
-find_package(CURL REQUIRED)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(curl REQUIRED IMPORTED_TARGET libcurl)
 
 add_executable(curl main.cpp)
-target_link_libraries(curl PRIVATE CURL::libcurl)
+target_link_libraries(curl PRIVATE PkgConfig::curl)
 
 add_custom_command(
   TARGET curl

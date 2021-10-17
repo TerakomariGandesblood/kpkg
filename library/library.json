@@ -80,28 +80,11 @@
     "cwd": "",
     "cmd": [
       "bash build/autogen.sh",
-      "./configure --disable-shared --disable-bsdtar --disable-bsdcat --disable-bsdcpio --without-bz2lib --without-libb2 --without-lz4 --without-zstd --without-lzma --without-cng --without-openssl --without-xml2 --without-expat",
+      "./configure --disable-shared --enable-static --disable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --without-lz4 --without-zstd --without-lzma --without-lzo2 --without-cng --without-openssl --without-xml2 --without-expat",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ],
     "cmd_install": ["sudo make install"]
-  },
-  {
-    "name": "zstd",
-    "releases_url": "https://api.github.com/repos/facebook/zstd/releases/latest",
-    "tags_url": "",
-    "tag_name": "",
-    "download_url": "",
-    "dependency": [],
-    "cwd": "build/cmake",
-    "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DZSTD_BUILD_PROGRAMS=OFF -DZSTD_BUILD_TESTS=OFF -DZSTD_BUILD_SHARED=OFF",
-      "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
-    ],
-    "cmd_install": [
-      "sudo cmake --build build --config Release --target install"
-    ]
   },
   {
     "name": "openssl",
@@ -112,11 +95,11 @@
     "dependency": [],
     "cwd": "",
     "cmd": [
-      "./Configure --libdir=lib no-afalgeng no-async no-capieng no-cmp no-cms no-ct no-dgram no-dso no-dynamic-engine no-engine no-filenames no-gost no-legacy no-module no-ocsp no-padlockeng no-psk no-shared no-srp no-srtp no-tests no-ts no-ui-console no-uplink no-ssl no-tls1 no-tls1_1 no-dtls no-aria no-bf no-blake2 no-cast no-chacha no-cmac no-des no-dsa no-idea no-md4 no-mdc2 no-ocb no-rc2 no-rc4 no-rmd160 no-scrypt no-seed no-siphash no-siv no-sm2 no-sm3 no-sm4 no-whirlpool",
+      "./Configure --libdir=lib no-afalgeng enable-ktls no-async no-capieng no-cmp no-cms no-ct no-dgram no-dso no-dynamic-engine no-engine no-filenames no-gost no-legacy no-module no-ocsp no-padlockeng no-psk no-shared no-srp no-srtp no-tests no-ts no-ui-console no-uplink no-ssl no-tls1 no-tls1_1 no-dtls no-aria no-bf no-blake2 no-cast no-chacha no-cmac no-des no-dsa no-idea no-md4 no-mdc2 no-ocb no-rc2 no-rc4 no-rmd160 no-scrypt no-seed no-siphash no-siv no-sm2 no-sm3 no-sm4 no-whirlpool",
       "make -j\"$(nproc)\"",
-      "sudo make install_sw"
+      "sudo make install_sw install_fips"
     ],
-    "cmd_install": ["sudo make install_sw"]
+    "cmd_install": ["sudo make install_sw install_fips"]
   },
   {
     "name": "nghttp2",
@@ -143,11 +126,11 @@
     "cwd": "",
     "cmd": [
       "autoreconf -fi",
-      "./configure --enable-symbol-hiding --disable-ares --disable-ech --disable-shared --enable-static --disable-ftp --disable-file --disable-ldap --disable-ldaps --disable-rtsp --disable-dict --disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smb --disable-smtp --disable-gopher --disable-mqtt --disable-manual --enable-libcurl-option --enable-libgcc --enable-ipv6 --enable-openssl-auto-load-config --disable-versioned-symbols --enable-threaded-resolver --enable-verbose --disable-sspi --enable-crypto-auth --disable-ntlm --disable-ntlm-wb --disable-tls-srp --disable-unix-sockets --enable-cookies --disable-socketpair --enable-http-auth --enable-doh --enable-mime --disable-dateparse --disable-netrc --disable-progress-meter --disable-dnsshuffle --disable-get-easy-options --enable-alt-svc --enable-hsts --with-openssl --without-hyper --with-zlib --without-brotli --without-zstd --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt' --with-ca-path='/etc/ssl/certs' --without-libpsl --without-libgsasl --without-librtmp --without-libidn2 --with-nghttp2 --without-ngtcp2 --without-nghttp3 --without-quiche --without-fish-functions-dir",
+      "./configure --enable-symbol-hiding --disable-ares --disable-ech --disable-shared --enable-static --disable-ftp --disable-file --disable-ldap --disable-ldaps --disable-rtsp --disable-dict --disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smb --disable-smtp --disable-gopher --disable-mqtt --disable-manual --enable-libcurl-option --enable-libgcc --enable-ipv6 --enable-openssl-auto-load-config --enable-threaded-resolver --enable-verbose --disable-sspi --enable-crypto-auth --disable-ntlm --disable-ntlm-wb --disable-tls-srp --disable-unix-sockets --enable-cookies --disable-socketpair --enable-http-auth --enable-doh --enable-mime --disable-dateparse --disable-netrc --enable-progress-meter --disable-dnsshuffle --disable-get-easy-options --enable-alt-svc --enable-hsts --with-openssl --without-hyper --with-zlib --without-brotli --without-zstd --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt' --with-ca-path='/etc/ssl/certs' --without-libpsl --without-libgsasl --without-librtmp --without-libidn2 --with-nghttp2 --without-ngtcp2 --without-nghttp3 --without-quiche --without-fish-functions-dir",
       "make -j\"$(nproc)\"",
-      "sudo make install-exec"
+      "sudo make install"
     ],
-    "cmd_install": ["sudo make install-exec"]
+    "cmd_install": ["sudo make install"]
   },
   {
     "name": "fmt",
@@ -158,7 +141,7 @@
     "dependency": [],
     "cwd": "",
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DFMT_DOC=OFF -DFMT_TEST=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DFMT_DOC=OFF -DFMT_TEST=OFF -DFMT_CUDA_TEST=OFF -DFMT_MODULE=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ],
@@ -175,7 +158,7 @@
     "dependency": ["fmt"],
     "cwd": "",
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DSPDLOG_BUILD_EXAMPLE=OFF -DSPDLOG_FMT_EXTERNAL=ON",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DSPDLOG_BUILD_ALL=OFF -DSPDLOG_BUILD_EXAMPLE=OFF -DSPDLOG_BUILD_EXAMPLE_HO=OFF -DSPDLOG_BUILD_TESTS=OFF -DSPDLOG_BUILD_TESTS_HO=OFF -DSPDLOG_BUILD_BENCH=OFF -DSPDLOG_SANITIZE_ADDRESS=OFF -DSPDLOG_FMT_EXTERNAL=ON",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ],
@@ -192,7 +175,7 @@
     "dependency": ["zlib"],
     "cwd": "",
     "cmd": [
-      "./configure --disable-shared --disable-tcl --disable-readline",
+      "./configure --disable-shared --enable-static --enable-releasemode --disable-tcl --disable-readline --disable-debug --disable-load-extension",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ],
@@ -240,7 +223,7 @@
     "dependency": [],
     "cwd": "",
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DTBB_TEST=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DTBB_TEST=OFF -DTBB_EXAMPLES=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ],
@@ -273,7 +256,7 @@
     "dependency": [],
     "cwd": "",
     "cmd": [
-      "export CFLAGS=\"$CFLAGS -DCATCH_CONFIG_ENABLE_BENCHMARKING\" && export CXXFLAGS=\"$CXXFLAGS -DCATCH_CONFIG_ENABLE_BENCHMARKING\" && cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCATCH_BUILD_TESTING=OFF -DCATCH_BUILD_STATIC_LIBRARY=ON -DCATCH_INSTALL_DOCS=OFF",
+      "export CFLAGS=\"$CFLAGS -DCATCH_CONFIG_ENABLE_BENCHMARKING\" && export CXXFLAGS=\"$CXXFLAGS -DCATCH_CONFIG_ENABLE_BENCHMARKING\" && cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCATCH_BUILD_TESTING=OFF -DCATCH_BUILD_EXAMPLES=OFF -DCATCH_BUILD_EXTRA_TESTS=OFF -DCATCH_BUILD_STATIC_LIBRARY=ON -DCATCH_INSTALL_DOCS=OFF -DCATCH_INSTALL_HELPERS=ON",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ],
@@ -290,7 +273,7 @@
     "dependency": [],
     "cwd": "",
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIB=OFF -DSUPPORT_CONSOLE_APP=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIB=OFF -DBUILD_SAMPLE_CODE=OFF -DSUPPORT_CONSOLE_APP=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ],
@@ -307,7 +290,7 @@
     "dependency": [],
     "cwd": "",
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF -DBUILD_SHARED_AND_STATIC_LIBS=OFF -DBUILD_SHARED_LIBS=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ],
@@ -324,7 +307,7 @@
     "dependency": [],
     "cwd": "",
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCLI11_BUILD_DOCS=OFF -DCLI11_BUILD_TESTS=OFF -DCLI11_BUILD_EXAMPLES=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCLI11_BUILD_DOCS=OFF -DCLI11_BUILD_TESTS=OFF -DCLI11_BUILD_EXAMPLES=OFF -DBUILD_TESTING=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ],
@@ -341,7 +324,7 @@
     "dependency": [],
     "cwd": "",
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DINDICATORS_BUILD_TESTS=OFF -DINDICATORS_SAMPLES=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DINDICATORS_BUILD_TESTS=OFF -DINDICATORS_SAMPLES=OFF -DINDICATORS_DEMO=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ],
