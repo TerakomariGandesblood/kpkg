@@ -4,7 +4,6 @@
 #include <string>
 
 #include <unicode/translit.h>
-#include <unicode/uclean.h>
 #include <unicode/unistr.h>
 #include <unicode/ustream.h>
 #include <unicode/utypes.h>
