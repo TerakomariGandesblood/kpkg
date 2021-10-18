@@ -18,6 +18,9 @@ add_cxx_compiler_flag_no_check("-Wextra")
 add_cxx_compiler_flag_no_check("-Wpedantic")
 add_cxx_compiler_flag_no_check("-Werror")
 
+add_link_options("-static-libgcc")
+add_link_options("-static-libstdc++")
+
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
   set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
 endif()
