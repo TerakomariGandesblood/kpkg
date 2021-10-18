@@ -38,5 +38,4 @@ int main() {
   std::cout << str << '\n';
 
   delete trans;
-  u_cleanup();
 }
