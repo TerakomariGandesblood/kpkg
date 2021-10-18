@@ -1,4 +1,4 @@
-find_package(Boost CONFIG REQUIRED)
+find_package(Boost REQUIRED CONFIG)
 
 add_executable(pool main.cpp)
 target_link_libraries(pool PRIVATE ${Boost_LIBRARIES})

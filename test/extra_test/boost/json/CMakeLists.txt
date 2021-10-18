@@ -1,4 +1,4 @@
-find_package(Boost CONFIG REQUIRED COMPONENTS json)
+find_package(Boost REQUIRED COMPONENTS json CONFIG)
 
 add_executable(json main.cpp)
 target_link_libraries(json PRIVATE ${Boost_LIBRARIES})
