@@ -75,6 +75,7 @@ file(COPY "${KPKG_SOURCE_DIR}/library/library.json"
      DESTINATION ${KPKG_BINARY_DIR})
 
 add_library(library_json STATIC "${KPKG_SOURCE_DIR}/src/library.s")
+target_compile_options(library_json PRIVATE "-Wno-unused-command-line-argument")
 
 # ---------------------------------------------------------------------------------------
 # Build static library
