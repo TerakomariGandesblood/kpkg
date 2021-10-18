@@ -10,5 +10,7 @@ add_executable(${TEST_EXECUTABLE} ${TEST_SRC})
 target_link_libraries(${TEST_EXECUTABLE} PRIVATE ${LIBRARY}
                                                  Catch2::Catch2WithMain)
 
-include(Catch)
-catch_discover_tests(${TEST_EXECUTABLE} REPORTER compact)
+if(NOT KPKG_VALGRIND)
+  include(Catch)
+  catch_discover_tests(${TEST_EXECUTABLE} REPORTER compact)
+endif()
