@@ -14,6 +14,7 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data.txt
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(icu-i18n REQUIRED IMPORTED_TARGET icu-i18n)
 pkg_check_modules(icu-io REQUIRED IMPORTED_TARGET icu-io)
+add_definitions(-DU_HIDE_INTERNAL_API -DU_HIDE_OBSOLETE_API)
 
 add_executable(unicode-string unicode_string.cpp)
 target_link_libraries(unicode-string PRIVATE PkgConfig::icu-i18n)
