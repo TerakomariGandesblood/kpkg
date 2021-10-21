@@ -50,10 +50,6 @@ void Library::init(const std::string& proxy) {
       spdlog::info("Use proxy: {}", proxy);
       request.set_proxy(proxy);
     }
-    // FIXME
-#ifndef KPKG_VALGRIND
-    request.set_doh_url("https://dns.google/dns-query");
-#endif
 #ifndef NDEBUG
     request.verbose(true);
 #endif
@@ -111,10 +107,6 @@ void Library::download(const std::string& proxy) const {
       spdlog::info("Use proxy: {}", proxy);
       request.set_proxy(proxy);
     }
-    // FIXME
-#ifndef KPKG_VALGRIND
-    request.set_doh_url("https://dns.google/dns-query");
-#endif
 #ifndef NDEBUG
     request.verbose(true);
 #endif

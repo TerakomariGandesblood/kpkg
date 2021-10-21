@@ -54,11 +54,6 @@ include(ClangTidy)
 include(Format)
 include(CompilerOptions)
 
-# FIXME
-if(KPKG_VALGRIND)
-  add_definitions(-DKPKG_VALGRIND)
-endif()
-
 # ---------------------------------------------------------------------------------------
 # Find package
 # ---------------------------------------------------------------------------------------
