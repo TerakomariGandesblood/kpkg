@@ -5,7 +5,7 @@
 #include <string>
 #include <string_view>
 
-#include <sqlite3.h>
+#include <sqlcipher/sqlite3.h>
 
 #include "error.h"
 

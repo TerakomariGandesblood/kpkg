@@ -22,5 +22,4 @@ TEST_CASE("read_from_json", "[library]") {
 #endif
 
   library.init(proxy);
-  library.download(proxy);
 }

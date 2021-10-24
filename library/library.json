@@ -167,15 +167,15 @@
     ]
   },
   {
-    "name": "sqlite",
+    "name": "sqlcipher",
     "releases_url": "",
-    "tags_url": "https://api.github.com/repos/sqlite/sqlite/tags",
+    "tags_url": "https://api.github.com/repos/sqlcipher/sqlcipher/tags",
     "tag_name": "",
     "download_url": "",
-    "dependency": ["zlib"],
+    "dependency": ["zlib", "openssl"],
     "cwd": "",
     "cmd": [
-      "./configure --disable-shared --enable-static --enable-releasemode --disable-tcl --disable-readline --disable-debug --disable-load-extension",
+      "./configure CFLAGS=\"-DSQLITE_HAS_CODEC\" LDFLAGS=\"/usr/local/lib/libcrypto.a\" --disable-shared --enable-static --enable-releasemode --enable-tempstore=yes --disable-tcl --disable-readline --disable-debug --disable-load-extension",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ],
