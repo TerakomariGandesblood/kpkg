@@ -14,6 +14,8 @@ add_definitions(-DOPENSSL_NO_DEPRECATED)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(sqlcipher REQUIRED IMPORTED_TARGET sqlcipher)
 
+add_definitions(-DSQLITE_HAS_CODEC)
+
 add_executable(sqlcipher main.cpp)
 target_link_libraries(
   sqlcipher PRIVATE PkgConfig::sqlcipher PkgConfig::openssl ${CMAKE_DL_LIBS}
