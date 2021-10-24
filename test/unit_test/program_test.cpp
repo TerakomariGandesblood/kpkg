@@ -15,9 +15,9 @@ TEST_CASE("program", "[program]") {
 
   auto dependency = program.dependencies();
   REQUIRE(std::size(dependency) == 4);
-  REQUIRE(dependency.at(0).get_name() == "fmt");
-  REQUIRE(dependency.at(1).get_name() == "openssl");
-  REQUIRE(dependency.at(2).get_name() == "zlib");
+  REQUIRE(dependency.at(0).get_name() == "zlib");
+  REQUIRE(dependency.at(1).get_name() == "fmt");
+  REQUIRE(dependency.at(2).get_name() == "openssl");
   REQUIRE(dependency.at(3).get_name() == "nghttp2");
 
   auto to_be_built = program.libraries_to_be_built();
