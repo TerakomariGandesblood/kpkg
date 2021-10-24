@@ -49,9 +49,9 @@ jobs:
 
       - name: Run executable
         run: |
-          ./kpkg install boost catch2 curl fmt icu libarchive nameof \
+          ./kpkg install boost catch2 curl fmt icu libarchive nameof zstd \
           openssl spdlog sqlcipher tidy-html5 pugixml onetbb cli11 indicators
-          ./kpkg install boost catch2 curl fmt icu libarchive nameof \
+          ./kpkg install boost catch2 curl fmt icu libarchive nameof zstd \
           openssl spdlog sqlcipher tidy-html5 pugixml onetbb cli11 indicators
         working-directory: build/tool
 
