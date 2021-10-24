@@ -175,7 +175,7 @@
     "dependency": ["zlib", "openssl"],
     "cwd": "",
     "cmd": [
-      "./configure CFLAGS=\"-DSQLITE_HAS_CODEC\" LDFLAGS=\"/usr/local/lib/libcrypto.a\" --disable-shared --enable-static --enable-releasemode --enable-tempstore=yes --disable-tcl --disable-readline --disable-debug",
+      "./configure CFLAGS=\"$CFLAGS -DSQLITE_HAS_CODEC\" LDFLAGS=\"/usr/local/lib/libcrypto.a\" --disable-shared --enable-static --enable-releasemode --enable-tempstore=yes --disable-tcl --disable-readline --disable-debug",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ],
