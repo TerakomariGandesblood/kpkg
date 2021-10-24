@@ -30,16 +30,18 @@ Program::Program(const std::vector<std::string>& libraries,
   });
 
   // NOTE
-  // for nghttp2
   auto iter = std::find_if(
+      std::begin(dependencies_), std::end(dependencies_),
+      [](const Library& item) { return item.get_name() == "zlib"; });
+  if (iter != std::end(dependencies_)) {
+    std::swap(*iter, dependencies_.front());
+  }
+
+  iter = std::find_if(
       std::begin(dependencies_), std::end(dependencies_),
       [](const Library& item) { return item.get_name() == "nghttp2"; });
   if (iter != std::end(dependencies_)) {
     std::swap(*iter, dependencies_.back());
-    std::sort(std::begin(dependencies_), std::end(dependencies_) - 1,
-              [](const Library& lhs, const Library& rhs) {
-                return lhs.get_name() < rhs.get_name();
-              });
   }
 }
 
