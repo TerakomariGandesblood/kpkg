@@ -5,6 +5,7 @@
 
 int downloadEventCallback(aria2::Session* session, aria2::DownloadEvent event,
                           aria2::A2Gid gid, void* userData) {
+  (void)userData;
   switch (event) {
     case aria2::EVENT_ON_DOWNLOAD_COMPLETE:
       std::cerr << "COMPLETE";

@@ -257,7 +257,7 @@
     "dependency": [],
     "cwd": "icu4c/source",
     "cmd": [
-      "export CC=clang && export CXX=clang++ && ./configure --disable-shared --enable-static --enable-auto-cleanup --disable-draft --disable-dyload --disable-tests --disable-samples --with-data-packaging=static",
+      "./configure --disable-shared --enable-static --enable-auto-cleanup --disable-draft --disable-dyload --disable-tests --disable-samples --with-data-packaging=static",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ],
