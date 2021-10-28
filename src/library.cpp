@@ -56,7 +56,7 @@ void Library::init(const std::string& proxy) {
 #endif
 
     auto response = request.get(url);
-    if (response.status_code() != klib::Response::StatusCode::Ok) {
+    if (!response.ok()) {
       klib::error("Status code is not ok: {}, url: {}", response.status_code(),
                   url);
     }
