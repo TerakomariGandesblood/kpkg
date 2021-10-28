@@ -28,11 +28,9 @@ if(KPKG_VALGRIND)
       ${KPKG_BINARY_DIR}/tool/${EXECUTABLE})
 
   if(KPKG_TEST_USE_PROXY)
-    add_test(NAME kpkg-list-valgrind COMMAND ${VALGRIND_CMD} list -p)
     add_test(NAME kpkg-install-valgrind COMMAND ${VALGRIND_CMD} install spdlog
                                                 -p)
   else()
-    add_test(NAME kpkg-list-valgrind COMMAND ${VALGRIND_CMD} list)
     add_test(NAME kpkg-install-valgrind COMMAND ${VALGRIND_CMD} install spdlog)
   endif()
 endif()
