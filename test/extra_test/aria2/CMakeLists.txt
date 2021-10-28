@@ -18,4 +18,4 @@ target_link_libraries(aria2 PRIVATE PkgConfig::libaria2 PkgConfig::zlib
 add_custom_command(
   TARGET aria2
   POST_BUILD
-  COMMAND aria2)
+  COMMAND aria2 https://github.com/madler/zlib/archive/refs/tags/v1.2.11.tar.gz)

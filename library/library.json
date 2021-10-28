@@ -358,7 +358,7 @@
     "cwd": "",
     "cmd": [
       "autoreconf -i",
-      "./configure --enable-static --disable-shared --disable-bittorrent --disable-metalink --disable-websocket --disable-epoll --enable-libaria2 --disable-nls --without-libuv --without-gnutls --without-libnettle --without-libgmp --without-libgcrypt --with-openssl --without-sqlite3 --without-libxml2 --without-libexpat --without-libcares --with-libz --without-tcmalloc --without-jemalloc --without-libssh2 --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt'",
+      "./configure LDFLAGS=\"-lpthread\" --enable-static --disable-shared --disable-bittorrent --disable-metalink --disable-websocket --disable-epoll --enable-libaria2 --disable-nls --without-libuv --without-gnutls --without-libnettle --without-libgmp --without-libgcrypt --with-openssl --without-sqlite3 --without-libxml2 --without-libexpat --without-libcares --with-libz --without-tcmalloc --without-jemalloc --without-libssh2 --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt'",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ],
