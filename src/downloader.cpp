@@ -75,6 +75,7 @@ void HTTPDownloader::download(const std::string& url,
 
   aria2::SessionConfig config;
   config.downloadEventCallback = download_event_callback;
+  config.useSignalHandler = false;
   std::unique_ptr<aria2::Session, decltype(free_session)> session(
       aria2::sessionNew(options_, config), free_session);
   if (!session) {
