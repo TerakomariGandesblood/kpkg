@@ -17,8 +17,7 @@ class HTTPDownloader {
 
   ~HTTPDownloader();
 
-  std::string download(const std::string &url,
-                       const std::string &file_name = "");
+  void download(const std::string &url, const std::string &file_name);
 
  private:
   aria2::KeyVals options_;

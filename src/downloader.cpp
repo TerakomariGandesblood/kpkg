@@ -1,11 +1,46 @@
 #include "downloader.h"
 
+#include <cstdint>
 #include <filesystem>
 #include <memory>
 
 #include <klib/error.h>
 
 namespace kpkg {
+
+namespace {
+
+std::int32_t download_event_callback(aria2::Session* session,
+                                     aria2::DownloadEvent event,
+                                     aria2::A2Gid gid, void* user_data) {
+  (void)user_data;
+
+  switch (event) {
+    case aria2::EVENT_ON_DOWNLOAD_COMPLETE:
+      break;
+    case aria2::EVENT_ON_DOWNLOAD_ERROR:
+      klib::error("download error");
+    default:
+      return 0;
+  }
+
+  std::unique_ptr<aria2::DownloadHandle, decltype(aria2::deleteDownloadHandle)*>
+      dh(aria2::getDownloadHandle(session, gid), aria2::deleteDownloadHandle);
+  if (!dh) {
+    klib::error("aria2::getDownloadHandle failed");
+  }
+
+  if (dh->getNumFiles() > 0) {
+    std::filesystem::path path(dh->getFile(1).path);
+    if (!std::filesystem::exists(path)) {
+      klib::error("no file: {}", path.string());
+    }
+  }
+
+  return 0;
+}
+
+}  // namespace
 
 HTTPDownloader::HTTPDownloader(const std::string& proxy) {
   auto rc = aria2::libraryInit();
@@ -29,16 +64,19 @@ HTTPDownloader::~HTTPDownloader() {
   }
 }
 
-std::string HTTPDownloader::download(const std::string& url,
-                                     const std::string& file_name) {
+void HTTPDownloader::download(const std::string& url,
+                              const std::string& file_name) {
   auto free_session = [](aria2::Session* ptr) {
     auto rc = aria2::sessionFinal(ptr);
     if (rc != 0) {
       klib::error("aria2::sessionFinal failed");
     }
   };
+
+  aria2::SessionConfig config;
+  config.downloadEventCallback = download_event_callback;
   std::unique_ptr<aria2::Session, decltype(free_session)> session(
-      aria2::sessionNew(options_, aria2::SessionConfig{}), free_session);
+      aria2::sessionNew(options_, config), free_session);
   if (!session) {
     klib::error("aria2::sessionNew failed");
   }
@@ -58,20 +96,6 @@ std::string HTTPDownloader::download(const std::string& url,
   if (rc != 0) {
     klib::error("aria2::run failed");
   }
-
-  std::unique_ptr<aria2::DownloadHandle, decltype(aria2::deleteDownloadHandle)*>
-      dh(aria2::getDownloadHandle(session.get(), gid),
-         aria2::deleteDownloadHandle);
-  if (!dh) {
-    klib::error("aria2::getDownloadHandle failed");
-  }
-
-  std::filesystem::path path(dh->getFile(1).path);
-  if (!std::filesystem::exists(path)) {
-    klib::error("no file: {}", path.string());
-  }
-
-  return path.filename().string();
 }
 
 }  // namespace kpkg
