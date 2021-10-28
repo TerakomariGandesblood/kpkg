@@ -3,8 +3,8 @@
     "name": "CMake",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "v3.21.3",
-    "download_url": "https://github.com/Kitware/CMake/archive/refs/tags/v3.21.3.tar.gz",
+    "tag_name": "v3.21.4",
+    "download_url": "https://github.com/Kitware/CMake/archive/refs/tags/v3.21.4.tar.gz",
     "dependency": [],
     "cwd": "",
     "cmd": [
@@ -92,10 +92,10 @@
     "tags_url": "",
     "tag_name": "openssl-3.0.0",
     "download_url": "https://github.com/openssl/openssl/archive/refs/tags/openssl-3.0.0.tar.gz",
-    "dependency": [],
+    "dependency": ["zlib"],
     "cwd": "",
     "cmd": [
-      "./Configure --libdir=lib no-afalgeng enable-ktls no-async no-capieng no-cmp no-cms no-ct no-dgram no-dso no-dynamic-engine no-engine no-filenames no-gost no-legacy no-module no-ocsp no-padlockeng no-psk no-shared no-srp no-srtp no-tests no-ts no-ui-console no-uplink no-ssl no-tls1 no-tls1_1 no-dtls no-aria no-bf no-blake2 no-cast no-chacha no-cmac no-des no-dsa no-idea no-md4 no-mdc2 no-ocb no-rc2 no-rc4 no-rmd160 no-scrypt no-seed no-siphash no-siv no-sm2 no-sm3 no-sm4 no-whirlpool",
+      "./Configure --libdir=lib no-afalgeng enable-ktls no-async no-capieng no-cmp no-cms no-ct no-dgram no-dso no-dynamic-engine no-engine no-filenames no-gost no-legacy no-module no-ocsp no-padlockeng no-psk no-shared no-srp no-srtp no-tests no-ts no-ui-console no-uplink no-ssl no-tls1 no-tls1_1 no-dtls no-aria no-bf no-blake2 no-cast no-chacha no-cmac no-des no-dsa no-idea no-md4 no-mdc2 no-ocb no-rc2 no-rmd160 no-scrypt no-seed no-siphash no-siv no-sm2 no-sm3 no-sm4 no-whirlpool",
       "make -j\"$(nproc)\"",
       "sudo make install_sw install_fips"
     ],
@@ -347,5 +347,21 @@
     "cmd_install": [
       "sudo cmake --build build --config Release --target install"
     ]
+  },
+  {
+    "name": "aria2",
+    "releases_url": "https://api.github.com/repos/aria2/aria2/releases/latest",
+    "tags_url": "",
+    "tag_name": "",
+    "download_url": "",
+    "dependency": ["zlib", "openssl"],
+    "cwd": "",
+    "cmd": [
+      "autoreconf -i",
+      "./configure --enable-static --disable-shared --disable-bittorrent --disable-metalink --disable-websocket --disable-epoll --enable-libaria2 --disable-nls --without-libuv --without-gnutls --without-libnettle --without-libgmp --without-libgcrypt --with-openssl --without-sqlite3 --without-libxml2 --without-libexpat --without-libcares --with-libz --without-tcmalloc --without-jemalloc --without-libssh2 --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt'",
+      "make -j\"$(nproc)\"",
+      "sudo make install"
+    ],
+    "cmd_install": ["sudo make install"]
   }
 ]

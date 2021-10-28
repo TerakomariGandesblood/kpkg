@@ -50,9 +50,11 @@ jobs:
       - name: Run executable
         run: |
           ./kpkg install boost catch2 curl fmt icu libarchive nameof zstd \
-          openssl spdlog sqlcipher tidy-html5 pugixml onetbb cli11 indicators
+          openssl spdlog sqlcipher tidy-html5 pugixml onetbb cli11 indicators \
+          aria2
           ./kpkg install boost catch2 curl fmt icu libarchive nameof zstd \
-          openssl spdlog sqlcipher tidy-html5 pugixml onetbb cli11 indicators
+          openssl spdlog sqlcipher tidy-html5 pugixml onetbb cli11 indicators \
+          aria2
         working-directory: build/tool
 
       - name: Test
