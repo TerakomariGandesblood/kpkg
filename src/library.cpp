@@ -101,7 +101,8 @@ void Library::download(const std::string& proxy) const {
     if (!std::empty(proxy)) {
       spdlog::info("Use proxy: {}", proxy);
     }
-    HTTPDownloader downloader(proxy);
+
+    static HTTPDownloader downloader(proxy);
     downloader.download(download_url_, file_name_);
 
     spdlog::info("Download file: {} complete", file_name_);
