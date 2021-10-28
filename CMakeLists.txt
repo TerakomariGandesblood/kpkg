@@ -63,6 +63,17 @@ find_package(klib REQUIRED)
 find_package(CLI11 REQUIRED)
 find_package(Boost 1.75.0 REQUIRED COMPONENTS json CONFIG)
 
+set(THREADS_PREFER_PTHREAD_FLAG TRUE)
+find_package(Threads REQUIRED)
+
+find_package(PkgConfig REQUIRED)
+
+pkg_check_modules(zlib REQUIRED IMPORTED_TARGET zlib)
+pkg_check_modules(openssl REQUIRED IMPORTED_TARGET openssl)
+pkg_check_modules(libaria2 REQUIRED IMPORTED_TARGET libaria2)
+
+add_definitions(-DOPENSSL_NO_DEPRECATED)
+
 # ---------------------------------------------------------------------------------------
 # Build library json file
 # ---------------------------------------------------------------------------------------
@@ -78,8 +89,17 @@ target_compile_options(library_json PRIVATE "-Wno-unused-command-line-argument")
 add_library(${LIBRARY} STATIC ${LIBRARY_SRC})
 
 target_include_directories(${LIBRARY} PUBLIC "${KPKG_SOURCE_DIR}/include")
-target_link_libraries(${LIBRARY} PRIVATE library_json fmt::fmt spdlog::spdlog
-                                         ${Boost_LIBRARIES} klib::klib)
+target_link_libraries(
+  ${LIBRARY}
+  PRIVATE library_json
+          fmt::fmt
+          spdlog::spdlog
+          ${Boost_LIBRARIES}
+          klib::klib
+          PkgConfig::libaria2
+          PkgConfig::zlib
+          PkgConfig::openssl
+          ${CMAKE_THREAD_LIBS_INIT})
 set_target_properties(${LIBRARY} PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
 
 # ---------------------------------------------------------------------------------------

@@ -54,8 +54,8 @@ int main(int argc, const char* argv[]) try {
 
   std::string proxy;
   install
-      ->add_flag("-p{socks5://127.0.0.1:1080},--proxy{socks5://127.0.0.1:1080}",
-                 proxy, "Use proxy")
+      ->add_flag("-p{127.0.0.1:1080},--proxy{127.0.0.1:1080}", proxy,
+                 "Use proxy")
       ->expected(0, 1);
 
   std::vector<std::string> libraries;

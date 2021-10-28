@@ -10,6 +10,7 @@
 #include <spdlog/spdlog.h>
 
 #include "command.h"
+#include "downloader.h"
 
 extern char library[];
 extern int library_size;
@@ -97,26 +98,11 @@ void Library::download(const std::string& proxy) const {
   } else {
     spdlog::info("Get file: {} from: {}", file_name_, download_url_);
 
-    klib::Request request;
-    // NOTE
-    // for boost
-    if (!download_url_.starts_with("https://boostorg.jfrog.io")) {
-      request.set_browser_user_agent();
-    }
     if (!std::empty(proxy)) {
       spdlog::info("Use proxy: {}", proxy);
-      request.set_proxy(proxy);
     }
-#ifndef NDEBUG
-    request.verbose(true);
-#endif
-
-    auto response = request.get(download_url_, {}, {}, true);
-    if (response.status_code() != klib::Response::StatusCode::Ok) {
-      klib::error("Status code is not ok: {}, url: {}", response.status_code(),
-                  download_url_);
-    }
-    response.save_to_file(file_name_, true);
+    HTTPDownloader downloader(proxy);
+    downloader.download(download_url_, file_name_);
 
     spdlog::info("Download file: {} complete", file_name_);
   }
