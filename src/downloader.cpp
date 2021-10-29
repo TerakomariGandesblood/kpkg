@@ -50,7 +50,6 @@ HTTPDownloader::HTTPDownloader(const std::string& proxy) {
 
   if (!std::empty(proxy)) {
     options_.emplace_back("http-proxy", proxy);
-    options_.emplace_back("https-proxy", proxy);
   }
   options_.emplace_back("auto-file-renaming", "false");
   options_.emplace_back("allow-overwrite", "true");

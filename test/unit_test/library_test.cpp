@@ -18,7 +18,7 @@ TEST_CASE("read_from_json", "[library]") {
 
   std::string proxy;
 #ifdef KPKG_TEST_USE_PROXY
-  proxy = "socks5://127.0.0.1:1080";
+  proxy = "http://127.0.0.1:1080";
 #endif
 
   library.init(proxy);

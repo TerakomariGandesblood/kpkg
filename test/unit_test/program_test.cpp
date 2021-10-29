@@ -7,11 +7,11 @@
 
 TEST_CASE("program", "[program]") {
   std::vector<std::string> libraries = {"spdlog", "curl"};
-  std::string proxy = "socks5://127.0.0.1:1080";
+  std::string proxy = "http://127.0.0.1:1080";
 
   kpkg::Program program(libraries, proxy);
 
-  REQUIRE(program.proxy() == "socks5://127.0.0.1:1080");
+  REQUIRE(program.proxy() == "http://127.0.0.1:1080");
 
   auto dependency = program.dependencies();
   REQUIRE(std::size(dependency) == 4);

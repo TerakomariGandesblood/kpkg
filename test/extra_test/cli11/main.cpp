@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
 
   std::string proxy;
   install
-      ->add_flag("-p{socks5://127.0.0.1:1080},--proxy{socks5://127.0.0.1:1080}",
+      ->add_flag("-p{http://127.0.0.1:1080},--proxy{http://127.0.0.1:1080}",
                  proxy, "Use proxy")
       ->expected(0, 1);
 
@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
   });
 
   auto list = app.add_subcommand("list", "Show all libraries");
-  list->add_flag("-p{socks5://127.0.0.1:1080},--proxy{socks5://127.0.0.1:1080}",
+  list->add_flag("-p{http://127.0.0.1:1080},--proxy{http://127.0.0.1:1080}",
                  proxy, "Use proxy")
       ->expected(0, 1);
   list->callback([&] {
