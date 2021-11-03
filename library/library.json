@@ -216,6 +216,23 @@
     ]
   },
   {
+    "name": "semver",
+    "releases_url": "https://api.github.com/repos/Neargye/semver/releases/latest",
+    "tags_url": "",
+    "tag_name": "",
+    "download_url": "",
+    "dependency": [],
+    "cwd": "",
+    "cmd": [
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DSEMVER_OPT_BUILD_EXAMPLES=OFF -DSEMVER_OPT_BUILD_TESTS=OFF",
+      "cmake --build build --config Release -j\"$(nproc)\"",
+      "sudo cmake --build build --config Release --target install"
+    ],
+    "cmd_install": [
+      "sudo cmake --build build --config Release --target install"
+    ]
+  },
+  {
     "name": "boost",
     "releases_url": "",
     "tags_url": "",

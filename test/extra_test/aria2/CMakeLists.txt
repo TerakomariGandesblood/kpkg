@@ -22,4 +22,4 @@ target_link_libraries(
 add_custom_command(
   TARGET aria2
   POST_BUILD
-  COMMAND aria2 https://github.com/madler/zlib/archive/refs/tags/v1.2.11.tar.gz)
+  COMMAND aria2 https://www.7-zip.org/a/7z1900-x64.exe)

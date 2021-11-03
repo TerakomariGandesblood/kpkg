@@ -51,10 +51,10 @@ jobs:
         run: |
           ./kpkg install boost catch2 curl fmt icu libarchive nameof zstd \
           openssl spdlog sqlcipher tidy-html5 pugixml onetbb cli11 indicators \
-          aria2
+          aria2 semver
           ./kpkg install boost catch2 curl fmt icu libarchive nameof zstd \
           openssl spdlog sqlcipher tidy-html5 pugixml onetbb cli11 indicators \
-          aria2
+          aria2 semver
         working-directory: build/tool
 
       - name: Test
