@@ -1,7 +1,9 @@
 #pragma once
 
+#include <string>
+
 namespace kpkg {
 
-void upgrade();
+void upgrade(const std::string &proxy);
 
 }  // namespace kpkg

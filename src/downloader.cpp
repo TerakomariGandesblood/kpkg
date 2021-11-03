@@ -13,8 +13,6 @@ namespace {
 std::int32_t download_event_callback(aria2::Session* session,
                                      aria2::DownloadEvent event,
                                      aria2::A2Gid gid, void* user_data) {
-  (void)user_data;
-
   switch (event) {
     case aria2::EVENT_ON_DOWNLOAD_COMPLETE:
       break;
@@ -35,6 +33,8 @@ std::int32_t download_event_callback(aria2::Session* session,
     if (!std::filesystem::exists(path)) {
       klib::error("no file: {}", path.string());
     }
+
+    *static_cast<std::string*>(user_data) = path.filename().string();
   }
 
   return 0;
@@ -64,8 +64,8 @@ HTTPDownloader::~HTTPDownloader() {
   }
 }
 
-void HTTPDownloader::download(const std::string& url,
-                              const std::string& file_name) {
+std::string HTTPDownloader::download(const std::string& url,
+                                     const std::string& file_name) {
   auto free_session = [](aria2::Session* ptr) {
     auto rc = aria2::sessionFinal(ptr);
     if (rc != 0) {
@@ -73,9 +73,11 @@ void HTTPDownloader::download(const std::string& url,
     }
   };
 
+  std::string name;
   aria2::SessionConfig config;
   config.downloadEventCallback = download_event_callback;
   config.useSignalHandler = false;
+  config.userData = &name;
   std::unique_ptr<aria2::Session, decltype(free_session)> session(
       aria2::sessionNew(options_, config), free_session);
   if (!session) {
@@ -97,6 +99,8 @@ void HTTPDownloader::download(const std::string& url,
   if (rc != 0) {
     klib::error("aria2::run failed");
   }
+
+  return name;
 }
 
 }  // namespace kpkg
