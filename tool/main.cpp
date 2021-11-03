@@ -12,6 +12,7 @@
 
 #include "library.h"
 #include "program.h"
+#include "upgrade.h"
 #include "version.h"
 
 void print_libraries(const std::vector<kpkg::Library>& libraries) {
@@ -67,12 +68,20 @@ int main(int argc, const char* argv[]) try {
                  proxy, "Use proxy")
       ->expected(0, 1);
 
+  auto upgrade = app.add_subcommand("upgrade", "Upgrade kaiser's software");
+  list->add_flag("-p{http://127.0.0.1:1080},--proxy{http://127.0.0.1:1080}",
+                 proxy, "Use proxy")
+      ->expected(0, 1);
+
   CLI11_PARSE(app, argc, argv);
 
   kpkg::Program program(libraries, proxy);
 
   if (list->parsed()) {
     program.show_libraries();
+    return EXIT_SUCCESS;
+  } else if (upgrade->parsed()) {
+    kpkg::upgrade();
     return EXIT_SUCCESS;
   }
 
