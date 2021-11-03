@@ -146,7 +146,10 @@ void upgrade(const std::string &proxy) {
     software.emplace_back("kepub");
   }
 
-  spdlog::info("Use proxy: {}", proxy);
+  if (!std::empty(proxy)) {
+    spdlog::info("Use proxy: {}", proxy);
+  }
+
   for (const auto &item : software) {
     auto curr_ver = semver::version(tidy_ver_str(get_curr_ver(item)));
     auto [latest_ver_str, download_url] = get_latest_ver(item, proxy);
@@ -173,6 +176,11 @@ void upgrade(const std::string &proxy) {
       }
 
       klib::execute_command("sudo dpkg -i " + file_name);
+
+      if (!std::filesystem::remove(file_name)) {
+        klib::error("Remove file {} failed", file_name);
+      }
+
       spdlog::info("{} upgrade completed", item);
     } else {
       spdlog::info("{} is the latest version: {}", item, curr_ver.to_string());
