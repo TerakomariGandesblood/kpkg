@@ -113,9 +113,14 @@ std::pair<std::string, std::string> get_latest_ver(const std::string &name,
   }
 
   std::string tag_name = jv.at("tag_name").as_string().c_str();
-  std::string download_url =
-      jv.at("assets").at(0).at("browser_download_url").as_string().c_str();
-  return {tag_name, download_url};
+
+  auto assets = jv.at("assets").as_array();
+  if (assets.empty()) {
+    return {tag_name, ""};
+  } else {
+    return {tag_name,
+            assets.at(0).at("browser_download_url").as_string().c_str()};
+  }
 }
 
 }  // namespace
@@ -148,6 +153,12 @@ void upgrade(const std::string &proxy) {
     auto latest_ver = semver::version(tidy_ver_str(latest_ver_str));
 
     if (curr_ver < latest_ver) {
+      if (std::empty(download_url)) {
+        klib::warn("The {} latest version {} has no assets", item,
+                   tidy_ver_str(latest_ver_str));
+        continue;
+      }
+
       spdlog::info("Will upgrade {} from {} to {}", item, curr_ver.to_string(),
                    latest_ver.to_string());
       spdlog::info("Get file from: {}", download_url);
