@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <memory>
 #include <utility>
+#include <vector>
 
 #include <fmt/compile.h>
 #include <fmt/format.h>
@@ -120,16 +121,24 @@ std::pair<std::string, std::string> get_latest_ver(const std::string &name,
 }  // namespace
 
 void upgrade(const std::string &proxy) {
-  std::array<std::string, 3> software = {"klib", "kpkg", "kepub"};
+  std::vector<std::string> software;
 
   if (!std::filesystem::exists("/usr/include/klib/version.h")) {
-    klib::error("klib is not installed");
+    klib::warn("klib is not installed");
+  } else {
+    software.emplace_back("klib");
   }
+
   if (!std::filesystem::exists("/usr/bin/kpkg")) {
-    klib::error("kpkg is not installed");
+    klib::warn("kpkg is not installed");
+  } else {
+    software.emplace_back("kpkg");
   }
+
   if (!std::filesystem::exists("/usr/bin/sfacg")) {
-    klib::error("kepub is not installed");
+    klib::warn("kepub is not installed");
+  } else {
+    software.emplace_back("kepub");
   }
 
   spdlog::info("Use proxy: {}", proxy);

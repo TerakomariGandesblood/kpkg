@@ -54,7 +54,10 @@ jobs:
 
       - name: Run executable
         if: ${{ matrix.build_type == 'Release' }}
-        run: kpkg install zlib
+        run: |
+          kpkg install zlib
+          kpkg list
+          kpkg upgrade
 
       - name: Test
         run: ctest -C ${{ matrix.build_type }} -j"$(nproc)" --output-on-failure

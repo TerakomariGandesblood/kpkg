@@ -58,7 +58,10 @@ jobs:
         working-directory: build
 
       - name: Run executable
-        run: kpkg install zlib
+        run: |
+          kpkg install zlib
+          kpkg list
+          kpkg upgrade
 
       # https://github.com/softprops/action-gh-release
       - name: Release
