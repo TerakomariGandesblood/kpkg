@@ -48,7 +48,7 @@ void build_libraries(std::vector<kpkg::Library>& libraries,
 
 int main(int argc, const char* argv[]) try {
   CLI::App app;
-  app.set_version_flag("-v,--version", kpkg::version_str(argv[0]));
+  app.set_version_flag("-v,--version", kpkg::version_str());
   app.require_subcommand(1);
 
   auto install = app.add_subcommand("install", "Install library");
