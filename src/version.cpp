@@ -25,7 +25,7 @@ std::string version_str() {
   result += fmt::format(FMT_COMPILE("klib/{} "), KLIB_VERSION_STRING);
   result += fmt::format(FMT_COMPILE("CLI11/{} "), CLI11_VERSION);
   result += fmt::format(FMT_COMPILE("Boost/{}.{}.{} "), BOOST_VERSION / 100000,
-                        BOOST_VERSION / 100 % 100, BOOST_VERSION % 100);
+                        BOOST_VERSION / 100 % 1000, BOOST_VERSION % 100);
   result +=
       fmt::format(FMT_COMPILE("semver/{} "), semver::semver_verion.to_string());
   result += fmt::format(FMT_COMPILE("fmt/{}.{}.{} "), FMT_VERSION / 10000,
