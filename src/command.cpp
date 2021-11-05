@@ -31,7 +31,7 @@ void run_commands(const std::vector<std::string>& commands,
                   const std::string& cwd) {
   auto cmd = detail::calc_command(commands, cwd);
   spdlog::info("Run commands: {}", cmd);
-  klib::execute_command(cmd);
+  klib::exec(cmd);
 }
 
 namespace detail {

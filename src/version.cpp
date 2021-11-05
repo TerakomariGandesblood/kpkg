@@ -3,12 +3,14 @@
 #include <sys/utsname.h>
 
 #include <cerrno>
+#include <cstring>
 
 #include <fmt/compile.h>
 #include <fmt/format.h>
 #include <klib/error.h>
 #include <klib/version.h>
 #include <spdlog/version.h>
+#include <CLI/Version.hpp>
 #include <boost/version.hpp>
 #include <semver.hpp>
 
@@ -20,10 +22,9 @@ std::string version_str() {
   result += fmt::format(FMT_COMPILE("kpkg version {}\n"), KPKG_VERSION_STRING);
 
   result += "Libraries: ";
-  // TODO use KLIB_VERSION_STRING
-  result += fmt::format(FMT_COMPILE("klib/{}.{}.{} "), KLIB_VER_MAJOR,
-                        KLIB_VER_MINOR, KLIB_VER_PATCH);
-  result += fmt::format(FMT_COMPILE("boost/{}.{}.{} "), BOOST_VERSION / 100000,
+  result += fmt::format(FMT_COMPILE("klib/{} "), KLIB_VERSION_STRING);
+  result += fmt::format(FMT_COMPILE("CLI11/{} "), CLI11_VERSION);
+  result += fmt::format(FMT_COMPILE("Boost/{}.{}.{} "), BOOST_VERSION / 100000,
                         BOOST_VERSION / 100 % 100, BOOST_VERSION % 100);
   result +=
       fmt::format(FMT_COMPILE("semver/{} "), semver::semver_verion.to_string());
@@ -51,8 +52,14 @@ std::string version_str() {
       .append("\n");
 
   if (utsname name; !uname(&name)) {
-    result += fmt::format(FMT_COMPILE("System: {} {} {} {}"), name.sysname,
-                          name.release, name.version, name.machine);
+    if (!std::strstr(name.version, name.sysname) ||
+        !std::strstr(name.version, name.release) ||
+        !std::strstr(name.version, name.machine)) {
+      result += fmt::format(FMT_COMPILE("System: {} {} {} {}"), name.sysname,
+                            name.release, name.version, name.machine);
+    } else {
+      result += name.version;
+    }
   } else {
     klib::error(std::strerror(errno));
   }

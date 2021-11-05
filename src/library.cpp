@@ -48,7 +48,6 @@ void Library::init(const std::string& proxy) {
     klib::Request request;
     request.set_browser_user_agent();
     if (!std::empty(proxy)) {
-      spdlog::info("Use proxy: {}", proxy);
       request.set_proxy(proxy);
     }
 #ifndef NDEBUG
@@ -97,10 +96,6 @@ void Library::download(const std::string& proxy) const {
     spdlog::info("Use exists file: {}", file_name_);
   } else {
     spdlog::info("Get file: {} from: {}", file_name_, download_url_);
-
-    if (!std::empty(proxy)) {
-      spdlog::info("Use proxy: {}", proxy);
-    }
 
     static HTTPDownloader downloader(proxy);
     downloader.download(download_url_, file_name_);

@@ -78,6 +78,10 @@ int main(int argc, const char* argv[]) try {
 
   kpkg::Program program(libraries, proxy);
 
+  if (!std::empty(proxy)) {
+    spdlog::info("Use proxy: {}", proxy);
+  }
+
   if (list->parsed()) {
     program.show_libraries();
     return EXIT_SUCCESS;
