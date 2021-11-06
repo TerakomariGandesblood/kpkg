@@ -431,5 +431,21 @@
     "cmd_install": [
       "sudo cmake --build build --config Release --target install"
     ]
+  },
+  {
+    "name": "argon2",
+    "releases_url": "https://api.github.com/repos/P-H-C/phc-winner-argon2/releases/latest",
+    "tags_url": "",
+    "tag_name": "",
+    "download_url": "",
+    "dependency": [],
+    "cwd": "",
+    "cmd": [
+      "make PREFIX=/usr/local OPTTARGET=x86-64 LIBRARY_REL=lib LIB_SH= LINKED_LIB_SH= -j\"$(nproc)\"",
+      "sudo make PREFIX=/usr/local OPTTARGET=x86-64 LIBRARY_REL=lib LIB_SH= LINKED_LIB_SH= install"
+    ],
+    "cmd_install": [
+      "sudo make PREFIX=/usr/local OPTTARGET=x86-64 LIBRARY_REL=lib LIB_SH= LINKED_LIB_SH= install"
+    ]
   }
 ]

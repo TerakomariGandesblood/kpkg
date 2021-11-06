@@ -13,4 +13,4 @@ target_link_libraries(curl PRIVATE PkgConfig::libcurl)
 add_custom_command(
   TARGET curl
   POST_BUILD
-  COMMAND curl -p www.baidu.com)
+  COMMAND curl -p https://www.baidu.com/)
