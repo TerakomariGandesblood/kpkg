@@ -54,7 +54,6 @@ HTTPDownloader::HTTPDownloader(const std::string& proxy) {
   }
   options_.emplace_back("auto-file-renaming", "false");
   options_.emplace_back("allow-overwrite", "true");
-  options_.emplace_back("max-connection-per-server", "16");
 }
 
 HTTPDownloader::~HTTPDownloader() {
