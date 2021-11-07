@@ -44,6 +44,7 @@ jobs:
 
       - name: CPack
         run: |
+          strip --strip-debug --strip-unneeded tool/kpkg
           cpack
           mv kpkg-${{ env.RELEASE_VERSION }}-Linux.deb \
           kpkg-v${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
@@ -59,7 +60,7 @@ jobs:
 
       - name: Run executable
         run: |
-          kpkg install zlib
+          kpkg install curl
           kpkg list
           kpkg upgrade
 

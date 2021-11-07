@@ -1,8 +1,5 @@
 #include <cstdint>
 
-#ifndef NDEBUG
-#define gsl_CONFIG_CONTRACT_VIOLATION_THROWS
-#endif
 #include <gsl/gsl-lite.hpp>
 
 int main() {

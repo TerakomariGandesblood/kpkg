@@ -55,7 +55,7 @@ jobs:
       - name: Run executable
         if: ${{ matrix.build_type == 'Release' }}
         run: |
-          kpkg install zlib
+          kpkg install spdlog
           kpkg list
           kpkg upgrade
 

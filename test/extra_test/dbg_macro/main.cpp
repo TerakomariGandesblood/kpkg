@@ -2,9 +2,6 @@
 #include <string>
 #include <vector>
 
-#ifdef NDEBUG
-#define DBG_MACRO_DISABLE
-#endif
 #include <dbg.h>
 
 std::int32_t factorial(std::int32_t n) {
