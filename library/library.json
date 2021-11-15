@@ -10,9 +10,9 @@
     "cmd": [
       "./bootstrap --parallel=\"$(nproc)\" -- -DCMAKE_BUILD_TYPE:STRING=Release",
       "make -j\"$(nproc)\"",
-      "sudo make install"
+      "make install"
     ],
-    "cmd_install": ["sudo make install"]
+    "cmd_install": ["make install"]
   },
   {
     "name": "ninja",
@@ -25,11 +25,9 @@
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release",
       "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
+      "cmake --build build --config Release --target install"
     ],
-    "cmd_install": [
-      "sudo cmake --build build --config Release --target install"
-    ]
+    "cmd_install": ["cmake --build build --config Release --target install"]
   },
   {
     "name": "doxygen",
@@ -42,11 +40,9 @@
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release",
       "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
+      "cmake --build build --config Release --target install"
     ],
-    "cmd_install": [
-      "sudo cmake --build build --config Release --target install"
-    ]
+    "cmd_install": ["cmake --build build --config Release --target install"]
   },
   {
     "name": "lcov",
@@ -56,8 +52,8 @@
     "download_url": "",
     "dependency": [],
     "cwd": "",
-    "cmd": ["sudo make install"],
-    "cmd_install": ["sudo make install"]
+    "cmd": ["make install"],
+    "cmd_install": ["make install"]
   },
   {
     "name": "zlib",
@@ -67,8 +63,8 @@
     "download_url": "",
     "dependency": [],
     "cwd": "",
-    "cmd": ["./configure --static", "make -j\"$(nproc)\"", "sudo make install"],
-    "cmd_install": ["sudo make install"]
+    "cmd": ["./configure --static", "make -j\"$(nproc)\"", "make install"],
+    "cmd_install": ["make install"]
   },
   {
     "name": "libarchive",
@@ -82,9 +78,9 @@
       "bash build/autogen.sh",
       "./configure --disable-shared --enable-static --disable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --without-lz4 --without-zstd --without-lzma --without-lzo2 --without-cng --without-openssl --without-xml2 --without-expat",
       "make -j\"$(nproc)\"",
-      "sudo make install"
+      "make install"
     ],
-    "cmd_install": ["sudo make install"]
+    "cmd_install": ["make install"]
   },
   {
     "name": "openssl",
@@ -97,9 +93,9 @@
     "cmd": [
       "./Configure --libdir=lib no-afalgeng enable-ktls no-async no-capieng no-cmp no-cms no-ct no-dgram no-dso no-dynamic-engine no-engine no-filenames no-gost no-legacy no-module no-ocsp no-padlockeng no-psk no-shared no-srp no-srtp no-tests no-ts no-ui-console no-uplink no-ssl no-tls1 no-tls1_1 no-dtls no-aria no-bf no-blake2 no-cast no-chacha no-cmac no-dsa no-idea no-md4 no-mdc2 no-ocb no-rc2 no-rmd160 no-scrypt no-seed no-siphash no-siv no-sm2 no-sm3 no-sm4 no-whirlpool",
       "make -j\"$(nproc)\"",
-      "sudo make install_sw"
+      "make install_sw"
     ],
-    "cmd_install": ["sudo make install_sw"]
+    "cmd_install": ["make install_sw"]
   },
   {
     "name": "nghttp2",
@@ -112,9 +108,9 @@
     "cmd": [
       "./configure --disable-shared --enable-static --disable-failmalloc --enable-lib-only --without-libxml2 --without-jansson --with-zlib --without-libevent-openssl --without-libcares --with-openssl --without-libev --without-cunit --without-jemalloc --without-systemd --without-mruby --without-neverbleed --without-cython --without-libngtcp2 --without-libnghttp3 --without-libbpf --without-boost",
       "make -j\"$(nproc)\"",
-      "sudo make install"
+      "make install"
     ],
-    "cmd_install": ["sudo make install"]
+    "cmd_install": ["make install"]
   },
   {
     "name": "curl",
@@ -128,9 +124,9 @@
       "autoreconf -fi",
       "./configure --enable-symbol-hiding --disable-ares --disable-ech --disable-shared --enable-static --disable-ftp --disable-file --disable-ldap --disable-ldaps --disable-rtsp --disable-dict --disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smb --disable-smtp --disable-gopher --disable-mqtt --disable-manual --enable-libcurl-option --enable-libgcc --enable-ipv6 --enable-openssl-auto-load-config --enable-threaded-resolver --enable-verbose --disable-sspi --enable-crypto-auth --disable-ntlm --disable-ntlm-wb --disable-tls-srp --disable-unix-sockets --enable-cookies --disable-socketpair --enable-http-auth --enable-doh --enable-mime --enable-dateparse --disable-netrc --enable-progress-meter --disable-dnsshuffle --disable-get-easy-options --enable-alt-svc --enable-hsts --with-openssl --without-hyper --with-zlib --without-brotli --without-zstd --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt' --with-ca-path='/etc/ssl/certs' --without-libpsl --without-libgsasl --without-librtmp --without-libidn2 --with-nghttp2 --without-ngtcp2 --without-nghttp3 --without-quiche --without-fish-functions-dir",
       "make -j\"$(nproc)\"",
-      "sudo make install"
+      "make install"
     ],
-    "cmd_install": ["sudo make install"]
+    "cmd_install": ["make install"]
   },
   {
     "name": "fmt",
@@ -143,11 +139,9 @@
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DFMT_DOC=OFF -DFMT_TEST=OFF -DFMT_CUDA_TEST=OFF -DFMT_MODULE=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
+      "cmake --build build --config Release --target install"
     ],
-    "cmd_install": [
-      "sudo cmake --build build --config Release --target install"
-    ]
+    "cmd_install": ["cmake --build build --config Release --target install"]
   },
   {
     "name": "spdlog",
@@ -160,11 +154,9 @@
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DSPDLOG_BUILD_ALL=OFF -DSPDLOG_BUILD_EXAMPLE=OFF -DSPDLOG_BUILD_EXAMPLE_HO=OFF -DSPDLOG_BUILD_TESTS=OFF -DSPDLOG_BUILD_TESTS_HO=OFF -DSPDLOG_BUILD_BENCH=OFF -DSPDLOG_SANITIZE_ADDRESS=OFF -DSPDLOG_FMT_EXTERNAL=ON",
       "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
+      "cmake --build build --config Release --target install"
     ],
-    "cmd_install": [
-      "sudo cmake --build build --config Release --target install"
-    ]
+    "cmd_install": ["cmake --build build --config Release --target install"]
   },
   {
     "name": "sqlcipher",
@@ -177,9 +169,9 @@
     "cmd": [
       "./configure CFLAGS=\"$CFLAGS -DSQLITE_HAS_CODEC\" LDFLAGS=\"/usr/local/lib/libcrypto.a\" --disable-shared --enable-static --enable-releasemode --enable-tempstore=yes --disable-tcl --disable-readline --disable-debug --disable-load-extension",
       "make -j\"$(nproc)\"",
-      "sudo make install"
+      "make install"
     ],
-    "cmd_install": ["sudo make install"]
+    "cmd_install": ["make install"]
   },
   {
     "name": "zstd",
@@ -192,11 +184,9 @@
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DZSTD_LEGACY_SUPPORT=OFF -DZSTD_MULTITHREAD_SUPPORT=ON -DZSTD_BUILD_PROGRAMS=ON -DZSTD_BUILD_CONTRIB=OFF -DZSTD_BUILD_TESTS=OFF -DZSTD_BUILD_SHARED=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
+      "cmake --build build --config Release --target install"
     ],
-    "cmd_install": [
-      "sudo cmake --build build --config Release --target install"
-    ]
+    "cmd_install": ["cmake --build build --config Release --target install"]
   },
   {
     "name": "nameof",
@@ -209,11 +199,9 @@
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DNAMEOF_OPT_BUILD_EXAMPLES=OFF -DNAMEOF_OPT_BUILD_TESTS=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
+      "cmake --build build --config Release --target install"
     ],
-    "cmd_install": [
-      "sudo cmake --build build --config Release --target install"
-    ]
+    "cmd_install": ["cmake --build build --config Release --target install"]
   },
   {
     "name": "semver",
@@ -226,11 +214,9 @@
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DSEMVER_OPT_BUILD_EXAMPLES=OFF -DSEMVER_OPT_BUILD_TESTS=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
+      "cmake --build build --config Release --target install"
     ],
-    "cmd_install": [
-      "sudo cmake --build build --config Release --target install"
-    ]
+    "cmd_install": ["cmake --build build --config Release --target install"]
   },
   {
     "name": "scope_guard",
@@ -243,11 +229,9 @@
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DSCOPE_GUARD_OPT_BUILD_EXAMPLES=OFF -DSCOPE_GUARD_OPT_BUILD_TESTS=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
+      "cmake --build build --config Release --target install"
     ],
-    "cmd_install": [
-      "sudo cmake --build build --config Release --target install"
-    ]
+    "cmd_install": ["cmake --build build --config Release --target install"]
   },
   {
     "name": "boost",
@@ -259,10 +243,10 @@
     "cwd": "",
     "cmd": [
       "./bootstrap.sh",
-      "sudo ./b2 --with-json cflags=\"$CFLAGS\" cxxflags=\"$CXXFLAGS\" toolset=gcc-11 link=static install"
+      "./b2 --with-json cflags=\"$CFLAGS\" cxxflags=\"$CXXFLAGS\" toolset=gcc-11 link=static install"
     ],
     "cmd_install": [
-      "sudo ./b2 --with-json cflags=\"$CFLAGS\" cxxflags=\"$CXXFLAGS\" toolset=gcc-11 link=static install"
+      "./b2 --with-json cflags=\"$CFLAGS\" cxxflags=\"$CXXFLAGS\" toolset=gcc-11 link=static install"
     ]
   },
   {
@@ -276,11 +260,9 @@
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DTBB_TEST=OFF -DTBB_EXAMPLES=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
+      "cmake --build build --config Release --target install"
     ],
-    "cmd_install": [
-      "sudo cmake --build build --config Release --target install"
-    ]
+    "cmd_install": ["cmake --build build --config Release --target install"]
   },
   {
     "name": "icu",
@@ -293,9 +275,9 @@
     "cmd": [
       "export CC=clang && export CXX=clang++ && ./configure --disable-shared --enable-static --enable-auto-cleanup --disable-draft --disable-dyload --disable-tests --disable-samples --with-data-packaging=static",
       "make -j\"$(nproc)\"",
-      "sudo make install"
+      "make install"
     ],
-    "cmd_install": ["sudo make install"]
+    "cmd_install": ["make install"]
   },
   {
     "name": "Catch2",
@@ -308,11 +290,9 @@
     "cmd": [
       "export CFLAGS=\"$CFLAGS -DCATCH_CONFIG_ENABLE_BENCHMARKING\" && export CXXFLAGS=\"$CXXFLAGS -DCATCH_CONFIG_ENABLE_BENCHMARKING\" && cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCATCH_BUILD_TESTING=OFF -DCATCH_BUILD_EXAMPLES=OFF -DCATCH_BUILD_EXTRA_TESTS=OFF -DCATCH_BUILD_STATIC_LIBRARY=ON -DCATCH_INSTALL_DOCS=OFF -DCATCH_INSTALL_HELPERS=ON",
       "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
+      "cmake --build build --config Release --target install"
     ],
-    "cmd_install": [
-      "sudo cmake --build build --config Release --target install"
-    ]
+    "cmd_install": ["cmake --build build --config Release --target install"]
   },
   {
     "name": "tidy-html5",
@@ -325,11 +305,9 @@
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIB=OFF -DBUILD_SAMPLE_CODE=OFF -DSUPPORT_CONSOLE_APP=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
+      "cmake --build build --config Release --target install"
     ],
-    "cmd_install": [
-      "sudo cmake --build build --config Release --target install"
-    ]
+    "cmd_install": ["cmake --build build --config Release --target install"]
   },
   {
     "name": "pugixml",
@@ -342,11 +320,9 @@
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF -DBUILD_SHARED_AND_STATIC_LIBS=OFF -DBUILD_SHARED_LIBS=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
+      "cmake --build build --config Release --target install"
     ],
-    "cmd_install": [
-      "sudo cmake --build build --config Release --target install"
-    ]
+    "cmd_install": ["cmake --build build --config Release --target install"]
   },
   {
     "name": "CLI11",
@@ -359,11 +335,9 @@
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCLI11_BUILD_DOCS=OFF -DCLI11_BUILD_TESTS=OFF -DCLI11_BUILD_EXAMPLES=OFF -DBUILD_TESTING=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
+      "cmake --build build --config Release --target install"
     ],
-    "cmd_install": [
-      "sudo cmake --build build --config Release --target install"
-    ]
+    "cmd_install": ["cmake --build build --config Release --target install"]
   },
   {
     "name": "indicators",
@@ -376,11 +350,9 @@
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DINDICATORS_BUILD_TESTS=OFF -DINDICATORS_SAMPLES=OFF -DINDICATORS_DEMO=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
+      "cmake --build build --config Release --target install"
     ],
-    "cmd_install": [
-      "sudo cmake --build build --config Release --target install"
-    ]
+    "cmd_install": ["cmake --build build --config Release --target install"]
   },
   {
     "name": "aria2",
@@ -394,9 +366,9 @@
       "autoreconf -i",
       "./configure LDFLAGS=\"-lpthread\" --enable-static --disable-shared --disable-bittorrent --disable-metalink --disable-websocket --disable-epoll --enable-libaria2 --disable-nls --without-libuv --without-gnutls --without-libnettle --without-libgmp --without-libgcrypt --with-openssl --without-sqlite3 --without-libxml2 --without-libexpat --without-libcares --with-libz --without-tcmalloc --without-jemalloc --without-libssh2 --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt'",
       "make -j\"$(nproc)\"",
-      "sudo make install"
+      "make install"
     ],
-    "cmd_install": ["sudo make install"]
+    "cmd_install": ["make install"]
   },
   {
     "name": "gsl-lite",
@@ -409,11 +381,9 @@
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DGSL_LITE_OPT_BUILD_TESTS=OFF -DGSL_LITE_OPT_BUILD_EXAMPLES=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
+      "cmake --build build --config Release --target install"
     ],
-    "cmd_install": [
-      "sudo cmake --build build --config Release --target install"
-    ]
+    "cmd_install": ["cmake --build build --config Release --target install"]
   },
   {
     "name": "dbg-macro",
@@ -426,11 +396,9 @@
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DDBG_MACRO_ENABLE_TESTS=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
+      "cmake --build build --config Release --target install"
     ],
-    "cmd_install": [
-      "sudo cmake --build build --config Release --target install"
-    ]
+    "cmd_install": ["cmake --build build --config Release --target install"]
   },
   {
     "name": "argon2",
@@ -442,10 +410,25 @@
     "cwd": "",
     "cmd": [
       "make PREFIX=/usr/local OPTTARGET=x86-64 LIBRARY_REL=lib LIB_SH= LINKED_LIB_SH= -j\"$(nproc)\"",
-      "sudo make PREFIX=/usr/local OPTTARGET=x86-64 LIBRARY_REL=lib LIB_SH= LINKED_LIB_SH= install"
+      "make PREFIX=/usr/local OPTTARGET=x86-64 LIBRARY_REL=lib LIB_SH= LINKED_LIB_SH= install"
     ],
     "cmd_install": [
-      "sudo make PREFIX=/usr/local OPTTARGET=x86-64 LIBRARY_REL=lib LIB_SH= LINKED_LIB_SH= install"
+      "make PREFIX=/usr/local OPTTARGET=x86-64 LIBRARY_REL=lib LIB_SH= LINKED_LIB_SH= install"
     ]
+  },
+  {
+    "name": "simdjson",
+    "releases_url": "https://api.github.com/repos/simdjson/simdjson/releases/latest",
+    "tags_url": "",
+    "tag_name": "",
+    "download_url": "",
+    "dependency": [],
+    "cwd": "",
+    "cmd": [
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DSIMDJSON_DISABLE_DEPRECATED_API=ON -DSIMDJSON_DEVELOPMENT_CHECKS=OFF",
+      "cmake --build build --config Release -j\"$(nproc)\"",
+      "cmake --build build --config Release --target install"
+    ],
+    "cmd_install": ["cmake --build build --config Release --target install"]
   }
 ]

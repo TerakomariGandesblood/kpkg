@@ -115,7 +115,7 @@ void upgrade(const std::string &proxy) {
         klib::error("Can't find a file in deb format");
       }
 
-      klib::exec("sudo dpkg -i " + file_name);
+      klib::exec("dpkg -i " + file_name);
 
       if (!std::filesystem::remove(file_name)) {
         klib::error("Remove file {} failed", file_name);

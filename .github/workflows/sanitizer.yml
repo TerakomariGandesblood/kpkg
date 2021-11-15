@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install dependencies
-        run: sudo bash script/build.sh
+        run: bash script/build.sh
 
       - name: Configure
         run: |
@@ -40,7 +40,7 @@ jobs:
         run: |
           ./kpkg install boost catch2 curl fmt icu libarchive nameof zstd \
           openssl spdlog sqlcipher tidy-html5 pugixml onetbb cli11 indicators \
-          aria2 semver gsl-lite dbg-macro scope_guard argon2
+          aria2 semver gsl-lite dbg-macro scope_guard argon2 simdjson
         working-directory: build/tool
 
       - name: Test

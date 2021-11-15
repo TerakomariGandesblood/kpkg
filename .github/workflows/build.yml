@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install dependencies
-        run: sudo bash script/build.sh
+        run: bash script/build.sh
 
       - name: Configure
         run: |
@@ -38,8 +38,8 @@ jobs:
       - name: Install
         if: ${{ matrix.build_type == 'Release' }}
         run: |
-          sudo cmake --build build --config ${{ matrix.build_type }} --target install
-          sudo ldconfig
+          cmake --build build --config ${{ matrix.build_type }} --target install
+          ldconfig
 
       - name: Run executable
         if: ${{ matrix.build_type == 'Release' }}
@@ -54,4 +54,4 @@ jobs:
 
       - name: Uninstall
         if: ${{ matrix.build_type == 'Release' }}
-        run: sudo cmake --build build --config ${{ matrix.build_type }} --target uninstall
+        run: cmake --build build --config ${{ matrix.build_type }} --target uninstall

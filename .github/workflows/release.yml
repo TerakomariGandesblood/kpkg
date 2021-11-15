@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install dependencies
-        run: sudo bash script/build.sh
+        run: bash script/build.sh
 
       - name: Configure
         run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
@@ -43,8 +43,8 @@ jobs:
 
       - name: Install
         run: |
-          sudo dpkg -i kpkg-v${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
-          sudo ldconfig
+          dpkg -i kpkg-v${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
+          ldconfig
         working-directory: build
 
       - name: Run executable
