@@ -1,6 +1,6 @@
 # kpkg
 
-[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/KaiserLancelot/kpkg)
+[![Platform](https://img.shields.io/badge/Platform-Debian%2011-brightgreen)](https://www.debian.org/)
 [![Build](https://github.com/KaiserLancelot/kpkg/actions/workflows/build.yml/badge.svg)](https://github.com/KaiserLancelot/kpkg/actions/workflows/build.yml)
 [![Coverage Status](https://coveralls.io/repos/github/KaiserLancelot/kpkg/badge.svg?branch=main)](https://coveralls.io/github/KaiserLancelot/kpkg?branch=main)
 [![GitHub License](https://img.shields.io/github/license/KaiserLancelot/kpkg)](https://github.com/KaiserLancelot/kpkg/blob/main/LICENSE)
@@ -15,18 +15,18 @@ C++ Library Manager
 
 ## Environment
 
-- Ubuntu 20.04
+- Debian 11
 - GCC 11 or Clang 13
 
 ## Dependency
 
+- [klib](https://github.com/KaiserLancelot/klib)
+- [Boost](https://www.boost.org/)
+- [CLI11](https://github.com/CLIUtils/CLI11)
 - [fmt](https://github.com/fmtlib/fmt)
 - [spdlog](https://github.com/gabime/spdlog)
-- [boost](https://www.boost.org/)
-- [CLI11](https://github.com/CLIUtils/CLI11)
-- [aria2](https://github.com/aria2/aria2)
 - [semver](https://github.com/Neargye/semver)
-- [klib](https://github.com/KaiserLancelot/klib)
+- [aria2](https://github.com/aria2/aria2)
 
 ## Build
 
@@ -58,7 +58,7 @@ kpkg list
 ### Install libraries
 
 ```bash
-kpkg install boost
+sudo kpkg install boost
 ```
 
 ---

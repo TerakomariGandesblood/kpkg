@@ -20,12 +20,12 @@ std::string version_str() {
   result += fmt::format(FMT_COMPILE("Boost/{}.{}.{} "), BOOST_VERSION / 100000,
                         BOOST_VERSION / 100 % 1000, BOOST_VERSION % 100);
   result += fmt::format(FMT_COMPILE("CLI11/{} "), CLI11_VERSION);
-  result +=
-      fmt::format(FMT_COMPILE("semver/{} "), semver::semver_verion.to_string());
   result += fmt::format(FMT_COMPILE("fmt/{}.{}.{} "), FMT_VERSION / 10000,
                         FMT_VERSION / 100 % 100, FMT_VERSION % 100);
   result += fmt::format(FMT_COMPILE("spdlog/{}.{}.{} "), SPDLOG_VER_MAJOR,
                         SPDLOG_VER_MINOR, SPDLOG_VER_PATCH);
+  result +=
+      fmt::format(FMT_COMPILE("semver/{} "), semver::semver_verion.to_string());
   // NOTE
   result += "aria2/1.36.0\n";
 

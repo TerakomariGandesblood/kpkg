@@ -7,6 +7,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # ---------------------------------------------------------------------------------------
+# Machine
+# ---------------------------------------------------------------------------------------
+add_cxx_compiler_flag("-march=x86-64")
+add_cxx_compiler_flag("-mtune=generic")
+
+# ---------------------------------------------------------------------------------------
 # Static link
 # ---------------------------------------------------------------------------------------
 add_cxx_linker_flag("-static-libgcc")
@@ -42,6 +48,10 @@ add_cxx_compiler_flag("-Wextra")
 add_cxx_compiler_flag("-Wpedantic")
 add_cxx_compiler_flag("-Werror")
 
+if(${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
+  add_cxx_compiler_flag("-Wno-error=unused-command-line-argument")
+endif()
+
 # ---------------------------------------------------------------------------------------
 # Link time optimization
 # ---------------------------------------------------------------------------------------
@@ -62,6 +72,15 @@ if((${CMAKE_BUILD_TYPE} STREQUAL "Release") OR (${CMAKE_BUILD_TYPE} STREQUAL
   endif()
 else()
   message(STATUS "Link time optimization: disable")
+endif()
+
+# ---------------------------------------------------------------------------------------
+# strip
+# ---------------------------------------------------------------------------------------
+if((${CMAKE_BUILD_TYPE} STREQUAL "Release") OR (${CMAKE_BUILD_TYPE} STREQUAL
+                                                "MinSizeRel"))
+  message(STATUS "Discard symbols and other data from object files")
+  add_cxx_linker_flag("-s")
 endif()
 
 # ---------------------------------------------------------------------------------------
