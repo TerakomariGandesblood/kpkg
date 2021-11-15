@@ -42,6 +42,7 @@ std::string calc_command(const std::vector<std::string>& commands,
 
   std::string cmd = "cd " + cwd;
 
+  cmd = combine_command(cmd, "export CI=false");
   // NOTE
   // Change the compiler version here
   cmd = combine_command(cmd, "export CC=gcc-11 && export CXX=g++-11");
