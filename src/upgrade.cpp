@@ -9,13 +9,13 @@
 #include <fmt/format.h>
 #include <klib/error.h>
 #include <klib/exception.h>
-#include <klib/http.h>
 #include <klib/util.h>
 #include <spdlog/spdlog.h>
-#include <boost/json.hpp>
 #include <semver.hpp>
 
 #include "downloader.h"
+#include "github_info.h"
+#include "http.h"
 
 namespace kpkg {
 
@@ -34,6 +34,7 @@ std::optional<std::string> get_curr_ver_str(const std::string &name) {
   for (const auto &line : klib::split_str(exec_output, "\n")) {
     if (line.starts_with(prefix)) {
       version_str = line.substr(std::size(prefix));
+      break;
     }
   }
 
@@ -47,36 +48,15 @@ std::pair<std::string, std::optional<std::string>> get_latest(
           "https://api.github.com/repos/KaiserLancelot/{}/releases/latest"),
       name);
 
-  klib::Request request;
-  request.set_browser_user_agent();
-  if (!std::empty(proxy)) {
-    request.set_proxy(proxy);
-  }
-#ifndef NDEBUG
-  request.verbose(true);
-#endif
+  auto response = http_get(url, proxy);
+  ReleaseInfo info(response.text());
 
-  auto response = request.get(url);
-  if (!response.ok()) {
-    klib::error("Status code is not ok: {}, url: {}", response.status_code(),
-                url);
-  }
-
-  boost::json::error_code error_code;
-  boost::json::monotonic_resource mr;
-  auto jv = boost::json::parse(response.text(), error_code, &mr);
-  if (error_code) {
-    klib::error("Json parse error: {}", error_code.message());
-  }
-
-  std::string tag_name = jv.at("tag_name").as_string().c_str();
-
-  auto assets = jv.at("assets").as_array();
-  if (assets.empty()) {
-    return {tag_name, {}};
+  auto tag_name = info.get_tag_name();
+  auto asset = info.get_deb_asset();
+  if (asset) {
+    return {tag_name, asset->url_};
   } else {
-    return {tag_name,
-            assets.at(0).at("browser_download_url").as_string().c_str()};
+    return {tag_name, {}};
   }
 }
 

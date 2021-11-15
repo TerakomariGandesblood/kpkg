@@ -26,6 +26,16 @@ void print_libraries(const std::vector<kpkg::Library>& libraries) {
                boost::join(names, " "));
 }
 
+void build_libraries(std::vector<kpkg::Library>& libraries,
+                     const std::string& proxy) {
+  for (auto& item : libraries) {
+    item.init(proxy);
+    item.download(proxy);
+    item.build();
+    spdlog::info("{} install complete", item.get_name());
+  }
+}
+
 int main(int argc, const char* argv[]) try {
   CLI::App app;
   app.set_version_flag("-v,--version", kpkg::version_str());
@@ -71,18 +81,10 @@ int main(int argc, const char* argv[]) try {
   }
 
   print_libraries(program.dependencies());
-  for (auto& item : program.dependencies()) {
-    item.init(program.proxy());
-    item.download(program.proxy());
-    item.build();
-  }
+  build_libraries(program.dependencies(), program.proxy());
 
   print_libraries(program.libraries_to_be_built());
-  for (auto& item : program.libraries_to_be_built()) {
-    item.init(program.proxy());
-    item.download(program.proxy());
-    item.build();
-  }
+  build_libraries(program.libraries_to_be_built(), program.proxy());
 } catch (const std::exception& err) {
   klib::error(err.what());
 } catch (...) {

@@ -63,7 +63,7 @@ find_package(klib REQUIRED)
 find_package(CLI11 REQUIRED)
 find_package(semver REQUIRED)
 find_package(simdjson REQUIRED)
-find_package(Boost 1.75.0 REQUIRED COMPONENTS json CONFIG)
+find_package(Boost 1.75.0 REQUIRED CONFIG)
 
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED)

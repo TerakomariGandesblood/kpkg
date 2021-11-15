@@ -3,8 +3,6 @@
 #include <string>
 #include <vector>
 
-#include <boost/json.hpp>
-
 namespace kpkg {
 
 class Library {
@@ -45,8 +43,5 @@ class Library {
 };
 
 std::vector<Library> read_from_json();
-
-Library tag_invoke(boost::json::value_to_tag<Library>,
-                   const boost::json::value& jv);
 
 }  // namespace kpkg

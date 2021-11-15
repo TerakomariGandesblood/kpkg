@@ -3,14 +3,17 @@
 #include <cassert>
 #include <filesystem>
 
+#include <fmt/compile.h>
 #include <fmt/format.h>
 #include <klib/archive.h>
 #include <klib/error.h>
-#include <klib/http.h>
+#include <simdjson.h>
 #include <spdlog/spdlog.h>
 
 #include "command.h"
 #include "downloader.h"
+#include "github_info.h"
+#include "http.h"
 
 extern char library[];
 extern int library_size;
@@ -45,37 +48,15 @@ void Library::init(const std::string& proxy) {
     }
     spdlog::info("Get info from: {} ", url);
 
-    klib::Request request;
-    request.set_browser_user_agent();
-    if (!std::empty(proxy)) {
-      request.set_proxy(proxy);
-    }
-#ifndef NDEBUG
-    request.verbose(true);
-#endif
-
-    auto response = request.get(url);
-    if (!response.ok()) {
-      klib::error("Status code is not ok: {}, url: {}", response.status_code(),
-                  url);
-    }
-
-    auto result = response.text();
-    boost::json::error_code error_code;
-    boost::json::monotonic_resource mr;
-    auto jv = boost::json::parse(result, error_code, &mr);
-    if (error_code) {
-      klib::error("Json parse error: {}", error_code.message());
-    }
-
+    auto response = http_get(url, proxy);
     if (!std::empty(releases_url_)) {
-      auto obj = jv.as_object();
-      tag_name_ = obj.at("tag_name").as_string().c_str();
-      download_url_ = obj.at("tarball_url").as_string().c_str();
+      ReleaseInfo info(response.text());
+      tag_name_ = info.get_tag_name();
+      download_url_ = info.get_url();
     } else if (!std::empty(tags_url_)) {
-      auto obj = jv.as_array().front().as_object();
-      tag_name_ = obj.at("name").as_string().c_str();
-      download_url_ = obj.at("tarball_url").as_string().c_str();
+      TagInfo info(response.text());
+      tag_name_ = info.get_tag_name();
+      download_url_ = info.get_url();
     } else {
       assert(false);
     }
@@ -95,7 +76,7 @@ void Library::download(const std::string& proxy) const {
   if (std::filesystem::is_regular_file(file_name_)) {
     spdlog::info("Use exists file: {}", file_name_);
   } else {
-    spdlog::info("Get file: {} from: {}", file_name_, download_url_);
+    spdlog::info("Get file {} from: {}", file_name_, download_url_);
 
     static HTTPDownloader downloader(proxy);
     downloader.download(download_url_, file_name_);
@@ -111,10 +92,10 @@ void Library::build() const {
   } else {
     auto temp = klib::decompress(file_name_);
     if (!temp.has_value()) {
-      klib::error("decompress error");
+      klib::error("Decompress error");
     }
 
-    spdlog::info("Decompress file: {}, to {}", file_name_, *temp);
+    spdlog::info("Decompress file: {} to {}", file_name_, *temp);
     spdlog::info("Rename folder from {} to {}", *temp, dir_name_);
     std::filesystem::rename(*temp, dir_name_);
 
@@ -122,38 +103,47 @@ void Library::build() const {
   }
 }
 
-void Library::print() const { fmt::print("{:<25} {:<25}\n", name_, tag_name_); }
+void Library::print() const {
+  fmt::print(FMT_COMPILE("{:<25} {:<25}\n"), name_, tag_name_);
+}
 
 std::vector<Library> read_from_json() {
-  std::string json_str(library, library_size);
-
-  boost::json::error_code error_code;
-  boost::json::monotonic_resource mr;
-  auto jv = boost::json::parse(json_str.data(), error_code, &mr);
-  if (error_code) {
-    klib::error("Json parse error: {}", error_code.message());
-  }
+  std::string json(library, library_size);
+  json.reserve(std::size(json) + simdjson::SIMDJSON_PADDING);
+  simdjson::ondemand::parser parser;
+  auto doc = parser.iterate(json);
 
   std::vector<Library> ret;
-  for (const auto& item : jv.as_array()) {
-    ret.push_back(boost::json::value_to<Library>(item));
+
+  for (auto elem : doc.get_array()) {
+    std::string name(elem["name"].get_string().value());
+    std::string releases_url(elem["releases_url"].get_string().value());
+    std::string tags_url(elem["tags_url"].get_string().value());
+    std::string tag_name(elem["tag_name"].get_string().value());
+    std::string download_url(elem["download_url"].get_string().value());
+
+    std::vector<std::string> dependency;
+    for (auto item : elem["dependency"].get_array()) {
+      dependency.emplace_back(item.get_string().value());
+    }
+
+    std::string cwd(elem["cwd"].get_string().value());
+
+    std::vector<std::string> cmd;
+    for (auto item : elem["cmd"].get_array()) {
+      cmd.emplace_back(item.get_string().value());
+    }
+
+    std::vector<std::string> cmd_install;
+    for (auto item : elem["cmd_install"].get_array()) {
+      cmd_install.emplace_back(item.get_string().value());
+    }
+
+    ret.emplace_back(name, releases_url, tags_url, dependency, cwd, cmd,
+                     cmd_install, tag_name, download_url);
   }
 
   return ret;
-}
-
-Library tag_invoke(boost::json::value_to_tag<Library>,
-                   const boost::json::value& jv) {
-  const auto& obj = jv.as_object();
-  return Library{value_to<std::string>(obj.at("name")),
-                 value_to<std::string>(obj.at("releases_url")),
-                 value_to<std::string>(obj.at("tags_url")),
-                 value_to<std::vector<std::string>>(obj.at("dependency")),
-                 value_to<std::string>(obj.at("cwd")),
-                 value_to<std::vector<std::string>>(obj.at("cmd")),
-                 value_to<std::vector<std::string>>(obj.at("cmd_install")),
-                 value_to<std::string>(obj.at("tag_name")),
-                 value_to<std::string>(obj.at("download_url"))};
 }
 
 }  // namespace kpkg
