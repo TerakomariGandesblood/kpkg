@@ -1,11 +1,8 @@
-#include <unistd.h>
-
 #include <cstdlib>
 #include <string>
 #include <vector>
 
 #include <klib/error.h>
-#include <klib/util.h>
 #include <spdlog/spdlog.h>
 #include <CLI/CLI.hpp>
 #include <boost/algorithm/string.hpp>
@@ -27,23 +24,6 @@ void print_libraries(const std::vector<kpkg::Library>& libraries) {
 
   spdlog::info("The following libraries will be installed: {}",
                boost::join(names, " "));
-}
-
-void build_libraries(std::vector<kpkg::Library>& libraries,
-                     const std::string& proxy) {
-  for (auto& item : libraries) {
-    auto pid = fork();
-    if (pid < 0) {
-      klib::error("Fork error");
-    } else if (pid == 0) {
-      item.init(proxy);
-      item.download(proxy);
-      item.build();
-      std::exit(EXIT_SUCCESS);
-    }
-  }
-
-  klib::wait_for_child_process();
 }
 
 int main(int argc, const char* argv[]) try {
@@ -98,7 +78,11 @@ int main(int argc, const char* argv[]) try {
   }
 
   print_libraries(program.libraries_to_be_built());
-  build_libraries(program.libraries_to_be_built(), program.proxy());
+  for (auto& item : program.libraries_to_be_built()) {
+    item.init(program.proxy());
+    item.download(program.proxy());
+    item.build();
+  }
 } catch (const std::exception& err) {
   klib::error(err.what());
 } catch (...) {
