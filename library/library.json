@@ -425,7 +425,7 @@
     "dependency": [],
     "cwd": "",
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DSIMDJSON_DISABLE_DEPRECATED_API=ON -DSIMDJSON_DEVELOPMENT_CHECKS=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DSIMDJSON_DISABLE_DEPRECATED_API=ON -DSIMDJSON_DEVELOPMENT_CHECKS=OFF -DSIMDJSON_ALLOW_DOWNLOADS=OFF -DSIMDJSON_COMPETITION=OFF -DSIMDJSON_GOOGLE_BENCHMARKS=OFF -DSIMDJSON_CXXOPTS=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "cmake --build build --config Release --target install"
     ],

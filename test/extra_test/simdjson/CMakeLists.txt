@@ -12,4 +12,4 @@ target_link_libraries(simdjson simdjson::simdjson)
 add_custom_command(
   TARGET simdjson
   POST_BUILD
-  COMMAND semver)
+  COMMAND simdjson)
