@@ -24,23 +24,13 @@ jobs:
       - name: Build
         run: cmake --build build --config Release -j"$(nproc)"
 
-      - name: Get version
-        run: echo "RELEASE_VERSION=${TAG_NAME:1}" >> $GITHUB_ENV
-        env:
-          TAG_NAME: ${{ github.event.release.tag_name }}
-
       - name: CPack
-        run: |
-          cpack
-          mv kpkg-${{ env.RELEASE_VERSION }}-Linux.deb \
-          kpkg-v${{ env.RELEASE_VERSION }}-Debian-11.deb
-          mv kpkg-${{ env.RELEASE_VERSION }}-Linux.tar.gz \
-          kpkg-v${{ env.RELEASE_VERSION }}-Debian-11.tar.gz
+        run: cpack
         working-directory: build
 
       - name: Install
         run: |
-          dpkg -i kpkg-v${{ env.RELEASE_VERSION }}-Debian-11.deb
+          dpkg -i kpkg*.deb
           ldconfig
         working-directory: build
 
@@ -55,5 +45,5 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            build/kpkg-v${{ env.RELEASE_VERSION }}-Debian-11.deb
-            build/kpkg-v${{ env.RELEASE_VERSION }}-Debian-11.tar.gz
+            build/kpkg*.deb
+            build/kpkg*.tar.gz
