@@ -24,6 +24,7 @@ C++ Library Manager
 - [CLI11](https://github.com/CLIUtils/CLI11)
 - [fmt](https://github.com/fmtlib/fmt)
 - [spdlog](https://github.com/gabime/spdlog)
+- [simdjson](https://github.com/simdjson/simdjson)
 - [semver](https://github.com/Neargye/semver)
 - [aria2](https://github.com/aria2/aria2)
 

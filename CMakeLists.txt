@@ -62,6 +62,7 @@ find_package(spdlog REQUIRED)
 find_package(klib REQUIRED)
 find_package(CLI11 REQUIRED)
 find_package(semver REQUIRED)
+find_package(simdjson REQUIRED)
 find_package(Boost 1.75.0 REQUIRED COMPONENTS json CONFIG)
 
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
@@ -96,6 +97,7 @@ target_link_libraries(
           fmt::fmt
           spdlog::spdlog
           semver::semver
+          simdjson::simdjson
           ${Boost_LIBRARIES}
           klib::klib
           PkgConfig::libaria2
