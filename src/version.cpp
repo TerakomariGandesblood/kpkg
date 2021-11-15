@@ -3,6 +3,7 @@
 #include <fmt/compile.h>
 #include <fmt/format.h>
 #include <klib/version.h>
+#include <simdjson.h>
 #include <spdlog/version.h>
 #include <CLI/Version.hpp>
 #include <boost/version.hpp>
@@ -24,6 +25,9 @@ std::string version_str() {
                         FMT_VERSION / 100 % 100, FMT_VERSION % 100);
   result += fmt::format(FMT_COMPILE("spdlog/{}.{}.{} "), SPDLOG_VER_MAJOR,
                         SPDLOG_VER_MINOR, SPDLOG_VER_PATCH);
+  result += fmt::format(
+      FMT_COMPILE("simdjson/{}.{}.{} "), simdjson::SIMDJSON_VERSION_MAJOR,
+      simdjson::SIMDJSON_VERSION_MINOR, simdjson::SIMDJSON_VERSION_REVISION);
   result +=
       fmt::format(FMT_COMPILE("semver/{} "), semver::semver_verion.to_string());
   // NOTE
