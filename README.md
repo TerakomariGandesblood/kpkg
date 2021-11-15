@@ -7,7 +7,6 @@
 [![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
 [![GitHub Releases](https://img.shields.io/github/release/KaiserLancelot/kpkg)](https://github.com/KaiserLancelot/kpkg/releases/latest)
 [![GitHub Downloads](https://img.shields.io/github/downloads/KaiserLancelot/kpkg/total)](https://github.com/KaiserLancelot/kpkg/releases)
-[![Bugs](https://img.shields.io/github/issues/KaiserLancelot/kpkg/bug)](https://github.com/KaiserLancelot/kpkg/issues?q=is%3Aopen+is%3Aissue+label%3Abug)
 
 ---
 
