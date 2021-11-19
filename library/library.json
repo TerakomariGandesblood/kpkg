@@ -3,8 +3,8 @@
     "name": "CMake",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "v3.21.4",
-    "download_url": "https://github.com/Kitware/CMake/archive/refs/tags/v3.21.4.tar.gz",
+    "tag_name": "v3.22.0",
+    "download_url": "https://github.com/Kitware/CMake/archive/refs/tags/v3.22.0.tar.gz",
     "dependency": ["zlib", "openssl"],
     "cwd": "",
     "cmd": [
