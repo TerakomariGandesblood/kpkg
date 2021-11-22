@@ -8,11 +8,11 @@ if(KPKG_VALGRIND)
   endif()
 
   add_test(
-    NAME ${TEST_EXECUTABLE}-valgrind
+    NAME ${KPKG_TEST_EXECUTABLE}-valgrind
     COMMAND
       ${VALGRIND_EXECUTABLE} --leak-check=full --show-leak-kinds=all
       --leak-resolution=med --track-origins=yes --vgdb=no --tool=memcheck
-      --gen-suppressions=all --error-exitcode=1 ./${TEST_EXECUTABLE}
+      --gen-suppressions=all --error-exitcode=1 ./${KPKG_TEST_EXECUTABLE}
     WORKING_DIRECTORY ${KPKG_BINARY_DIR}/test/unit_test)
 
   set(VALGRIND_CMD
@@ -25,7 +25,7 @@ if(KPKG_VALGRIND)
       --tool=memcheck
       --gen-suppressions=all
       --error-exitcode=1
-      ${KPKG_BINARY_DIR}/tool/${EXECUTABLE})
+      ${KPKG_BINARY_DIR}/tool/${KPKG_EXECUTABLE})
 
   if(KPKG_TEST_USE_PROXY)
     add_test(NAME kpkg-install-valgrind COMMAND ${VALGRIND_CMD} install spdlog

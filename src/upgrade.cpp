@@ -67,7 +67,7 @@ void upgrade(const std::string &proxy) {
   for (const auto &item : software) {
     auto curr_ver_str = get_curr_ver_str(item);
     if (!curr_ver_str) {
-      klib::warn("{} is not installed", item);
+      klib::warn(KLIB_CURR_LOC, "{} is not installed", item);
       continue;
     }
     auto curr_ver = semver::version(*curr_ver_str);
@@ -77,8 +77,8 @@ void upgrade(const std::string &proxy) {
 
     if (curr_ver < latest_ver) {
       if (!download_url) {
-        klib::warn("The {} latest version {} has no assets", item,
-                   latest_ver.to_string());
+        klib::warn(KLIB_CURR_LOC, "The {} latest version {} has no assets",
+                   item, latest_ver.to_string());
         continue;
       }
 
@@ -92,13 +92,13 @@ void upgrade(const std::string &proxy) {
       spdlog::info("Download file: {} complete", file_name);
 
       if (std::filesystem::path(file_name).extension() != ".deb") {
-        klib::error("Can't find a file in deb format");
+        klib::error(KLIB_CURR_LOC, "Can't find a file in deb format");
       }
 
       klib::exec("dpkg -i " + file_name);
 
       if (!std::filesystem::remove(file_name)) {
-        klib::error("Remove file {} failed", file_name);
+        klib::error(KLIB_CURR_LOC, "Remove file {} failed", file_name);
       }
 
       spdlog::info("{} upgrade completed", item);

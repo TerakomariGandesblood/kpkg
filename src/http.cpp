@@ -5,7 +5,8 @@
 namespace kpkg {
 
 klib::Response http_get(const std::string &url, const std::string &proxy) {
-  klib::Request request;
+  static klib::Request request;
+  request.use_cookies(false);
   request.set_browser_user_agent();
   if (!std::empty(proxy)) {
     request.set_proxy(proxy);
@@ -16,8 +17,8 @@ klib::Response http_get(const std::string &url, const std::string &proxy) {
 
   auto response = request.get(url);
   if (!response.ok()) {
-    klib::error("Status code is not ok: {}, url: {}", response.status_code(),
-                url);
+    klib::error(KLIB_CURR_LOC, "Status code is not ok: {}, url: {}",
+                response.status_code(), url);
   }
 
   return response;

@@ -92,7 +92,7 @@ void Library::build() const {
   } else {
     auto temp = klib::decompress(file_name_);
     if (!temp.has_value()) {
-      klib::error("Decompress error");
+      klib::error(KLIB_CURR_LOC, "Decompress error");
     }
 
     spdlog::info("Decompress file: {} to {}", file_name_, *temp);

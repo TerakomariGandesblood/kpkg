@@ -32,15 +32,16 @@ message(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
 # ---------------------------------------------------------------------------------------
 # Set variables
 # ---------------------------------------------------------------------------------------
-set(LIBRARY lib${PROJECT_NAME})
-set(EXECUTABLE ${PROJECT_NAME})
-set(TEST_EXECUTABLE ${EXECUTABLE}-test)
+set(KPKG_LIBRARY lib${PROJECT_NAME})
+set(KPKG_EXECUTABLE ${PROJECT_NAME})
+set(KPKG_TEST_EXECUTABLE ${KPKG_EXECUTABLE}-test)
 
 set(KPKG_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(KPKG_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
 # https://cmake.org/cmake/help/latest/command/file.html#glob-recurse
-file(GLOB_RECURSE LIBRARY_SRC CONFIGURE_DEPENDS "${KPKG_SOURCE_DIR}/src/*.cpp")
+file(GLOB_RECURSE KPKG_LIBRARY_SRC CONFIGURE_DEPENDS
+     "${KPKG_SOURCE_DIR}/src/*.cpp")
 
 # ---------------------------------------------------------------------------------------
 # Include CMake module
@@ -88,11 +89,11 @@ target_compile_options(library_json PRIVATE "-Wno-unused-command-line-argument")
 # ---------------------------------------------------------------------------------------
 # Build static library
 # ---------------------------------------------------------------------------------------
-add_library(${LIBRARY} STATIC ${LIBRARY_SRC})
+add_library(${KPKG_LIBRARY} STATIC ${KPKG_LIBRARY_SRC})
 
-target_include_directories(${LIBRARY} PUBLIC "${KPKG_SOURCE_DIR}/include")
+target_include_directories(${KPKG_LIBRARY} PUBLIC "${KPKG_SOURCE_DIR}/include")
 target_link_libraries(
-  ${LIBRARY}
+  ${KPKG_LIBRARY}
   PRIVATE library_json
           fmt::fmt
           spdlog::spdlog
@@ -104,7 +105,7 @@ target_link_libraries(
           PkgConfig::zlib
           PkgConfig::openssl
           ${CMAKE_THREAD_LIBS_INIT})
-set_target_properties(${LIBRARY} PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
+set_target_properties(${KPKG_LIBRARY} PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
 
 # ---------------------------------------------------------------------------------------
 # Build executable
