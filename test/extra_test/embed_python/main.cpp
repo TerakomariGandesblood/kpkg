@@ -1,14 +1,18 @@
-#include <sanitizer/lsan_interface.h>
-
 #include <cstdlib>
 #include <iostream>
 
 #include <Python.h>
 
+// TODO FIXME
+#ifdef KPKG_SANITIZER
+#include <sanitizer/lsan_interface.h>
+#endif
+
 // https://docs.python.org/zh-cn/3/extending/embedding.html#very-high-level-embedding
 int main(int argc, const char *argv[]) {
-  // TODO FIXME
+#ifdef KPKG_SANITIZER
   __lsan::ScopedDisabler disabler;
+#endif
   (void)argc;
 
   auto program = Py_DecodeLocale(argv[0], nullptr);

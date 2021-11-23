@@ -4,6 +4,11 @@ project(test_library_install LANGUAGES CXX)
 
 include(../common.cmake)
 
+# FIXME
+if(KPKG_SANITIZER)
+  add_definitions(-DKPKG_SANITIZER)
+endif()
+
 # https://cmake.org/cmake/help/latest/module/FindPython.html
 set(Python_USE_STATIC_LIBS TRUE)
 find_package(Python COMPONENTS Development.Embed)
