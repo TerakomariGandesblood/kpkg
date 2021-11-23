@@ -430,5 +430,20 @@
       "cmake --build build --config Release --target install"
     ],
     "cmd_install": ["cmake --build build --config Release --target install"]
+  },
+  {
+    "name": "python",
+    "releases_url": "",
+    "tags_url": "",
+    "tag_name": "v3.9.9",
+    "download_url": "https://github.com/python/cpython/archive/refs/tags/v3.9.9.tar.gz",
+    "dependency": ["zlib", "openssl"],
+    "cwd": "",
+    "cmd": [
+      "./configure --enable-shared --disable-profiling --enable-optimizations --disable-loadable-sqlite-extensions --disable-ipv6 --without-pydebug --without-trace-refs --without-assertions --with-lto --with-tzpath=/usr/share/zoneinfo --without-system-expat --without-system-ffi --without-system-libmpdec --with-dbmliborder=gdbm:ndbm --without-doc-strings --with-pymalloc --with-c-locale-coercion --without-valgrind --without-dtrace --with-computed-gotos --with-ssl-default-suites=openssl",
+      "make -j\"$(nproc)\"",
+      "make install"
+    ],
+    "cmd_install": ["make install"]
   }
 ]
