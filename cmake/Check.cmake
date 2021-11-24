@@ -77,15 +77,6 @@ endif()
 # ---------------------------------------------------------------------------------------
 # Option
 # ---------------------------------------------------------------------------------------
-if(KPKG_SANITIZER AND KPKG_VALGRIND)
-  message(
-    FATAL_ERROR "AddressSanitizer and valgrind cannot be used at the same time")
-endif()
-
 if(NOT (BUILD_TESTING AND KPKG_BUILD_TEST) AND KPKG_SANITIZER)
   message(FATAL_ERROR "Must build test when using AddressSanitizer")
-endif()
-
-if(NOT (BUILD_TESTING AND KPKG_BUILD_TEST) AND KPKG_VALGRIND)
-  message(FATAL_ERROR "Must build test when using valgrind")
 endif()

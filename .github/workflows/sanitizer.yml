@@ -38,8 +38,8 @@ jobs:
         run: |
           ./kpkg install boost catch2 curl fmt icu libarchive nameof zstd \
           openssl spdlog sqlcipher tidy-html5 pugixml onetbb cli11 indicators \
-          aria2 semver gsl-lite dbg-macro scope_guard argon2 simdjson python
-          ./kpkg install fonttools
+          aria2 semver gsl-lite dbg-macro scope_guard argon2 simdjson pyftsubset
+          pyftsubset --help
         working-directory: build/tool
 
       - name: Test

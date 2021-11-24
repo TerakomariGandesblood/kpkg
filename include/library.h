@@ -44,6 +44,8 @@ class Library {
 
 std::vector<Library> read_from_json();
 
-void build_font_tools(const std::string& proxy);
+void show_pyftsubset(const std::string& proxy);
+
+void build_pyftsubset();
 
 }  // namespace kpkg

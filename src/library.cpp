@@ -19,8 +19,8 @@
 extern char library[];
 extern int library_size;
 
-extern char font_tools[];
-extern int font_tools_size;
+extern char pyftsubset[];
+extern int pyftsubset_size;
 
 namespace kpkg {
 
@@ -150,23 +150,26 @@ std::vector<Library> read_from_json() {
   return ret;
 }
 
-void build_font_tools(const std::string& proxy) {
-  klib::write_file("font_tools.py", false, font_tools, font_tools_size);
+void show_pyftsubset(const std::string& proxy) {
+  auto response = http_get(
+      "https://api.github.com/repos/fonttools/fonttools/releases/latest",
+      proxy);
+  ReleaseInfo info(response.text());
+
+  auto tag_name = info.get_tag_name();
+  fmt::print(FMT_COMPILE("{:<25} {:<25}\n"), "pyftsubset", tag_name);
+}
+
+void build_pyftsubset() {
+  klib::write_file("pyftsubset.py", false, pyftsubset, pyftsubset_size);
 
   std::vector<std::string> cmd;
 
-  if (!std::empty(proxy)) {
-    cmd.push_back(fmt::format(FMT_COMPILE("export all_proxy=\"{}\""), proxy));
-  }
-
-  cmd.emplace_back("python3 -m pip install --upgrade pip");
-  cmd.emplace_back("python3 -m pip install nuitka fonttools[woff]");
   cmd.emplace_back(
-      "python3 -m nuitka --module --include-module=fontTools.subset "
-      "--follow-imports --plugin-enable=pylint-warnings --remove-output "
-      "--no-pyi-file --lto=yes --prefer-source-code "
-      "--python-for-scons=/usr/local/bin/python3 font_tools.py");
-  cmd.emplace_back("mv font_tools*.so /usr/local/lib/font_tools.so");
+      "python -m nuitka --onefile --plugin-enable=pylint-warnings "
+      "--remove-output --lto=yes --prefer-source-code --static-libpython=yes "
+      "-o pyftsubset pyftsubset.py");
+  cmd.emplace_back("mv pyftsubset /usr/local/bin/pyftsubset");
 
   run_commands(cmd, ".");
 }

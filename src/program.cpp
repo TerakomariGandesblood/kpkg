@@ -14,8 +14,8 @@ Program::Program(const std::vector<std::string>& libraries,
                  const std::string& proxy)
     : proxy_(proxy), libraries_(read_from_json()) {
   for (const auto& library_name : libraries) {
-    if (boost::to_lower_copy(library_name) == "fonttools") {
-      build_font_tools_ = true;
+    if (boost::to_lower_copy(library_name) == "pyftsubset") {
+      build_pyftsubset_ = true;
       continue;
     }
 
@@ -77,6 +77,8 @@ bool Program::contains(const std::vector<Library>& libraries,
 void Program::show_libraries() {
   auto backup = spdlog::get_level();
   spdlog::set_level(spdlog::level::err);
+
+  show_pyftsubset(proxy_);
 
   for (auto& library : libraries_) {
     auto pid = fork();

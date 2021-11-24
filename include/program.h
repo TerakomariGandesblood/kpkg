@@ -12,7 +12,7 @@ class Program {
  public:
   Program(const std::vector<std::string>& libraries, const std::string& proxy);
 
-  bool build_font_tools() const { return build_font_tools_; }
+  bool build_pyftsubset() const { return build_pyftsubset_; }
   [[nodiscard]] std::string proxy() const { return proxy_; }
 
   [[nodiscard]] std::vector<Library>& dependencies() { return dependencies_; }
@@ -35,7 +35,7 @@ class Program {
   std::vector<Library> dependencies_;
   std::vector<Library> libraries_to_be_built_;
 
-  bool build_font_tools_ = false;
+  bool build_pyftsubset_ = false;
 };
 
 }  // namespace kpkg
