@@ -5,7 +5,9 @@ project(test_library_install LANGUAGES CXX)
 include(../common.cmake)
 
 # FIXME
-add_cxx_compiler_flag_no_check("-Wno-error=maybe-uninitialized")
+if(CMAKE_COMPILER_IS_GNUCXX)
+  add_cxx_compiler_flag_no_check("-Wno-error=maybe-uninitialized")
+endif()
 if(KPKG_SANITIZER)
   add_definitions(-DKPKG_SANITIZER)
 endif()
