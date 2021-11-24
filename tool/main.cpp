@@ -85,6 +85,12 @@ int main(int argc, const char* argv[]) try {
 
   print_libraries(program.libraries_to_be_built());
   build_libraries(program.libraries_to_be_built(), program.proxy());
+
+  if (program.build_font_tools()) {
+    spdlog::info("Start building {}", "fontTools");
+    kpkg::build_font_tools(program.proxy());
+    spdlog::info("{} install complete", "fontTools");
+  }
 } catch (const std::exception& err) {
   klib::error(KLIB_CURR_LOC, err.what());
 } catch (...) {

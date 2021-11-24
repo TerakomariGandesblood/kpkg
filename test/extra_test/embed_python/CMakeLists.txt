@@ -3,6 +3,13 @@ cmake_minimum_required(VERSION 3.20)
 project(test_library_install LANGUAGES CXX)
 
 include(../common.cmake)
+# FIXME
+if(KPKG_SANITIZER)
+  add_definitions(-DKPKG_SANITIZER)
+endif()
+
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/SourceHanSansSC-Bold.otf"
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 # https://cmake.org/cmake/help/latest/module/FindPython.html
 find_package(Python COMPONENTS Development.Embed)

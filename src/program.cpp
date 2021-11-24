@@ -14,6 +14,11 @@ Program::Program(const std::vector<std::string>& libraries,
                  const std::string& proxy)
     : proxy_(proxy), libraries_(read_from_json()) {
   for (const auto& library_name : libraries) {
+    if (boost::to_lower_copy(library_name) == "fonttools") {
+      build_font_tools_ = true;
+      continue;
+    }
+
     auto library = get_from_name(library_name);
 
     for (const auto& dependency_name : library.get_dependency()) {

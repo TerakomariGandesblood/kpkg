@@ -1,8 +1,16 @@
     .global library
     .global library_size
+    .global font_tools
+    .global font_tools_size
     .section .rodata
 library:
     .incbin "library.json"
-1:
+library_end:
 library_size:
-    .int 1b - library
+    .int library_end - library
+
+font_tools:
+    .incbin "font_tools.py"
+font_tools_end:
+font_tools_size:
+    .int font_tools_end - font_tools

@@ -80,8 +80,9 @@ add_definitions(-DOPENSSL_NO_DEPRECATED)
 # ---------------------------------------------------------------------------------------
 # Build library json file
 # ---------------------------------------------------------------------------------------
-file(COPY "${KPKG_SOURCE_DIR}/library/library.json"
-     DESTINATION ${KPKG_BINARY_DIR})
+file(GLOB_RECURSE KPKG_LIBRARY_FILE CONFIGURE_DEPENDS
+     "${KPKG_SOURCE_DIR}/library/*")
+file(COPY ${KPKG_LIBRARY_FILE} DESTINATION ${KPKG_BINARY_DIR})
 
 add_library(library_json STATIC "${KPKG_SOURCE_DIR}/src/library.s")
 target_compile_options(library_json PRIVATE "-Wno-unused-command-line-argument")

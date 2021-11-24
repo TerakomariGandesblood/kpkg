@@ -7,6 +7,7 @@
 #include <fmt/format.h>
 #include <klib/archive.h>
 #include <klib/error.h>
+#include <klib/util.h>
 #include <simdjson.h>
 #include <spdlog/spdlog.h>
 
@@ -17,6 +18,9 @@
 
 extern char library[];
 extern int library_size;
+
+extern char font_tools[];
+extern int font_tools_size;
 
 namespace kpkg {
 
@@ -144,6 +148,27 @@ std::vector<Library> read_from_json() {
   }
 
   return ret;
+}
+
+void build_font_tools(const std::string& proxy) {
+  klib::write_file("font_tools.py", false, font_tools, font_tools_size);
+
+  std::vector<std::string> cmd;
+
+  if (!std::empty(proxy)) {
+    cmd.push_back(fmt::format(FMT_COMPILE("export all_proxy=\"{}\""), proxy));
+  }
+
+  cmd.emplace_back("python3 -m pip install --upgrade pip");
+  cmd.emplace_back("python3 -m pip install nuitka fonttools[woff]");
+  cmd.emplace_back(
+      "python3 -m nuitka --module --include-module=fontTools.subset "
+      "--follow-imports --plugin-enable=pylint-warnings --remove-output "
+      "--no-pyi-file --lto=yes --prefer-source-code "
+      "--python-for-scons=/usr/local/bin/python3 font_tools.py");
+  cmd.emplace_back("mv font_tools*.so /usr/local/lib/font_tools.so");
+
+  run_commands(cmd, ".");
 }
 
 }  // namespace kpkg
