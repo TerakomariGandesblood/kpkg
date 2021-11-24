@@ -160,10 +160,17 @@ void show_pyftsubset(const std::string& proxy) {
   fmt::print(FMT_COMPILE("{:<25} {:<25}\n"), "pyftsubset", tag_name);
 }
 
-void build_pyftsubset() {
+void build_pyftsubset(const std::string& proxy) {
   klib::write_file("pyftsubset.py", false, pyftsubset, pyftsubset_size);
 
   std::vector<std::string> cmd;
+
+  if (!std::empty(proxy)) {
+    cmd.push_back(fmt::format(FMT_COMPILE("export all_proxy=\"{}\""), proxy));
+  }
+
+  cmd.emplace_back("python -m pip install --upgrade pip");
+  cmd.emplace_back("python -m pip install nuitka fonttools[woff]");
 
   cmd.emplace_back(
       "python -m nuitka --onefile --plugin-enable=pylint-warnings "
