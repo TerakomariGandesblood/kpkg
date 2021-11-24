@@ -83,7 +83,7 @@ void Program::show_libraries() {
   for (auto& library : libraries_) {
     auto pid = fork();
     if (pid < 0) {
-      klib::error(KLIB_CURR_LOC, "fork error");
+      klib::error(KLIB_CURR_LOC, "Fork error");
     } else if (pid == 0) {
       library.init(proxy_);
       library.print();
@@ -104,7 +104,7 @@ Library Program::get_from_name(const std::string& name) {
     }
   }
 
-  klib::error(KLIB_CURR_LOC, "can not find this library: {}", name);
+  klib::error(KLIB_CURR_LOC, "Can not find this library: {}", name);
 }
 
 }  // namespace kpkg
