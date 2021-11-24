@@ -36,10 +36,11 @@ jobs:
 
       - name: Run executable
         run: |
+          ./kpkg install pyftsubset
+          pyftsubset --help
           ./kpkg install boost catch2 curl fmt icu libarchive nameof zstd \
           openssl spdlog sqlcipher tidy-html5 pugixml onetbb cli11 indicators \
-          aria2 semver gsl-lite dbg-macro scope_guard argon2 simdjson pyftsubset
-          pyftsubset --help
+          aria2 semver gsl-lite dbg-macro scope_guard argon2 simdjson
         working-directory: build/tool
 
       - name: Test
