@@ -162,7 +162,6 @@ void show_pyftsubset(const std::string& proxy) {
 
 void build_pyftsubset(const std::string& proxy) {
   klib::write_file("pyftsubset.py", false, pyftsubset, pyftsubset_size);
-  klib::exec("python3 pyftsubset.py --help");
 
   std::vector<std::string> cmd;
 
@@ -172,6 +171,7 @@ void build_pyftsubset(const std::string& proxy) {
 
   cmd.emplace_back("python3 -m pip install --upgrade pip");
   cmd.emplace_back("python3 -m pip install nuitka fonttools[woff]");
+  cmd.emplace_back("python3 pyftsubset.py --help");
 
   cmd.emplace_back(
       "python3 -m nuitka --onefile --plugin-enable=pylint-warnings "
