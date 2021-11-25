@@ -157,10 +157,10 @@ void build_pyftsubset() {
 
   std::vector<std::string> cmd;
 
-  cmd.emplace_back("python3 pyftsubset.py --help");
+  cmd.emplace_back("sudo python3 pyftsubset.py --help");
 
   cmd.emplace_back(
-      "python3 -m nuitka --onefile --plugin-enable=pylint-warnings "
+      "sudo python3 -m nuitka --onefile --plugin-enable=pylint-warnings "
       "--lto=yes --prefer-source-code --static-libpython=yes "
       "--assume-yes-for-downloads -o pyftsubset pyftsubset.py");
   cmd.emplace_back("sudo cp pyftsubset /usr/local/bin/pyftsubset");
