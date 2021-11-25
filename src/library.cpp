@@ -162,6 +162,7 @@ void show_pyftsubset(const std::string& proxy) {
 
 void build_pyftsubset(const std::string& proxy) {
   klib::write_file("pyftsubset.py", false, pyftsubset, pyftsubset_size);
+  klib::exec("python3 pyftsubset.py --help");
 
   std::vector<std::string> cmd;
 
@@ -169,14 +170,14 @@ void build_pyftsubset(const std::string& proxy) {
     cmd.push_back(fmt::format(FMT_COMPILE("export all_proxy=\"{}\""), proxy));
   }
 
-  cmd.emplace_back("python -m pip install --upgrade pip");
-  cmd.emplace_back("python -m pip install nuitka fonttools[woff]");
+  cmd.emplace_back("python3 -m pip install --upgrade pip");
+  cmd.emplace_back("python3 -m pip install nuitka fonttools[woff]");
 
   cmd.emplace_back(
-      "python -m nuitka --onefile --plugin-enable=pylint-warnings "
+      "python3 -m nuitka --onefile --plugin-enable=pylint-warnings "
       "--remove-output --lto=yes --prefer-source-code --static-libpython=yes "
-      "-o pyftsubset pyftsubset.py");
-  cmd.emplace_back("mv pyftsubset /usr/local/bin/pyftsubset");
+      "--assume-yes-for-downloads -o pyftsubset pyftsubset.py");
+  cmd.emplace_back("cp pyftsubset /usr/local/bin/pyftsubset");
 
   run_commands(cmd, ".");
 }
