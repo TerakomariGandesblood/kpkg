@@ -88,7 +88,7 @@ int main(int argc, const char* argv[]) try {
 
   if (program.build_pyftsubset()) {
     spdlog::info("Start building {}", "pyftsubset");
-    kpkg::build_pyftsubset(program.proxy());
+    kpkg::build_pyftsubset();
     spdlog::info("{} install complete", "pyftsubset");
   }
 } catch (const std::exception& err) {
