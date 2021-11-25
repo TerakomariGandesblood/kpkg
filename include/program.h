@@ -12,7 +12,7 @@ class Program {
  public:
   Program(const std::vector<std::string>& libraries, const std::string& proxy);
 
-  bool build_pyftsubset() const { return build_pyftsubset_; }
+  [[nodiscard]] bool build_pyftsubset() const { return build_pyftsubset_; }
   [[nodiscard]] std::string proxy() const { return proxy_; }
 
   [[nodiscard]] std::vector<Library>& dependencies() { return dependencies_; }

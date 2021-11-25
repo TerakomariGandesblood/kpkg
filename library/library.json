@@ -260,9 +260,13 @@
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DTBB_TEST=OFF -DTBB_EXAMPLES=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
-      "cmake --build build --config Release --target install"
+      "cmake --build build --config Release --target install",
+      "ldconfig"
     ],
-    "cmd_install": ["cmake --build build --config Release --target install"]
+    "cmd_install": [
+      "cmake --build build --config Release --target install",
+      "ldconfig"
+    ]
   },
   {
     "name": "icu",
@@ -440,11 +444,12 @@
     "dependency": ["zlib", "bzip2", "openssl"],
     "cwd": "",
     "cmd": [
-      "./configure --enable-shared --disable-profiling --enable-optimizations --disable-loadable-sqlite-extensions --disable-ipv6 --without-pydebug --without-trace-refs --without-assertions --with-lto --with-tzpath=/usr/share/zoneinfo --without-system-expat --without-system-ffi --without-system-libmpdec --with-dbmliborder=gdbm:ndbm --without-doc-strings --with-pymalloc --with-c-locale-coercion --without-valgrind --without-dtrace --with-computed-gotos --with-ssl-default-suites=openssl",
+      "./configure --disable-shared --disable-profiling --enable-optimizations --disable-loadable-sqlite-extensions --disable-ipv6 --without-pydebug --without-trace-refs --without-assertions --with-lto --without-system-expat --without-system-ffi --without-system-libmpdec --without-doc-strings --with-pymalloc --with-c-locale-coercion --without-valgrind --without-dtrace --with-computed-gotos --with-ssl-default-suites=openssl",
       "make -j\"$(nproc)\"",
-      "make install"
+      "make install",
+      "ldconfig"
     ],
-    "cmd_install": ["make install"]
+    "cmd_install": ["make install", "ldconfig"]
   },
   {
     "name": "bzip2",
@@ -454,10 +459,7 @@
     "download_url": "https://www.sourceware.org/pub/bzip2/bzip2-latest.tar.gz",
     "dependency": [],
     "cwd": "",
-    "cmd": [
-      "make -j\"$(nproc)\"",
-      "make install"
-    ],
+    "cmd": ["make -j\"$(nproc)\"", "make install"],
     "cmd_install": ["make install"]
   }
 ]
