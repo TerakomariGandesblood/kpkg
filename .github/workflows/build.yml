@@ -49,4 +49,4 @@ jobs:
 
       - name: Uninstall
         if: ${{ matrix.build_type == 'Release' }}
-        run: cmake --build build --config ${{ matrix.build_type }} --target uninstall
+        run: sudo cmake --build build --config ${{ matrix.build_type }} --target uninstall
