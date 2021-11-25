@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: kaiserlancelot/kenv:latest
-      options: --cap-add SYS_ADMIN --device /dev/fuse --security-opt apparmor:unconfined
+      options: --user root --cap-add SYS_ADMIN --device /dev/fuse --security-opt apparmor:unconfined
 
     steps:
       # https://github.com/actions/checkout
