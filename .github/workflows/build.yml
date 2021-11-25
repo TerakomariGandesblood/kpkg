@@ -5,7 +5,9 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: kaiserlancelot/kenv:latest
+    container:
+      image: kaiserlancelot/kenv:latest
+      options: --cap-add SYS_ADMIN --device /dev/fuse --security-opt apparmor:unconfined
     strategy:
       matrix:
         # https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html
@@ -35,16 +37,11 @@ jobs:
 
       - name: Install
         if: ${{ matrix.build_type == 'Release' }}
-        run: |
-          cmake --build build --config ${{ matrix.build_type }} --target install
-          ldconfig
+        run: sudo cmake --build build --config ${{ matrix.build_type }} --target install
 
       - name: Run executable
         if: ${{ matrix.build_type == 'Release' }}
-        run: |
-          kpkg install spdlog
-          kpkg list
-          kpkg upgrade
+        run: kpkg install spdlog
 
       - name: Test
         run: ctest -C ${{ matrix.build_type }} -j"$(nproc)" --output-on-failure

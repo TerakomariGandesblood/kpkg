@@ -44,6 +44,6 @@ std::vector<Library> read_from_json();
 
 void show_pyftsubset(const std::string& proxy);
 
-void build_pyftsubset(const std::string& proxy);
+void build_pyftsubset();
 
 }  // namespace kpkg

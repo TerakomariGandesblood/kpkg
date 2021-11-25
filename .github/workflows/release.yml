@@ -8,7 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: kaiserlancelot/kenv:latest
+    container:
+      image: kaiserlancelot/kenv:latest
+      options: --cap-add SYS_ADMIN --device /dev/fuse --security-opt apparmor:unconfined
 
     steps:
       # https://github.com/actions/checkout
@@ -29,17 +31,14 @@ jobs:
         working-directory: build
 
       - name: Install
-        run: |
-          dpkg -i kpkg*.deb
-          ldconfig
+        run: sudo dpkg -i kpkg*.deb
         working-directory: build
 
-# TEMP
-#      - name: Run executable
-#        run: |
-#          kpkg install curl
-#          kpkg list
-#          kpkg upgrade
+      - name: Run executable
+        run: |
+          kpkg install spdlog
+          kpkg list
+          kpkg upgrade
 
       # https://github.com/softprops/action-gh-release
       - name: Release

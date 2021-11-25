@@ -5,7 +5,9 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: kaiserlancelot/kenv:latest
+    container:
+      image: kaiserlancelot/kenv:latest
+      options: --cap-add SYS_ADMIN --device /dev/fuse --security-opt apparmor:unconfined
     strategy:
       matrix:
         # https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html
@@ -36,12 +38,11 @@ jobs:
 
       - name: Run executable
         run: |
-          ./kpkg install python
           ./kpkg install pyftsubset
           /usr/local/bin/pyftsubset --help
           ./kpkg install boost catch2 curl fmt icu libarchive nameof zstd \
           openssl spdlog sqlcipher tidy-html5 pugixml onetbb cli11 indicators \
-          aria2 semver gsl-lite dbg-macro scope_guard argon2 simdjson
+          aria2 semver gsl-lite dbg-macro scope_guard argon2 simdjson python
         working-directory: build/tool
 
       - name: Test
