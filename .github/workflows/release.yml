@@ -34,11 +34,12 @@ jobs:
           ldconfig
         working-directory: build
 
-      - name: Run executable
-        run: |
-          kpkg install curl
-          kpkg list
-          kpkg upgrade
+# TEMP
+#      - name: Run executable
+#        run: |
+#          kpkg install curl
+#          kpkg list
+#          kpkg upgrade
 
       # https://github.com/softprops/action-gh-release
       - name: Release

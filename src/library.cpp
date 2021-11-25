@@ -169,7 +169,7 @@ void build_pyftsubset(const std::string& proxy) {
       "python3 -m nuitka --onefile --plugin-enable=pylint-warnings "
       "--remove-output --lto=yes --prefer-source-code --static-libpython=yes "
       "--assume-yes-for-downloads -o pyftsubset pyftsubset.py");
-  cmd.emplace_back("cp pyftsubset /usr/local/bin/pyftsubset");
+  cmd.emplace_back("sudo cp pyftsubset /usr/local/bin/pyftsubset");
 
   run_commands(cmd, ".");
 }
