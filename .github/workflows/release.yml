@@ -34,11 +34,8 @@ jobs:
         run: sudo dpkg -i kpkg*.deb
         working-directory: build
 
-      - name: Run executable
-        run: |
-          kpkg install spdlog
-          kpkg list
-          kpkg upgrade
+      - name: Build pyftsubset
+        run: kpkg install pyftsubset
 
       # https://github.com/softprops/action-gh-release
       - name: Release
@@ -47,3 +44,4 @@ jobs:
           files: |
             build/kpkg*.deb
             build/kpkg*.tar.gz
+            /usr/local/bin/pyftsubset
