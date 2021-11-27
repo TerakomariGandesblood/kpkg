@@ -4,7 +4,7 @@
 #include <filesystem>
 #include <memory>
 
-#include <klib/error.h>
+#include <klib/log.h>
 
 namespace kpkg {
 
@@ -17,7 +17,7 @@ std::int32_t download_event_callback(aria2::Session* session,
     case aria2::EVENT_ON_DOWNLOAD_COMPLETE:
       break;
     case aria2::EVENT_ON_DOWNLOAD_ERROR:
-      klib::error(KLIB_CURR_LOC, "download error");
+      klib::error("download error");
     default:
       return 0;
   }
@@ -25,13 +25,13 @@ std::int32_t download_event_callback(aria2::Session* session,
   std::unique_ptr<aria2::DownloadHandle, decltype(aria2::deleteDownloadHandle)*>
       dh(aria2::getDownloadHandle(session, gid), aria2::deleteDownloadHandle);
   if (!dh) {
-    klib::error(KLIB_CURR_LOC, "aria2::getDownloadHandle failed");
+    klib::error("aria2::getDownloadHandle failed");
   }
 
   if (dh->getNumFiles() > 0) {
     std::filesystem::path path(dh->getFile(1).path);
     if (!std::filesystem::exists(path)) {
-      klib::error(KLIB_CURR_LOC, "no file: {}", path.string());
+      klib::error("no file: {}", path.string());
     }
 
     *static_cast<std::string*>(user_data) = path.filename().string();
@@ -45,7 +45,7 @@ std::int32_t download_event_callback(aria2::Session* session,
 HTTPDownloader::HTTPDownloader(const std::string& proxy) {
   auto rc = aria2::libraryInit();
   if (rc != 0) {
-    klib::error(KLIB_CURR_LOC, "aria2::libraryInit failed");
+    klib::error("aria2::libraryInit failed");
   }
 
   if (!std::empty(proxy)) {
@@ -59,7 +59,7 @@ HTTPDownloader::HTTPDownloader(const std::string& proxy) {
 HTTPDownloader::~HTTPDownloader() {
   auto rc = aria2::libraryDeinit();
   if (rc != 0) {
-    klib::error(KLIB_CURR_LOC, "aria2::libraryDeinit failed");
+    klib::error("aria2::libraryDeinit failed");
   }
 }
 
@@ -68,7 +68,7 @@ std::string HTTPDownloader::download(const std::string& url,
   auto free_session = [](aria2::Session* ptr) {
     auto rc = aria2::sessionFinal(ptr);
     if (rc != 0) {
-      klib::error(KLIB_CURR_LOC, "aria2::sessionFinal failed");
+      klib::error("aria2::sessionFinal failed");
     }
   };
 
@@ -80,7 +80,7 @@ std::string HTTPDownloader::download(const std::string& url,
   std::unique_ptr<aria2::Session, decltype(free_session)> session(
       aria2::sessionNew(options_, config), free_session);
   if (!session) {
-    klib::error(KLIB_CURR_LOC, "aria2::sessionNew failed");
+    klib::error("aria2::sessionNew failed");
   }
 
   aria2::KeyVals options;
@@ -91,12 +91,12 @@ std::string HTTPDownloader::download(const std::string& url,
   aria2::A2Gid gid;
   auto rc = aria2::addUri(session.get(), &gid, {url}, options);
   if (rc != 0) {
-    klib::error(KLIB_CURR_LOC, "aria2::addUri failed");
+    klib::error("aria2::addUri failed");
   }
 
   rc = aria2::run(session.get(), aria2::RUN_DEFAULT);
   if (rc != 0) {
-    klib::error(KLIB_CURR_LOC, "aria2::run failed");
+    klib::error("aria2::run failed");
   }
 
   return name;

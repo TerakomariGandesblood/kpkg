@@ -7,10 +7,9 @@
 
 #include <fmt/compile.h>
 #include <fmt/format.h>
-#include <klib/error.h>
 #include <klib/exception.h>
+#include <klib/log.h>
 #include <klib/util.h>
-#include <spdlog/spdlog.h>
 #include <semver.hpp>
 
 #include "downloader.h"
@@ -82,28 +81,28 @@ void upgrade(const std::string &proxy) {
         continue;
       }
 
-      spdlog::info("Will upgrade {} from {} to {}", item, curr_ver.to_string(),
-                   latest_ver.to_string());
-      spdlog::info("Get file from: {}", *download_url);
+      klib::info("Will upgrade {} from {} to {}", item, curr_ver.to_string(),
+                 latest_ver.to_string());
+      klib::info("Get file from: {}", *download_url);
 
       static HTTPDownloader downloader(proxy);
       auto file_name = downloader.download(*download_url);
 
-      spdlog::info("Download file: {} complete", file_name);
+      klib::info("Download file: {} complete", file_name);
 
       if (std::filesystem::path(file_name).extension() != ".deb") {
-        klib::error(KLIB_CURR_LOC, "Can't find a file in deb format");
+        klib::error("Can't find a file in deb format");
       }
 
       klib::exec("sudo dpkg -i " + file_name);
 
       if (!std::filesystem::remove(file_name)) {
-        klib::error(KLIB_CURR_LOC, "Remove file {} failed", file_name);
+        klib::error("Remove file {} failed", file_name);
       }
 
-      spdlog::info("{} upgrade completed", item);
+      klib::info("{} upgrade completed", item);
     } else {
-      spdlog::info("{} is the latest version: {}", item, curr_ver.to_string());
+      klib::info("{} is the latest version: {}", item, curr_ver.to_string());
     }
   }
 }

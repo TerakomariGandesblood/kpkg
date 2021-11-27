@@ -6,10 +6,9 @@
 #include <fmt/compile.h>
 #include <fmt/format.h>
 #include <klib/archive.h>
-#include <klib/error.h>
+#include <klib/log.h>
 #include <klib/util.h>
 #include <simdjson.h>
-#include <spdlog/spdlog.h>
 
 #include "command.h"
 #include "downloader.h"
@@ -48,7 +47,7 @@ void Library::init(const std::string& proxy) {
     } else {
       assert(false);
     }
-    spdlog::info("Get info from: {} ", url);
+    klib::info("Get info from: {} ", url);
 
     auto response = http_get(url, proxy);
     if (!std::empty(releases_url_)) {
@@ -76,28 +75,28 @@ void Library::init(const std::string& proxy) {
 
 void Library::download(const std::string& proxy) const {
   if (std::filesystem::is_regular_file(file_name_)) {
-    spdlog::info("Use exists file: {}", file_name_);
+    klib::info("Use exists file: {}", file_name_);
   } else {
-    spdlog::info("Get file {} from: {}", file_name_, download_url_);
+    klib::info("Get file {} from: {}", file_name_, download_url_);
 
     static HTTPDownloader downloader(proxy);
     downloader.download(download_url_, file_name_);
 
-    spdlog::info("Download file: {} complete", file_name_);
+    klib::info("Download file: {} complete", file_name_);
   }
 }
 
 void Library::build() const {
   if (std::filesystem::is_directory(dir_name_)) {
-    spdlog::info("Use exists folder: {}", dir_name_);
+    klib::info("Use exists folder: {}", dir_name_);
   } else {
     auto temp = klib::decompress(file_name_);
     if (!temp.has_value()) {
-      klib::error(KLIB_CURR_LOC, "Decompress error");
+      klib::error("Decompress error");
     }
 
-    spdlog::info("Decompress file: {} to {}", file_name_, *temp);
-    spdlog::info("Rename folder from {} to {}", *temp, dir_name_);
+    klib::info("Decompress file: {} to {}", file_name_, *temp);
+    klib::info("Rename folder from {} to {}", *temp, dir_name_);
     std::filesystem::rename(*temp, dir_name_);
   }
 

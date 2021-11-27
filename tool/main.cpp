@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 
-#include <klib/error.h>
+#include <klib/log.h>
 #include <spdlog/spdlog.h>
 #include <CLI/CLI.hpp>
 #include <boost/algorithm/string.hpp>
@@ -22,8 +22,8 @@ void print_libraries(const std::vector<kpkg::Library>& libraries) {
     names.push_back(library.get_name());
   }
 
-  spdlog::info("The following libraries will be installed: {}",
-               boost::join(names, " "));
+  klib::info("The following libraries will be installed: {}",
+             boost::join(names, " "));
 }
 
 void build_libraries(std::vector<kpkg::Library>& libraries,
@@ -32,7 +32,7 @@ void build_libraries(std::vector<kpkg::Library>& libraries,
     item.init(proxy);
     item.download(proxy);
     item.build();
-    spdlog::info("{} install complete", item.get_name());
+    klib::info("{} install complete", item.get_name());
   }
 }
 
@@ -69,7 +69,7 @@ int main(int argc, const char* argv[]) try {
   kpkg::Program program(libraries, proxy);
 
   if (!std::empty(proxy)) {
-    spdlog::info("Use proxy: {}", proxy);
+    klib::info("Use proxy: {}", proxy);
   }
 
   if (list->parsed()) {
@@ -87,12 +87,12 @@ int main(int argc, const char* argv[]) try {
   build_libraries(program.libraries_to_be_built(), program.proxy());
 
   if (program.build_pyftsubset()) {
-    spdlog::info("Start building {}", "pyftsubset");
+    klib::info("Start building {}", "pyftsubset");
     kpkg::build_pyftsubset();
-    spdlog::info("{} install complete", "pyftsubset");
+    klib::info("{} install complete", "pyftsubset");
   }
 } catch (const std::exception& err) {
-  klib::error(KLIB_CURR_LOC, err.what());
+  klib::error(err.what());
 } catch (...) {
-  klib::error(KLIB_CURR_LOC, "Unknown exception");
+  klib::error("Unknown exception");
 }
