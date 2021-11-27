@@ -10,6 +10,7 @@
 #include <klib/exception.h>
 #include <klib/log.h>
 #include <klib/util.h>
+#include <spdlog/spdlog.h>
 #include <semver.hpp>
 
 #include "downloader.h"
@@ -81,14 +82,14 @@ void upgrade(const std::string &proxy) {
         continue;
       }
 
-      klib::info("Will upgrade {} from {} to {}", item, curr_ver.to_string(),
-                 latest_ver.to_string());
-      klib::info("Get file from: {}", *download_url);
+      spdlog::info("Will upgrade {} from {} to {}", item, curr_ver.to_string(),
+                   latest_ver.to_string());
+      spdlog::info("Get file from: {}", *download_url);
 
       static HTTPDownloader downloader(proxy);
       auto file_name = downloader.download(*download_url);
 
-      klib::info("Download file: {} complete", file_name);
+      spdlog::info("Download file: {} complete", file_name);
 
       if (std::filesystem::path(file_name).extension() != ".deb") {
         klib::error("Can't find a file in deb format");
@@ -100,9 +101,9 @@ void upgrade(const std::string &proxy) {
         klib::error("Remove file {} failed", file_name);
       }
 
-      klib::info("{} upgrade completed", item);
+      spdlog::info("{} upgrade completed", item);
     } else {
-      klib::info("{} is the latest version: {}", item, curr_ver.to_string());
+      spdlog::info("{} is the latest version: {}", item, curr_ver.to_string());
     }
   }
 }

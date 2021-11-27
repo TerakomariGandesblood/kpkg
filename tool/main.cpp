@@ -22,8 +22,8 @@ void print_libraries(const std::vector<kpkg::Library>& libraries) {
     names.push_back(library.get_name());
   }
 
-  klib::info("The following libraries will be installed: {}",
-             boost::join(names, " "));
+  spdlog::info("The following libraries will be installed: {}",
+               boost::join(names, " "));
 }
 
 void build_libraries(std::vector<kpkg::Library>& libraries,
@@ -32,7 +32,7 @@ void build_libraries(std::vector<kpkg::Library>& libraries,
     item.init(proxy);
     item.download(proxy);
     item.build();
-    klib::info("{} install complete", item.get_name());
+    spdlog::info("{} install complete", item.get_name());
   }
 }
 
@@ -69,7 +69,7 @@ int main(int argc, const char* argv[]) try {
   kpkg::Program program(libraries, proxy);
 
   if (!std::empty(proxy)) {
-    klib::info("Use proxy: {}", proxy);
+    spdlog::info("Use proxy: {}", proxy);
   }
 
   if (list->parsed()) {
@@ -87,9 +87,9 @@ int main(int argc, const char* argv[]) try {
   build_libraries(program.libraries_to_be_built(), program.proxy());
 
   if (program.build_pyftsubset()) {
-    klib::info("Start building {}", "pyftsubset");
+    spdlog::info("Start building {}", "pyftsubset");
     kpkg::build_pyftsubset();
-    klib::info("{} install complete", "pyftsubset");
+    spdlog::info("{} install complete", "pyftsubset");
   }
 } catch (const std::exception& err) {
   klib::error(err.what());

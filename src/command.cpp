@@ -2,8 +2,8 @@
 
 #include <cassert>
 
-#include <klib/log.h>
 #include <klib/util.h>
+#include <spdlog/spdlog.h>
 
 namespace kpkg {
 
@@ -30,7 +30,7 @@ std::string combine_command(const std::string& lhs, const std::string& rhs) {
 void run_commands(const std::vector<std::string>& commands,
                   const std::string& cwd) {
   auto cmd = detail::calc_command(commands, cwd);
-  klib::info("Run commands: {}", cmd);
+  spdlog::info("Run commands: {}", cmd);
   klib::exec(cmd);
 }
 
