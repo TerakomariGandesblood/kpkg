@@ -31,7 +31,8 @@ jobs:
         working-directory: build
 
       - name: Install
-        run: sudo cmake --build build --config ${{ matrix.build_type }} --target install
+        run: sudo dpkg -i kpkg*.deb
+        working-directory: build
 
       - name: Build pyftsubset
         run: kpkg install pyftsubset
