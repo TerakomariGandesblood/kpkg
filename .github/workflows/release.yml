@@ -31,8 +31,7 @@ jobs:
         working-directory: build
 
       - name: Install
-        run: sudo dpkg -i kpkg*.deb
-        working-directory: build
+        run: sudo cmake --build build --config ${{ matrix.build_type }} --target install
 
       - name: Build pyftsubset
         run: kpkg install pyftsubset
@@ -43,6 +42,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
+            build/kpkg*.tar.zst
             build/kpkg*.deb
-            build/kpkg*.tar.gz
             build/pyftsubset

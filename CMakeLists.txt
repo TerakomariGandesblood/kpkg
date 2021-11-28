@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------------------------------
 # CMake version
 # ---------------------------------------------------------------------------------------
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.22)
 message(STATUS "CMake version: ${CMAKE_VERSION}")
 
 # ---------------------------------------------------------------------------------------
@@ -14,8 +14,9 @@ kpkg_extract_version()
 
 project(
   kpkg
+  LANGUAGES ASM CXX
   VERSION ${KPKG_VERSION}
-  LANGUAGES ASM CXX)
+  HOMEPAGE_URL https://github.com/KaiserLancelot/kpkg)
 
 message(STATUS "${PROJECT_NAME} version: ${KPKG_VERSION}")
 
