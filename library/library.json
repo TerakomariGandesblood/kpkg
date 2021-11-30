@@ -423,5 +423,34 @@
     "dependency": [],
     "cwd": "",
     "cmd": ["make -j\"$(nproc)\"", "sudo make install"]
+  },
+  {
+    "name": "marisa-trie",
+    "releases_url": "https://api.github.com/repos/s-yata/marisa-trie/releases/latest",
+    "tags_url": "",
+    "tag_name": "",
+    "download_url": "",
+    "dependency": [],
+    "cwd": "",
+    "cmd": [
+      "autoreconf -i",
+      "./configure --disable-shared",
+      "make -j\"$(nproc)\"",
+      "sudo make install"
+    ]
+  },
+  {
+    "name": "OpenCC",
+    "releases_url": "https://api.github.com/repos/BYVoid/OpenCC/releases/latest",
+    "tags_url": "",
+    "tag_name": "",
+    "download_url": "",
+    "dependency": ["marisa-trie"],
+    "cwd": "",
+    "cmd": [
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_DOCUMENTATION=OFF -DBUILD_SHARED_LIBS=OFF -DENABLE_GTEST=OFF -DENABLE_BENCHMARK=OFF -DENABLE_DARTS=ON -DBUILD_PYTHON=OFF -DUSE_SYSTEM_DARTS=OFF -DUSE_SYSTEM_GOOGLE_BENCHMARK=OFF -DUSE_SYSTEM_GTEST=OFF -DUSE_SYSTEM_MARISA=ON -DUSE_SYSTEM_PYBIND11=OFF -DUSE_SYSTEM_RAPIDJSON=OFF -DUSE_SYSTEM_TCLAP=OFF",
+      "cmake --build build --config Release -j\"$(nproc)\"",
+      "sudo cmake --build build --config Release --target install"
+    ]
   }
 ]
