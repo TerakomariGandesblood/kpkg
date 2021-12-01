@@ -46,9 +46,12 @@ void compress(const std::string &file_name, const std::string &out) {
   if (out.ends_with("zip")) {
     archive_write_set_format_zip(archive);
     archive_write_add_filter_none(archive);
-  } else {
+  } else if (out.ends_with("tar.gz") || out.ends_with("tgz")) {
     archive_write_set_format_gnutar(archive);
     archive_write_add_filter_gzip(archive);
+  } else {
+    archive_write_set_format_gnutar(archive);
+    archive_write_add_filter_zstd(archive);
   }
 
   auto status = archive_write_open_filename(archive, out.c_str());
@@ -113,6 +116,7 @@ void decompress(const std::string &file_name) {
   archive_read_support_format_gnutar(archive);
   archive_read_support_format_zip(archive);
   archive_read_support_filter_gzip(archive);
+  archive_read_support_filter_zstd(archive);
 
   auto extract = archive_write_disk_new();
   archive_write_disk_set_options(extract, flags);
@@ -167,7 +171,7 @@ int main(int argc, char *argv[]) {
   }
 
   if (file_name.ends_with("zip") || file_name.ends_with("tar.gz") ||
-      file_name.ends_with("tgz")) {
+      file_name.ends_with("tgz") || file_name.ends_with("tar.zst")) {
     decompress(file_name);
   } else {
     if (argc != 3) {
