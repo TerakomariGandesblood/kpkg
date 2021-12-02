@@ -71,7 +71,7 @@
     "cwd": "",
     "cmd": [
       "bash build/autogen.sh",
-      "./configure --disable-shared --enable-static --disable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --without-lz4 --with-zstd --without-lzma --without-lzo2 --without-cng --with-openssl --without-xml2 --without-expat",
+      "export CFLAGS=\"$CFLAGS -lpthread\" && export CXXFLAGS=\"$CXXFLAGS -lpthread\" && ./configure --disable-shared --enable-static --disable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --without-lz4 --with-zstd --without-lzma --without-lzo2 --without-cng --with-openssl --without-xml2 --without-expat",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
