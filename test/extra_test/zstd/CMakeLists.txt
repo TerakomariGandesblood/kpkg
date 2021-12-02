@@ -4,10 +4,11 @@ project(test_library_install LANGUAGES CXX)
 
 include(../common.cmake)
 
-find_package(zstd REQUIRED)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(libzstd REQUIRED IMPORTED_TARGET libzstd)
 
 add_executable(zstd main.cpp)
-target_link_libraries(zstd zstd::libzstd_static)
+target_link_libraries(zstd PkgConfig::libzstd)
 
 add_custom_command(
   TARGET zstd
