@@ -3,8 +3,8 @@
     "name": "CMake",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "v3.22.0",
-    "download_url": "https://github.com/Kitware/CMake/archive/refs/tags/v3.22.0.tar.gz",
+    "tag_name": "v3.22.1",
+    "download_url": "https://github.com/Kitware/CMake/archive/refs/tags/v3.22.1.tar.gz",
     "dependency": ["zlib", "openssl"],
     "cwd": "",
     "cmd": [
@@ -80,8 +80,8 @@
     "name": "openssl",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "openssl-3.0.0",
-    "download_url": "https://github.com/openssl/openssl/archive/refs/tags/openssl-3.0.0.tar.gz",
+    "tag_name": "openssl-3.0.1",
+    "download_url": "https://github.com/openssl/openssl/archive/refs/tags/openssl-3.0.1.tar.gz",
     "dependency": ["zlib"],
     "cwd": "",
     "cmd": [
@@ -237,8 +237,8 @@
     "name": "boost",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "boost-1.77.0",
-    "download_url": "https://boostorg.jfrog.io/artifactory/main/release/1.77.0/source/boost_1_77_0.tar.gz",
+    "tag_name": "boost-1.78.0",
+    "download_url": "https://boostorg.jfrog.io/artifactory/main/release/1.78.0/source/boost_1_78_0.tar.gz",
     "dependency": [],
     "cwd": "",
     "cmd": [
