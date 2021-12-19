@@ -4,6 +4,7 @@ project(test_library_install LANGUAGES CXX)
 
 include(../common.cmake)
 
+# https://microsoft.github.io/mimalloc/overrides.html
 if(NOT KPKG_SANITIZER)
   message(STATUS "Use mimalloc")
   set(MIMALLOC_OBJECT "/usr/local/lib/mimalloc.o")
