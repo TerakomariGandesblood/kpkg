@@ -495,5 +495,19 @@
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
+  },
+  {
+    "name": "mimalloc",
+    "releases_url": "",
+    "tags_url": "",
+    "tag_name": "v2.0.3",
+    "download_url": "https://github.com/microsoft/mimalloc/archive/refs/tags/v2.0.3.tar.gz",
+    "dependency": [],
+    "cwd": "",
+    "cmd": [
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DMI_SECURE=OFF -DMI_DEBUG_FULL=OFF -DMI_OVERRIDE=ON -DMI_LOCAL_DYNAMIC_TLS=OFF -DMI_BUILD_SHARED=OFF -DMI_BUILD_STATIC=OFF -DMI_BUILD_OBJECT=ON -DMI_BUILD_TESTS=OFF -DMI_DEBUG_TSAN=OFF -DMI_DEBUG_UBSAN=OFF -DMI_INSTALL_TOPLEVEL=ON",
+      "cmake --build build --config Release -j\"$(nproc)\"",
+      "sudo cmake --build build --config Release --target install"
+    ]
   }
 ]
