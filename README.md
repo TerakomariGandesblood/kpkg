@@ -20,6 +20,7 @@ C++ Library Manager
 ## Dependency
 
 - [klib](https://github.com/KaiserLancelot/klib)
+- [mimalloc](https://github.com/microsoft/mimalloc)
 - [Boost](https://www.boost.org/)
 - [CLI11](https://github.com/CLIUtils/CLI11)
 - [fmt](https://github.com/fmtlib/fmt)

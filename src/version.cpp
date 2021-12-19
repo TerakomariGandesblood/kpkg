@@ -3,6 +3,7 @@
 #include <fmt/compile.h>
 #include <fmt/format.h>
 #include <klib/version.h>
+#include <mimalloc.h>
 #include <simdjson.h>
 #include <spdlog/version.h>
 #include <CLI/Version.hpp>
@@ -18,6 +19,9 @@ std::string version_str() {
 
   result += "Libraries: ";
   result += fmt::format(FMT_COMPILE("klib/{} "), KLIB_VERSION_STRING);
+  result +=
+      fmt::format(FMT_COMPILE("mimalloc/{}.{}.{} "), MI_MALLOC_VERSION / 100,
+                  MI_MALLOC_VERSION / 10 % 10, MI_MALLOC_VERSION % 10);
   result += fmt::format(FMT_COMPILE("Boost/{}.{}.{} "), BOOST_VERSION / 100000,
                         BOOST_VERSION / 100 % 1000, BOOST_VERSION % 100);
   result += fmt::format(FMT_COMPILE("CLI11/{} "), CLI11_VERSION);

@@ -78,6 +78,11 @@ pkg_check_modules(libaria2 REQUIRED IMPORTED_TARGET libaria2)
 
 add_definitions(-DOPENSSL_NO_DEPRECATED)
 
+if(NOT KPKG_SANITIZER)
+  message(STATUS "Use mimalloc")
+  set(MIMALLOC_OBJECT "/usr/local/lib/mimalloc.o")
+endif()
+
 # ---------------------------------------------------------------------------------------
 # Build library json file
 # ---------------------------------------------------------------------------------------
@@ -91,7 +96,7 @@ target_compile_options(library_json PRIVATE "-Wno-unused-command-line-argument")
 # ---------------------------------------------------------------------------------------
 # Build static library
 # ---------------------------------------------------------------------------------------
-add_library(${KPKG_LIBRARY} STATIC ${KPKG_LIBRARY_SRC})
+add_library(${KPKG_LIBRARY} STATIC ${MIMALLOC_OBJECT} ${KPKG_LIBRARY_SRC})
 
 target_include_directories(${KPKG_LIBRARY} PUBLIC "${KPKG_SOURCE_DIR}/include")
 target_link_libraries(
