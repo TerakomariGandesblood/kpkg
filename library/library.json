@@ -509,5 +509,19 @@
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
+  },
+  {
+    "name": "cmark",
+    "releases_url": "https://api.github.com/repos/commonmark/cmark/releases/latest",
+    "tags_url": "",
+    "tag_name": "",
+    "download_url": "",
+    "dependency": [],
+    "cwd": "",
+    "cmd": [
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMARK_TESTS=OFF -DCMARK_STATIC=ON -DCMARK_SHARED=OFF",
+      "cmake --build build --config Release -j\"$(nproc)\"",
+      "sudo cmake --build build --config Release --target install"
+    ]
   }
 ]

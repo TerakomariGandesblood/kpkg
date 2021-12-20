@@ -1,10 +1,8 @@
 #include "program.h"
 
 #include <algorithm>
-#include <cstdlib>
 
 #include <klib/log.h>
-#include <klib/util.h>
 #include <spdlog/spdlog.h>
 #include <boost/algorithm/string.hpp>
 
@@ -81,17 +79,9 @@ void Program::show_libraries() {
   show_pyftsubset(proxy_);
 
   for (auto& library : libraries_) {
-    auto pid = fork();
-    if (pid < 0) {
-      klib::error("Fork error");
-    } else if (pid == 0) {
-      library.init(proxy_);
-      library.print();
-      std::exit(EXIT_SUCCESS);
-    }
+    library.init(proxy_);
+    library.print();
   }
-
-  klib::wait_for_child_process();
 
   spdlog::set_level(backup);
 }
