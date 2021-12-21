@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 
+#include <klib/exception.h>
 #include <klib/log.h>
 #include <spdlog/spdlog.h>
 #include <CLI/CLI.hpp>
@@ -91,6 +92,8 @@ int main(int argc, const char* argv[]) try {
     kpkg::build_pyftsubset();
     spdlog::info("{} install complete", "pyftsubset");
   }
+} catch (const klib::Exception& err) {
+  klib::error(err.what());
 } catch (const std::exception& err) {
   klib::error(err.what());
 } catch (...) {
