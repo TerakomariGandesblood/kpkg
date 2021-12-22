@@ -5,7 +5,7 @@
     "tags_url": "",
     "tag_name": "v3.22.1",
     "download_url": "https://github.com/Kitware/CMake/archive/refs/tags/v3.22.1.tar.gz",
-    "dependency": ["zlib", "openssl"],
+    "dependency": ["zlib-ng", "openssl"],
     "cwd": "",
     "cmd": [
       "./bootstrap --parallel=\"$(nproc)\" -- -DCMAKE_BUILD_TYPE:STRING=Release",
@@ -52,14 +52,18 @@
     "cmd": ["sudo make install"]
   },
   {
-    "name": "zlib",
-    "releases_url": "",
-    "tags_url": "https://api.github.com/repos/madler/zlib/tags",
+    "name": "zlib-ng",
+    "releases_url": "https://api.github.com/repos/zlib-ng/zlib-ng/releases/latest",
+    "tags_url": "",
     "tag_name": "",
     "download_url": "",
     "dependency": [],
     "cwd": "",
-    "cmd": ["./configure --static", "make -j\"$(nproc)\"", "sudo make install"]
+    "cmd": [
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DWITH_GZFILEOP=ON -DZLIB_COMPAT=ON -DZLIB_ENABLE_TESTS=OFF -DZLIB_DUAL_LINK=OFF -DWITH_FUZZERS=OFF -DWITH_OPTIM=ON -DWITH_NEW_STRATEGIES=ON -DWITH_NATIVE_INSTRUCTIONS=OFF -DWITH_CODE_COVERAGE=OFF",
+      "cmake --build build --config Release -j\"$(nproc)\"",
+      "sudo cmake --build build --config Release --target install"
+    ]
   },
   {
     "name": "libarchive",
@@ -67,7 +71,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
-    "dependency": ["zlib", "zstd", "openssl"],
+    "dependency": ["zlib-ng", "zstd", "openssl"],
     "cwd": "",
     "cmd": [
       "bash build/autogen.sh",
@@ -82,7 +86,7 @@
     "tags_url": "",
     "tag_name": "openssl-3.0.1",
     "download_url": "https://github.com/openssl/openssl/archive/refs/tags/openssl-3.0.1.tar.gz",
-    "dependency": ["zlib"],
+    "dependency": ["zlib-ng"],
     "cwd": "",
     "cmd": [
       "./Configure --libdir=lib no-afalgeng enable-ktls no-async no-capieng no-cmp no-cms no-ct no-dgram no-dso no-dynamic-engine no-engine no-filenames no-gost no-legacy no-module no-ocsp no-padlockeng no-psk no-shared no-srp no-srtp no-tests no-ts no-ui-console no-uplink no-ssl no-tls1 no-tls1_1 no-dtls no-aria no-bf no-blake2 no-cast no-chacha no-cmac no-dsa no-idea no-md4 no-mdc2 no-ocb no-rc2 no-scrypt no-seed no-siphash no-siv no-sm2 no-sm3 no-sm4 no-whirlpool",
@@ -96,7 +100,7 @@
     "tags_url": "",
     "tag_name": "v1.46.0",
     "download_url": "https://github.com/nghttp2/nghttp2/releases/download/v1.46.0/nghttp2-1.46.0.tar.gz",
-    "dependency": ["zlib", "openssl"],
+    "dependency": ["zlib-ng", "openssl"],
     "cwd": "",
     "cmd": [
       "./configure --disable-shared --enable-static --disable-failmalloc --enable-lib-only --without-libxml2 --without-jansson --with-zlib --without-libevent-openssl --without-libcares --with-openssl --without-libev --without-cunit --without-jemalloc --without-systemd --without-mruby --without-neverbleed --without-cython --without-libngtcp2 --without-libnghttp3 --without-libbpf --without-boost",
@@ -125,7 +129,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
-    "dependency": ["zlib", "brotli", "openssl", "nghttp2"],
+    "dependency": ["zlib-ng", "brotli", "openssl", "nghttp2"],
     "cwd": "",
     "cmd": [
       "autoreconf -fi",
@@ -168,7 +172,7 @@
     "tags_url": "https://api.github.com/repos/sqlcipher/sqlcipher/tags",
     "tag_name": "",
     "download_url": "",
-    "dependency": ["zlib", "openssl"],
+    "dependency": ["zlib-ng", "openssl"],
     "cwd": "",
     "cmd": [
       "./configure CFLAGS=\"$CFLAGS -DSQLITE_HAS_CODEC\" LDFLAGS=\"/usr/local/lib/libcrypto.a\" --disable-shared --enable-static --enable-releasemode --enable-tempstore=yes --disable-tcl --disable-readline --disable-debug --disable-load-extension",
@@ -350,7 +354,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
-    "dependency": ["zlib", "openssl"],
+    "dependency": ["zlib-ng", "openssl"],
     "cwd": "",
     "cmd": [
       "autoreconf -i",
@@ -462,7 +466,7 @@
     "tags_url": "",
     "tag_name": "v3.9.9",
     "download_url": "https://github.com/python/cpython/archive/refs/tags/v3.9.9.tar.gz",
-    "dependency": ["zlib", "bzip2", "openssl"],
+    "dependency": ["zlib-ng", "bzip2", "openssl"],
     "cwd": "",
     "cmd": [
       "./configure --disable-shared --disable-profiling --enable-optimizations --disable-loadable-sqlite-extensions --disable-ipv6 --without-pydebug --without-trace-refs --without-assertions --with-lto --without-system-expat --without-system-ffi --without-system-libmpdec --without-doc-strings --with-pymalloc --with-c-locale-coercion --without-valgrind --without-dtrace --with-computed-gotos --with-ssl-default-suites=openssl",
