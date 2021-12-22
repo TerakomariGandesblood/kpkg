@@ -15,7 +15,7 @@ TEST_CASE("program", "[program]") {
 
   auto dependency = program.dependencies();
   REQUIRE(std::size(dependency) == 5);
-  REQUIRE(dependency.at(0).get_name() == "zlib");
+  REQUIRE(dependency.at(0).get_name() == "zlib-ng");
   REQUIRE(dependency.at(1).get_name() == "fmt");
   REQUIRE(dependency.at(2).get_name() == "brotli");
   REQUIRE(dependency.at(3).get_name() == "openssl");

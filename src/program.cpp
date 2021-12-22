@@ -35,7 +35,7 @@ Program::Program(const std::vector<std::string>& libraries,
   // NOTE
   auto iter = std::find_if(
       std::begin(dependencies_), std::end(dependencies_),
-      [](const Library& item) { return item.get_name() == "zlib"; });
+      [](const Library& item) { return item.get_name() == "zlib-ng"; });
   if (iter != std::end(dependencies_)) {
     std::swap(*iter, dependencies_.front());
   }
