@@ -48,7 +48,6 @@ void Library::init(const std::string& proxy) {
     } else {
       assert(false);
     }
-    spdlog::info("Get info from: {} ", url);
 
     auto response = http_get(url, proxy);
     if (!std::empty(releases_url_)) {
@@ -104,9 +103,7 @@ void Library::build() const {
   run_commands(cmd_, cwd_);
 }
 
-void Library::print() const {
-  fmt::print(FMT_COMPILE("{:<25} {:<25}\n"), name_, tag_name_);
-}
+void Library::print() const { spdlog::info("{:<25} {:<25}", name_, tag_name_); }
 
 std::vector<Library> read_from_json() {
   std::string json(library, library_size);
@@ -149,14 +146,21 @@ void show_pyftsubset(const std::string& proxy) {
   ReleaseInfo info(response.text());
 
   auto tag_name = info.get_tag_name();
-  fmt::print(FMT_COMPILE("{:<25} {:<25}\n"), "pyftsubset", tag_name);
+  spdlog::info("{:<25} {:<25}", "pyftsubset", tag_name);
 }
 
-void build_pyftsubset() {
+void build_pyftsubset(const std::string& proxy) {
   klib::write_file("pyftsubset.py", false, pyftsubset, pyftsubset_size);
 
   std::vector<std::string> cmd;
 
+  if (!std::empty(proxy)) {
+    cmd.emplace_back(
+        fmt::format(FMT_COMPILE(R"(export all_proxy="{}")"), proxy));
+  }
+
+  cmd.emplace_back(
+      "sudo python3 -m pip install --upgrade nuitka fonttools[woff]");
   cmd.emplace_back("sudo python3 pyftsubset.py --help");
 
   cmd.emplace_back(

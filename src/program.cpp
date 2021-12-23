@@ -73,17 +73,12 @@ bool Program::contains(const std::vector<Library>& libraries,
 }
 
 void Program::show_libraries() {
-  auto backup = spdlog::get_level();
-  spdlog::set_level(spdlog::level::err);
-
   show_pyftsubset(proxy_);
 
   for (auto& library : libraries_) {
     library.init(proxy_);
     library.print();
   }
-
-  spdlog::set_level(backup);
 }
 
 Library Program::get_from_name(const std::string& name) {

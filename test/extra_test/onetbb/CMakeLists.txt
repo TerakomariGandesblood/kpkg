@@ -11,8 +11,12 @@ else()
 endif()
 
 find_package(TBB REQUIRED)
+if(NOT KPKG_SANITIZER)
+  message(STATUS "Use mimalloc")
+  set(MIMALLOC_OBJECT "/usr/local/lib/mimalloc.o")
+endif()
 
-add_executable(onetbb main.cpp)
+add_executable(onetbb ${MIMALLOC_OBJECT} main.cpp)
 target_link_libraries(onetbb PRIVATE TBB::tbb)
 
 add_custom_command(

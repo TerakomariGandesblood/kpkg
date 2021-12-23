@@ -258,7 +258,7 @@
     "dependency": [],
     "cwd": "",
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DTBB_TEST=OFF -DTBB_EXAMPLES=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DTBB_TEST=OFF -DTBB_EXAMPLES=OFF -DTBB4PY_BUILD=OFF -DTBB_BUILD=ON -DTBBMALLOC_BUILD=ON -DTBB_CPF=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install",
       "sudo ldconfig"

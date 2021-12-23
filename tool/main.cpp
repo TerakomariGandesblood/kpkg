@@ -89,7 +89,7 @@ int main(int argc, const char* argv[]) try {
 
   if (program.build_pyftsubset()) {
     spdlog::info("Start building {}", "pyftsubset");
-    kpkg::build_pyftsubset();
+    kpkg::build_pyftsubset(program.proxy());
     spdlog::info("{} install complete", "pyftsubset");
   }
 } catch (const klib::Exception& err) {
