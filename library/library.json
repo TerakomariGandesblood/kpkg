@@ -464,12 +464,12 @@
     "name": "python",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "v3.9.9",
-    "download_url": "https://github.com/python/cpython/archive/refs/tags/v3.9.9.tar.gz",
+    "tag_name": "v3.10.1",
+    "download_url": "https://github.com/python/cpython/archive/refs/tags/v3.10.1.tar.gz",
     "dependency": ["zlib-ng", "bzip2", "openssl"],
     "cwd": "",
     "cmd": [
-      "./configure --disable-shared --disable-profiling --enable-optimizations --disable-loadable-sqlite-extensions --disable-ipv6 --without-pydebug --without-trace-refs --without-assertions --with-lto --without-system-expat --without-system-ffi --without-system-libmpdec --without-doc-strings --with-pymalloc --with-c-locale-coercion --without-valgrind --without-dtrace --with-computed-gotos --with-ssl-default-suites=openssl",
+      "./configure --disable-shared --disable-profiling --enable-optimizations --disable-loadable-sqlite-extensions --disable-ipv6 --disable-test-modules --without-pydebug --without-trace-refs --without-assertions --with-lto --without-system-expat --without-system-ffi --without-system-libmpdec --without-doc-strings --with-pymalloc --with-c-locale-coercion --without-valgrind --without-dtrace --with-computed-gotos --with-ssl-default-suites=openssl --with-static-libpython",
       "make -j\"$(nproc)\"",
       "sudo make install",
       "sudo ldconfig"
