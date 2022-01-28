@@ -22,4 +22,4 @@ target_link_libraries(
 add_custom_command(
   TARGET aria2
   POST_BUILD
-  COMMAND aria2 https://www.7-zip.org/a/7z1900-x64.exe)
+  COMMAND aria2 https://dldir1.qq.com/qqfile/qq/PCQQ9.5.6/QQ9.5.6.28129.exe)

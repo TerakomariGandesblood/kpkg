@@ -3,8 +3,8 @@
     "name": "CMake",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "v3.22.1",
-    "download_url": "https://github.com/Kitware/CMake/archive/refs/tags/v3.22.1.tar.gz",
+    "tag_name": "v3.22.2",
+    "download_url": "https://github.com/Kitware/CMake/archive/refs/tags/v3.22.2.tar.gz",
     "dependency": ["zlib-ng", "openssl"],
     "cwd": "",
     "cmd": [
@@ -464,8 +464,8 @@
     "name": "python",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "v3.10.1",
-    "download_url": "https://github.com/python/cpython/archive/refs/tags/v3.10.1.tar.gz",
+    "tag_name": "v3.10.2",
+    "download_url": "https://github.com/python/cpython/archive/refs/tags/v3.10.2.tar.gz",
     "dependency": ["zlib-ng", "bzip2", "openssl"],
     "cwd": "",
     "cmd": [

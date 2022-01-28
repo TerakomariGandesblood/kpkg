@@ -59,7 +59,7 @@ kpkg list
 ### Install libraries
 
 ```bash
-sudo kpkg install boost
+kpkg install boost
 ```
 
 ---
