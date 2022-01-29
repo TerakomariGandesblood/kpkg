@@ -3,7 +3,7 @@
 set -e
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  curl -L https://github.com/KaiserLancelot/klib/releases/download/v0.11.7/klib-0.11.7-Linux.deb \
+  curl -L https://github.com/KaiserLancelot/klib/releases/download/v0.11.8/klib-0.11.8-Linux.deb \
     -o klib.deb
   sudo dpkg -i klib.deb
 else

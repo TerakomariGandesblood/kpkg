@@ -48,7 +48,7 @@ std::string calc_command(const std::vector<std::string>& commands,
   cmd = combine_command(cmd, "export CC=gcc-11 && export CXX=g++-11");
   cmd = combine_command(
       cmd,
-      R"(export CFLAGS="-march=x86-64 -mtune=generic -g0 -DNDEBUG -O3 -fPIC -static-libgcc" && export CXXFLAGS="-march=x86-64 -mtune=generic -g0 -DNDEBUG -O3 -fPIC -static-libgcc -static-libstdc++")");
+      R"(export CFLAGS="-fuse-ld=gold -march=x86-64 -mtune=generic -g0 -DNDEBUG -O3 -fPIC -static-libgcc" && export CXXFLAGS="-fuse-ld=gold -march=x86-64 -mtune=generic -g0 -DNDEBUG -O3 -fPIC -static-libgcc -static-libstdc++")");
 
   for (const auto& item : commands) {
     cmd = combine_command(cmd, item);
