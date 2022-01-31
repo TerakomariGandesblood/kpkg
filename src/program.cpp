@@ -17,59 +17,39 @@ Program::Program(const std::vector<std::string>& libraries,
       continue;
     }
 
-    auto library = get_from_name(library_name);
+    add_library(libraries_to_be_built_, get_from_name(library_name));
+  }
 
-    for (const auto& dependency_name : library.get_dependency()) {
-      dependencies_.push_back(get_from_name(dependency_name));
+  for (auto iter = std::begin(libraries_to_be_built_) + 1;
+       iter != std::end(libraries_to_be_built_);) {
+    if (Program::contains(std::begin(libraries_to_be_built_), iter,
+                          iter->get_name())) {
+      iter = libraries_to_be_built_.erase(iter);
+    } else {
+      ++iter;
     }
-    libraries_to_be_built_.push_back(get_from_name(library.get_name()));
-  }
-
-  Program::unique(dependencies_);
-  Program::unique(libraries_to_be_built_);
-
-  std::erase_if(libraries_to_be_built_, [this](const Library& item) {
-    return Program::contains(dependencies_, item.get_name());
-  });
-
-  // NOTE
-  auto iter = std::find_if(
-      std::begin(dependencies_), std::end(dependencies_),
-      [](const Library& item) { return item.get_name() == "zlib-ng"; });
-  if (iter != std::end(dependencies_)) {
-    std::swap(*iter, dependencies_.front());
-  }
-
-  iter = std::find_if(
-      std::begin(dependencies_), std::end(dependencies_),
-      [](const Library& item) { return item.get_name() == "nghttp2"; });
-  if (iter != std::end(dependencies_)) {
-    std::swap(*iter, dependencies_.back());
   }
 }
 
-void Program::unique(std::vector<Library>& libraries) {
-  std::sort(std::begin(libraries), std::end(libraries),
-            [](const Library& lhs, const Library& rhs) {
-              return lhs.get_name() < rhs.get_name();
-            });
-
-  libraries.erase(std::unique(std::begin(libraries), std::end(libraries),
-                              [](const Library& lhs, const Library& rhs) {
-                                return lhs.get_name() == rhs.get_name();
-                              }),
-                  std::end(libraries));
-}
-
-bool Program::contains(const std::vector<Library>& libraries,
+bool Program::contains(std::vector<Library>::const_iterator begin,
+                       std::vector<Library>::const_iterator end,
                        const std::string& name) {
-  for (const auto& library : libraries) {
-    if (library.get_name() == name) {
+  for (auto iter = begin; iter != end; ++iter) {
+    if (iter->get_name() == name) {
       return true;
     }
   }
 
   return false;
+}
+
+void Program::add_library(std::vector<Library>& libraries,
+                          const Library& library) {
+  for (const auto& item : library.get_dependency()) {
+    add_library(libraries, get_from_name(item));
+  }
+
+  libraries.push_back(library);
 }
 
 void Program::show_libraries() {

@@ -13,13 +13,7 @@ TEST_CASE("program", "[program]") {
 
   REQUIRE(program.proxy() == "http://127.0.0.1:1080");
 
-  auto dependency = program.dependencies();
-  REQUIRE(std::size(dependency) == 5);
-  REQUIRE(dependency.at(0).get_name() == "zlib-ng");
-  REQUIRE(dependency.at(1).get_name() == "fmt");
-  REQUIRE(dependency.at(2).get_name() == "brotli");
-  REQUIRE(dependency.at(3).get_name() == "openssl");
-  REQUIRE(dependency.at(4).get_name() == "nghttp2");
+  // TODO
 
   auto to_be_built = program.libraries_to_be_built();
   REQUIRE(std::size(to_be_built) == 2);

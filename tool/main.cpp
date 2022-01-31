@@ -81,9 +81,6 @@ int main(int argc, const char* argv[]) try {
     return EXIT_SUCCESS;
   }
 
-  print_libraries(program.dependencies());
-  build_libraries(program.dependencies(), program.proxy());
-
   print_libraries(program.libraries_to_be_built());
   build_libraries(program.libraries_to_be_built(), program.proxy());
 
