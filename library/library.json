@@ -125,10 +125,10 @@
   },
   {
     "name": "curl",
-    "releases_url": "https://api.github.com/repos/curl/curl/releases/latest",
+    "releases_url": "",
     "tags_url": "",
-    "tag_name": "",
-    "download_url": "",
+    "tag_name": "curl-7_81_0",
+    "download_url": "https://github.com/curl/curl/releases/download/curl-7_81_0/curl-7.81.0.tar.gz",
     "dependency": [
       "zlib-ng",
       "brotli",
