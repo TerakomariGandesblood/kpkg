@@ -588,7 +588,8 @@
       "sudo python3 -m pip install --upgrade nuitka fonttools[woff]",
       "sudo python3 pyftsubset.py --help",
       "sudo python3 -m nuitka --onefile --plugin-enable=pylint-warnings --lto=yes --prefer-source-code --static-libpython=yes --assume-yes-for-downloads -o pyftsubset pyftsubset.py",
-      "sudo cp pyftsubset /usr/local/bin/pyftsubset"
+      "sudo cp pyftsubset /usr/local/bin/pyftsubset",
+      "sudo chmod 755 /usr/local/bin/pyftsubset"
     ]
   }
 ]

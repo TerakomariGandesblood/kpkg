@@ -45,4 +45,4 @@ jobs:
           files: |
             build/kpkg*.tar.zst
             build/kpkg*.deb
-            build/pyftsubset
+            /usr/local/bin/pyftsubset
