@@ -130,9 +130,33 @@
       "libpsl"
     ],
     "cmd": [
+      "mkdir tmp && cd tmp",
+      "mkdir backup && cd backup",
+      "cp /usr/local/lib/libidn2.a .",
+      "cp /usr/local/lib/libpsl.a .",
+      "cd ..",
+      "mkdir libidn2 && cd libidn2",
+      "gcc-ar -x /usr/local/lib/libidn2.a",
+      "cd ..",
+      "mkdir libunistring && cd libunistring",
+      "gcc-ar -x /usr/local/lib/libunistring.a",
+      "cd ..",
+      "mkdir libpsl && cd libpsl",
+      "gcc-ar -x /usr/local/lib/libpsl.a",
+      "cd ..",
+      "gcc-ar -qcs libidn2.a libidn2/*.o libunistring/*.o",
+      "gcc-ranlib libidn2.a",
+      "gcc-ar -qcs libpsl.a libidn2/*.o libunistring/*.o libpsl/*.o",
+      "gcc-ranlib libpsl.a",
+      "sudo cp libidn2.a /usr/local/lib/libidn2.a",
+      "sudo cp libpsl.a /usr/local/lib/libpsl.a",
+      "cd ..",
       "./configure --disable-debug --enable-optimize --disable-curldebug --enable-symbol-hiding --disable-ares --disable-ech --disable-code-coverage --disable-shared --enable-static --enable-http --disable-ftp --disable-file --disable-ldap --disable-ldaps --disable-rtsp --disable-dict --disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smb --disable-smtp --disable-gopher --disable-mqtt --disable-manual --enable-libcurl-option --enable-libgcc --enable-ipv6 --enable-openssl-auto-load-config --enable-threaded-resolver --enable-verbose --disable-sspi --enable-crypto-auth --disable-ntlm --disable-ntlm-wb --disable-tls-srp --disable-unix-sockets --enable-cookies --disable-socketpair --enable-http-auth --enable-doh --enable-mime --enable-dateparse --disable-netrc --enable-progress-meter --enable-dnsshuffle --disable-get-easy-options --enable-alt-svc --enable-hsts --with-openssl --without-hyper --with-zlib --with-brotli --with-zstd --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt' --with-ca-path='/etc/ssl/certs' --with-libpsl --without-libgsasl --without-libssh2 --without-libssh --without-librtmp --with-libidn2 --with-nghttp2 --without-ngtcp2 --without-nghttp3 --without-quiche",
       "make -j\"$(nproc)\"",
-      "sudo make install"
+      "sudo make install",
+      "cd tmp/backup",
+      "sudo cp libidn2.a /usr/local/lib/libidn2.a",
+      "sudo cp libpsl.a /usr/local/lib/libpsl.a"
     ]
   },
   {
@@ -523,16 +547,7 @@
     "cmd": [
       "./configure --disable-shared --enable-static --disable-valgrind-tests --disable-gtk-doc --disable-gtk-doc-html --disable-gtk-doc-pdf --disable-nls --disable-code-coverage --disable-doc",
       "make -j\"$(nproc)\"",
-      "sudo make install",
-      "mkdir tmp && cd tmp",
-      "mkdir idn2 && cd idn2",
-      "gcc-ar -x /usr/local/lib/libidn2.a",
-      "cd .. && mkdir unistring && cd unistring",
-      "gcc-ar -x /usr/local/lib/libunistring.a",
-      "cd ..",
-      "gcc-ar -qcs libidn2.a idn2/*.o unistring/*.o",
-      "gcc-ranlib libidn2.a",
-      "sudo cp libidn2.a /usr/local/lib/libidn2.a"
+      "sudo make install"
     ]
   },
   {
@@ -559,16 +574,7 @@
       "autoreconf -fi",
       "./configure --disable-shared --enable-static --disable-nls --disable-gtk-doc --disable-gtk-doc-html --disable-gtk-doc-pdf --disable-man --disable-cfi --disable-ubsan --disable-asan --enable-runtime=libidn2 --enable-builtin=libidn2 --disable-valgrind-tests",
       "make -j\"$(nproc)\"",
-      "sudo make install",
-      "mkdir tmp && cd tmp",
-      "mkdir idn2 && cd idn2",
-      "gcc-ar -x /usr/local/lib/libidn2.a",
-      "cd .. && mkdir psl && cd psl",
-      "gcc-ar -x /usr/local/lib/libpsl.a",
-      "cd ..",
-      "gcc-ar -qcs libpsl.a idn2/*.o psl/*.o",
-      "gcc-ranlib libpsl.a",
-      "sudo cp libpsl.a /usr/local/lib/libpsl.a"
+      "sudo make install"
     ]
   },
   {

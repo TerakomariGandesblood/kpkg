@@ -11,7 +11,7 @@ add_definitions(-DCURL_NO_OLDIES)
 
 add_executable(curl main.cpp)
 target_link_libraries(curl PRIVATE PkgConfig::libcurl
-                                   PkgConfig::libbrotlicommon)
+                                   PkgConfig::libbrotlicommon unistring)
 
 add_custom_command(
   TARGET curl
