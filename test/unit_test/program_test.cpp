@@ -16,7 +16,7 @@ TEST_CASE("program", "[program]") {
   // TODO
 
   auto to_be_built = program.libraries_to_be_built();
-  REQUIRE(std::size(to_be_built) == 2);
+  REQUIRE(std::size(to_be_built) == 12);
   REQUIRE(to_be_built.front().get_name() == "curl");
   REQUIRE(to_be_built.back().get_name() == "spdlog");
 }

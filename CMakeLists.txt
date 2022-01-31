@@ -75,6 +75,7 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(zlib REQUIRED IMPORTED_TARGET zlib)
 pkg_check_modules(openssl REQUIRED IMPORTED_TARGET openssl)
 pkg_check_modules(libaria2 REQUIRED IMPORTED_TARGET libaria2)
+pkg_check_modules(libcares REQUIRED IMPORTED_TARGET libcares)
 
 add_definitions(-DOPENSSL_NO_DEPRECATED)
 
@@ -111,6 +112,7 @@ target_link_libraries(
           PkgConfig::libaria2
           PkgConfig::zlib
           PkgConfig::openssl
+          PkgConfig::libcares
           ${CMAKE_THREAD_LIBS_INIT})
 set_target_properties(${KPKG_LIBRARY} PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
 
