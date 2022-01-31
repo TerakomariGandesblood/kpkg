@@ -8,6 +8,10 @@ namespace kpkg {
 Program::Program(const std::vector<std::string>& libraries,
                  const std::string& proxy)
     : proxy_(proxy), libraries_(read_from_json()) {
+  if (std::empty(libraries)) {
+    return;
+  }
+
   for (const auto& library_name : libraries) {
     add_library(libraries_to_be_built_, get_from_name(library_name));
   }
