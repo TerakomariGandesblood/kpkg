@@ -14,7 +14,7 @@ TEST_CASE("read_from_json", "[library]") {
 
   auto library = libraries[dis(gen)];
 
-  REQUIRE(!std::empty(library.get_name()));
+  REQUIRE(!std::empty(library.name()));
 
   std::string proxy;
 #ifdef KPKG_TEST_USE_PROXY

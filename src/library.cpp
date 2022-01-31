@@ -1,6 +1,5 @@
 #include "library.h"
 
-#include <cassert>
 #include <filesystem>
 
 #include <fmt/compile.h>
@@ -10,6 +9,7 @@
 #include <klib/util.h>
 #include <simdjson.h>
 #include <spdlog/spdlog.h>
+#include <gsl/gsl-lite.hpp>
 
 #include "command.h"
 #include "downloader.h"
@@ -27,13 +27,12 @@ namespace kpkg {
 Library::Library(const std::string& name, const std::string& releases_url,
                  const std::string& tags_url,
                  const std::vector<std::string>& dependency,
-                 const std::string& cwd, const std::vector<std::string>& cmd,
+                 const std::vector<std::string>& cmd,
                  const std::string& tag_name, const std::string& download_url)
     : name_(name),
       releases_url_(releases_url),
       tags_url_(tags_url),
       dependency_(dependency),
-      cwd_(cwd),
       cmd_(cmd),
       tag_name_(tag_name),
       download_url_(download_url) {}
@@ -43,34 +42,26 @@ void Library::init(const std::string& proxy) {
     std::string url;
     if (!std::empty(releases_url_)) {
       url = releases_url_;
-    } else if (!std::empty(tags_url_)) {
-      url = tags_url_;
     } else {
-      assert(false);
+      url = tags_url_;
     }
+    Ensures(!std::empty(url));
 
     auto response = http_get(url, proxy);
     if (!std::empty(releases_url_)) {
       ReleaseInfo info(response.text());
-      tag_name_ = info.get_tag_name();
-      download_url_ = info.get_url();
-    } else if (!std::empty(tags_url_)) {
-      TagInfo info(response.text());
-      tag_name_ = info.get_tag_name();
-      download_url_ = info.get_url();
+      tag_name_ = info.tag_name();
+      download_url_ = info.url();
     } else {
-      assert(false);
+      TagInfo info(response.text());
+      tag_name_ = info.tag_name();
+      download_url_ = info.url();
     }
+    Ensures(!std::empty(tag_name_) && !std::empty(download_url_));
   }
 
   dir_name_ = name_ + "-" + tag_name_;
   file_name_ = dir_name_ + ".tar.gz";
-
-  if (std::empty(cwd_)) {
-    cwd_ = dir_name_;
-  } else {
-    cwd_ = dir_name_ + "/" + cwd_;
-  }
 }
 
 void Library::download(const std::string& proxy) const {
@@ -100,7 +91,7 @@ void Library::build() const {
     std::filesystem::rename(*temp, dir_name_);
   }
 
-  run_commands(cmd_, cwd_);
+  run_commands(cmd_, dir_name_);
 }
 
 void Library::print() const { spdlog::info("{:<25} {:<25}", name_, tag_name_); }
@@ -125,15 +116,13 @@ std::vector<Library> read_from_json() {
       dependency.emplace_back(item.get_string().value());
     }
 
-    std::string cwd(elem["cwd"].get_string().value());
-
     std::vector<std::string> cmd;
     for (auto item : elem["cmd"].get_array()) {
       cmd.emplace_back(item.get_string().value());
     }
 
-    ret.emplace_back(name, releases_url, tags_url, dependency, cwd, cmd,
-                     tag_name, download_url);
+    ret.emplace_back(name, releases_url, tags_url, dependency, cmd, tag_name,
+                     download_url);
   }
 
   return ret;
@@ -145,7 +134,7 @@ void show_pyftsubset(const std::string& proxy) {
       proxy);
   ReleaseInfo info(response.text());
 
-  auto tag_name = info.get_tag_name();
+  auto tag_name = info.tag_name();
   spdlog::info("{:<25} {:<25}", "pyftsubset", tag_name);
 }
 

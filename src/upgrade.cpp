@@ -51,8 +51,8 @@ std::pair<std::string, std::optional<std::string>> get_latest(
   auto response = http_get(url, proxy);
   ReleaseInfo info(response.text());
 
-  auto tag_name = info.get_tag_name();
-  auto asset = info.get_deb_asset();
+  auto tag_name = info.tag_name();
+  auto asset = info.deb_asset();
   if (asset) {
     return {tag_name, asset->url_};
   } else {

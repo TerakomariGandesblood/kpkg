@@ -14,13 +14,9 @@
 #include "version.h"
 
 void print_libraries(const std::vector<kpkg::Library>& libraries) {
-  if (std::empty(libraries)) {
-    return;
-  }
-
   std::vector<std::string> names;
   for (const auto& library : libraries) {
-    names.push_back(library.get_name());
+    names.push_back(library.name());
   }
 
   spdlog::info("The following libraries will be installed: {}",
@@ -33,7 +29,7 @@ void build_libraries(std::vector<kpkg::Library>& libraries,
     item.init(proxy);
     item.download(proxy);
     item.build();
-    spdlog::info("{} install complete", item.get_name());
+    spdlog::info("{} install complete", item.name());
   }
 }
 

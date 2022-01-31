@@ -13,10 +13,8 @@ TEST_CASE("program", "[program]") {
 
   REQUIRE(program.proxy() == "http://127.0.0.1:1080");
 
-  // TODO
-
-  auto to_be_built = program.libraries_to_be_built();
-  REQUIRE(std::size(to_be_built) == 12);
-  REQUIRE(to_be_built.front().get_name() == "curl");
-  REQUIRE(to_be_built.back().get_name() == "spdlog");
+  auto libraries_to_be_built = program.libraries_to_be_built();
+  REQUIRE(std::size(libraries_to_be_built) == 11);
+  REQUIRE(libraries_to_be_built.front().name() == "fmt");
+  REQUIRE(libraries_to_be_built.back().name() == "curl");
 }

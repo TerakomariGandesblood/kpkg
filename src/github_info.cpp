@@ -18,7 +18,7 @@ ReleaseInfo::ReleaseInfo(std::string json) {
   }
 }
 
-std::optional<Asset> ReleaseInfo::get_deb_asset() const {
+std::optional<Asset> ReleaseInfo::deb_asset() const {
   for (const auto &asset : assets_) {
     if (asset.name_.ends_with(".deb")) {
       return asset;

@@ -18,9 +18,9 @@ class ReleaseInfo {
  public:
   explicit ReleaseInfo(std::string json);
 
-  [[nodiscard]] const std::string& get_tag_name() const { return tag_name_; }
-  [[nodiscard]] const std::string& get_url() const { return url_; }
-  [[nodiscard]] std::optional<Asset> get_deb_asset() const;
+  [[nodiscard]] const std::string& tag_name() const { return tag_name_; }
+  [[nodiscard]] const std::string& url() const { return url_; }
+  [[nodiscard]] std::optional<Asset> deb_asset() const;
 
  private:
   std::string tag_name_;
@@ -33,8 +33,8 @@ class TagInfo {
  public:
   explicit TagInfo(std::string json);
 
-  [[nodiscard]] const std::string& get_tag_name() const { return tag_name_; }
-  [[nodiscard]] const std::string& get_url() const { return url_; }
+  [[nodiscard]] const std::string& tag_name() const { return tag_name_; }
+  [[nodiscard]] const std::string& url() const { return url_; }
 
  private:
   std::string tag_name_;

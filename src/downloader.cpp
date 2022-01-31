@@ -31,7 +31,7 @@ std::int32_t download_event_callback(aria2::Session* session,
   if (dh->getNumFiles() > 0) {
     std::filesystem::path path(dh->getFile(1).path);
     if (!std::filesystem::exists(path)) {
-      klib::error("no file: {}", path.string());
+      klib::error("No file: {}", path.string());
     }
 
     *static_cast<std::string*>(user_data) = path.filename().string();

@@ -22,6 +22,7 @@ C++ Library Manager
 - [klib](https://github.com/KaiserLancelot/klib)
 - [mimalloc](https://github.com/microsoft/mimalloc)
 - [Boost](https://www.boost.org/)
+- [gsl-lite](https://github.com/gsl-lite/gsl-lite)
 - [CLI11](https://github.com/CLIUtils/CLI11)
 - [fmt](https://github.com/fmtlib/fmt)
 - [spdlog](https://github.com/gabime/spdlog)

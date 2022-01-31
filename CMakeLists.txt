@@ -66,6 +66,11 @@ find_package(CLI11 REQUIRED)
 find_package(semver REQUIRED)
 find_package(simdjson REQUIRED)
 find_package(Boost REQUIRED CONFIG)
+find_package(gsl-lite REQUIRED)
+
+if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+  add_definitions(-Dgsl_CONFIG_CONTRACT_VIOLATION_THROWS)
+endif()
 
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED)
@@ -108,6 +113,7 @@ target_link_libraries(
           simdjson::simdjson
           ${Boost_LIBRARIES}
           klib::klib
+          gsl::gsl-lite-v1
           PkgConfig::libaria2
           PkgConfig::zlib
           PkgConfig::openssl

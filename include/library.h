@@ -10,14 +10,14 @@ class Library {
   Library() = default;
   Library(const std::string& name, const std::string& releases_url,
           const std::string& tags_url,
-          const std::vector<std::string>& dependency, const std::string& cwd,
+          const std::vector<std::string>& dependency,
           const std::vector<std::string>& cmd, const std::string& tag_name,
           const std::string& download_url);
 
   void init(const std::string& proxy);
 
-  [[nodiscard]] const std::string& get_name() const { return name_; }
-  [[nodiscard]] const std::vector<std::string>& get_dependency() const {
+  [[nodiscard]] const std::string& name() const { return name_; }
+  [[nodiscard]] const std::vector<std::string>& dependency() const {
     return dependency_;
   }
 
@@ -31,11 +31,11 @@ class Library {
   std::string releases_url_;
   std::string tags_url_;
   std::vector<std::string> dependency_;
-  std::string cwd_;
   std::vector<std::string> cmd_;
 
   std::string tag_name_;
   std::string download_url_;
+
   std::string file_name_;
   std::string dir_name_;
 };
