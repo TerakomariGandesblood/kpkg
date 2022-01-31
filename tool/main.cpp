@@ -13,6 +13,11 @@
 #include "upgrade.h"
 #include "version.h"
 
+#ifndef NDEBUG
+#include <backward.hpp>
+backward::SignalHandling sh;
+#endif
+
 void print_libraries(const std::vector<kpkg::Library>& libraries) {
   std::vector<std::string> names;
   for (const auto& library : libraries) {
@@ -79,12 +84,6 @@ int main(int argc, const char* argv[]) try {
 
   print_libraries(program.libraries_to_be_built());
   build_libraries(program.libraries_to_be_built(), program.proxy());
-
-  if (program.build_pyftsubset()) {
-    spdlog::info("Start building {}", "pyftsubset");
-    kpkg::build_pyftsubset(program.proxy());
-    spdlog::info("{} install complete", "pyftsubset");
-  }
 } catch (const klib::Exception& err) {
   klib::error(err.what());
 } catch (const std::exception& err) {

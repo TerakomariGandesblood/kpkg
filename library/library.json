@@ -570,5 +570,19 @@
       "gcc-ranlib libpsl.a",
       "sudo cp libpsl.a /usr/local/lib/libpsl.a"
     ]
+  },
+  {
+    "name": "pyftsubset",
+    "releases_url": "https://api.github.com/repos/fonttools/fonttools/releases/latest",
+    "tags_url": "",
+    "tag_name": "",
+    "download_url": "",
+    "dependency": [],
+    "cmd": [
+      "sudo python3 -m pip install --upgrade nuitka fonttools[woff]",
+      "sudo python3 pyftsubset.py --help",
+      "sudo python3 -m nuitka --onefile --plugin-enable=pylint-warnings --lto=yes --prefer-source-code --static-libpython=yes --assume-yes-for-downloads -o pyftsubset pyftsubset.py",
+      "sudo cp pyftsubset /usr/local/bin/pyftsubset"
+    ]
   }
 ]

@@ -2,8 +2,6 @@
 
 #include <filesystem>
 
-#include <fmt/compile.h>
-#include <fmt/format.h>
 #include <klib/archive.h>
 #include <klib/log.h>
 #include <klib/util.h>
@@ -91,6 +89,11 @@ void Library::build() const {
     std::filesystem::rename(*temp, dir_name_);
   }
 
+  if (name_ == "pyftsubset") {
+    klib::ChangeWorkingDir dir(dir_name_);
+    klib::write_file("pyftsubset.py", false, pyftsubset, pyftsubset_size);
+  }
+
   run_commands(cmd_, dir_name_);
 }
 
@@ -126,39 +129,6 @@ std::vector<Library> read_from_json() {
   }
 
   return ret;
-}
-
-void show_pyftsubset(const std::string& proxy) {
-  auto response = http_get(
-      "https://api.github.com/repos/fonttools/fonttools/releases/latest",
-      proxy);
-  ReleaseInfo info(response.text());
-
-  auto tag_name = info.tag_name();
-  spdlog::info("{:<25} {:<25}", "pyftsubset", tag_name);
-}
-
-void build_pyftsubset(const std::string& proxy) {
-  klib::write_file("pyftsubset.py", false, pyftsubset, pyftsubset_size);
-
-  std::vector<std::string> cmd;
-
-  if (!std::empty(proxy)) {
-    cmd.emplace_back(
-        fmt::format(FMT_COMPILE(R"(export all_proxy="{}")"), proxy));
-  }
-
-  cmd.emplace_back(
-      "sudo python3 -m pip install --upgrade nuitka fonttools[woff]");
-  cmd.emplace_back("sudo python3 pyftsubset.py --help");
-
-  cmd.emplace_back(
-      "sudo python3 -m nuitka --onefile --plugin-enable=pylint-warnings "
-      "--lto=yes --prefer-source-code --static-libpython=yes "
-      "--assume-yes-for-downloads -o pyftsubset pyftsubset.py");
-  cmd.emplace_back("sudo cp pyftsubset /usr/local/bin/pyftsubset");
-
-  run_commands(cmd, ".");
 }
 
 }  // namespace kpkg

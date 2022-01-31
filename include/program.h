@@ -12,7 +12,6 @@ class Program {
  public:
   Program(const std::vector<std::string>& libraries, const std::string& proxy);
 
-  [[nodiscard]] bool build_pyftsubset() const { return build_pyftsubset_; }
   [[nodiscard]] std::string proxy() const { return proxy_; }
 
   [[nodiscard]] std::vector<Library>& libraries_to_be_built() {
@@ -33,8 +32,6 @@ class Program {
 
   std::vector<Library> libraries_;
   std::vector<Library> libraries_to_be_built_;
-
-  bool build_pyftsubset_ = false;
 };
 
 }  // namespace kpkg

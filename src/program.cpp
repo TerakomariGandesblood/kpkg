@@ -9,11 +9,6 @@ Program::Program(const std::vector<std::string>& libraries,
                  const std::string& proxy)
     : proxy_(proxy), libraries_(read_from_json()) {
   for (const auto& library_name : libraries) {
-    if (boost::to_lower_copy(library_name) == "pyftsubset") {
-      build_pyftsubset_ = true;
-      continue;
-    }
-
     add_library(libraries_to_be_built_, get_from_name(library_name));
   }
 
@@ -50,8 +45,6 @@ void Program::add_library(std::vector<Library>& libraries,
 }
 
 void Program::show_libraries() {
-  show_pyftsubset(proxy_);
-
   for (auto& library : libraries_) {
     library.init(proxy_);
     library.print();
