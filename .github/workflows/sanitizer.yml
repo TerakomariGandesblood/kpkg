@@ -1,6 +1,6 @@
 name: Sanitizer
 
-on: [ push, pull_request ]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         # https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html
-        build_type: [ "Debug", "Release", "RelWithDebInfo", "MinSizeRel" ]
+        build_type: ["Debug", "Release", "RelWithDebInfo", "MinSizeRel"]
         compiler:
           - { cc: "gcc", cxx: "g++" }
           - { cc: "clang", cxx: "clang++" }
