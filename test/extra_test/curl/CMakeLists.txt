@@ -10,8 +10,9 @@ pkg_check_modules(libbrotlicommon REQUIRED IMPORTED_TARGET libbrotlicommon)
 add_definitions(-DCURL_NO_OLDIES)
 
 add_executable(curl main.cpp)
-target_link_libraries(curl PRIVATE PkgConfig::libcurl
-                                   PkgConfig::libbrotlicommon unistring)
+target_link_libraries(
+  curl PRIVATE PkgConfig::libcurl PkgConfig::libbrotlicommon
+               /usr/local/lib/libunistring.a)
 
 add_custom_command(
   TARGET curl
