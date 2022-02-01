@@ -43,7 +43,7 @@ jobs:
           aria2 semver gsl-lite dbg-macro scope_guard argon2 simdjson opencc \
           simdutf xxHash mimalloc cmark backward-cpp
           ./kpkg install python
-          working-directory: build/tool
+        working-directory: build/tool
 
       - name: Test
         run: ctest -C ${{ matrix.build_type }} -j"$(nproc)" --output-on-failure
