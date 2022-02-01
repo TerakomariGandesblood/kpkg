@@ -1,6 +1,6 @@
 name: Sanitizer
 
-on: [push, pull_request]
+on: [ push, pull_request ]
 
 jobs:
   build:
@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         # https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html
-        build_type: ["Debug", "Release", "RelWithDebInfo", "MinSizeRel"]
+        build_type: [ "Debug", "Release", "RelWithDebInfo", "MinSizeRel" ]
         compiler:
           - { cc: "gcc", cxx: "g++" }
           - { cc: "clang", cxx: "clang++" }
@@ -36,15 +36,14 @@ jobs:
       - name: Build
         run: cmake --build build --config ${{ matrix.build_type }} -j"$(nproc)"
 
-      # FIXME
-      #      - name: Run executable
-      #        run: |
-      #          ./kpkg install boost catch2 curl fmt icu libarchive nameof zstd \
-      #          openssl spdlog sqlcipher tidy-html5 pugixml onetbb cli11 indicators \
-      #          aria2 semver gsl-lite dbg-macro scope_guard argon2 simdjson opencc \
-      #          simdutf xxHash mimalloc cmark backward-cpp
-      #          ./kpkg install python
-      #        working-directory: build/tool
+      - name: Run executable
+        run: |
+          ./kpkg install boost catch2 curl fmt icu libarchive nameof zstd \
+          openssl spdlog sqlcipher tidy-html5 pugixml onetbb cli11 indicators \
+          aria2 semver gsl-lite dbg-macro scope_guard argon2 simdjson opencc \
+          simdutf xxHash mimalloc cmark backward-cpp
+          ./kpkg install python
+          working-directory: build/tool
 
       - name: Test
         run: ctest -C ${{ matrix.build_type }} -j"$(nproc)" --output-on-failure
