@@ -110,7 +110,7 @@ void Library::build() const {
   run_commands(cmd_, dir_name_);
 
   std::unique_ptr<klib::ChangeWorkingDir> dir;
-  if (name_ == "libunistring" || name_ == "boringssl") {
+  if (name_ == "libunistring" || name_ == "BoringSSL") {
     spdlog::info("Start generating pkgconfig file");
 
     if (!std::filesystem::exists("/usr/local/lib/pkgconfig")) {
@@ -124,7 +124,7 @@ void Library::build() const {
   if (name_ == "libunistring") {
     klib::write_file("libunistring.pc", false, libunistring, libunistring_size);
     klib::exec("sudo cp libunistring.pc /usr/local/lib/pkgconfig");
-  } else if (name_ == "boringssl") {
+  } else if (name_ == "BoringSSL") {
     klib::write_file("libcrypto.pc", false, libcrypto, libcrypto_size);
     klib::exec("sudo cp libcrypto.pc /usr/local/lib/pkgconfig");
 
