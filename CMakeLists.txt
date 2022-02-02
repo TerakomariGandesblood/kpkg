@@ -72,16 +72,6 @@ if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
   add_definitions(-Dgsl_CONFIG_CONTRACT_VIOLATION_THROWS)
 endif()
 
-set(THREADS_PREFER_PTHREAD_FLAG TRUE)
-find_package(Threads REQUIRED)
-
-find_package(PkgConfig REQUIRED)
-
-pkg_check_modules(zlib REQUIRED IMPORTED_TARGET zlib)
-pkg_check_modules(openssl REQUIRED IMPORTED_TARGET openssl)
-
-add_definitions(-DOPENSSL_NO_DEPRECATED)
-
 if(NOT KPKG_SANITIZER)
   message(STATUS "Use mimalloc")
   set(MIMALLOC_OBJECT "/usr/local/lib/mimalloc.o")
@@ -112,10 +102,7 @@ target_link_libraries(
           simdjson::simdjson
           ${Boost_LIBRARIES}
           klib::klib
-          gsl::gsl-lite-v1
-          PkgConfig::zlib
-          PkgConfig::openssl
-          ${CMAKE_THREAD_LIBS_INIT})
+          gsl::gsl-lite-v1)
 set_target_properties(${KPKG_LIBRARY} PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
 
 # ---------------------------------------------------------------------------------------

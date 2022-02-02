@@ -12,9 +12,6 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     -o appimagetool-x86_64.AppImage
   sudo mkdir -p /root/.local/share/Nuitka/appimagetool-x86_64.AppImage/x86_64/13
   sudo mv appimagetool-x86_64.AppImage /root/.local/share/Nuitka/appimagetool-x86_64.AppImage/x86_64/13/appimagetool-x86_64.AppImage
-
-  # FIXME
-  sudo cp $(dirname $0)/libunistring.pc /usr/local/lib/pkgconfig
 else
   echo "The system does not support: $OSTYPE"
   exit 1
