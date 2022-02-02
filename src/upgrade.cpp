@@ -13,7 +13,6 @@
 #include <spdlog/spdlog.h>
 #include <semver.hpp>
 
-#include "downloader.h"
 #include "github_info.h"
 #include "http.h"
 
@@ -86,8 +85,9 @@ void upgrade(const std::string &proxy) {
                    latest_ver.to_string());
       spdlog::info("Get file from: {}", *download_url);
 
-      static HTTPDownloader downloader(proxy);
-      auto file_name = downloader.download(*download_url);
+      auto file_name = item + "-" + latest_ver.to_string() + ".deb";
+      auto response = http_get(*download_url, proxy);
+      response.save_to_file(file_name, true);
 
       spdlog::info("Download file: {} complete", file_name);
 

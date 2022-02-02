@@ -36,9 +36,7 @@ std::string version_str() {
       FMT_COMPILE("simdjson/{}.{}.{} "), simdjson::SIMDJSON_VERSION_MAJOR,
       simdjson::SIMDJSON_VERSION_MINOR, simdjson::SIMDJSON_VERSION_REVISION);
   result +=
-      fmt::format(FMT_COMPILE("semver/{} "), semver::semver_verion.to_string());
-  // NOTE
-  result += "aria2/1.36.0\n";
+      fmt::format(FMT_COMPILE("semver/{}\n"), semver::semver_verion.to_string());
 
   result += "Compiler: ";
 #if defined(__clang_version__)

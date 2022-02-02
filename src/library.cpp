@@ -10,7 +10,6 @@
 #include <gsl/gsl-lite.hpp>
 
 #include "command.h"
-#include "downloader.h"
 #include "github_info.h"
 #include "http.h"
 
@@ -68,8 +67,8 @@ void Library::download(const std::string& proxy) const {
   } else {
     spdlog::info("Get file {} from: {}", file_name_, download_url_);
 
-    static HTTPDownloader downloader(proxy);
-    downloader.download(download_url_, file_name_);
+    auto response = http_get(download_url_, proxy);
+    response.save_to_file(file_name_, true);
 
     spdlog::info("Download file: {} complete", file_name_);
   }

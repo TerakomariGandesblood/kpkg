@@ -79,7 +79,6 @@ find_package(PkgConfig REQUIRED)
 
 pkg_check_modules(zlib REQUIRED IMPORTED_TARGET zlib)
 pkg_check_modules(openssl REQUIRED IMPORTED_TARGET openssl)
-pkg_check_modules(libaria2 REQUIRED IMPORTED_TARGET libaria2)
 
 add_definitions(-DOPENSSL_NO_DEPRECATED)
 
@@ -114,7 +113,6 @@ target_link_libraries(
           ${Boost_LIBRARIES}
           klib::klib
           gsl::gsl-lite-v1
-          PkgConfig::libaria2
           PkgConfig::zlib
           PkgConfig::openssl
           ${CMAKE_THREAD_LIBS_INIT})
