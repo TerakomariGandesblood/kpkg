@@ -9,7 +9,6 @@ find_package(Threads REQUIRED)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(openssl REQUIRED IMPORTED_TARGET openssl)
-add_definitions(-DOPENSSL_NO_DEPRECATED)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(sqlcipher REQUIRED IMPORTED_TARGET sqlcipher)

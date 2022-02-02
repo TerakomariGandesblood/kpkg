@@ -14,7 +14,6 @@ find_package(Threads REQUIRED)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(openssl REQUIRED IMPORTED_TARGET openssl)
-add_definitions(-DOPENSSL_NO_DEPRECATED)
 
 add_executable(openssl main.cpp)
 target_link_libraries(openssl PRIVATE PkgConfig::openssl fmt::fmt

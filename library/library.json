@@ -5,7 +5,7 @@
     "tags_url": "",
     "tag_name": "v3.22.2",
     "download_url": "https://github.com/Kitware/CMake/archive/refs/tags/v3.22.2.tar.gz",
-    "dependency": ["boringssl"],
+    "dependency": ["BoringSSL"],
     "cmd": [
       "./bootstrap --parallel=\"$(nproc)\" -- -DCMAKE_BUILD_TYPE:STRING=Release",
       "make -j\"$(nproc)\"",
@@ -75,7 +75,7 @@
     ]
   },
   {
-    "name": "boringssl",
+    "name": "BoringSSL",
     "releases_url": "",
     "tags_url": "",
     "tag_name": "boringssl-master",
@@ -96,7 +96,7 @@
     "tags_url": "",
     "tag_name": "v1.46.0",
     "download_url": "https://github.com/nghttp2/nghttp2/releases/download/v1.46.0/nghttp2-1.46.0.tar.gz",
-    "dependency": ["zlib-ng", "boringssl"],
+    "dependency": ["zlib-ng", "BoringSSL"],
     "cmd": [
       "./configure --disable-shared --enable-static --disable-debug --disable-asio-lib --disable-failmalloc --enable-lib-only --disable-http3 --without-libxml2 --without-jansson --with-zlib --without-libevent-openssl --without-libcares --with-openssl --without-libev --without-cunit --without-jemalloc --without-systemd --without-mruby --without-neverbleed --without-cython --without-libngtcp2 --without-libnghttp3 --without-libbpf --without-boost",
       "make -j\"$(nproc)\"",
@@ -127,7 +127,7 @@
       "zlib-ng",
       "brotli",
       "zstd",
-      "boringssl",
+      "BoringSSL",
       "nghttp2",
       "libidn2",
       "libpsl"
@@ -196,7 +196,7 @@
     "tags_url": "https://api.github.com/repos/sqlcipher/sqlcipher/tags",
     "tag_name": "",
     "download_url": "",
-    "dependency": ["zlib-ng", "boringssl"],
+    "dependency": ["zlib-ng", "BoringSSL"],
     "cmd": [
       "./configure CFLAGS=\"$CFLAGS -DSQLITE_HAS_CODEC -DOPENSSL_VERSION_TEXT\" LDFLAGS=\"/usr/local/lib/libcrypto.a /usr/local/lib/libz.a\" --disable-shared --enable-static --enable-releasemode --enable-tempstore=yes --disable-tcl --disable-readline --disable-debug --disable-load-extension",
       "make -j\"$(nproc)\"",
@@ -458,7 +458,7 @@
     "tags_url": "",
     "tag_name": "v3.10.2",
     "download_url": "https://github.com/python/cpython/archive/refs/tags/v3.10.2.tar.gz",
-    "dependency": ["zlib-ng", "bzip2", "boringssl"],
+    "dependency": ["zlib-ng", "bzip2", "BoringSSL"],
     "cmd": [
       "./configure --disable-shared --disable-profiling --enable-optimizations --disable-loadable-sqlite-extensions --disable-ipv6 --disable-test-modules --without-pydebug --without-trace-refs --without-assertions --with-lto --without-system-expat --without-system-ffi --without-system-libmpdec --without-doc-strings --with-pymalloc --with-c-locale-coercion --without-valgrind --without-dtrace --with-computed-gotos --with-ssl-default-suites=openssl --with-static-libpython",
       "make -j\"$(nproc)\"",

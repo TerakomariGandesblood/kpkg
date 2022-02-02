@@ -1,12 +1,14 @@
 #include "library.h"
 
 #include <filesystem>
+#include <memory>
 
 #include <klib/archive.h>
 #include <klib/log.h>
 #include <klib/util.h>
 #include <simdjson.h>
 #include <spdlog/spdlog.h>
+#include <boost/core/ignore_unused.hpp>
 #include <gsl/gsl-lite.hpp>
 
 #include "command.h"
@@ -18,6 +20,18 @@ extern int library_size;
 
 extern char pyftsubset[];
 extern int pyftsubset_size;
+
+extern char libcrypto[];
+extern int libcrypto_size;
+
+extern char libssl[];
+extern int libssl_size;
+
+extern char openssl[];
+extern int openssl_size;
+
+extern char libunistring[];
+extern int libunistring_size;
 
 namespace kpkg {
 
@@ -94,6 +108,32 @@ void Library::build() const {
   }
 
   run_commands(cmd_, dir_name_);
+
+  std::unique_ptr<klib::ChangeWorkingDir> dir;
+  if (name_ == "libunistring" || name_ == "boringssl") {
+    spdlog::info("Start generating pkgconfig file");
+
+    if (!std::filesystem::exists("/usr/local/lib/pkgconfig")) {
+      klib::exec("sudo mkdir /usr/local/lib/pkgconfig");
+    }
+
+    dir = std::make_unique<klib::ChangeWorkingDir>(dir_name_);
+    boost::ignore_unused(dir);
+  }
+
+  if (name_ == "libunistring") {
+    klib::write_file("libunistring.pc", false, libunistring, libunistring_size);
+    klib::exec("sudo cp libunistring.pc /usr/local/lib/pkgconfig");
+  } else if (name_ == "boringssl") {
+    klib::write_file("libcrypto.pc", false, libcrypto, libcrypto_size);
+    klib::exec("sudo cp libcrypto.pc /usr/local/lib/pkgconfig");
+
+    klib::write_file("libssl.pc", false, libssl, libssl_size);
+    klib::exec("sudo cp libssl.pc /usr/local/lib/pkgconfig");
+
+    klib::write_file("openssl.pc", false, openssl, openssl_size);
+    klib::exec("sudo cp openssl.pc /usr/local/lib/pkgconfig");
+  }
 }
 
 void Library::print() const { spdlog::info("{:<25} {:<25}", name_, tag_name_); }
