@@ -42,7 +42,6 @@ jobs:
           boringssl spdlog sqlcipher tidy-html5 pugixml onetbb cli11 indicators \
           semver gsl-lite dbg-macro scope_guard argon2 simdjson opencc \
           simdutf xxHash mimalloc cmark backward-cpp
-          ./kpkg install python
         working-directory: build/tool
 
       - name: Test
