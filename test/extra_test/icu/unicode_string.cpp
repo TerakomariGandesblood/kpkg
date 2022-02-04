@@ -53,10 +53,6 @@ int main() {
   // 只读视图
   str.tempSubString(1);
 
-  str = "helLo wOrld!";
-  str.toTitle(nullptr);
-  EXPECT(str == "Hello World!");
-
   str = "𝄞𝄞你好";
   auto length = str.length();
   // 获取每一个字符
