@@ -33,6 +33,9 @@ extern int openssl_size;
 extern char libunistring[];
 extern int libunistring_size;
 
+extern char filters[];
+extern int filters_size;
+
 namespace kpkg {
 
 Library::Library(const std::string& name, const std::string& releases_url,
@@ -105,6 +108,9 @@ void Library::build() const {
   if (name_ == "pyftsubset") {
     klib::ChangeWorkingDir dir(dir_name_);
     klib::write_file("pyftsubset.py", false, pyftsubset, pyftsubset_size);
+  } else if (name_ == "icu") {
+    klib::ChangeWorkingDir dir(dir_name_);
+    klib::write_file("filters.json", false, filters, filters_size);
   }
 
   run_commands(cmd_, dir_name_);

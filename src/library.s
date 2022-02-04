@@ -10,6 +10,8 @@
     .global openssl_size
     .global libunistring
     .global libunistring_size
+    .global filters
+    .global filters_size
     .section .rodata
 library:
     .incbin "library.json"
@@ -46,3 +48,9 @@ libunistring:
 libunistring_end:
 libunistring_size:
     .int libunistring_end - libunistring
+
+filters:
+    .incbin "filters.json"
+filters_end:
+filters_size:
+    .int filters_end - filters

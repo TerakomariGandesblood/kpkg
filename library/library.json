@@ -291,7 +291,7 @@
     "dependency": [],
     "cmd": [
       "cd icu4c/source",
-      "export CC=clang && export CXX=clang++ && ./configure --disable-shared --enable-static --enable-auto-cleanup --disable-draft --disable-dyload --disable-tests --disable-samples --with-data-packaging=static",
+      "export ICU_DATA_FILTER_FILE=../../filters.json && ./runConfigureICU Linux --disable-icu-config --disable-debug --enable-release --disable-shared --enable-static --enable-auto-cleanup --disable-draft --disable-plugins --disable-dyload --disable-extras --enable-icuio --disable-layoutex --enable-tools --disable-fuzzer --disable-tests --disable-samples --with-data-packaging=static",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
