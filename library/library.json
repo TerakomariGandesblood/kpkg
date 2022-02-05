@@ -78,7 +78,7 @@
     "name": "BoringSSL",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "boringssl-master",
+    "tag_name": "boringssl-master-with-bazel",
     "download_url": "https://github.com/google/boringssl/archive/refs/heads/master-with-bazel.zip",
     "dependency": [],
     "cmd": [
@@ -558,6 +558,19 @@
       "sudo python3 -m nuitka --onefile --plugin-enable=pylint-warnings --lto=yes --prefer-source-code --static-libpython=yes --assume-yes-for-downloads -o pyftsubset pyftsubset.py",
       "sudo cp pyftsubset /usr/local/bin/pyftsubset",
       "sudo chmod 755 /usr/local/bin/pyftsubset"
+    ]
+  },
+  {
+    "name": "llhttp",
+    "releases_url": "",
+    "tags_url": "",
+    "tag_name": "v6.0.6",
+    "download_url": "https://github.com/nodejs/llhttp/archive/refs/tags/release/v6.0.6.tar.gz",
+    "dependency": [],
+    "cmd": [
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF",
+      "cmake --build build --config Release -j\"$(nproc)\"",
+      "sudo cmake --build build --config Release --target install"
     ]
   }
 ]

@@ -4,7 +4,7 @@ libdir=${exec_prefix}/lib
 includedir=${prefix}/include
 
 Name: BoringSSL-libssl
-Description: Secure Sockets Layer and cryptography libraries
+Description: BoringSSL Secure Sockets Layer
 Version: 1.1.1.BoringSSL
 Requires.private: libcrypto
 Libs: -L${libdir} -lssl
