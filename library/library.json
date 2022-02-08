@@ -69,7 +69,7 @@
     "dependency": ["zlib-ng", "zstd"],
     "cmd": [
       "bash build/autogen.sh",
-      "export CFLAGS=\"$CFLAGS -lpthread\" && export CXXFLAGS=\"$CXXFLAGS -lpthread\" && ./configure --disable-shared --enable-static --disable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --without-lz4 --with-zstd --without-lzma --without-lzo2 --without-cng --without-openssl --without-xml2 --without-expat",
+      "./configure LDFLAGS=\"-lpthread\" --disable-shared --enable-static --enable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --without-lz4 --with-zstd --without-lzma --without-lzo2 --without-cng --without-openssl --without-xml2 --without-expat",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
@@ -212,7 +212,7 @@
     "dependency": [],
     "cmd": [
       "cd build/cmake",
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DZSTD_LEGACY_SUPPORT=OFF -DZSTD_MULTITHREAD_SUPPORT=ON -DZSTD_BUILD_PROGRAMS=ON -DZSTD_BUILD_CONTRIB=OFF -DZSTD_BUILD_TESTS=OFF -DZSTD_BUILD_SHARED=OFF",
+      "export CFLAGS=\"$CFLAGS -DZSTD_MULTITHREAD\" && export CXXFLAGS=\"$CXXFLAGS -DZSTD_MULTITHREAD\" && cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DZSTD_LEGACY_SUPPORT=OFF -DZSTD_MULTITHREAD_SUPPORT=ON -DZSTD_BUILD_PROGRAMS=ON -DZSTD_BUILD_CONTRIB=OFF -DZSTD_BUILD_TESTS=OFF -DZSTD_BUILD_SHARED=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
