@@ -7,7 +7,6 @@
 #include <klib/log.h>
 #include <klib/util.h>
 #include <simdjson.h>
-#include <spdlog/spdlog.h>
 #include <boost/core/ignore_unused.hpp>
 #include <gsl/gsl-lite.hpp>
 
@@ -63,13 +62,13 @@ void Library::init(const std::string& proxy) {
 
     auto response = http_get(url, proxy);
     if (!std::empty(releases_url_)) {
-      ReleaseInfo info(response.text());
-      tag_name_ = info.tag_name();
-      download_url_ = info.url();
+      auto info = get_release_info(response.text());
+      tag_name_ = info.tag_name_;
+      download_url_ = info.url_;
     } else {
-      TagInfo info(response.text());
-      tag_name_ = info.tag_name();
-      download_url_ = info.url();
+      auto info = get_tag_info(response.text());
+      tag_name_ = info.tag_name_;
+      download_url_ = info.url_;
     }
     Ensures(!std::empty(tag_name_) && !std::empty(download_url_));
   }
@@ -80,20 +79,20 @@ void Library::init(const std::string& proxy) {
 
 void Library::download(const std::string& proxy) const {
   if (std::filesystem::is_regular_file(file_name_)) {
-    spdlog::info("Use exists file: {}", file_name_);
+    klib::info("Use exists file: {}", file_name_);
   } else {
-    spdlog::info("Get file {} from: {}", file_name_, download_url_);
+    klib::info("Get file {} from: {}", file_name_, download_url_);
 
     auto response = http_get(download_url_, proxy);
     response.save_to_file(file_name_);
 
-    spdlog::info("Download file: {} complete", file_name_);
+    klib::info("Download file: {} complete", file_name_);
   }
 }
 
 void Library::build() const {
   if (std::filesystem::is_directory(dir_name_)) {
-    spdlog::info("Use exists folder: {}", dir_name_);
+    klib::info("Use exists folder: {}", dir_name_);
   } else {
     auto temp = klib::outermost_folder_name(file_name_);
     if (!temp.has_value()) {
@@ -101,8 +100,8 @@ void Library::build() const {
     }
     klib::decompress(file_name_);
 
-    spdlog::info("Decompress file: {} to {}", file_name_, *temp);
-    spdlog::info("Rename folder from {} to {}", *temp, dir_name_);
+    klib::info("Decompress file: {} to {}", file_name_, *temp);
+    klib::info("Rename folder from {} to {}", *temp, dir_name_);
     std::filesystem::rename(*temp, dir_name_);
   }
 
@@ -118,7 +117,7 @@ void Library::build() const {
 
   std::unique_ptr<klib::ChangeWorkingDir> dir;
   if (name_ == "libunistring" || name_ == "BoringSSL") {
-    spdlog::info("Start generating pkgconfig file");
+    klib::info("Start generating pkgconfig file");
 
     if (!std::filesystem::exists("/usr/local/lib/pkgconfig")) {
       klib::exec("sudo mkdir /usr/local/lib/pkgconfig");
@@ -143,7 +142,7 @@ void Library::build() const {
   }
 }
 
-void Library::print() const { spdlog::info("{:<25} {:<25}", name_, tag_name_); }
+void Library::print() const { klib::info("{:<25} {:<25}", name_, tag_name_); }
 
 std::vector<Library> read_from_json() {
   std::string json(library, library_size);

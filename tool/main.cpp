@@ -4,7 +4,6 @@
 
 #include <klib/exception.h>
 #include <klib/log.h>
-#include <spdlog/spdlog.h>
 #include <CLI/CLI.hpp>
 #include <boost/algorithm/string.hpp>
 
@@ -24,8 +23,8 @@ void print_libraries(const std::vector<kpkg::Library>& libraries) {
     names.push_back(library.name());
   }
 
-  spdlog::info("The following libraries will be installed: {}",
-               boost::join(names, " "));
+  klib::info("The following libraries will be installed: {}",
+             boost::join(names, " "));
 }
 
 void build_libraries(std::vector<kpkg::Library>& libraries,
@@ -34,7 +33,7 @@ void build_libraries(std::vector<kpkg::Library>& libraries,
     item.init(proxy);
     item.download(proxy);
     item.build();
-    spdlog::info("{} install complete", item.name());
+    klib::info("{} install complete", item.name());
   }
 }
 
@@ -71,7 +70,7 @@ int main(int argc, const char* argv[]) try {
   kpkg::Program program(libraries, proxy);
 
   if (!std::empty(proxy)) {
-    spdlog::info("Use proxy: {}", proxy);
+    klib::info("Use proxy: {}", proxy);
   }
 
   if (list->parsed()) {

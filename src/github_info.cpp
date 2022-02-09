@@ -4,22 +4,27 @@
 
 namespace kpkg {
 
-ReleaseInfo::ReleaseInfo(std::string json) {
+ReleaseInfo get_release_info(std::string json) {
+  ReleaseInfo result;
+
   json.reserve(std::size(json) + simdjson::SIMDJSON_PADDING);
   simdjson::ondemand::parser parser;
   auto doc = parser.iterate(json);
 
-  tag_name_ = doc["tag_name"].get_string().value();
-  url_ = doc["tarball_url"].get_string().value();
+  result.tag_name_ = doc["tag_name"].get_string().value();
+  result.url_ = doc["tarball_url"].get_string().value();
 
   for (auto elem : doc["assets"].get_array()) {
-    assets_.emplace_back(elem["name"].get_string().value(),
-                         elem["browser_download_url"].get_string().value());
+    result.assets_.emplace_back(
+        elem["name"].get_string().value(),
+        elem["browser_download_url"].get_string().value());
   }
+
+  return result;
 }
 
-std::optional<Asset> ReleaseInfo::deb_asset() const {
-  for (const auto &asset : assets_) {
+std::optional<Asset> get_deb_asset(const std::vector<Asset> &assets) {
+  for (const auto &asset : assets) {
     if (asset.name_.ends_with(".deb")) {
       return asset;
     }
@@ -28,14 +33,18 @@ std::optional<Asset> ReleaseInfo::deb_asset() const {
   return {};
 }
 
-TagInfo::TagInfo(std::string json) {
+TagInfo get_tag_info(std::string json) {
+  TagInfo result;
+
   json.reserve(std::size(json) + simdjson::SIMDJSON_PADDING);
   simdjson::ondemand::parser parser;
   auto doc = parser.iterate(json);
 
   auto first = doc.at(0);
-  tag_name_ = first["name"].get_string().value();
-  url_ = first["tarball_url"].get_string().value();
+  result.tag_name_ = first["name"].get_string().value();
+  result.url_ = first["tarball_url"].get_string().value();
+
+  return result;
 }
 
 }  // namespace kpkg

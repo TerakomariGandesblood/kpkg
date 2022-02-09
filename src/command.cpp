@@ -1,7 +1,7 @@
 #include "command.h"
 
+#include <klib/log.h>
 #include <klib/util.h>
-#include <spdlog/spdlog.h>
 #include <gsl/gsl-lite.hpp>
 
 namespace kpkg {
@@ -39,7 +39,7 @@ std::string calc_command(const std::vector<std::string>& commands,
 void run_commands(const std::vector<std::string>& commands,
                   const std::string& dir) {
   auto cmd = calc_command(commands, dir);
-  spdlog::info("Run commands: {}", cmd);
+  klib::info("Run commands: {}", cmd);
   klib::exec(cmd);
 }
 

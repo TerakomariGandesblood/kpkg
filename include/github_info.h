@@ -14,31 +14,21 @@ struct Asset {
   std::string url_;
 };
 
-class ReleaseInfo {
- public:
-  explicit ReleaseInfo(std::string json);
-
-  [[nodiscard]] const std::string& tag_name() const { return tag_name_; }
-  [[nodiscard]] const std::string& url() const { return url_; }
-  [[nodiscard]] std::optional<Asset> deb_asset() const;
-
- private:
+struct ReleaseInfo {
   std::string tag_name_;
   std::string url_;
-
   std::vector<Asset> assets_;
 };
 
-class TagInfo {
- public:
-  explicit TagInfo(std::string json);
+ReleaseInfo get_release_info(std::string json);
 
-  [[nodiscard]] const std::string& tag_name() const { return tag_name_; }
-  [[nodiscard]] const std::string& url() const { return url_; }
+std::optional<Asset> get_deb_asset(const std::vector<Asset> &assets);
 
- private:
+struct TagInfo {
   std::string tag_name_;
   std::string url_;
 };
+
+TagInfo get_tag_info(std::string json);
 
 }  // namespace kpkg

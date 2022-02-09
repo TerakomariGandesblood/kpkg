@@ -2,7 +2,6 @@
 
 #include <filesystem>
 #include <optional>
-#include <utility>
 #include <vector>
 
 #include <fmt/compile.h>
@@ -10,7 +9,6 @@
 #include <klib/exception.h>
 #include <klib/log.h>
 #include <klib/util.h>
-#include <spdlog/spdlog.h>
 #include <semver.hpp>
 
 #include "github_info.h"
@@ -48,10 +46,11 @@ std::pair<std::string, std::optional<std::string>> get_latest(
       name);
 
   auto response = http_get(url, proxy);
-  ReleaseInfo info(response.text());
+  auto info = get_release_info(response.text());
 
-  auto tag_name = info.tag_name();
-  auto asset = info.deb_asset();
+  auto tag_name = info.tag_name_;
+  auto asset = get_deb_asset(info.assets_);
+
   if (asset) {
     return {tag_name, asset->url_};
   } else {
@@ -81,15 +80,15 @@ void upgrade(const std::string &proxy) {
         continue;
       }
 
-      spdlog::info("Will upgrade {} from {} to {}", item, curr_ver.to_string(),
-                   latest_ver.to_string());
-      spdlog::info("Get file from: {}", *download_url);
+      klib::info("Will upgrade {} from {} to {}", item, curr_ver.to_string(),
+                 latest_ver.to_string());
+      klib::info("Get file from: {}", *download_url);
 
       auto file_name = item + "-" + latest_ver.to_string() + ".deb";
       auto response = http_get(*download_url, proxy);
       response.save_to_file(file_name);
 
-      spdlog::info("Download file: {} complete", file_name);
+      klib::info("Download file: {} complete", file_name);
 
       if (std::filesystem::path(file_name).extension() != ".deb") {
         klib::error("Can't find a file in deb format");
@@ -101,9 +100,9 @@ void upgrade(const std::string &proxy) {
         klib::error("Remove file {} failed", file_name);
       }
 
-      spdlog::info("{} upgrade completed", item);
+      klib::info("{} upgrade completed", item);
     } else {
-      spdlog::info("{} is the latest version: {}", item, curr_ver.to_string());
+      klib::info("{} is the latest version: {}", item, curr_ver.to_string());
     }
   }
 }
