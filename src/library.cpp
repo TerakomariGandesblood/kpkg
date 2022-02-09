@@ -85,7 +85,7 @@ void Library::download(const std::string& proxy) const {
     spdlog::info("Get file {} from: {}", file_name_, download_url_);
 
     auto response = http_get(download_url_, proxy);
-    response.save_to_file(file_name_, true);
+    response.save_to_file(file_name_);
 
     spdlog::info("Download file: {} complete", file_name_);
   }
@@ -95,10 +95,11 @@ void Library::build() const {
   if (std::filesystem::is_directory(dir_name_)) {
     spdlog::info("Use exists folder: {}", dir_name_);
   } else {
-    auto temp = klib::decompress(file_name_);
+    auto temp = klib::outermost_folder_name(file_name_);
     if (!temp.has_value()) {
-      klib::error("Decompress error");
+      klib::error("No outermost folder");
     }
+    klib::decompress(file_name_);
 
     spdlog::info("Decompress file: {} to {}", file_name_, *temp);
     spdlog::info("Rename folder from {} to {}", *temp, dir_name_);

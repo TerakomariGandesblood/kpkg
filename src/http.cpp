@@ -1,5 +1,7 @@
 #include "http.h"
 
+#include <cstdint>
+
 #include <klib/log.h>
 
 namespace kpkg {
@@ -16,9 +18,11 @@ klib::Response http_get(const std::string &url, const std::string &proxy) {
 #endif
 
   auto response = request.get(url);
-  if (!response.ok()) {
-    klib::error("Status code is not ok: {}, url: {}", response.status_code(),
-                url);
+  auto status = response.status();
+  if (status != klib::HttpStatus::HTTP_STATUS_OK) {
+    klib::error("Status code is not ok: {}, code:{}, url: {}",
+                klib::http_status_str(status),
+                static_cast<std::int32_t>(status), url);
   }
 
   return response;

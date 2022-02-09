@@ -14,20 +14,7 @@ C++ Library Manager
 
 ## Environment
 
-- Debian 11
-- GCC 11 or Clang 13
-
-## Dependency
-
-- [klib](https://github.com/KaiserLancelot/klib)
-- [mimalloc](https://github.com/microsoft/mimalloc)
-- [Boost](https://www.boost.org/)
-- [gsl-lite](https://github.com/gsl-lite/gsl-lite)
-- [CLI11](https://github.com/CLIUtils/CLI11)
-- [fmt](https://github.com/fmtlib/fmt)
-- [spdlog](https://github.com/gabime/spdlog)
-- [simdjson](https://github.com/simdjson/simdjson)
-- [semver](https://github.com/Neargye/semver)
+- [kenv](https://github.com/KaiserLancelot/kenv)
 
 ## Build
 

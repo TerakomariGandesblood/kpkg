@@ -87,7 +87,7 @@ void upgrade(const std::string &proxy) {
 
       auto file_name = item + "-" + latest_ver.to_string() + ".deb";
       auto response = http_get(*download_url, proxy);
-      response.save_to_file(file_name, true);
+      response.save_to_file(file_name);
 
       spdlog::info("Download file: {} complete", file_name);
 

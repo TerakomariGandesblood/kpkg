@@ -52,7 +52,6 @@ include(GNUInstallDirs)
 
 include(Options)
 include(Check)
-include(ClangTidy)
 include(Format)
 include(CompilerOptions)
 
