@@ -4,7 +4,7 @@
     "releases_url": "",
     "tags_url": "",
     "tag_name": "v3.22.2",
-    "download_url": "https://github.com/Kitware/CMake/archive/refs/tags/v3.22.2.tar.gz",
+    "download_url": "https://github.com/Kitware/CMake/releases/download/v3.22.2/cmake-3.22.2.tar.gz",
     "dependency": ["BoringSSL"],
     "cmd": [
       "./bootstrap --parallel=\"$(nproc)\" -- -DCMAKE_BUILD_TYPE:STRING=Release",
@@ -62,14 +62,13 @@
   },
   {
     "name": "libarchive",
-    "releases_url": "https://api.github.com/repos/libarchive/libarchive/releases/latest",
+    "releases_url": "",
     "tags_url": "",
-    "tag_name": "",
-    "download_url": "",
+    "tag_name": "v3.5.3",
+    "download_url": "https://github.com/libarchive/libarchive/releases/download/v3.5.3/libarchive-3.5.3.tar.gz",
     "dependency": ["zlib-ng", "zstd"],
     "cmd": [
-      "bash build/autogen.sh",
-      "./configure LDFLAGS=\"-lpthread\" --disable-shared --enable-static --enable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --without-lz4 --with-zstd --without-lzma --without-lzo2 --without-cng --without-openssl --without-xml2 --without-expat",
+      "./configure LDFLAGS=\"-lpthread\" --disable-shared --enable-static --disable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --without-lz4 --with-zstd --without-lzma --without-lzo2 --without-cng --without-openssl --without-xml2 --without-expat",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
@@ -166,10 +165,10 @@
   },
   {
     "name": "fmt",
-    "releases_url": "https://api.github.com/repos/fmtlib/fmt/releases/latest",
+    "releases_url": "",
     "tags_url": "",
-    "tag_name": "",
-    "download_url": "",
+    "tag_name": "v8.1.1",
+    "download_url": "https://github.com/fmtlib/fmt/releases/download/8.1.1/fmt-8.1.1.zip",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DFMT_DOC=OFF -DFMT_TEST=OFF -DFMT_CUDA_TEST=OFF -DFMT_MODULE=OFF",
@@ -276,7 +275,7 @@
     "download_url": "",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DTBB_TEST=OFF -DTBB_EXAMPLES=OFF -DTBB4PY_BUILD=OFF -DTBB_BUILD=ON -DTBBMALLOC_BUILD=ON -DTBB_CPF=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DTBB_TEST=OFF -DTBB_EXAMPLES=OFF -DTBB4PY_BUILD=OFF -DTBB_BUILD=ON -DTBBMALLOC_BUILD=OFF -DTBB_CPF=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install",
       "sudo ldconfig"
@@ -291,7 +290,7 @@
     "dependency": [],
     "cmd": [
       "cd icu4c/source",
-      "export ICU_DATA_FILTER_FILE=../../filters.json && ./runConfigureICU Linux --disable-icu-config --disable-debug --enable-release --disable-shared --enable-static --enable-auto-cleanup --disable-draft --disable-plugins --disable-dyload --disable-extras --enable-icuio --disable-layoutex --enable-tools --disable-fuzzer --disable-tests --disable-samples --with-data-packaging=static",
+      "export CC=clang && export CXX=clang++ && export ICU_DATA_FILTER_FILE=../../filters.json && ./runConfigureICU Linux --disable-icu-config --disable-debug --enable-release --disable-shared --enable-static --enable-auto-cleanup --disable-draft --disable-plugins --disable-dyload --disable-extras --enable-icuio --disable-layoutex --enable-tools --disable-fuzzer --disable-tests --disable-samples --with-data-packaging=static",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
@@ -324,10 +323,10 @@
   },
   {
     "name": "pugixml",
-    "releases_url": "https://api.github.com/repos/zeux/pugixml/releases/latest",
+    "releases_url": "",
     "tags_url": "",
-    "tag_name": "",
-    "download_url": "",
+    "tag_name": "v1.11.4",
+    "download_url": "https://github.com/zeux/pugixml/releases/download/v1.11.4/pugixml-1.11.4.tar.gz",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF -DBUILD_SHARED_AND_STATIC_LIBS=OFF -DBUILD_SHARED_LIBS=OFF",
@@ -539,7 +538,6 @@
     "download_url": "https://github.com/rockdaboot/libpsl/releases/download/0.21.1/libpsl-0.21.1.tar.gz",
     "dependency": ["libidn2"],
     "cmd": [
-      "autoreconf -fi",
       "./configure --disable-shared --enable-static --disable-nls --disable-gtk-doc --disable-gtk-doc-html --disable-gtk-doc-pdf --disable-man --disable-cfi --disable-ubsan --disable-asan --enable-runtime=libidn2 --enable-builtin=libidn2 --disable-valgrind-tests",
       "make -j\"$(nproc)\"",
       "sudo make install"

@@ -4,6 +4,8 @@
 #include <random>
 #include <vector>
 
+#include <oneapi/tbb.h>
+
 #include "error.h"
 
 int main() {
@@ -17,6 +19,6 @@ int main() {
     v.push_back(static_cast<std::int32_t>(gen()));
   }
 
-  std::sort(std::execution::par, std::begin(v), std::end(v));
+  tbb::parallel_sort(v);
   EXPECT(std::is_sorted(std::execution::par, std::begin(v), std::end(v)));
 }
