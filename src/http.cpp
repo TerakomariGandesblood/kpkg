@@ -20,9 +20,9 @@ klib::Response http_get(const std::string &url, const std::string &proxy) {
   auto response = request.get(url);
   auto status = response.status();
   if (status != klib::HttpStatus::HTTP_STATUS_OK) {
-    klib::error("Status code is not ok: {}, code:{}, url: {}",
-                klib::http_status_str(status),
-                static_cast<std::int32_t>(status), url);
+    klib::error("HTTP request failed, code: {}, reason: {}, url: {}",
+                static_cast<std::int32_t>(status),
+                klib::http_status_str(status), url);
   }
 
   return response;
