@@ -64,11 +64,11 @@
     "name": "libarchive",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "v3.5.3",
-    "download_url": "https://github.com/libarchive/libarchive/releases/download/v3.5.3/libarchive-3.5.3.tar.gz",
+    "tag_name": "v3.6.0",
+    "download_url": "https://github.com/libarchive/libarchive/releases/download/v3.6.0/libarchive-3.6.0.tar.gz",
     "dependency": ["zlib-ng", "zstd"],
     "cmd": [
-      "./configure LDFLAGS=\"-lpthread\" --disable-shared --enable-static --disable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --without-lz4 --with-zstd --without-lzma --without-lzo2 --without-cng --without-openssl --without-xml2 --without-expat",
+      "./configure LDFLAGS=\"-lpthread\" --disable-shared --enable-static --disable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --without-lz4 --with-zstd --without-lzma --without-lzo2 --without-cng --without-mbedtls --without-nettle --without-openssl --without-xml2 --without-expat",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
@@ -325,11 +325,11 @@
     "name": "pugixml",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "v1.11.4",
-    "download_url": "https://github.com/zeux/pugixml/releases/download/v1.11.4/pugixml-1.11.4.tar.gz",
+    "tag_name": "v1.12",
+    "download_url": "https://github.com/zeux/pugixml/releases/download/v1.12/pugixml-1.12.tar.gz",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF -DBUILD_SHARED_AND_STATIC_LIBS=OFF -DBUILD_SHARED_LIBS=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DPUGIXML_BUILD_TESTS=OFF -DPUGIXML_BUILD_SHARED_AND_STATIC_LIBS=OFF -DBUILD_SHARED_LIBS=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
