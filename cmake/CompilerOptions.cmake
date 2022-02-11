@@ -1,7 +1,7 @@
 include(AddCXXFlag)
 
 # ---------------------------------------------------------------------------------------
-# C/C++ standard
+# C++ standard
 # ---------------------------------------------------------------------------------------
 # https://cmake.org/cmake/help/latest/prop_tgt/CXX_STANDARD.html
 set(CMAKE_CXX_STANDARD 20)
