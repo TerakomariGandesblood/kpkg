@@ -66,9 +66,9 @@
     "tags_url": "",
     "tag_name": "v3.6.0",
     "download_url": "https://github.com/libarchive/libarchive/releases/download/v3.6.0/libarchive-3.6.0.tar.gz",
-    "dependency": ["zlib-ng", "zstd"],
+    "dependency": ["zlib-ng", "zstd", "BoringSSL"],
     "cmd": [
-      "./configure LDFLAGS=\"-lpthread\" --disable-shared --enable-static --disable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --without-lz4 --with-zstd --without-lzma --without-lzo2 --without-cng --without-mbedtls --without-nettle --without-openssl --without-xml2 --without-expat",
+      "./configure LDFLAGS=\"-lpthread\" --disable-shared --enable-static --disable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --without-lz4 --with-zstd --without-lzma --without-lzo2 --without-cng --without-mbedtls --without-nettle --with-openssl --without-xml2 --without-expat",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
@@ -77,8 +77,8 @@
     "name": "BoringSSL",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "boringssl-master-with-bazel",
-    "download_url": "https://github.com/google/boringssl/archive/refs/heads/master-with-bazel.zip",
+    "tag_name": "BoringSSL-fork",
+    "download_url": "https://github.com/KaiserLancelot/boringssl/archive/refs/heads/master-with-bazel.zip",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release",
@@ -197,7 +197,7 @@
     "download_url": "",
     "dependency": ["zlib-ng", "BoringSSL"],
     "cmd": [
-      "./configure CFLAGS=\"$CFLAGS -DSQLITE_HAS_CODEC -DOPENSSL_VERSION_TEXT\" LDFLAGS=\"/usr/local/lib/libcrypto.a /usr/local/lib/libz.a\" --disable-shared --enable-static --enable-releasemode --enable-tempstore=yes --disable-tcl --disable-readline --disable-debug --disable-load-extension",
+      "./configure CFLAGS=\"$CFLAGS -DSQLITE_HAS_CODEC\" LDFLAGS=\"/usr/local/lib/libcrypto.a /usr/local/lib/libz.a\" --disable-shared --enable-static --enable-releasemode --enable-tempstore=yes --disable-tcl --disable-readline --disable-debug --disable-load-extension",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
@@ -211,7 +211,8 @@
     "dependency": [],
     "cmd": [
       "cd build/cmake",
-      "export CFLAGS=\"$CFLAGS -DZSTD_MULTITHREAD\" && export CXXFLAGS=\"$CXXFLAGS -DZSTD_MULTITHREAD\" && cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DZSTD_LEGACY_SUPPORT=OFF -DZSTD_MULTITHREAD_SUPPORT=ON -DZSTD_BUILD_PROGRAMS=ON -DZSTD_BUILD_CONTRIB=OFF -DZSTD_BUILD_TESTS=OFF -DZSTD_BUILD_SHARED=OFF",
+      "export CFLAGS=\"$CFLAGS -DZSTD_MULTITHREAD\" && export CXXFLAGS=\"$CXXFLAGS -DZSTD_MULTITHREAD\"",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DZSTD_LEGACY_SUPPORT=OFF -DZSTD_MULTITHREAD_SUPPORT=ON -DZSTD_BUILD_PROGRAMS=ON -DZSTD_BUILD_CONTRIB=OFF -DZSTD_BUILD_TESTS=OFF -DZSTD_BUILD_SHARED=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -290,7 +291,8 @@
     "dependency": [],
     "cmd": [
       "cd icu4c/source",
-      "export ICU_DATA_FILTER_FILE=../../filters.json && ./runConfigureICU Linux --disable-icu-config --disable-debug --enable-release --disable-shared --enable-static --enable-auto-cleanup --disable-draft --disable-plugins --disable-dyload --disable-extras --enable-icuio --disable-layoutex --enable-tools --disable-fuzzer --disable-tests --disable-samples --with-data-packaging=static",
+      "export ICU_DATA_FILTER_FILE=../../filters.json",
+      "./runConfigureICU Linux --disable-icu-config --disable-debug --enable-release --disable-shared --enable-static --enable-auto-cleanup --disable-draft --disable-plugins --disable-dyload --disable-extras --enable-icuio --disable-layoutex --enable-tools --disable-fuzzer --disable-tests --disable-samples --with-data-packaging=static",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
@@ -303,7 +305,8 @@
     "download_url": "",
     "dependency": [],
     "cmd": [
-      "export CFLAGS=\"$CFLAGS -DCATCH_CONFIG_ENABLE_BENCHMARKING\" && export CXXFLAGS=\"$CXXFLAGS -DCATCH_CONFIG_ENABLE_BENCHMARKING\" && cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCATCH_BUILD_TESTING=OFF -DCATCH_BUILD_EXAMPLES=OFF -DCATCH_BUILD_EXTRA_TESTS=OFF -DCATCH_BUILD_STATIC_LIBRARY=ON -DCATCH_INSTALL_DOCS=OFF -DCATCH_INSTALL_HELPERS=ON",
+      "export CFLAGS=\"$CFLAGS -DCATCH_CONFIG_ENABLE_BENCHMARKING\" && export CXXFLAGS=\"$CXXFLAGS -DCATCH_CONFIG_ENABLE_BENCHMARKING\"",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCATCH_BUILD_TESTING=OFF -DCATCH_BUILD_EXAMPLES=OFF -DCATCH_BUILD_EXTRA_TESTS=OFF -DCATCH_BUILD_STATIC_LIBRARY=ON -DCATCH_INSTALL_DOCS=OFF -DCATCH_INSTALL_HELPERS=ON",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
