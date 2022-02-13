@@ -65,11 +65,7 @@ find_package(CLI11 REQUIRED)
 find_package(semver REQUIRED)
 find_package(simdjson REQUIRED)
 find_package(Boost REQUIRED CONFIG)
-find_package(gsl-lite REQUIRED)
-
-if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
-  add_definitions(-Dgsl_CONFIG_CONTRACT_VIOLATION_THROWS)
-endif()
+find_package(Microsoft.GSL REQUIRED)
 
 if(NOT KPKG_SANITIZER)
   message(STATUS "Use mimalloc")
@@ -101,7 +97,7 @@ target_link_libraries(
           simdjson::simdjson
           ${Boost_LIBRARIES}
           klib::klib
-          gsl::gsl-lite-v1)
+          Microsoft.GSL::GSL)
 set_target_properties(${KPKG_LIBRARY} PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
 
 # ---------------------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 
 #include <klib/log.h>
 #include <klib/util.h>
-#include <gsl/gsl-lite.hpp>
+#include <gsl/assert>
 
 namespace kpkg {
 

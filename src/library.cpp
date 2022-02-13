@@ -8,7 +8,7 @@
 #include <klib/util.h>
 #include <simdjson.h>
 #include <boost/core/ignore_unused.hpp>
-#include <gsl/gsl-lite.hpp>
+#include <gsl/assert>
 
 #include "command.h"
 #include "github_info.h"
