@@ -33,7 +33,7 @@
     "download_url": "",
     "dependency": ["zlib-ng", "BoringSSL"],
     "cmd": [
-      "export LDFLAGS=\"$LDFLAGS /usr/local/lib/libcrypto.a /usr/local/lib/libz.a\"",
+      "export LDFLAGS=\"/usr/local/lib/libcrypto.a /usr/local/lib/libz.a\"",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
@@ -81,7 +81,7 @@
     "download_url": "https://github.com/libarchive/libarchive/releases/download/v3.6.0/libarchive-3.6.0.tar.gz",
     "dependency": ["zlib-ng", "zstd", "BoringSSL"],
     "cmd": [
-      "./configure LDFLAGS=\"$LDFLAGS -lpthread\" --disable-shared --enable-static --disable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --without-lz4 --with-zstd --without-lzma --without-lzo2 --without-cng --without-mbedtls --without-nettle --with-openssl --without-xml2 --without-expat",
+      "./configure LDFLAGS=\"-lpthread\" --disable-shared --enable-static --disable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --without-lz4 --with-zstd --without-lzma --without-lzo2 --without-cng --without-mbedtls --without-nettle --with-openssl --without-xml2 --without-expat",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
@@ -210,7 +210,7 @@
     "download_url": "",
     "dependency": ["zlib-ng", "BoringSSL"],
     "cmd": [
-      "./configure CFLAGS=\"$CFLAGS -DSQLITE_HAS_CODEC\" LDFLAGS=\"$LDFLAGS /usr/local/lib/libcrypto.a /usr/local/lib/libz.a\" --disable-shared --enable-static --enable-releasemode --enable-tempstore=yes --disable-tcl --disable-readline --disable-debug --disable-load-extension",
+      "./configure CFLAGS=\"$CFLAGS -DSQLITE_HAS_CODEC\" LDFLAGS=\"/usr/local/lib/libcrypto.a /usr/local/lib/libz.a\" --disable-shared --enable-static --enable-releasemode --enable-tempstore=yes --disable-tcl --disable-readline --disable-debug --disable-load-extension",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
