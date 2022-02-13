@@ -6,7 +6,7 @@
 
 #define KPKG_VER_MINOR 13
 
-#define KPKG_VER_PATCH 14
+#define KPKG_VER_PATCH 15
 
 #define KPKG_STRINGIZE2(s) #s
 #define KPKG_STRINGIZE(s) KPKG_STRINGIZE2(s)
