@@ -1,6 +1,6 @@
 #include <cstdint>
 
-#include <gsl/gsl-lite.hpp>
+#include <gsl/assert>
 
 int main() {
   std::int32_t a = 10;
