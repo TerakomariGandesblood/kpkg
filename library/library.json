@@ -123,7 +123,7 @@
     "download_url": "https://github.com/ngtcp2/ngtcp2/releases/download/v0.1.0/ngtcp2-0.1.0.tar.gz",
     "dependency": ["nghttp3", "BoringSSL"],
     "cmd": [
-      "./configure BORINGSSL_LIBS=\"-L/usr/local/lib -lssl -lcrypto\" --disable-shared --enable-static --disable-debug --disable-asan --enable-lib-only --without-jemalloc --without-cunit --with-libnghttp3 --without-libev --without-openssl --without-gnutls --with-boringssl",
+      "./configure BORINGSSL_LIBS=\"/usr/local/lib/libssl.a /usr/local/lib/libcrypto.a\" --disable-shared --enable-static --disable-debug --disable-asan --enable-lib-only --without-jemalloc --without-cunit --with-libnghttp3 --without-libev --without-openssl --without-gnutls --with-boringssl",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
