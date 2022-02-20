@@ -33,7 +33,7 @@
     "download_url": "",
     "dependency": ["zlib-ng", "BoringSSL"],
     "cmd": [
-      "export LDFLAGS=\"/usr/local/lib/libcrypto.a /usr/local/lib/libz.a\"",
+      "export LDFLAGS=\"-L/usr/local/lib -lcrypto -lz\"",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
@@ -238,7 +238,7 @@
     "download_url": "",
     "dependency": ["zlib-ng", "BoringSSL"],
     "cmd": [
-      "./configure CFLAGS=\"$CFLAGS -DSQLITE_HAS_CODEC\" LDFLAGS=\"/usr/local/lib/libcrypto.a /usr/local/lib/libz.a\" --disable-shared --enable-static --enable-releasemode --enable-tempstore=yes --disable-tcl --disable-readline --disable-debug --disable-load-extension",
+      "./configure CFLAGS=\"$CFLAGS -DSQLITE_HAS_CODEC\" LDFLAGS=\"-L/usr/local/lib -lcrypto -lz\" --disable-shared --enable-static --enable-releasemode --enable-tempstore=yes --disable-tcl --disable-readline --disable-debug --disable-load-extension",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
