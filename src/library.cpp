@@ -32,12 +32,6 @@ extern int openssl_size;
 extern char libunistring[];
 extern int libunistring_size;
 
-extern char libidn2[];
-extern int libidn2_size;
-
-extern char libpsl[];
-extern int libpsl_size;
-
 extern char filters[];
 extern int filters_size;
 
