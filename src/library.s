@@ -10,6 +10,10 @@
     .global openssl_size
     .global libunistring
     .global libunistring_size
+    .global libidn2
+    .global libidn2_size
+    .global libpsl
+    .global libpsl_size
     .global filters
     .global filters_size
     .section .rodata
@@ -48,6 +52,18 @@ libunistring:
 libunistring_end:
 libunistring_size:
     .int libunistring_end - libunistring
+
+libidn2:
+    .incbin "libidn2.pc"
+libidn2_end:
+libidn2_size:
+    .int libidn2_end - libidn2
+
+libpsl:
+    .incbin "libpsl.pc"
+libpsl_end:
+libpsl_size:
+    .int libpsl_end - libpsl
 
 filters:
     .incbin "filters.json"
