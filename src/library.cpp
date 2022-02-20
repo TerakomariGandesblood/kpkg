@@ -136,12 +136,6 @@ void Library::build() const {
   if (name_ == "libunistring") {
     klib::write_file("libunistring.pc", false, libunistring, libunistring_size);
     klib::exec("sudo cp libunistring.pc /usr/local/lib/pkgconfig");
-  } else if (name_ == "libidn2") {
-    klib::write_file("libidn2.pc", false, libidn2, libidn2_size);
-    klib::exec("sudo cp libidn2.pc /usr/local/lib/pkgconfig");
-  } else if (name_ == "libpsl") {
-    klib::write_file("libpsl.pc", false, libpsl, libpsl_size);
-    klib::exec("sudo cp libpsl.pc /usr/local/lib/pkgconfig");
   } else if (name_ == "BoringSSL") {
     klib::write_file("libcrypto.pc", false, libcrypto, libcrypto_size);
     klib::exec("sudo cp libcrypto.pc /usr/local/lib/pkgconfig");
