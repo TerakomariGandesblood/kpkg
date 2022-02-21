@@ -35,7 +35,7 @@
     "dependency": ["zlib-ng", "BoringSSL"],
     "cmd": [
       "export LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lcrypto -lz\"",
-      "make -j\"$(nproc)\"",
+      "make CFLAGS=\"$CFLAGS\" CXXFLAGS=\"$CXXFLAGS\" LDFLAGS=\"$LDFLAGS\" -j\"$(nproc)\"",
       "sudo make install"
     ]
   },
@@ -281,7 +281,7 @@
     "dependency": [],
     "cmd": [
       "./bootstrap.sh",
-      "sudo ./b2 --with-json cflags=\"$CFLAGS\" cxxflags=\"$CXXFLAGS\" toolset=gcc-11 link=static install"
+      "sudo ./b2 --with-json cflags=\"$CFLAGS\" cxxflags=\"$CXXFLAGS\" linkflags=\"$LDFLAGS\" toolset=gcc-11 link=static install"
     ]
   },
   {
@@ -505,7 +505,7 @@
     "download_url": "https://github.com/microsoft/mimalloc/archive/refs/tags/v2.0.5.tar.gz",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DMI_SECURE=OFF -DMI_DEBUG_FULL=OFF -DMI_OVERRIDE=ON -DMI_LOCAL_DYNAMIC_TLS=OFF -DMI_BUILD_SHARED=OFF -DMI_BUILD_STATIC=OFF -DMI_BUILD_OBJECT=ON -DMI_BUILD_TESTS=OFF -DMI_DEBUG_TSAN=OFF -DMI_DEBUG_UBSAN=OFF -DMI_INSTALL_TOPLEVEL=ON",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DMI_SECURE=OFF -DMI_DEBUG_FULL=OFF -DMI_PADDING=OFF -DMI_OVERRIDE=ON -DMI_LOCAL_DYNAMIC_TLS=OFF -DMI_BUILD_SHARED=OFF -DMI_BUILD_STATIC=ON -DMI_BUILD_OBJECT=ON -DMI_BUILD_TESTS=OFF -DMI_DEBUG_TSAN=OFF -DMI_DEBUG_UBSAN=OFF -DMI_CHECK_FULL=OFF -DMI_INSTALL_TOPLEVEL=ON",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]

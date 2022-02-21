@@ -26,7 +26,9 @@ std::string calc_command(const std::vector<std::string>& commands,
   cmd = combine_command(
       cmd,
       R"(export CFLAGS="-pipe -march=haswell -mtune=haswell -fno-plt -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fipa-pta -fgraphite-identity -O3 -g0 -DNDEBUG -fPIC -static-libgcc -s" && export CXXFLAGS="-pipe -march=haswell -mtune=haswell -fno-plt -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fipa-pta -fgraphite-identity -O3 -g0 -DNDEBUG -fPIC -static-libgcc -static-libstdc++ -s")");
-  cmd = combine_command(cmd, R"(export LDFLAGS="-L/usr/local/lib")");
+  cmd = combine_command(
+      cmd,
+      R"(export LDFLAGS="-static-libgcc -static-libstdc++ -s -L/usr/local/lib")");
 
   for (const auto& item : commands) {
     cmd = combine_command(cmd, item);
