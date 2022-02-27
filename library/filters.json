@@ -55,6 +55,9 @@
     "zone_supplemental": {
       "filterType": "exclude"
     },
+    "translit": {
+      "filterType": "exclude"
+    },
     "unames": {
       "filterType": "exclude"
     },
