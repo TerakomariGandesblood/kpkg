@@ -633,7 +633,21 @@
     "download_url": "",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DENABLE_SHARED=OFF -DENABLE_STATIC=ON -DREQUIRE_SIMD=ON -DWITH_JAVA=OFF -DWITH_SIMD=ON -DWITH_TURBOJPEG=OFF -DWITH_FUZZ=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DENABLE_SHARED=OFF -DENABLE_STATIC=ON -DREQUIRE_SIMD=ON -DWITH_JAVA=OFF -DWITH_JPEG8=ON -DWITH_SIMD=ON -DWITH_TURBOJPEG=OFF -DWITH_FUZZ=OFF",
+      "cmake --build build --config Release -j\"$(nproc)\"",
+      "sudo cmake --build build --config Release --target install"
+    ]
+  },
+  {
+    "name": "libwebp",
+    "releases_url": "",
+    "tags_url": "",
+    "tag_name": "v1.2.2",
+    "download_url": "https://github.com/webmproject/libwebp/archive/refs/tags/v1.2.2.tar.gz",
+    "dependency": ["zlib-ng", "libpng", "libjpeg-turbo"],
+    "cmd": [
+      "export LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lpng -ljpeg -lz\"",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DWEBP_ENABLE_SIMD=ON -DWEBP_BUILD_ANIM_UTILS=OFF -DWEBP_BUILD_CWEBP=ON -DWEBP_BUILD_DWEBP=ON -DWEBP_BUILD_GIF2WEBP=OFF -DWEBP_BUILD_IMG2WEBP=OFF -DWEBP_BUILD_VWEBP=OFF -DWEBP_BUILD_WEBPINFO=OFF -DWEBP_BUILD_LIBWEBPMUX=OFF -DWEBP_BUILD_WEBPMUX=OFF -DWEBP_BUILD_EXTRAS=OFF -DWEBP_BUILD_WEBP_JS=OFF -DWEBP_USE_THREAD=ON",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
