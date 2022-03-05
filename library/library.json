@@ -3,8 +3,8 @@
     "name": "CMake",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "v3.22.2",
-    "download_url": "https://github.com/Kitware/CMake/releases/download/v3.22.2/cmake-3.22.2.tar.gz",
+    "tag_name": "v3.22.3",
+    "download_url": "https://github.com/Kitware/CMake/releases/download/v3.22.3/cmake-3.22.3.tar.gz",
     "dependency": ["BoringSSL"],
     "cmd": [
       "export CFLAGS=\"$CFLAGS -flto -fno-fat-lto-objects\"",
@@ -170,8 +170,8 @@
     "name": "curl",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "curl-7_81_0",
-    "download_url": "https://github.com/curl/curl/releases/download/curl-7_81_0/curl-7.81.0.tar.gz",
+    "tag_name": "curl-7_82_0",
+    "download_url": "https://github.com/curl/curl/releases/download/curl-7_82_0/curl-7.82.0.tar.gz",
     "dependency": [
       "zlib-ng",
       "brotli",
@@ -573,21 +573,6 @@
     ]
   },
   {
-    "name": "pyftsubset",
-    "releases_url": "https://api.github.com/repos/fonttools/fonttools/releases/latest",
-    "tags_url": "",
-    "tag_name": "",
-    "download_url": "",
-    "dependency": [],
-    "cmd": [
-      "sudo python3 -m pip install --upgrade nuitka fonttools[woff]",
-      "sudo python3 pyftsubset.py --help",
-      "sudo python3 -m nuitka --onefile --plugin-enable=pylint-warnings --lto=yes --prefer-source-code --static-libpython=yes --assume-yes-for-downloads -o pyftsubset pyftsubset.py",
-      "sudo cp pyftsubset /usr/local/bin/pyftsubset",
-      "sudo chmod 755 /usr/local/bin/pyftsubset"
-    ]
-  },
-  {
     "name": "llhttp",
     "releases_url": "",
     "tags_url": "",
@@ -609,6 +594,19 @@
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DUTF8_TESTS=OFF -DUTF8_INSTALL=ON -DUTF8_SAMPLES=OFF",
+      "cmake --build build --config Release -j\"$(nproc)\"",
+      "sudo cmake --build build --config Release --target install"
+    ]
+  },
+  {
+    "name": "woff2",
+    "releases_url": "https://api.github.com/repos/google/woff2/releases/latest",
+    "tags_url": "",
+    "tag_name": "",
+    "download_url": "",
+    "dependency": ["brotli"],
+    "cmd": [
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DNOISY_LOGGING=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]

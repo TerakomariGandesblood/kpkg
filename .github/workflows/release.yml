@@ -34,10 +34,6 @@ jobs:
         run: sudo dpkg -i kpkg*.deb
         working-directory: build
 
-      - name: Build pyftsubset
-        run: kpkg install pyftsubset
-        working-directory: build
-
       # https://github.com/softprops/action-gh-release
       - name: Release
         uses: softprops/action-gh-release@v1
@@ -45,4 +41,3 @@ jobs:
           files: |
             build/kpkg*.tar.zst
             build/kpkg*.deb
-            /usr/local/bin/pyftsubset

@@ -17,9 +17,6 @@
 extern char library[];
 extern int library_size;
 
-extern char pyftsubset[];
-extern int pyftsubset_size;
-
 extern char libcrypto[];
 extern int libcrypto_size;
 
@@ -34,6 +31,9 @@ extern int libunistring_size;
 
 extern char filters[];
 extern int filters_size;
+
+extern char woff2[];
+extern int woff2_size;
 
 namespace kpkg {
 
@@ -105,9 +105,9 @@ void Library::build() const {
     std::filesystem::rename(*temp, dir_name_);
   }
 
-  if (name_ == "pyftsubset") {
+  if (name_ == "woff2") {
     klib::ChangeWorkingDir dir(dir_name_);
-    klib::write_file("pyftsubset.py", false, pyftsubset, pyftsubset_size);
+    klib::write_file("CMakeLists.txt", false, woff2, woff2_size);
   } else if (name_ == "icu") {
     klib::ChangeWorkingDir dir(dir_name_);
     klib::write_file("filters.json", false, filters, filters_size);

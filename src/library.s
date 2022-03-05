@@ -1,7 +1,5 @@
     .global library
     .global library_size
-    .global pyftsubset
-    .global pyftsubset_size
     .global libcrypto
     .global libcrypto_size
     .global libssl
@@ -12,18 +10,14 @@
     .global libunistring_size
     .global filters
     .global filters_size
+    .global woff2
+    .global woff2_size
     .section .rodata
 library:
     .incbin "library.json"
 library_end:
 library_size:
     .int library_end - library
-
-pyftsubset:
-    .incbin "pyftsubset.py"
-pyftsubset_end:
-pyftsubset_size:
-    .int pyftsubset_end - pyftsubset
 
 libcrypto:
     .incbin "libcrypto.pc"
@@ -54,3 +48,9 @@ filters:
 filters_end:
 filters_size:
     .int filters_end - filters
+
+woff2:
+    .incbin "woff2.txt"
+woff2_end:
+woff2_size:
+    .int woff2_end - woff2
