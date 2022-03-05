@@ -610,5 +610,19 @@
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
+  },
+  {
+    "name": "libpng",
+    "releases_url": "",
+    "tags_url": "",
+    "tag_name": "v1.6.37",
+    "download_url": "https://github.com/glennrp/libpng/archive/refs/tags/v1.6.37.tar.gz",
+    "dependency": ["zlib-ng"],
+    "cmd": [
+      "export LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lz\"",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DPNG_BUILD_ZLIB=OFF -DPNG_SHARED=OFF -DPNG_STATIC=ON -DPNG_TESTS=OFF -DPNG_DEBUG=OFF -DPNG_HARDWARE_OPTIMIZATIONS=ON",
+      "cmake --build build --config Release -j\"$(nproc)\"",
+      "sudo cmake --build build --config Release --target install"
+    ]
   }
 ]
