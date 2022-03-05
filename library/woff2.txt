@@ -14,7 +14,6 @@ include(GNUInstallDirs)
 
 # Build options
 option(BUILD_SHARED_LIBS "Build shared libraries" ON)
-option(CANONICAL_PREFIXES "Canonical prefixes" OFF)
 option(NOISY_LOGGING "Noisy logging" ON)
 
 # Version information
@@ -38,9 +37,6 @@ pkg_check_modules(libbrotlienc REQUIRED IMPORTED_TARGET libbrotlienc)
 pkg_check_modules(libbrotlicommon REQUIRED IMPORTED_TARGET libbrotlicommon)
 
 # Set compiler flags
-if(NOT CANONICAL_PREFIXES)
-  add_definitions(-no-canonical-prefixes)
-endif()
 if(NOISY_LOGGING)
   add_definitions(-DFONT_COMPRESSION_BIN)
 endif()
