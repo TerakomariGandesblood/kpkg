@@ -59,7 +59,6 @@ include(CompilerOptions)
 # Find package
 # ---------------------------------------------------------------------------------------
 find_package(fmt REQUIRED)
-find_package(spdlog REQUIRED)
 find_package(klib REQUIRED)
 find_package(CLI11 REQUIRED)
 find_package(semver REQUIRED)
@@ -92,7 +91,6 @@ target_link_libraries(
   ${KPKG_LIBRARY}
   PRIVATE library_json
           fmt::fmt
-          spdlog::spdlog
           semver::semver
           simdjson::simdjson
           ${Boost_LIBRARIES}
