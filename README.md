@@ -27,6 +27,7 @@ C++ Library Manager
 - spdlog ([MIT License](https://github.com/gabime/spdlog/blob/v1.x/LICENSE))
 - simdjson ([Apache License 2.0](https://github.com/simdjson/simdjson/blob/master/LICENSE))
 - semver ([MIT License](https://github.com/Neargye/semver/blob/master/LICENSE))
+- Catch2 ([Boost License](https://github.com/catchorg/Catch2/blob/devel/LICENSE.txt))
 
 ## Build
 
