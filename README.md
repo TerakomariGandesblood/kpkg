@@ -16,6 +16,18 @@ C++ Library Manager
 
 - [kenv](https://github.com/KaiserLancelot/kenv)
 
+## Third party
+
+- klib ([MIT License](https://github.com/KaiserLancelot/klib/blob/main/LICENSE))
+- mimalloc ([MIT License](https://github.com/microsoft/mimalloc/blob/master/LICENSE))
+- Boost ([Boost License](https://www.boost.org/users/license.html))
+- GSL ([MIT License](https://github.com/Microsoft/GSL/blob/master/LICENSE))
+- CLI11 ([License](https://github.com/CLIUtils/CLI11/blob/main/LICENSE))
+- fmt ([License](https://github.com/fmtlib/fmt/blob/master/LICENSE.rst))
+- spdlog ([MIT License](https://github.com/gabime/spdlog/blob/v1.x/LICENSE))
+- simdjson ([Apache License 2.0](https://github.com/simdjson/simdjson/blob/master/LICENSE))
+- semver ([MIT License](https://github.com/Neargye/semver/blob/master/LICENSE))
+
 ## Build
 
 ```bash
