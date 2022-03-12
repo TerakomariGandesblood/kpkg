@@ -74,7 +74,7 @@ void Library::init(const std::string& proxy) {
   }
 
   dir_name_ = name_ + "-" + tag_name_;
-  file_name_ = dir_name_ + ".tar.gz";
+  file_name_ = dir_name_ + ".archive";
 }
 
 void Library::download(const std::string& proxy) const {
@@ -92,18 +92,16 @@ void Library::download(const std::string& proxy) const {
 
 void Library::build() const {
   if (std::filesystem::is_directory(dir_name_)) {
-    klib::info("Use exists folder: {}", dir_name_);
-  } else {
-    auto temp = klib::outermost_folder_name(file_name_);
-    if (!temp.has_value()) {
-      klib::error("No outermost folder");
-    }
-    klib::decompress(file_name_);
-
-    klib::info("Decompress file: {} to {}", file_name_, *temp);
-    klib::info("Rename folder from {} to {}", *temp, dir_name_);
-    std::filesystem::rename(*temp, dir_name_);
+    std::filesystem::remove_all(dir_name_);
   }
+
+  auto temp = klib::outermost_folder_name(file_name_);
+  if (!temp.has_value()) {
+    klib::error("No outermost folder");
+  }
+  klib::decompress(file_name_);
+
+  std::filesystem::rename(*temp, dir_name_);
 
   if (name_ == "woff2") {
     klib::ChangeWorkingDir dir(dir_name_);
@@ -140,6 +138,9 @@ void Library::build() const {
     klib::write_file("openssl.pc", false, openssl, openssl_size);
     klib::exec("sudo cp openssl.pc /usr/local/lib/pkgconfig");
   }
+
+  std::filesystem::remove(file_name_);
+  std::filesystem::remove_all(dir_name_);
 }
 
 void Library::print() const { klib::info("{:<25} {:<25}", name_, tag_name_); }
