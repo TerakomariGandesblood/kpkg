@@ -139,6 +139,7 @@ void Library::build() const {
     klib::exec("sudo cp openssl.pc /usr/local/lib/pkgconfig");
   }
 
+  dir.reset();
   klib::exec("sudo rm " + file_name_);
   klib::exec("sudo rm -rf " + dir_name_);
 }
