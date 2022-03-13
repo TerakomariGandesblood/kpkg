@@ -184,7 +184,7 @@
       "libpsl"
     ],
     "cmd": [
-      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lssl -lcrypto -lz\" LIBS=\"-lidn2 -lunistring\" --disable-debug --enable-optimize --disable-curldebug --enable-symbol-hiding --disable-ares --disable-ech --disable-code-coverage --disable-shared --enable-static --enable-http --disable-ftp --disable-file --disable-ldap --disable-ldaps --disable-rtsp --disable-dict --disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smb --disable-smtp --disable-gopher --disable-mqtt --disable-manual --enable-libcurl-option --enable-libgcc --enable-ipv6 --enable-openssl-auto-load-config --enable-threaded-resolver --enable-verbose --disable-sspi --enable-crypto-auth --disable-ntlm --disable-ntlm-wb --disable-tls-srp --disable-unix-sockets --enable-cookies --disable-socketpair --enable-http-auth --enable-doh --enable-mime --enable-dateparse --disable-netrc --enable-progress-meter --enable-dnsshuffle --disable-get-easy-options --enable-alt-svc --enable-hsts --with-openssl --without-hyper --with-zlib --with-brotli --with-zstd --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt' --with-ca-path='/etc/ssl/certs' --with-libpsl --without-libgsasl --without-libssh2 --without-libssh --without-librtmp --with-libidn2 --with-nghttp2 --without-ngtcp2 --without-nghttp3 --without-quiche",
+      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lssl -lcrypto -lz\" LIBS=\"-L/usr/local/lib -lidn2 -lunistring\" --disable-debug --enable-optimize --disable-curldebug --enable-symbol-hiding --disable-ares --disable-ech --disable-code-coverage --disable-shared --enable-static --enable-http --disable-ftp --disable-file --disable-ldap --disable-ldaps --disable-rtsp --disable-dict --disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smb --disable-smtp --disable-gopher --disable-mqtt --disable-manual --enable-libcurl-option --enable-libgcc --enable-ipv6 --enable-openssl-auto-load-config --enable-threaded-resolver --enable-verbose --disable-sspi --enable-crypto-auth --disable-ntlm --disable-ntlm-wb --disable-tls-srp --disable-unix-sockets --enable-cookies --disable-socketpair --enable-http-auth --enable-doh --enable-mime --enable-dateparse --disable-netrc --enable-progress-meter --enable-dnsshuffle --disable-get-easy-options --enable-alt-svc --enable-hsts --with-openssl --without-hyper --with-zlib --with-brotli --with-zstd --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt' --with-ca-path='/etc/ssl/certs' --with-libpsl --without-libgsasl --without-libssh2 --without-libssh --without-librtmp --with-libidn2 --with-nghttp2 --without-ngtcp2 --without-nghttp3 --without-quiche",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
@@ -619,10 +619,9 @@
     "download_url": "https://github.com/glennrp/libpng/archive/refs/tags/v1.6.37.tar.gz",
     "dependency": ["zlib-ng"],
     "cmd": [
-      "export LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lz\"",
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DPNG_BUILD_ZLIB=OFF -DPNG_SHARED=OFF -DPNG_STATIC=ON -DPNG_TESTS=OFF -DPNG_DEBUG=OFF -DPNG_HARDWARE_OPTIMIZATIONS=ON",
-      "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
+      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lz\" --disable-shared --enable-static --enable-hardware-optimizations --enable-intel-sse",
+      "make -j\"$(nproc)\"",
+      "sudo make install"
     ]
   },
   {
@@ -646,10 +645,10 @@
     "download_url": "https://github.com/webmproject/libwebp/archive/refs/tags/v1.2.2.tar.gz",
     "dependency": ["zlib-ng", "libpng", "libjpeg-turbo"],
     "cmd": [
-      "export LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lpng -ljpeg -lz\"",
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DWEBP_ENABLE_SIMD=ON -DWEBP_BUILD_ANIM_UTILS=OFF -DWEBP_BUILD_CWEBP=ON -DWEBP_BUILD_DWEBP=ON -DWEBP_BUILD_GIF2WEBP=OFF -DWEBP_BUILD_IMG2WEBP=OFF -DWEBP_BUILD_VWEBP=OFF -DWEBP_BUILD_WEBPINFO=OFF -DWEBP_BUILD_LIBWEBPMUX=OFF -DWEBP_BUILD_WEBPMUX=OFF -DWEBP_BUILD_EXTRAS=OFF -DWEBP_BUILD_WEBP_JS=OFF -DWEBP_USE_THREAD=ON",
-      "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
+      "./autogen.sh",
+      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lpng -ljpeg -lz\" LIBS=\"-L/usr/local/lib -lz -lm\" --disable-shared --enable-static --disable-libwebpmux --enable-libwebpdemux --enable-libwebpdecoder --disable-libwebpextras --disable-neon --disable-neon-rtcd --disable-gl --disable-sdl --enable-png --enable-jpeg --disable-tiff --disable-gif --disable-wic",
+      "make -j\"$(nproc)\"",
+      "sudo make install"
     ]
   }
 ]
