@@ -139,8 +139,8 @@ void Library::build() const {
     klib::exec("sudo cp openssl.pc /usr/local/lib/pkgconfig");
   }
 
-  std::filesystem::remove(file_name_);
-  std::filesystem::remove_all(dir_name_);
+  klib::exec("sudo rm " + file_name_);
+  klib::exec("sudo rm -rf " + dir_name_);
 }
 
 void Library::print() const { klib::info("{:<25} {:<25}", name_, tag_name_); }
