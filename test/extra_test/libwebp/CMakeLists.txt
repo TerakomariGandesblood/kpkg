@@ -4,10 +4,11 @@ project(test_library_install LANGUAGES CXX)
 
 include(../common.cmake)
 
-find_package(WebP REQUIRED)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(libwebp REQUIRED IMPORTED_TARGET libwebp)
 
 add_executable(libwebp main.cpp)
-target_link_libraries(libwebp WebP::webp)
+target_link_libraries(libwebp PkgConfig::libwebp)
 
 add_custom_command(
   TARGET libwebp
