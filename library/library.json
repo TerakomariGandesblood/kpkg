@@ -625,14 +625,15 @@
     ]
   },
   {
-    "name": "libjpeg-turbo",
-    "releases_url": "https://api.github.com/repos/libjpeg-turbo/libjpeg-turbo/releases/latest",
+    "name": "mozjpeg",
+    "releases_url": "https://api.github.com/repos/mozilla/mozjpeg/releases/latest",
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
-    "dependency": [],
+    "dependency": ["libpng"],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DENABLE_SHARED=OFF -DENABLE_STATIC=ON -DREQUIRE_SIMD=ON -DWITH_JAVA=OFF -DWITH_JPEG8=ON -DWITH_SIMD=ON -DWITH_TURBOJPEG=OFF -DWITH_FUZZ=OFF",
+      "export LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lpng -lz -lm\"",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DENABLE_SHARED=OFF -DENABLE_STATIC=ON -DREQUIRE_SIMD=ON -DPNG_SUPPORTED=ON -DWITH_JAVA=OFF -DWITH_JPEG8=ON -DWITH_SIMD=ON -DWITH_TURBOJPEG=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -643,7 +644,7 @@
     "tags_url": "",
     "tag_name": "v1.2.2",
     "download_url": "https://github.com/webmproject/libwebp/archive/refs/tags/v1.2.2.tar.gz",
-    "dependency": ["zlib-ng", "libpng", "libjpeg-turbo"],
+    "dependency": ["zlib-ng", "libpng", "mozjpeg"],
     "cmd": [
       "./autogen.sh",
       "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lpng -ljpeg -lz\" LIBS=\"-L/usr/local/lib -lz -lm\" --disable-shared --enable-static --disable-libwebpmux --enable-libwebpdemux --enable-libwebpdecoder --disable-libwebpextras --disable-neon --disable-neon-rtcd --disable-gl --disable-sdl --enable-png --enable-jpeg --disable-tiff --disable-gif --disable-wic",
