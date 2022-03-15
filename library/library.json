@@ -237,7 +237,8 @@
     "dependency": [],
     "cmd": [
       "cd build/cmake",
-      "export CFLAGS=\"$CFLAGS -DZSTD_MULTITHREAD\" && export CXXFLAGS=\"$CXXFLAGS -DZSTD_MULTITHREAD\"",
+      "export CFLAGS=\"$CFLAGS -DZSTD_MULTITHREAD\"",
+      "export CXXFLAGS=\"$CXXFLAGS -DZSTD_MULTITHREAD\"",
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DZSTD_LEGACY_SUPPORT=OFF -DZSTD_MULTITHREAD_SUPPORT=ON -DZSTD_BUILD_PROGRAMS=ON -DZSTD_BUILD_CONTRIB=OFF -DZSTD_BUILD_TESTS=OFF -DZSTD_BUILD_SHARED=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
@@ -296,16 +297,15 @@
   },
   {
     "name": "oneTBB",
-    "releases_url": "https://api.github.com/repos/oneapi-src/oneTBB/releases/latest",
+    "releases_url": "",
     "tags_url": "",
-    "tag_name": "",
-    "download_url": "",
+    "tag_name": "v2021.6.0-rc1",
+    "download_url": "https://github.com/oneapi-src/oneTBB/archive/refs/tags/v2021.6.0-rc1.zip",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DTBB_TEST=OFF -DTBB_EXAMPLES=OFF -DTBB4PY_BUILD=OFF -DTBB_BUILD=ON -DTBBMALLOC_BUILD=OFF -DTBB_CPF=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DTBB_TEST=OFF -DTBB_EXAMPLES=OFF -DTBB4PY_BUILD=OFF -DTBB_BUILD=ON -DTBBMALLOC_BUILD=OFF -DTBBMALLOC_PROXY_BUILD=OFF -DTBB_CPF=OFF -DTBB_FIND_PACKAGE=OFF -DTBB_DISABLE_HWLOC_AUTOMATIC_SEARCH=ON -DTBB_ENABLE_IPO=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install",
-      "sudo ldconfig"
+      "sudo cmake --build build --config Release --target install"
     ]
   },
   {
@@ -331,7 +331,8 @@
     "download_url": "",
     "dependency": [],
     "cmd": [
-      "export CFLAGS=\"$CFLAGS -DCATCH_CONFIG_ENABLE_BENCHMARKING\" && export CXXFLAGS=\"$CXXFLAGS -DCATCH_CONFIG_ENABLE_BENCHMARKING\"",
+      "export CFLAGS=\"$CFLAGS -DCATCH_CONFIG_ENABLE_BENCHMARKING\"",
+      "export CXXFLAGS=\"$CXXFLAGS -DCATCH_CONFIG_ENABLE_BENCHMARKING\"",
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCATCH_BUILD_TESTING=OFF -DCATCH_BUILD_EXAMPLES=OFF -DCATCH_BUILD_EXTRA_TESTS=OFF -DCATCH_BUILD_STATIC_LIBRARY=ON -DCATCH_INSTALL_DOCS=OFF -DCATCH_INSTALL_HELPERS=ON",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"

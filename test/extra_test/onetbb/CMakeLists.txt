@@ -9,6 +9,7 @@ else()
   add_cxx_compiler_flag_no_check("-fsanitize-recover=alignment")
 endif()
 
+find_package(Threads REQUIRED)
 find_package(TBB REQUIRED)
 if(NOT KPKG_SANITIZER)
   message(STATUS "Use mimalloc")
