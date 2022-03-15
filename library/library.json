@@ -7,9 +7,7 @@
     "download_url": "https://github.com/Kitware/CMake/releases/download/v3.22.3/cmake-3.22.3.tar.gz",
     "dependency": ["BoringSSL"],
     "cmd": [
-      "export CFLAGS=\"$CFLAGS -flto -fno-fat-lto-objects\"",
-      "export CXXFLAGS=\"$CXXFLAGS -flto -fno-fat-lto-objects\"",
-      "export LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lssl -lcrypto -flto -fno-fat-lto-objects\"",
+      "export LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lssl -lcrypto\"",
       "./bootstrap --parallel=\"$(nproc)\" -- -DCMAKE_BUILD_TYPE:STRING=Release",
       "make -j\"$(nproc)\"",
       "sudo make install"
@@ -23,9 +21,6 @@
     "download_url": "",
     "dependency": [],
     "cmd": [
-      "export CFLAGS=\"$CFLAGS -flto -fno-fat-lto-objects\"",
-      "export CXXFLAGS=\"$CXXFLAGS -flto -fno-fat-lto-objects\"",
-      "export LDFLAGS=\"$LDFLAGS -flto -fno-fat-lto-objects\"",
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
@@ -39,9 +34,7 @@
     "download_url": "",
     "dependency": ["zlib-ng", "BoringSSL"],
     "cmd": [
-      "export CFLAGS=\"$CFLAGS -flto -fno-fat-lto-objects\"",
-      "export CXXFLAGS=\"$CXXFLAGS -flto -fno-fat-lto-objects\"",
-      "export LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lcrypto -lz -flto -fno-fat-lto-objects\"",
+      "export LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lcrypto -lz\"",
       "make CFLAGS=\"$CFLAGS\" CXXFLAGS=\"$CXXFLAGS\" LDFLAGS=\"$LDFLAGS\" -j\"$(nproc)\"",
       "sudo make install"
     ]
@@ -54,9 +47,6 @@
     "download_url": "",
     "dependency": [],
     "cmd": [
-      "export CFLAGS=\"$CFLAGS -flto -fno-fat-lto-objects\"",
-      "export CXXFLAGS=\"$CXXFLAGS -flto -fno-fat-lto-objects\"",
-      "export LDFLAGS=\"$LDFLAGS -flto -fno-fat-lto-objects\"",
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
