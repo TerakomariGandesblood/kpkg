@@ -40,19 +40,6 @@
     ]
   },
   {
-    "name": "doxygen",
-    "releases_url": "",
-    "tags_url": "https://api.github.com/repos/doxygen/doxygen/tags",
-    "tag_name": "",
-    "download_url": "",
-    "dependency": [],
-    "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release",
-      "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
-    ]
-  },
-  {
     "name": "lcov",
     "releases_url": "https://api.github.com/repos/linux-test-project/lcov/releases/latest",
     "tags_url": "",
