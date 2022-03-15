@@ -12,10 +12,6 @@
 
 C++ Library Manager
 
-## Environment
-
-- [kenv](https://github.com/KaiserLancelot/kenv)
-
 ## Third party
 
 - klib ([MIT License](https://github.com/KaiserLancelot/klib/blob/main/LICENSE))
@@ -28,24 +24,9 @@ C++ Library Manager
 - semver ([MIT License](https://github.com/Neargye/semver/blob/master/LICENSE))
 - Catch2 ([Boost License](https://github.com/catchorg/Catch2/blob/devel/LICENSE.txt))
 
-## Build
+## Build environment
 
-```bash
-cmake -S . -B build
-cmake --build build --config Release -j"$(nproc)"
-```
-
-## Install
-
-```bash
-sudo cmake --build build --config Release --target install
-```
-
-## Uninstall
-
-```bash
-sudo cmake --build build --config Release --target uninstall
-```
+- [kenv](https://github.com/KaiserLancelot/kenv)
 
 ## Usage
 
