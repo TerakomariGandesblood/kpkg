@@ -39,7 +39,7 @@ jobs:
           ./kpkg install libwebp woff2 curl icu boost catch2 fmt libarchive nameof zstd \
           boringssl spdlog sqlcipher tidy-html5 pugixml onetbb cli11 indicators \
           semver gsl dbg-macro scope_guard argon2 simdjson opencc utfcpp \
-          simdutf xxHash mimalloc cmark backward-cpp llhttp re2
+          simdutf xxHash mimalloc cmark backward-cpp llhttp re2 parallel-hashmap
         working-directory: build/tool
 
       - name: Test
