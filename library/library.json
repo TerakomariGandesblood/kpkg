@@ -78,16 +78,20 @@
     "name": "BoringSSL",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "BoringSSL-fork",
-    "download_url": "https://github.com/KaiserLancelot/boringssl/archive/refs/heads/master-with-bazel.zip",
+    "tag_name": "BoringSSL-master-with-bazel",
+    "download_url": "https://github.com/google/boringssl/archive/refs/heads/master-with-bazel.zip",
     "dependency": [],
     "cmd": [
+      "patch -p1 < 0001-expose-ripemd160.patch",
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cp build/bssl /usr/local/bin",
       "sudo cp build/libcrypto.a /usr/local/lib",
       "sudo cp build/libssl.a /usr/local/lib",
-      "sudo cp -r src/include /usr/local"
+      "sudo cp -r src/include /usr/local",
+      "sudo cp libcrypto.pc /usr/local/lib/pkgconfig",
+      "sudo cp libssl.pc /usr/local/lib/pkgconfig",
+      "sudo cp openssl.pc /usr/local/lib/pkgconfig"
     ]
   },
   {
@@ -200,6 +204,7 @@
     "download_url": "",
     "dependency": ["zlib-ng", "BoringSSL"],
     "cmd": [
+      "patch -p1 < 0001-fix-OPENSSL_VERSION_TEXT.patch",
       "./configure CFLAGS=\"$CFLAGS -DSQLITE_HAS_CODEC\" LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lcrypto -lz\" --disable-shared --enable-static --enable-releasemode --enable-tempstore=yes --disable-tcl --disable-readline --disable-debug --disable-load-extension",
       "make -j\"$(nproc)\"",
       "sudo make install"
@@ -522,7 +527,8 @@
       "./configure --disable-shared --enable-static --disable-valgrind-tests --disable-gtk-doc --disable-gtk-doc-html --disable-gtk-doc-pdf --disable-nls --disable-code-coverage --disable-doc",
       "sed -i '/^#define HAVE_SYMVER_ALIAS_SUPPORT 1$/d' config.h",
       "make -j\"$(nproc)\"",
-      "sudo make install"
+      "sudo make install",
+      "sudo cp libunistring.pc /usr/local/lib/pkgconfig"
     ]
   },
   {
@@ -585,6 +591,7 @@
     "download_url": "",
     "dependency": ["brotli"],
     "cmd": [
+      "patch -p1 < 0001-fix-brotli-link.patch",
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DNOISY_LOGGING=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"

@@ -32,10 +32,41 @@ extern int libunistring_size;
 extern char filters[];
 extern int filters_size;
 
+extern char boringssl[];
+extern int boringssl_size;
+
 extern char woff2[];
 extern int woff2_size;
 
+extern char sqlcipher[];
+extern int sqlcipher_size;
+
 namespace kpkg {
+
+namespace {
+
+void write_files(const std::string& library_name, const std::string& dir_name) {
+  klib::ChangeWorkingDir dir(dir_name);
+
+  if (library_name == "woff2") {
+    klib::write_file("0001-fix-brotli-link.patch", false, woff2, woff2_size);
+  } else if (library_name == "BoringSSL") {
+    klib::write_file("0001-expose-ripemd160.patch", false, boringssl,
+                     boringssl_size);
+    klib::write_file("libcrypto.pc", false, libcrypto, libcrypto_size);
+    klib::write_file("libssl.pc", false, libssl, libssl_size);
+    klib::write_file("openssl.pc", false, openssl, openssl_size);
+  } else if (library_name == "sqlcipher") {
+    klib::write_file("0001-fix-OPENSSL_VERSION_TEXT.patch", false, sqlcipher,
+                     sqlcipher_size);
+  } else if (library_name == "icu") {
+    klib::write_file("filters.json", false, filters, filters_size);
+  } else if (library_name == "libunistring") {
+    klib::write_file("libunistring.pc", false, libunistring, libunistring_size);
+  }
+}
+
+}  // namespace
 
 Library::Library(const std::string& name, const std::string& releases_url,
                  const std::string& tags_url,
@@ -103,43 +134,13 @@ void Library::build() const {
 
   std::filesystem::rename(*temp, dir_name_);
 
-  if (name_ == "woff2") {
-    klib::ChangeWorkingDir dir(dir_name_);
-    klib::write_file("CMakeLists.txt", false, woff2, woff2_size);
-  } else if (name_ == "icu") {
-    klib::ChangeWorkingDir dir(dir_name_);
-    klib::write_file("filters.json", false, filters, filters_size);
-  }
+  write_files(name_, dir_name_);
 
+  if (!std::filesystem::exists("/usr/local/lib/pkgconfig")) {
+    klib::exec("sudo mkdir /usr/local/lib/pkgconfig");
+  }
   run_commands(cmd_, dir_name_);
 
-  std::unique_ptr<klib::ChangeWorkingDir> dir;
-  if (name_ == "libunistring" || name_ == "BoringSSL") {
-    klib::info("Start generating pkgconfig file");
-
-    if (!std::filesystem::exists("/usr/local/lib/pkgconfig")) {
-      klib::exec("sudo mkdir /usr/local/lib/pkgconfig");
-    }
-
-    dir = std::make_unique<klib::ChangeWorkingDir>(dir_name_);
-    boost::ignore_unused(dir);
-  }
-
-  if (name_ == "libunistring") {
-    klib::write_file("libunistring.pc", false, libunistring, libunistring_size);
-    klib::exec("sudo cp libunistring.pc /usr/local/lib/pkgconfig");
-  } else if (name_ == "BoringSSL") {
-    klib::write_file("libcrypto.pc", false, libcrypto, libcrypto_size);
-    klib::exec("sudo cp libcrypto.pc /usr/local/lib/pkgconfig");
-
-    klib::write_file("libssl.pc", false, libssl, libssl_size);
-    klib::exec("sudo cp libssl.pc /usr/local/lib/pkgconfig");
-
-    klib::write_file("openssl.pc", false, openssl, openssl_size);
-    klib::exec("sudo cp openssl.pc /usr/local/lib/pkgconfig");
-  }
-
-  dir.reset();
   klib::exec("sudo rm " + file_name_);
   klib::exec("sudo rm -rf " + dir_name_);
 }

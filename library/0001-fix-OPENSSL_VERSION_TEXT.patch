@@ -1,0 +1,24 @@
+From 04c7ed3e0aeac228275088945f7f947b7cddbeb9 Mon Sep 17 00:00:00 2001
+From: Kaiser <1244713586@qq.com>
+Date: Sat, 19 Mar 2022 16:22:28 +0800
+Subject: [PATCH] fix OPENSSL_VERSION_TEXT
+
+---
+ src/crypto_openssl.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/crypto_openssl.c b/src/crypto_openssl.c
+index d8f2236..c4a40f9 100644
+--- a/src/crypto_openssl.c
++++ b/src/crypto_openssl.c
+@@ -39,6 +39,7 @@
+ #include <openssl/objects.h>
+ #include <openssl/hmac.h>
+ #include <openssl/err.h>
++#include <openssl/crypto.h>
+ 
+ static unsigned int openssl_init_count = 0;
+ 
+-- 
+2.32.0
+
