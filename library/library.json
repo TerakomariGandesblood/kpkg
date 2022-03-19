@@ -592,7 +592,7 @@
     "dependency": ["brotli"],
     "cmd": [
       "patch -p1 < 0001-fix-brotli-link.patch",
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DNOISY_LOGGING=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DCANONICAL_PREFIXES=ON -DNOISY_LOGGING=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]

@@ -1,34 +1,17 @@
-From d386e175d74d1a07109513db39611f66c5c6b5c1 Mon Sep 17 00:00:00 2001
+From f4b0a94942062b3b55ef32e2ea20e9a6b3610e96 Mon Sep 17 00:00:00 2001
 From: Kaiser <1244713586@qq.com>
-Date: Sat, 19 Mar 2022 17:56:32 +0800
+Date: Sat, 19 Mar 2022 18:02:21 +0800
 Subject: [PATCH] fix brotli link
 
 ---
- CMakeLists.txt | 26 ++++++++------------------
- 1 file changed, 8 insertions(+), 18 deletions(-)
+ CMakeLists.txt | 20 +++++++-------------
+ 1 file changed, 7 insertions(+), 13 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index ecfbb83..aafccec 100644
+index ecfbb83..236f64d 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -7,7 +7,7 @@
- # several CI services, such as Travis and Drone, use it.  Solaris 11
- # has 2.8.6, and it's not difficult to support if you already have to
- # support 2.8.7.
--cmake_minimum_required(VERSION 2.8.6)
-+cmake_minimum_required(VERSION 3.18)
- 
- project(woff2)
- 
-@@ -15,7 +15,6 @@ include(GNUInstallDirs)
- 
- # Build options
- option(BUILD_SHARED_LIBS "Build shared libraries" ON)
--option(CANONICAL_PREFIXES "Canonical prefixes" OFF)
- option(NOISY_LOGGING "Noisy logging" ON)
- 
- # Version information
-@@ -32,20 +31,12 @@ if ("${isSystemDir}" STREQUAL "-1")
+@@ -32,15 +32,10 @@ if ("${isSystemDir}" STREQUAL "-1")
  endif()
  
  # Find Brotli dependencies
@@ -47,13 +30,8 @@ index ecfbb83..aafccec 100644
 +pkg_check_modules(libbrotlicommon REQUIRED IMPORTED_TARGET libbrotlicommon)
  
  # Set compiler flags
--if (NOT CANONICAL_PREFIXES)
--    add_definitions(-no-canonical-prefixes)
--  endif ()
- if (NOISY_LOGGING)
-     add_definitions(-DFONT_COMPRESSION_BIN)
- endif ()
-@@ -64,8 +55,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${COMMON_FLAG}")
+ if (NOT CANONICAL_PREFIXES)
+@@ -64,8 +59,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${COMMON_FLAG}")
  set(CMAKE_CXX_STANDARD 11)
  
  # Set search path for our private/public headers as well as Brotli headers
@@ -63,7 +41,7 @@ index ecfbb83..aafccec 100644
  
  # Common part used by decoder and encoder
  add_library(woff2common
-@@ -77,7 +67,7 @@ add_library(woff2common
+@@ -77,7 +71,7 @@ add_library(woff2common
  add_library(woff2dec
              src/woff2_dec.cc
              src/woff2_out.cc)
@@ -72,7 +50,7 @@ index ecfbb83..aafccec 100644
  add_executable(woff2_decompress src/woff2_decompress.cc)
  target_link_libraries(woff2_decompress woff2dec)
  
-@@ -88,7 +78,7 @@ add_library(woff2enc
+@@ -88,7 +82,7 @@ add_library(woff2enc
              src/normalize.cc
              src/transform.cc
              src/woff2_enc.cc)
