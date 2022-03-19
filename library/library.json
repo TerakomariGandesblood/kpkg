@@ -527,8 +527,7 @@
       "./configure --disable-shared --enable-static --disable-valgrind-tests --disable-gtk-doc --disable-gtk-doc-html --disable-gtk-doc-pdf --disable-nls --disable-code-coverage --disable-doc",
       "sed -i '/^#define HAVE_SYMVER_ALIAS_SUPPORT 1$/d' config.h",
       "make -j\"$(nproc)\"",
-      "sudo make install",
-      "sudo cp libunistring.pc /usr/local/lib/pkgconfig"
+      "sudo make install"
     ]
   },
   {
@@ -541,7 +540,8 @@
     "cmd": [
       "./configure --disable-shared --enable-static",
       "make -j\"$(nproc)\"",
-      "sudo make install"
+      "sudo make install",
+      "sudo cp libunistring.pc /usr/local/lib/pkgconfig"
     ]
   },
   {
