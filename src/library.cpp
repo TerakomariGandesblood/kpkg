@@ -39,6 +39,9 @@ extern int woff2_size;
 extern char sqlcipher[];
 extern int sqlcipher_size;
 
+extern char libidn2[];
+extern int libidn2_size;
+
 namespace kpkg {
 
 namespace {
@@ -61,6 +64,9 @@ void write_files(const std::string& library_name, const std::string& dir_name) {
     klib::write_file("filters.json", false, filters, filters_size);
   } else if (library_name == "libunistring") {
     klib::write_file("libunistring.pc", false, libunistring, libunistring_size);
+  } else if (library_name == "libidn2") {
+    klib::write_file("0001-remove-HAVE_SYMVER_ALIAS_SUPPORT.patch", false,
+                     libidn2, libidn2_size);
   }
 }
 

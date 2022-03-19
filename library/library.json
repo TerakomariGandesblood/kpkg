@@ -524,8 +524,8 @@
     "download_url": "https://ftp.gnu.org/gnu/libidn/libidn2-2.3.2.tar.gz",
     "dependency": ["libunistring"],
     "cmd": [
+      "patch -p1 < 0001-remove-HAVE_SYMVER_ALIAS_SUPPORT.patch",
       "./configure --disable-shared --enable-static --disable-valgrind-tests --disable-gtk-doc --disable-gtk-doc-html --disable-gtk-doc-pdf --disable-nls --disable-code-coverage --disable-doc",
-      "sed -i '/^#define HAVE_SYMVER_ALIAS_SUPPORT 1$/d' config.h",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]

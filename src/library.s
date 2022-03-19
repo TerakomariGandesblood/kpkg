@@ -16,6 +16,8 @@
     .global woff2_size
     .global sqlcipher
     .global sqlcipher_size
+    .global libidn2
+    .global libidn2_size
     .section .rodata
 library:
     .incbin "library.json"
@@ -70,3 +72,9 @@ sqlcipher:
 sqlcipher_end:
 sqlcipher_size:
     .int sqlcipher_end - sqlcipher
+
+libidn2:
+    .incbin "0001-remove-HAVE_SYMVER_ALIAS_SUPPORT.patch"
+libidn2_end:
+libidn2_size:
+    .int libidn2_end - libidn2
