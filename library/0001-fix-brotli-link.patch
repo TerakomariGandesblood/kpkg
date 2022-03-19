@@ -1,16 +1,25 @@
-From 5511652e11baf498bb65a029d005eb46dcedb9e1 Mon Sep 17 00:00:00 2001
+From 9a6642ecafb431d92a40e30593990233603dae5d Mon Sep 17 00:00:00 2001
 From: Kaiser <1244713586@qq.com>
-Date: Sat, 19 Mar 2022 15:32:04 +0800
+Date: Sat, 19 Mar 2022 17:48:40 +0800
 Subject: [PATCH] fix brotli link
 
 ---
- CMakeLists.txt | 20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
+ CMakeLists.txt | 22 ++++++++--------------
+ 1 file changed, 8 insertions(+), 14 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index ecfbb83..236f64d 100644
+index ecfbb83..14e5f6f 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
+@@ -7,7 +7,7 @@
+ # several CI services, such as Travis and Drone, use it.  Solaris 11
+ # has 2.8.6, and it's not difficult to support if you already have to
+ # support 2.8.7.
+-cmake_minimum_required(VERSION 2.8.6)
++cmake_minimum_required(VERSION 3.18)
+ 
+ project(woff2)
+ 
 @@ -32,15 +32,10 @@ if ("${isSystemDir}" STREQUAL "-1")
  endif()
  
