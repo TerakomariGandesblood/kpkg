@@ -15,8 +15,8 @@ int main() {
   }
 
   auto image = vips::VImage::new_from_file("avatar.jpg");
-  image.webpsave("fuck.wepb");
-  image.jpegsave("fuck.jpeg");
+  image.webpsave("avatar.wepb");
+  image.jpegsave("avatar.jpeg");
 
 #ifdef KPKG_SANITIZER
   __lsan_enable();
