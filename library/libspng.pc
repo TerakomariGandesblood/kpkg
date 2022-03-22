@@ -1,0 +1,12 @@
+prefix=/usr/local
+exec_prefix=/usr/local
+libdir=/usr/local/lib
+includedir=/usr/local/include/
+
+Name: libspng
+Description: PNG decoding and encoding library
+Version: 0.7.2
+Requires: zlib
+Libs: -L${libdir} -lspng_static -lz -lm
+Libs.private: -lz -lm
+Cflags: -I${includedir}

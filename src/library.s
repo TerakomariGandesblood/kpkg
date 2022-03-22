@@ -18,6 +18,8 @@
     .global sqlcipher_size
     .global libidn2
     .global libidn2_size
+    .global libspng
+    .global libspng_size
     .section .rodata
 library:
     .incbin "library.json"
@@ -78,3 +80,9 @@ libidn2:
 libidn2_end:
 libidn2_size:
     .int libidn2_end - libidn2
+
+libspng:
+    .incbin "libspng.pc"
+libspng_end:
+libspng_size:
+    .int libspng_end - libspng

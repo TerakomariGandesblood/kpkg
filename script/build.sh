@@ -6,6 +6,9 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   curl -L https://github.com/KaiserLancelot/klib/releases/download/v1.11.0/klib-1.11.0-Linux.deb \
     -o klib.deb
   sudo dpkg -i klib.deb
+
+  # TODO TEMP
+  sudo apt update && sudo apt install meson
 else
   echo "The system does not support: $OSTYPE"
   exit 1
