@@ -646,7 +646,7 @@
     "download_url": "https://github.com/GNOME/glib/archive/refs/tags/2.72.0.tar.gz",
     "dependency": ["zlib-ng", "libpcre", "libffi"],
     "cmd": [
-      "export LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lz\"",
+      "export LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lz -lpcre\"",
       "meson setup build --buildtype=release --default-library=static --libdir=lib -Dselinux=disabled -Dxattr=false -Dman=false -Ddtrace=false -Dsystemtap=false -Dsysprof=disabled -Dgtk_doc=false -Dfam=false -Dtests=false -Dinstalled_tests=false -Dnls=disabled -Doss_fuzz=disabled -Dglib_debug=disabled -Dlibelf=disabled",
       "cd build",
       "meson compile",
@@ -670,11 +670,11 @@
     "name": "libvips",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "master",
-    "download_url": "https://github.com/libvips/libvips/archive/refs/heads/master.zip",
+    "tag_name": "v8.12.2",
+    "download_url": "https://github.com/libvips/libvips/releases/download/v8.12.2/vips-8.12.2.tar.gz",
     "dependency": ["libspng", "mozjpeg", "libwebp", "glib", "libexpat"],
     "cmd": [
-      "./configure --disable-debug --disable-deprecated --disable-shared --enable-static --disable-doxygen --disable-modules --disable-gtk-doc --disable-gtk-doc-html --disable-gtk-doc-pdf --disable-magickload --disable-magicksave --without-gsf --without-fftw --without-magick --without-orc --without-lcms --without-OpenEXR --without-nifti --without-x --without-libjxl --without-libopenjp2 --without-heif --without-pdfium --without-poppler --without-rsvg --without-zlib --without-openslide --without-matio --without-nsgif --without-ppm --without-analyze --without-radiance --without-cfitsio --with-libwebp --without-pangocairo --without-fontconfig --without-tiff --with-libspng --without-png --without-imagequant --with-jpeg --without-libexif --without-cgif",
+      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lgio-2.0 -lglib-2.0 -lgmodule-2.0 -lgobject-2.0\" --disable-debug --disable-deprecated --disable-shared --enable-static --disable-doxygen --disable-modules --disable-gtk-doc --disable-gtk-doc-html --disable-gtk-doc-pdf --disable-magickload --disable-magicksave --without-gsf --without-fftw --without-magick --without-orc --without-lcms --without-OpenEXR --without-nifti --without-x --without-libjxl --without-libopenjp2 --without-heif --without-pdfium --without-poppler --without-rsvg --without-zlib --without-openslide --without-matio --without-nsgif --without-ppm --without-analyze --without-radiance --without-cfitsio --with-libwebp --without-pangocairo --without-fontconfig --without-tiff --with-libspng --without-png --without-imagequant --with-jpeg --without-libexif --without-cgif",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
