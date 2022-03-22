@@ -20,6 +20,8 @@
     .global libidn2_size
     .global libspng
     .global libspng_size
+    .global libvips
+    .global libvips_size
     .section .rodata
 library:
     .incbin "library.json"
@@ -86,3 +88,9 @@ libspng:
 libspng_end:
 libspng_size:
     .int libspng_end - libspng
+
+libvips:
+    .incbin "0001-Add-spngsave.patch"
+libvips_end:
+libvips_size:
+    .int libvips_end - libvips

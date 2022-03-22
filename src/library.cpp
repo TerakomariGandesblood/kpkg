@@ -45,6 +45,9 @@ extern int libidn2_size;
 extern char libspng[];
 extern int libspng_size;
 
+extern char libvips[];
+extern int libvips_size;
+
 namespace kpkg {
 
 namespace {
@@ -72,6 +75,8 @@ void write_files(const std::string& library_name, const std::string& dir_name) {
                      libidn2, libidn2_size);
   } else if (library_name == "libspng") {
     klib::write_file("libspng.pc", false, libspng, libspng_size);
+  } else if (library_name == "libvips") {
+    klib::write_file("0001-Add-spngsave.patch", false, libvips, libvips_size);
   }
 }
 
