@@ -620,7 +620,7 @@
     "download_url": "https://github.com/libffi/libffi/releases/download/v3.4.2/libffi-3.4.2.tar.gz",
     "dependency": [],
     "cmd": [
-      "./configure --disable-shared --enable-static --disable-docs --disable-debug",
+      "./configure --libdir=/usr/local/lib --disable-shared --enable-static --disable-docs --disable-debug",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
