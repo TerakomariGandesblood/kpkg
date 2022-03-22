@@ -1,32 +1,5 @@
 [
   {
-    "name": "CMake",
-    "releases_url": "",
-    "tags_url": "",
-    "tag_name": "v3.22.3",
-    "download_url": "https://github.com/Kitware/CMake/releases/download/v3.22.3/cmake-3.22.3.tar.gz",
-    "dependency": ["BoringSSL"],
-    "cmd": [
-      "export LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lssl -lcrypto\"",
-      "./bootstrap --parallel=\"$(nproc)\" -- -DCMAKE_BUILD_TYPE:STRING=Release",
-      "make -j\"$(nproc)\"",
-      "sudo make install"
-    ]
-  },
-  {
-    "name": "ninja",
-    "releases_url": "https://api.github.com/repos/ninja-build/ninja/releases/latest",
-    "tags_url": "",
-    "tag_name": "",
-    "download_url": "",
-    "dependency": [],
-    "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release",
-      "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
-    ]
-  },
-  {
     "name": "mold",
     "releases_url": "https://api.github.com/repos/rui314/mold/releases/latest",
     "tags_url": "",
