@@ -658,6 +658,7 @@
     "download_url": "https://github.com/GNOME/glib/archive/refs/tags/2.72.0.tar.gz",
     "dependency": ["zlib-ng", "libpcre", "libffi", "util-linux"],
     "cmd": [
+      "patch -p1 < 0001-fix-link-error.patch",
       "export LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lmount -lblkid -lpcre -lz\"",
       "meson setup build --buildtype=release --default-library=static --libdir=lib -Dselinux=disabled -Dxattr=false -Dman=false -Ddtrace=false -Dsystemtap=false -Dsysprof=disabled -Dgtk_doc=false -Dfam=false -Dtests=false -Dinstalled_tests=false -Dnls=disabled -Doss_fuzz=disabled -Dglib_debug=disabled -Dlibelf=disabled",
       "cd build",

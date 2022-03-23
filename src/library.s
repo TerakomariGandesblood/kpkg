@@ -22,6 +22,8 @@
     .global libspng_size
     .global libvips
     .global libvips_size
+    .global glib
+    .global glib_size
     .section .rodata
 library:
     .incbin "library.json"
@@ -94,3 +96,9 @@ libvips:
 libvips_end:
 libvips_size:
     .int libvips_end - libvips
+
+glib:
+    .incbin "0001-fix-link-error.patch"
+glib_end:
+glib_size:
+    .int glib_end - glib

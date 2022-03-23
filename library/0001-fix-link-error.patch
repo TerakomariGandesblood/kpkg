@@ -1,0 +1,81 @@
+From 75ca578409eb0faa8de317c9171b1428455526bc Mon Sep 17 00:00:00 2001
+From: Kaiser <1244713586@qq.com>
+Date: Wed, 23 Mar 2022 17:53:17 +0800
+Subject: [PATCH] fix link error
+
+---
+ gio/gthreadedresolver.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/gio/gthreadedresolver.c b/gio/gthreadedresolver.c
+index 48545d6..0a74eb9 100644
+--- a/gio/gthreadedresolver.c
++++ b/gio/gthreadedresolver.c
+@@ -540,7 +540,7 @@ parse_res_srv (const guint8  *answer,
+   GETSHORT (priority, *p);
+   GETSHORT (weight, *p);
+   GETSHORT (port, *p);
+-  *p += dn_expand (answer, end, *p, namebuf, sizeof (namebuf));
++  //*p += dn_expand (answer, end, *p, namebuf, sizeof (namebuf));
+ 
+   return g_variant_new ("(qqqs)",
+                         priority,
+@@ -558,8 +558,8 @@ parse_res_soa (const guint8  *answer,
+   gchar rnamebuf[1024];
+   guint32 serial, refresh, retry, expire, ttl;
+ 
+-  *p += dn_expand (answer, end, *p, mnamebuf, sizeof (mnamebuf));
+-  *p += dn_expand (answer, end, *p, rnamebuf, sizeof (rnamebuf));
++  //*p += dn_expand (answer, end, *p, mnamebuf, sizeof (mnamebuf));
++  //*p += dn_expand (answer, end, *p, rnamebuf, sizeof (rnamebuf));
+ 
+   GETLONG (serial, *p);
+   GETLONG (refresh, *p);
+@@ -584,7 +584,7 @@ parse_res_ns (const guint8  *answer,
+ {
+   gchar namebuf[1024];
+ 
+-  *p += dn_expand (answer, end, *p, namebuf, sizeof (namebuf));
++  //*p += dn_expand (answer, end, *p, namebuf, sizeof (namebuf));
+ 
+   return g_variant_new ("(s)", namebuf);
+ }
+@@ -599,7 +599,7 @@ parse_res_mx (const guint8  *answer,
+ 
+   GETSHORT (preference, *p);
+ 
+-  *p += dn_expand (answer, end, *p, namebuf, sizeof (namebuf));
++  //*p += dn_expand (answer, end, *p, namebuf, sizeof (namebuf));
+ 
+   return g_variant_new ("(qs)",
+                         preference,
+@@ -699,7 +699,7 @@ g_resolver_records_from_res_query (const gchar      *rrname,
+   count = ntohs (header->qdcount);
+   while (count-- && p < end)
+     {
+-      p += dn_expand (answer, end, p, namebuf, sizeof (namebuf));
++      //p += dn_expand (answer, end, p, namebuf, sizeof (namebuf));
+       p += 4;
+ 
+       /* To silence gcc warnings */
+@@ -710,7 +710,7 @@ g_resolver_records_from_res_query (const gchar      *rrname,
+   count = ntohs (header->ancount);
+   while (count-- && p < end)
+     {
+-      p += dn_expand (answer, end, p, namebuf, sizeof (namebuf));
++      //p += dn_expand (answer, end, p, namebuf, sizeof (namebuf));
+       GETSHORT (type, p);
+       GETSHORT (qclass, p);
+       p += 4; /* ignore the ttl (type=long) value */
+@@ -981,7 +981,7 @@ do_lookup_records (GTask         *task,
+     {
+       g_byte_array_set_size (answer, len * 2);
+ #if defined(HAVE_RES_NQUERY)
+-      len = res_nquery (&res, lrd->rrname, C_IN, rrtype, answer->data, answer->len);
++      //len = res_nquery (&res, lrd->rrname, C_IN, rrtype, answer->data, answer->len);
+ #else
+       len = res_query (lrd->rrname, C_IN, rrtype, answer->data, answer->len);
+ #endif
+-- 
+2.32.0
+
