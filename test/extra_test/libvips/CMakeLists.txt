@@ -4,10 +4,6 @@ project(test_library_install LANGUAGES CXX)
 
 include(../common.cmake)
 
-if(KPKG_SANITIZER)
-  add_definitions(-DKPKG_SANITIZER)
-endif()
-
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/avatar.jpg
      DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
