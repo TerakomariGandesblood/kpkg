@@ -626,6 +626,19 @@
     ]
   },
   {
+    "name": "util-linux",
+    "releases_url": "",
+    "tags_url": "",
+    "tag_name": "v2.37",
+    "download_url": "https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.37/util-linux-2.37.4.tar.gz",
+    "dependency": [],
+    "cmd": [
+      "./configure --prefix=/usr/local --disable-shared --enable-static --disable-gtk-doc --disable-nls --disable-all-programs --enable-libmount --enable-libblkid --without-util --without-selinux --without-audit --without-udev --without-ncursesw --without-ncurses --without-slang --without-tinfo --without-readline --without-utempter --without-cap-ng --without-libz --without-libmagic --without-user --without-btrfs --without-systemd --without-smack --without-econf --without-python --without-cryptsetup",
+      "make -j\"$(nproc)\"",
+      "sudo make install"
+    ]
+  },
+  {
     "name": "libpcre",
     "releases_url": "",
     "tags_url": "",
@@ -644,7 +657,7 @@
     "tags_url": "",
     "tag_name": "2.72.0",
     "download_url": "https://github.com/GNOME/glib/archive/refs/tags/2.72.0.tar.gz",
-    "dependency": ["zlib-ng", "libpcre", "libffi"],
+    "dependency": ["zlib-ng", "libpcre", "libffi", "util-linux"],
     "cmd": [
       "export LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lz -lpcre\"",
       "meson setup build --buildtype=release --default-library=static --libdir=lib -Dselinux=disabled -Dxattr=false -Dman=false -Ddtrace=false -Dsystemtap=false -Dsysprof=disabled -Dgtk_doc=false -Dfam=false -Dtests=false -Dinstalled_tests=false -Dnls=disabled -Doss_fuzz=disabled -Dglib_debug=disabled -Dlibelf=disabled",
