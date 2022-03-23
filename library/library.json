@@ -603,11 +603,10 @@
     "releases_url": "",
     "tags_url": "",
     "tag_name": "v1.2.2",
-    "download_url": "https://github.com/webmproject/libwebp/archive/refs/tags/v1.2.2.tar.gz",
+    "download_url": "https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-1.2.2.tar.gz",
     "dependency": [],
     "cmd": [
-      "./autogen.sh",
-      "./configure --disable-shared --enable-static --enable-libwebpmux --enable-libwebpdemux --enable-libwebpdecoder --disable-libwebpextras --enable-threading --disable-gl --disable-sdl --disable-png --disable-jpeg --disable-tiff --disable-gif --disable-wic",
+      "./configure --disable-shared --enable-static --enable-libwebpmux --enable-libwebpdemux --disable-libwebpdecoder --disable-libwebpextras --enable-threading --disable-gl --disable-sdl --disable-png --disable-jpeg --disable-tiff --disable-gif --disable-wic",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
@@ -646,7 +645,7 @@
     "download_url": "https://onboardcloud.dl.sourceforge.net/project/pcre/pcre/8.45/pcre-8.45.tar.gz",
     "dependency": [],
     "cmd": [
-      "./configure --disable-shared --enable-static --disable-valgrind --disable-coverage",
+      "./configure --disable-shared --enable-static --disable-cpp --disable-valgrind --disable-coverage",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
