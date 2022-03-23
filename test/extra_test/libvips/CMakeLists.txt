@@ -24,6 +24,7 @@ pkg_check_modules(libjpeg REQUIRED IMPORTED_TARGET libjpeg)
 pkg_check_modules(libwebp REQUIRED IMPORTED_TARGET libwebp)
 pkg_check_modules(libwebpmux REQUIRED IMPORTED_TARGET libwebpmux)
 pkg_check_modules(libwebpdemux REQUIRED IMPORTED_TARGET libwebpdemux)
+pkg_check_modules(blkid REQUIRED IMPORTED_TARGET blkid)
 
 add_executable(libvips main.cpp)
 target_link_libraries(
@@ -38,7 +39,8 @@ target_link_libraries(
           PkgConfig::libjpeg
           PkgConfig::libwebp
           PkgConfig::libwebpmux
-          PkgConfig::libwebpdemux)
+          PkgConfig::libwebpdemux
+          PkgConfig::blkid)
 
 add_custom_command(
   TARGET libvips
