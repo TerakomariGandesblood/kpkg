@@ -53,27 +53,9 @@ else()
 endif()
 
 add_cxx_compiler_flag_no_check("-pipe")
-
 add_cxx_compiler_flag_no_check("-march=haswell")
-add_cxx_compiler_flag_no_check("-mtune=haswell")
-
-add_cxx_compiler_flag_no_check("-fno-plt")
-
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-
 add_cxx_compiler_flag_no_check("-fvisibility=hidden")
-
-if((${CMAKE_BUILD_TYPE} STREQUAL "Release") OR (${CMAKE_BUILD_TYPE} STREQUAL
-                                                "MinSizeRel"))
-  add_cxx_compiler_flag_no_check("-fno-math-errno")
-  add_cxx_compiler_flag_no_check("-fno-trapping-math")
-  add_cxx_compiler_flag_no_check("-fno-semantic-interposition")
-
-  if(CMAKE_COMPILER_IS_GNUCXX)
-    add_cxx_compiler_flag_no_check("-fipa-pta")
-    add_cxx_compiler_flag_no_check("-fgraphite-identity")
-  endif()
-endif()
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 if((${CMAKE_BUILD_TYPE} STREQUAL "Release") OR (${CMAKE_BUILD_TYPE} STREQUAL
                                                 "MinSizeRel"))

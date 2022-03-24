@@ -38,11 +38,9 @@ std::string calc_command(const std::vector<std::string>& commands,
   }
 
   cmd = combine_command(
-      cmd,
-      R"(export CFLAGS="-pipe -march=haswell -mtune=haswell -fvisibility=hidden -fno-plt -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fipa-pta -fgraphite-identity -O3 -g0 -DNDEBUG -fPIC")");
+      cmd, R"(export CFLAGS="-pipe -march=haswell -O3 -g0 -DNDEBUG -fPIC")");
   cmd = combine_command(
-      cmd,
-      R"(export CXXFLAGS="-pipe -march=haswell -mtune=haswell -fvisibility=hidden -fno-plt -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fipa-pta -fgraphite-identity -O3 -g0 -DNDEBUG -fPIC")");
+      cmd, R"(export CXXFLAGS="-pipe -march=haswell -O3 -g0 -DNDEBUG -fPIC")");
   cmd = combine_command(
       cmd,
       R"(export LDFLAGS="-fuse-ld=bfd -static-libgcc -static-libstdc++ -s -L/usr/local/lib")");
