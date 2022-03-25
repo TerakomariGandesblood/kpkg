@@ -628,7 +628,7 @@
     "name": "util-linux",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "v2.37",
+    "tag_name": "v2.37.4",
     "download_url": "https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.37/util-linux-2.37.4.tar.gz",
     "dependency": [],
     "cmd": [

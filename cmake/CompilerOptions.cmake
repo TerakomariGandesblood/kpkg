@@ -68,6 +68,7 @@ endif()
 add_cxx_compiler_flag("-pipe")
 add_cxx_compiler_flag("-march=haswell")
 add_cxx_compiler_flag("-fvisibility=hidden")
+
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # ---------------------------------------------------------------------------------------
