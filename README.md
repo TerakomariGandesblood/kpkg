@@ -22,7 +22,6 @@ C++ Library Manager
 - fmt ([License](https://github.com/fmtlib/fmt/blob/master/LICENSE.rst))
 - simdjson ([Apache License 2.0](https://github.com/simdjson/simdjson/blob/master/LICENSE))
 - semver ([MIT License](https://github.com/Neargye/semver/blob/master/LICENSE))
-- Catch2 ([Boost License](https://github.com/catchorg/Catch2/blob/devel/LICENSE.txt))
 
 ## Build environment
 
