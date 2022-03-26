@@ -1,5 +1,7 @@
 #include "command.h"
 
+#include <fmt/compile.h>
+#include <fmt/format.h>
 #include <klib/exception.h>
 #include <klib/log.h>
 #include <klib/util.h>
@@ -22,7 +24,7 @@ std::string calc_command(const std::vector<std::string>& commands,
 
   cmd = combine_command(cmd, "export CI=false");
   // NOTE
-  // Change the compiler version here
+  // Change compiler version here
   // TODO temp
   bool gcc_12 = true;
   try {
@@ -37,13 +39,20 @@ std::string calc_command(const std::vector<std::string>& commands,
     cmd = combine_command(cmd, "export CC=gcc-11 && export CXX=g++-11");
   }
 
+  // NOTE
+  // Change compiler flags here
+  // https://wiki.gentoo.org/wiki/GCC_optimization
+  // https://www.phoronix.com/scan.php?page=article&item=gcc11-rocket-opts&num=4
+  const std::string flags = "-pipe -march=haswell -O3 -g0 -DNDEBUG -fPIC";
+  const std::string ld_flags =
+      "-fuse-ld=bfd -static-libgcc -static-libstdc++ -s -L/usr/local/lib";
+
   cmd = combine_command(
-      cmd, R"(export CFLAGS="-pipe -march=haswell -O3 -g0 -DNDEBUG -fPIC")");
+      cmd, fmt::format(FMT_COMPILE(R"(export CFLAGS="{}")"), flags));
   cmd = combine_command(
-      cmd, R"(export CXXFLAGS="-pipe -march=haswell -O3 -g0 -DNDEBUG -fPIC")");
+      cmd, fmt::format(FMT_COMPILE(R"(export CXXFLAGS="{}")"), flags));
   cmd = combine_command(
-      cmd,
-      R"(export LDFLAGS="-fuse-ld=bfd -static-libgcc -static-libstdc++ -s -L/usr/local/lib")");
+      cmd, fmt::format(FMT_COMPILE(R"(export LDFLAGS="{}")"), ld_flags));
 
   for (const auto& item : commands) {
     cmd = combine_command(cmd, item);

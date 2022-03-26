@@ -42,7 +42,7 @@
     "download_url": "https://github.com/libarchive/libarchive/releases/download/v3.6.0/libarchive-3.6.0.tar.gz",
     "dependency": ["zlib-ng", "zstd", "BoringSSL"],
     "cmd": [
-      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lcrypto -lz -lpthread\" --disable-shared --enable-static --disable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --without-lz4 --with-zstd --without-lzma --without-lzo2 --without-cng --without-mbedtls --without-nettle --with-openssl --without-xml2 --without-expat",
+      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lcrypto -lz -pthread\" --disable-shared --enable-static --disable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --without-lz4 --with-zstd --without-lzma --without-lzo2 --without-cng --without-mbedtls --without-nettle --with-openssl --without-xml2 --without-expat",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
@@ -88,7 +88,7 @@
     "download_url": "https://github.com/ngtcp2/ngtcp2/releases/download/v0.2.1/ngtcp2-0.2.1.tar.gz",
     "dependency": ["nghttp3", "BoringSSL"],
     "cmd": [
-      "./configure BORINGSSL_LIBS=\"-L/usr/local/lib -lssl -lcrypto -lpthread\" --disable-shared --enable-static --disable-debug --disable-memdebug --disable-asan --enable-lib-only --without-jemalloc --without-cunit --with-libnghttp3 --without-libev --without-openssl --without-gnutls --with-boringssl --without-picotls",
+      "./configure BORINGSSL_LIBS=\"-L/usr/local/lib -lssl -lcrypto -pthread\" --disable-shared --enable-static --disable-debug --disable-memdebug --disable-asan --enable-lib-only --without-jemalloc --without-cunit --with-libnghttp3 --without-libev --without-openssl --without-gnutls --with-boringssl --without-picotls",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
@@ -265,14 +265,13 @@
   },
   {
     "name": "icu",
-    "releases_url": "https://api.github.com/repos/unicode-org/icu/releases/latest",
+    "releases_url": "",
     "tags_url": "",
-    "tag_name": "",
-    "download_url": "",
+    "tag_name": "release-70-1",
+    "download_url": "https://github.com/unicode-org/icu/releases/download/release-70-1/icu4c-70_1-src.tgz",
     "dependency": [],
     "cmd": [
-      "cd icu4c/source",
-      "export ICU_DATA_FILTER_FILE=../../filters.json",
+      "cd source",
       "./runConfigureICU Linux --disable-icu-config --disable-debug --enable-release --disable-shared --enable-static --enable-auto-cleanup --disable-draft --disable-plugins --disable-dyload --disable-extras --enable-icuio --disable-layoutex --enable-tools --disable-fuzzer --disable-tests --disable-samples --with-data-packaging=static",
       "make -j\"$(nproc)\"",
       "sudo make install"
@@ -690,7 +689,7 @@
       "patch -p1 < 0001-Add-spngsave.patch",
       "aclocal -I m4 --install",
       "automake",
-      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lgio-2.0 -lgmodule-2.0 -lgobject-2.0 -lglib-2.0\" --disable-debug --disable-deprecated --disable-shared --enable-static --disable-doxygen --disable-modules --disable-gtk-doc --disable-gtk-doc-html --disable-gtk-doc-pdf --disable-magickload --disable-magicksave --without-gsf --without-fftw --without-magick --without-orc --without-lcms --without-OpenEXR --without-nifti --without-x --without-libjxl --without-libopenjp2 --without-heif --without-pdfium --without-poppler --without-rsvg --without-zlib --without-openslide --without-matio --without-nsgif --without-ppm --without-analyze --without-radiance --without-cfitsio --with-libwebp --without-pangocairo --without-fontconfig --without-tiff --with-libspng --without-png --without-imagequant --with-jpeg --without-libexif --without-cgif",
+      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lgio-2.0 -lgmodule-2.0 -lgobject-2.0 -lglib-2.0\" --disable-debug --disable-deprecated --disable-shared --enable-static --disable-doxygen --disable-modules --disable-gtk-doc --disable-gtk-doc-html --disable-gtk-doc-pdf --disable-magickload --disable-magicksave --without-gsf --without-fftw --without-magick --without-magickpackage --without-orc --without-lcms --without-OpenEXR --without-nifti --without-x --without-libjxl --without-libopenjp2 --without-heif --without-pdfium --without-poppler --without-rsvg --without-zlib --without-openslide --without-matio --without-nsgif --without-ppm --without-analyze --without-radiance --without-cfitsio --with-libwebp --without-pangocairo --without-fontconfig --without-tiff --with-libspng --without-png --without-imagequant --with-jpeg --without-libexif --without-cgif",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]

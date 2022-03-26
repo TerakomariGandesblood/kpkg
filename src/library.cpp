@@ -27,9 +27,6 @@ extern int openssl_size;
 extern char libunistring[];
 extern int libunistring_size;
 
-extern char filters[];
-extern int filters_size;
-
 extern char boringssl[];
 extern int boringssl_size;
 
@@ -69,8 +66,6 @@ void write_files(const std::string& library_name, const std::string& dir_name) {
   } else if (library_name == "sqlcipher") {
     klib::write_file("0001-fix-OPENSSL_VERSION_TEXT.patch", false, sqlcipher,
                      sqlcipher_size);
-  } else if (library_name == "icu") {
-    klib::write_file("filters.json", false, filters, filters_size);
   } else if (library_name == "libunistring") {
     klib::write_file("libunistring.pc", false, libunistring, libunistring_size);
   } else if (library_name == "libidn2") {

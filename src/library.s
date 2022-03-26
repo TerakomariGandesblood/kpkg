@@ -8,8 +8,6 @@
     .global openssl_size
     .global libunistring
     .global libunistring_size
-    .global filters
-    .global filters_size
     .global boringssl
     .global boringssl_size
     .global woff2
@@ -54,12 +52,6 @@ libunistring:
 libunistring_end:
 libunistring_size:
     .int libunistring_end - libunistring
-
-filters:
-    .incbin "filters.json"
-filters_end:
-filters_size:
-    .int filters_end - filters
 
 boringssl:
     .incbin "0001-expose-ripemd160.patch"
