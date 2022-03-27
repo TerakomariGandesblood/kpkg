@@ -23,16 +23,16 @@ index 48545d6..c32f67e 100644
 +}
 +
 +static int
-+k_dn_expand(const u_char *, const u_char *, const u_char *, char *, int)
++k_dn_expand (const u_char *, const u_char *, const u_char *, char *, int)
 +{
-+  bail();
++  bail ();
 +  return 0;
 +}
 +
 +static int
-+k_res_nquery(struct __res_state*, const char *, int, int, unsigned char *, int)
++k_res_nquery (struct __res_state*, const char *, int, int, unsigned char *, int)
 +{
-+  bail();
++  bail ();
 +  return 0;
 +}
 +
