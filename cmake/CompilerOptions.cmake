@@ -60,8 +60,10 @@ endif()
 # General options
 # ---------------------------------------------------------------------------------------
 add_cxx_compiler_flag("-pipe")
-add_cxx_compiler_flag("-march=haswell")
 add_cxx_compiler_flag("-fvisibility=hidden")
+
+add_cxx_compiler_flag("-maes")
+add_cxx_compiler_flag("-march=haswell")
 
 add_cxx_linker_flag("-static-libgcc")
 add_cxx_linker_flag("-static-libstdc++")

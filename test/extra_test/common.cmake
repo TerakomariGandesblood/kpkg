@@ -17,9 +17,6 @@ if(${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
   add_cxx_compiler_flag_no_check("-Wno-error=unused-command-line-argument")
 endif()
 
-add_link_options("-static-libgcc")
-add_link_options("-static-libstdc++")
-
 # FIXME
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   execute_process(
@@ -53,12 +50,19 @@ else()
 endif()
 
 add_cxx_compiler_flag_no_check("-pipe")
-add_cxx_compiler_flag_no_check("-march=haswell")
 add_cxx_compiler_flag_no_check("-fvisibility=hidden")
+
+add_cxx_compiler_flag_no_check("-maes")
+add_cxx_compiler_flag_no_check("-march=haswell")
+
+add_link_options("-static-libgcc")
+add_link_options("-static-libstdc++")
+
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-if((${CMAKE_BUILD_TYPE} STREQUAL "Release") OR (${CMAKE_BUILD_TYPE} STREQUAL
-                                                "MinSizeRel"))
+if(((${CMAKE_BUILD_TYPE} STREQUAL "Release") OR (${CMAKE_BUILD_TYPE} STREQUAL
+                                                 "MinSizeRel"))
+   AND NOT KPKG_SANITIZER)
   include(CheckIPOSupported)
   check_ipo_supported(
     RESULT LTO_SUPPORTED
@@ -83,10 +87,10 @@ endif()
 
 if(KPKG_SANITIZER)
   message(STATUS "Build with AddressSanitizer and UndefinedSanitizer")
-  add_cxx_compiler_flag_no_check("-fno-omit-frame-pointer")
 
   add_cxx_compiler_flag_no_check("-fsanitize=address")
   add_cxx_compiler_flag_no_check("-fsanitize-address-use-after-scope")
+  add_cxx_compiler_flag_no_check("-fno-omit-frame-pointer")
   add_cxx_compiler_flag_no_check("-fno-optimize-sibling-calls")
 
   add_cxx_compiler_flag_no_check("-fsanitize=undefined")
@@ -100,6 +104,14 @@ if(KPKG_SANITIZER)
     add_cxx_compiler_flag_no_check("-fsanitize=nullability")
     add_cxx_compiler_flag_no_check(
       "-fsanitize-recover=unsigned-integer-overflow")
+  endif()
+
+  if(CMAKE_COMPILER_IS_GNUCXX)
+    add_cxx_compiler_flag_no_check("-static-libasan")
+    add_cxx_compiler_flag_no_check("-static-liblsan")
+    add_cxx_compiler_flag_no_check("-static-libubsan")
+  else()
+    add_cxx_compiler_flag_no_check("-static-libsan")
   endif()
 endif()
 
