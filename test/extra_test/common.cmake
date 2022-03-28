@@ -50,7 +50,6 @@ else()
 endif()
 
 add_cxx_compiler_flag_no_check("-pipe")
-add_cxx_compiler_flag_no_check("-fvisibility=hidden")
 
 add_cxx_compiler_flag_no_check("-maes")
 add_cxx_compiler_flag_no_check("-march=haswell")
@@ -58,6 +57,8 @@ add_cxx_compiler_flag_no_check("-march=haswell")
 add_link_options("-static-libgcc")
 add_link_options("-static-libstdc++")
 
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 if(((${CMAKE_BUILD_TYPE} STREQUAL "Release") OR (${CMAKE_BUILD_TYPE} STREQUAL

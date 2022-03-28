@@ -56,7 +56,7 @@
     "dependency": [],
     "cmd": [
       "patch -p1 < 0001-expose-ripemd160.patch",
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cp build/bssl /usr/local/bin",
       "sudo cp build/libcrypto.a /usr/local/lib",
@@ -151,7 +151,7 @@
     "download_url": "https://github.com/fmtlib/fmt/releases/download/8.1.1/fmt-8.1.1.zip",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DFMT_DOC=OFF -DFMT_TEST=OFF -DFMT_CUDA_TEST=OFF -DFMT_MODULE=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DFMT_DOC=OFF -DFMT_TEST=OFF -DFMT_CUDA_TEST=OFF -DFMT_MODULE=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -164,7 +164,7 @@
     "download_url": "",
     "dependency": ["fmt"],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DSPDLOG_BUILD_ALL=OFF -DSPDLOG_BUILD_EXAMPLE=OFF -DSPDLOG_BUILD_EXAMPLE_HO=OFF -DSPDLOG_BUILD_TESTS=OFF -DSPDLOG_BUILD_TESTS_HO=OFF -DSPDLOG_BUILD_BENCH=OFF -DSPDLOG_SANITIZE_ADDRESS=OFF -DSPDLOG_FMT_EXTERNAL=ON",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DSPDLOG_BUILD_ALL=OFF -DSPDLOG_BUILD_EXAMPLE=OFF -DSPDLOG_BUILD_EXAMPLE_HO=OFF -DSPDLOG_BUILD_TESTS=OFF -DSPDLOG_BUILD_TESTS_HO=OFF -DSPDLOG_BUILD_BENCH=OFF -DSPDLOG_SANITIZE_ADDRESS=OFF -DSPDLOG_FMT_EXTERNAL=ON",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -194,7 +194,7 @@
       "cd build/cmake",
       "export CFLAGS=\"$CFLAGS -DZSTD_MULTITHREAD\"",
       "export CXXFLAGS=\"$CXXFLAGS -DZSTD_MULTITHREAD\"",
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DZSTD_LEGACY_SUPPORT=OFF -DZSTD_MULTITHREAD_SUPPORT=ON -DZSTD_BUILD_PROGRAMS=ON -DZSTD_BUILD_CONTRIB=OFF -DZSTD_BUILD_TESTS=OFF -DZSTD_BUILD_SHARED=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DZSTD_LEGACY_SUPPORT=OFF -DZSTD_MULTITHREAD_SUPPORT=ON -DZSTD_BUILD_PROGRAMS=ON -DZSTD_BUILD_CONTRIB=OFF -DZSTD_BUILD_TESTS=OFF -DZSTD_BUILD_SHARED=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -207,7 +207,7 @@
     "download_url": "",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DNAMEOF_OPT_BUILD_EXAMPLES=OFF -DNAMEOF_OPT_BUILD_TESTS=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DNAMEOF_OPT_BUILD_EXAMPLES=OFF -DNAMEOF_OPT_BUILD_TESTS=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -220,7 +220,7 @@
     "download_url": "",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DSEMVER_OPT_BUILD_EXAMPLES=OFF -DSEMVER_OPT_BUILD_TESTS=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DSEMVER_OPT_BUILD_EXAMPLES=OFF -DSEMVER_OPT_BUILD_TESTS=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -233,7 +233,7 @@
     "download_url": "",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DSCOPE_GUARD_OPT_BUILD_EXAMPLES=OFF -DSCOPE_GUARD_OPT_BUILD_TESTS=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DSCOPE_GUARD_OPT_BUILD_EXAMPLES=OFF -DSCOPE_GUARD_OPT_BUILD_TESTS=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -258,7 +258,7 @@
     "download_url": "https://github.com/oneapi-src/oneTBB/archive/refs/tags/v2021.6.0-rc1.zip",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DTBB_TEST=OFF -DTBB_EXAMPLES=OFF -DTBB4PY_BUILD=OFF -DTBB_BUILD=ON -DTBBMALLOC_BUILD=OFF -DTBBMALLOC_PROXY_BUILD=OFF -DTBB_CPF=OFF -DTBB_FIND_PACKAGE=OFF -DTBB_DISABLE_HWLOC_AUTOMATIC_SEARCH=ON -DTBB_ENABLE_IPO=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DTBB_TEST=OFF -DTBB_EXAMPLES=OFF -DTBB4PY_BUILD=OFF -DTBB_BUILD=ON -DTBBMALLOC_BUILD=OFF -DTBBMALLOC_PROXY_BUILD=OFF -DTBB_CPF=OFF -DTBB_FIND_PACKAGE=OFF -DTBB_DISABLE_HWLOC_AUTOMATIC_SEARCH=ON -DTBB_ENABLE_IPO=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -287,7 +287,7 @@
     "cmd": [
       "export CFLAGS=\"$CFLAGS -DCATCH_CONFIG_ENABLE_BENCHMARKING\"",
       "export CXXFLAGS=\"$CXXFLAGS -DCATCH_CONFIG_ENABLE_BENCHMARKING\"",
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCATCH_BUILD_TESTING=OFF -DCATCH_BUILD_EXAMPLES=OFF -DCATCH_BUILD_EXTRA_TESTS=OFF -DCATCH_BUILD_STATIC_LIBRARY=ON -DCATCH_INSTALL_DOCS=OFF -DCATCH_INSTALL_HELPERS=ON",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DCATCH_BUILD_TESTING=OFF -DCATCH_BUILD_EXAMPLES=OFF -DCATCH_BUILD_EXTRA_TESTS=OFF -DCATCH_BUILD_STATIC_LIBRARY=ON -DCATCH_INSTALL_DOCS=OFF -DCATCH_INSTALL_HELPERS=ON",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -300,7 +300,7 @@
     "download_url": "",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIB=OFF -DBUILD_SAMPLE_CODE=OFF -DSUPPORT_CONSOLE_APP=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DBUILD_SHARED_LIB=OFF -DBUILD_SAMPLE_CODE=OFF -DSUPPORT_CONSOLE_APP=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -313,7 +313,7 @@
     "download_url": "https://github.com/zeux/pugixml/releases/download/v1.12.1/pugixml-1.12.1.tar.gz",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DPUGIXML_BUILD_TESTS=OFF -DPUGIXML_BUILD_SHARED_AND_STATIC_LIBS=OFF -DBUILD_SHARED_LIBS=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DPUGIXML_BUILD_TESTS=OFF -DPUGIXML_BUILD_SHARED_AND_STATIC_LIBS=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -326,7 +326,7 @@
     "download_url": "",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCLI11_BUILD_DOCS=OFF -DCLI11_BUILD_TESTS=OFF -DCLI11_BUILD_EXAMPLES=OFF -DBUILD_TESTING=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DCLI11_BUILD_DOCS=OFF -DCLI11_BUILD_TESTS=OFF -DCLI11_BUILD_EXAMPLES=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -339,7 +339,7 @@
     "download_url": "",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DINDICATORS_BUILD_TESTS=OFF -DINDICATORS_SAMPLES=OFF -DINDICATORS_DEMO=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DINDICATORS_BUILD_TESTS=OFF -DINDICATORS_SAMPLES=OFF -DINDICATORS_DEMO=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -352,7 +352,7 @@
     "download_url": "",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DGSL_TEST=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DGSL_TEST=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -365,7 +365,7 @@
     "download_url": "",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DDBG_MACRO_ENABLE_TESTS=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DDBG_MACRO_ENABLE_TESTS=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -378,7 +378,7 @@
     "download_url": "",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBACKWARD_SHARED=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DBACKWARD_SHARED=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -403,7 +403,7 @@
     "download_url": "",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DSIMDJSON_DISABLE_DEPRECATED_API=ON -DSIMDJSON_DEVELOPMENT_CHECKS=OFF -DSIMDJSON_DEVELOPER_MODE=OFF -DBUILD_SHARED_LIBS=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DSIMDJSON_DISABLE_DEPRECATED_API=ON -DSIMDJSON_DEVELOPMENT_CHECKS=OFF -DSIMDJSON_DEVELOPER_MODE=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -416,7 +416,7 @@
     "download_url": "",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -430,7 +430,7 @@
     "dependency": [],
     "cmd": [
       "cd cmake_unofficial",
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DXXHASH_BUILD_XXHSUM=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DXXHASH_BUILD_XXHSUM=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -457,7 +457,7 @@
     "download_url": "",
     "dependency": ["marisa-trie"],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_DOCUMENTATION=OFF -DBUILD_SHARED_LIBS=OFF -DENABLE_GTEST=OFF -DENABLE_BENCHMARK=OFF -DENABLE_DARTS=OFF -DBUILD_PYTHON=OFF -DUSE_SYSTEM_DARTS=OFF -DUSE_SYSTEM_GOOGLE_BENCHMARK=OFF -DUSE_SYSTEM_GTEST=OFF -DUSE_SYSTEM_MARISA=ON -DUSE_SYSTEM_PYBIND11=OFF -DUSE_SYSTEM_RAPIDJSON=OFF -DUSE_SYSTEM_TCLAP=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DBUILD_DOCUMENTATION=OFF -DENABLE_GTEST=OFF -DENABLE_BENCHMARK=OFF -DENABLE_DARTS=OFF -DBUILD_PYTHON=OFF -DUSE_SYSTEM_DARTS=OFF -DUSE_SYSTEM_GOOGLE_BENCHMARK=OFF -DUSE_SYSTEM_GTEST=OFF -DUSE_SYSTEM_MARISA=ON -DUSE_SYSTEM_PYBIND11=OFF -DUSE_SYSTEM_RAPIDJSON=OFF -DUSE_SYSTEM_TCLAP=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -470,7 +470,7 @@
     "download_url": "https://github.com/microsoft/mimalloc/archive/refs/tags/v2.0.5.tar.gz",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DMI_SECURE=OFF -DMI_DEBUG_FULL=OFF -DMI_PADDING=OFF -DMI_OVERRIDE=ON -DMI_LOCAL_DYNAMIC_TLS=OFF -DMI_BUILD_SHARED=OFF -DMI_BUILD_STATIC=ON -DMI_BUILD_OBJECT=ON -DMI_BUILD_TESTS=OFF -DMI_DEBUG_TSAN=OFF -DMI_DEBUG_UBSAN=OFF -DMI_CHECK_FULL=OFF -DMI_INSTALL_TOPLEVEL=ON",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DMI_SECURE=OFF -DMI_DEBUG_FULL=OFF -DMI_PADDING=OFF -DMI_OVERRIDE=ON -DMI_LOCAL_DYNAMIC_TLS=OFF -DMI_BUILD_SHARED=OFF -DMI_BUILD_STATIC=ON -DMI_BUILD_OBJECT=ON -DMI_BUILD_TESTS=OFF -DMI_DEBUG_TSAN=OFF -DMI_DEBUG_UBSAN=OFF -DMI_CHECK_FULL=OFF -DMI_INSTALL_TOPLEVEL=ON",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -483,7 +483,7 @@
     "download_url": "",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMARK_TESTS=OFF -DCMARK_STATIC=ON -DCMARK_SHARED=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DCMARK_TESTS=OFF -DCMARK_STATIC=ON -DCMARK_SHARED=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -537,7 +537,7 @@
     "download_url": "https://github.com/nodejs/llhttp/archive/refs/tags/release/v6.0.6.tar.gz",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -550,7 +550,7 @@
     "download_url": "",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DUTF8_TESTS=OFF -DUTF8_INSTALL=ON -DUTF8_SAMPLES=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DUTF8_TESTS=OFF -DUTF8_INSTALL=ON -DUTF8_SAMPLES=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -564,7 +564,7 @@
     "dependency": ["brotli"],
     "cmd": [
       "patch -p1 < 0001-fix-brotli-link.patch",
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DCANONICAL_PREFIXES=ON -DNOISY_LOGGING=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DCANONICAL_PREFIXES=ON -DNOISY_LOGGING=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -578,7 +578,7 @@
     "dependency": ["zlib-ng"],
     "cmd": [
       "export LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lz\"",
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DENABLE_OPT=ON -DSPNG_SHARED=OFF -DSPNG_STATIC=ON -DBUILD_EXAMPLES=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DENABLE_OPT=ON -DSPNG_SHARED=OFF -DSPNG_STATIC=ON -DBUILD_EXAMPLES=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install",
       "sudo cp libspng.pc /usr/local/lib/pkgconfig"
@@ -592,7 +592,7 @@
     "download_url": "",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DENABLE_SHARED=OFF -DENABLE_STATIC=ON -DREQUIRE_SIMD=ON -DPNG_SUPPORTED=OFF -DWITH_JAVA=OFF -DWITH_JPEG8=ON -DWITH_SIMD=ON -DWITH_TURBOJPEG=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX=/usr/local -DENABLE_SHARED=OFF -DENABLE_STATIC=ON -DREQUIRE_SIMD=ON -DPNG_SUPPORTED=OFF -DWITH_JAVA=OFF -DWITH_JPEG8=ON -DWITH_SIMD=ON -DWITH_TURBOJPEG=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -702,7 +702,7 @@
     "download_url": "",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DUSEPCRE=OFF -DRE2_BUILD_TESTING=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DUSEPCRE=OFF -DRE2_BUILD_TESTING=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
@@ -715,7 +715,20 @@
     "download_url": "",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DPHMAP_BUILD_TESTS=OFF -DPHMAP_BUILD_EXAMPLES=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DPHMAP_BUILD_TESTS=OFF -DPHMAP_BUILD_EXAMPLES=OFF",
+      "cmake --build build --config Release -j\"$(nproc)\"",
+      "sudo cmake --build build --config Release --target install"
+    ]
+  },
+  {
+    "name": "highway",
+    "releases_url": "https://api.github.com/repos/google/highway/releases/latest",
+    "tags_url": "",
+    "tag_name": "",
+    "download_url": "",
+    "dependency": [],
+    "cmd": [
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DHWY_FORCE_STATIC_LIBS=ON -DHWY_ENABLE_EXAMPLES=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
