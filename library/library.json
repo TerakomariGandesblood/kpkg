@@ -654,7 +654,7 @@
     "releases_url": "",
     "tags_url": "",
     "tag_name": "2.72.0",
-    "download_url": "https://github.com/GNOME/glib/archive/refs/tags/2.72.0.tar.gz",
+    "download_url": "https://download.gnome.org/sources/glib/2.72/glib-2.72.0.tar.xz",
     "dependency": ["zlib-ng", "libpcre", "libffi", "util-linux"],
     "cmd": [
       "patch -p1 < 0001-fix-link-error.patch",
