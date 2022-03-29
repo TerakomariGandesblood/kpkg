@@ -37,5 +37,5 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            build/kpkg*.tar.gz
+            build/kpkg*.tar.xz
             build/kpkg*.deb
