@@ -40,9 +40,9 @@
     "tags_url": "",
     "tag_name": "v3.6.0",
     "download_url": "https://github.com/libarchive/libarchive/releases/download/v3.6.0/libarchive-3.6.0.tar.gz",
-    "dependency": ["zlib-ng", "zstd", "BoringSSL"],
+    "dependency": ["zlib-ng", "zstd", "BoringSSL", "xz"],
     "cmd": [
-      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lcrypto -lz -pthread\" --disable-shared --enable-static --disable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --without-lz4 --with-zstd --without-lzma --without-lzo2 --without-cng --without-mbedtls --without-nettle --with-openssl --without-xml2 --without-expat",
+      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lcrypto -lz -llzma -pthread\" --disable-shared --enable-static --disable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --without-lz4 --with-zstd --with-lzma --without-lzo2 --without-cng --without-mbedtls --without-nettle --with-openssl --without-xml2 --without-expat",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
@@ -731,6 +731,19 @@
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DHWY_FORCE_STATIC_LIBS=ON -DHWY_ENABLE_EXAMPLES=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
+    ]
+  },
+  {
+    "name": "xz",
+    "releases_url": "",
+    "tags_url": "",
+    "tag_name": "5.2.5",
+    "download_url": "https://onboardcloud.dl.sourceforge.net/project/lzmautils/xz-5.2.5.tar.gz",
+    "dependency": [],
+    "cmd": [
+      "./configure --disable-debug --enable-assembler --disable-small --enable-threads=posix --enable-xz --enable-xzdec --enable-lzmadec --enable-lzmainfo --disable-doc --disable-shared --enable-static --disable-nls",
+      "make -j\"$(nproc)\"",
+      "sudo make install"
     ]
   }
 ]
