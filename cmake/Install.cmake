@@ -3,12 +3,6 @@
 # ---------------------------------------------------------------------------------------
 include(GNUInstallDirs)
 
-# https://stackoverflow.com/questions/30398238/cmake-rpath-not-working-could-not-find-shared-object-file
-set_target_properties(
-  ${KPKG_EXECUTABLE}
-  PROPERTIES INSTALL_RPATH "$ORIGIN/../${CMAKE_INSTALL_LIBDIR}"
-             INSTALL_RPATH_USE_LINK_PATH TRUE)
-
 install(
   TARGETS ${KPKG_EXECUTABLE}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
