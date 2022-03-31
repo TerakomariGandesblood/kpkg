@@ -40,9 +40,9 @@
     "tags_url": "",
     "tag_name": "v3.6.0",
     "download_url": "https://github.com/libarchive/libarchive/releases/download/v3.6.0/libarchive-3.6.0.tar.gz",
-    "dependency": ["zlib-ng", "zstd", "xz", "lz4", "BoringSSL"],
+    "dependency": ["zlib-ng", "zstd", "xz", "BoringSSL"],
     "cmd": [
-      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lcrypto -lz -pthread\" --disable-shared --enable-static --enable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --with-lz4 --with-zstd --with-lzma --without-lzo2 --without-cng --without-mbedtls --without-nettle --with-openssl --without-xml2 --without-expat",
+      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lcrypto -lz -pthread\" --disable-shared --enable-static --enable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --without-lz4 --with-zstd --with-lzma --without-lzo2 --without-cng --without-mbedtls --without-nettle --with-openssl --without-xml2 --without-expat",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
@@ -742,20 +742,6 @@
       "./configure --disable-debug --enable-assembler --disable-small --enable-threads=posix --enable-xz --enable-xzdec --enable-lzmadec --enable-lzmainfo --disable-doc --disable-shared --enable-static --disable-nls",
       "make -j\"$(nproc)\"",
       "sudo make install"
-    ]
-  },
-  {
-    "name": "lz4",
-    "releases_url": "https://api.github.com/repos/lz4/lz4/releases/latest",
-    "tags_url": "",
-    "tag_name": "",
-    "download_url": "",
-    "dependency": [],
-    "cmd": [
-      "cd build/cmake",
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DLZ4_BUILD_CLI=ON -DLZ4_BUILD_LEGACY_LZ4C=OFF -DBUILD_STATIC_LIBS=ON -DLZ4_POSITION_INDEPENDENT_LIB=ON",
-      "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
     ]
   }
 ]
