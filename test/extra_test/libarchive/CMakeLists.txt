@@ -17,12 +17,8 @@ pkg_check_modules(liblzma REQUIRED IMPORTED_TARGET liblzma)
 add_executable(libarchive main.cpp)
 target_link_libraries(
   libarchive
-  PRIVATE PkgConfig::libarchive
-          PkgConfig::libzstd
-          PkgConfig::zlib
-          PkgConfig::liblzma
-          PkgConfig::openssl
-          ${CMAKE_THREAD_LIBS_INIT})
+  PRIVATE PkgConfig::libarchive PkgConfig::libzstd PkgConfig::zlib
+          PkgConfig::liblzma PkgConfig::openssl ${CMAKE_THREAD_LIBS_INIT})
 
 add_custom_command(
   TARGET libarchive
