@@ -14,7 +14,6 @@ TEST_CASE("program", "[program]") {
   REQUIRE(program.proxy() == "http://127.0.0.1:1080");
 
   auto libraries_to_be_built = program.libraries_to_be_built();
-  REQUIRE(std::size(libraries_to_be_built) == 13);
   REQUIRE(libraries_to_be_built.front().name() == "fmt");
   REQUIRE(libraries_to_be_built.back().name() == "curl");
 }
