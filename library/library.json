@@ -84,11 +84,11 @@
     "name": "ngtcp2",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "v0.2.1",
-    "download_url": "https://github.com/ngtcp2/ngtcp2/releases/download/v0.2.1/ngtcp2-0.2.1.tar.gz",
+    "tag_name": "v0.3.0",
+    "download_url": "https://github.com/ngtcp2/ngtcp2/releases/download/v0.3.0/ngtcp2-0.3.0.tar.gz",
     "dependency": ["nghttp3", "BoringSSL"],
     "cmd": [
-      "./configure BORINGSSL_LIBS=\"-L/usr/local/lib -lssl -lcrypto -pthread\" --disable-shared --enable-static --disable-debug --disable-memdebug --disable-asan --enable-lib-only --without-jemalloc --without-cunit --with-libnghttp3 --without-libev --without-openssl --without-gnutls --with-boringssl --without-picotls",
+      "./configure BORINGSSL_LIBS=\"-L/usr/local/lib -lssl -lcrypto -pthread\" --disable-shared --enable-static --disable-debug --disable-memdebug --enable-mempool --disable-asan --enable-lib-only --without-jemalloc --without-cunit --with-libnghttp3 --without-libev --without-openssl --without-gnutls --with-boringssl --without-picotls",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
@@ -97,8 +97,8 @@
     "name": "nghttp3",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "v0.2.0",
-    "download_url": "https://github.com/ngtcp2/nghttp3/releases/download/v0.2.0/nghttp3-0.2.0.tar.gz",
+    "tag_name": "v0.3.0",
+    "download_url": "https://github.com/ngtcp2/nghttp3/releases/download/v0.3.0/nghttp3-0.3.0.tar.gz",
     "dependency": [],
     "cmd": [
       "./configure --disable-shared --enable-static --disable-debug --disable-memdebug --disable-asan --enable-lib-only --without-cunit",
