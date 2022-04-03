@@ -4,6 +4,6 @@
 
 namespace kpkg {
 
-void upgrade(const std::string &proxy);
+void update(const std::string &proxy);
 
 }  // namespace kpkg

@@ -9,7 +9,7 @@
 
 #include "library.h"
 #include "program.h"
-#include "upgrade.h"
+#include "update.h"
 #include "version.h"
 
 #ifndef NDEBUG
@@ -59,8 +59,8 @@ int main(int argc, const char* argv[]) try {
                  proxy, "Use proxy")
       ->expected(0, 1);
 
-  auto upgrade = app.add_subcommand("upgrade", "Upgrade kaiser's software");
-  upgrade
+  auto update = app.add_subcommand("update", "Update kaiser's software");
+  update
       ->add_flag("-p{http://127.0.0.1:1080},--proxy{http://127.0.0.1:1080}",
                  proxy, "Use proxy")
       ->expected(0, 1);
@@ -76,8 +76,8 @@ int main(int argc, const char* argv[]) try {
   if (list->parsed()) {
     program.show_libraries();
     return EXIT_SUCCESS;
-  } else if (upgrade->parsed()) {
-    kpkg::upgrade(proxy);
+  } else if (update->parsed()) {
+    kpkg::update(proxy);
     return EXIT_SUCCESS;
   }
 

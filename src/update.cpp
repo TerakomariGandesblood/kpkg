@@ -1,4 +1,4 @@
-#include "upgrade.h"
+#include "update.h"
 
 #include <filesystem>
 #include <optional>
@@ -60,7 +60,7 @@ std::pair<std::string, std::optional<std::string>> get_latest(
 
 }  // namespace
 
-void upgrade(const std::string &proxy) {
+void update(const std::string &proxy) {
   std::vector<std::string> software = {"klib", "kpkg", "kepub"};
   for (const auto &item : software) {
     auto curr_ver_str = get_curr_ver_str(item);
@@ -80,7 +80,7 @@ void upgrade(const std::string &proxy) {
         continue;
       }
 
-      klib::info("Will upgrade {} from {} to {}", item, curr_ver.to_string(),
+      klib::info("Will update {} from {} to {}", item, curr_ver.to_string(),
                  latest_ver.to_string());
       klib::info("Get file from: {}", *download_url);
 
@@ -100,7 +100,7 @@ void upgrade(const std::string &proxy) {
         klib::error("Remove file {} failed", file_name);
       }
 
-      klib::info("{} upgrade completed", item);
+      klib::info("{} update completed", item);
     } else {
       klib::info("{} is the latest version: {}", item, curr_ver.to_string());
     }
