@@ -48,6 +48,9 @@ extern int libvips_size;
 extern char glib[];
 extern int glib_size;
 
+extern char simdjson_patch[];
+extern int simdjson_patch_size;
+
 namespace kpkg {
 
 namespace {
@@ -80,6 +83,9 @@ void write_files(const std::string& library_name, const std::string& dir_name) {
   } else if (library_name == "quiche") {
     klib::write_file("0001-expose-ripemd160.patch", false, boringssl,
                      boringssl_size);
+  } else if (library_name == "simdjson") {
+    klib::write_file("0001-Reduce-compile-time.patch", false, simdjson_patch,
+                     simdjson_patch_size);
   }
 }
 

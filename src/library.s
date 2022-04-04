@@ -22,6 +22,8 @@
     .global libvips_size
     .global glib
     .global glib_size
+    .global simdjson_patch
+    .global simdjson_patch_size
     .section .rodata
 library:
     .incbin "library.json"
@@ -64,7 +66,7 @@ woff2:
 woff2_end:
 woff2_size:
     .int woff2_end - woff2
-    
+
 sqlcipher:
     .incbin "0001-fix-OPENSSL_VERSION_TEXT.patch"
 sqlcipher_end:
@@ -94,3 +96,9 @@ glib:
 glib_end:
 glib_size:
     .int glib_end - glib
+
+simdjson_patch:
+    .incbin "0001-Reduce-compile-time.patch"
+simdjson_patch_end:
+simdjson_patch_size:
+    .int simdjson_patch_end - simdjson_patch

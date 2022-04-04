@@ -424,6 +424,7 @@
     "download_url": "",
     "dependency": [],
     "cmd": [
+      "patch -p1 < 0001-Reduce-compile-time.patch",
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DSIMDJSON_DISABLE_DEPRECATED_API=ON -DSIMDJSON_DEVELOPMENT_CHECKS=OFF -DSIMDJSON_DEVELOPER_MODE=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
