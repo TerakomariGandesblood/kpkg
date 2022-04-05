@@ -65,6 +65,7 @@ find_package(semver REQUIRED)
 find_package(simdjson REQUIRED)
 find_package(Boost REQUIRED CONFIG)
 find_package(Microsoft.GSL REQUIRED)
+find_package(re2 REQUIRED)
 
 if(NOT KPKG_SANITIZER)
   message(STATUS "Use mimalloc")
@@ -95,7 +96,8 @@ target_link_libraries(
           simdjson::simdjson
           ${Boost_LIBRARIES}
           klib::klib
-          Microsoft.GSL::GSL)
+          Microsoft.GSL::GSL
+          re2::re2)
 set_target_properties(${KPKG_LIBRARY} PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
 
 # ---------------------------------------------------------------------------------------

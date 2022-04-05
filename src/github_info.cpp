@@ -12,6 +12,8 @@ ReleaseInfo get_release_info(std::string json) {
   auto doc = parser.iterate(json);
 
   result.tag_name_ = doc["tag_name"].get_string().value();
+  // e.g. 2020-07-18T11:22:30Z
+  result.published_at_ = doc["published_at"].get_string().value().substr(0, 10);
   result.url_ = doc["tarball_url"].get_string().value();
 
   for (auto elem : doc["assets"].get_array()) {

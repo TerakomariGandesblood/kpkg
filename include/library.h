@@ -12,7 +12,7 @@ class Library {
           const std::string& tags_url,
           const std::vector<std::string>& dependency,
           const std::vector<std::string>& cmd, const std::string& tag_name,
-          const std::string& download_url);
+          const std::string& download_url, const std::string& published_at);
 
   void init(const std::string& proxy);
 
@@ -35,6 +35,7 @@ class Library {
 
   std::string tag_name_;
   std::string download_url_;
+  std::string published_at_;
 
   std::string file_name_;
   std::string dir_name_;

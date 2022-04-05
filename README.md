@@ -16,6 +16,7 @@ C++ Library Manager
 
 - klib ([MIT License](https://github.com/KaiserLancelot/klib/blob/main/LICENSE))
 - mimalloc ([MIT License](https://github.com/microsoft/mimalloc/blob/master/LICENSE))
+- RE2 ([BSD 3-Clause "New" or "Revised" License](https://github.com/google/re2/blob/main/LICENSE))
 - Boost ([Boost License](https://www.boost.org/users/license.html))
 - GSL ([MIT License](https://github.com/Microsoft/GSL/blob/master/LICENSE))
 - CLI11 ([License](https://github.com/CLIUtils/CLI11/blob/main/LICENSE))

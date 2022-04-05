@@ -17,6 +17,7 @@ struct Asset {
 struct ReleaseInfo {
   std::string tag_name_;
   std::string url_;
+  std::string published_at_;
   std::vector<Asset> assets_;
 };
 

@@ -1,10 +1,14 @@
 #include "library.h"
 
+#include <chrono>
 #include <filesystem>
 
+#include <fmt/compile.h>
+#include <fmt/format.h>
 #include <klib/archive.h>
 #include <klib/log.h>
 #include <klib/util.h>
+#include <re2/re2.h>
 #include <simdjson.h>
 #include <gsl/assert>
 
@@ -95,14 +99,16 @@ Library::Library(const std::string& name, const std::string& releases_url,
                  const std::string& tags_url,
                  const std::vector<std::string>& dependency,
                  const std::vector<std::string>& cmd,
-                 const std::string& tag_name, const std::string& download_url)
+                 const std::string& tag_name, const std::string& download_url,
+                 const std::string& published_at)
     : name_(name),
       releases_url_(releases_url),
       tags_url_(tags_url),
       dependency_(dependency),
       cmd_(cmd),
       tag_name_(tag_name),
-      download_url_(download_url) {}
+      download_url_(download_url),
+      published_at_(published_at) {}
 
 void Library::init(const std::string& proxy) {
   if (std::empty(tag_name_) && std::empty(download_url_)) {
@@ -119,6 +125,7 @@ void Library::init(const std::string& proxy) {
       auto info = get_release_info(response.text());
       tag_name_ = info.tag_name_;
       download_url_ = info.url_;
+      published_at_ = info.published_at_;
     } else {
       auto info = get_tag_info(response.text());
       tag_name_ = info.tag_name_;
@@ -168,7 +175,29 @@ void Library::build() const {
   klib::exec("sudo rm -rf " + dir_name_);
 }
 
-void Library::print() const { klib::info("{:<25} {:<25}", name_, tag_name_); }
+void Library::print() const {
+  Expects(!std::empty(published_at_));
+
+  auto msg = fmt::format(FMT_COMPILE("{:<20} {:<20} {}"), name_, tag_name_,
+                         published_at_);
+
+  std::int32_t year, month, day;
+  RE2::FullMatch(published_at_, "([0-9]{4})-([0-9]{2})-([0-9]{2})", &year,
+                 &month, &day);
+  auto ymd = std::chrono::year(year) / std::chrono::month(month) /
+             std::chrono::day(day);
+
+  std::chrono::year_month_day now(
+      std::chrono::floor<std::chrono::days>(std::chrono::system_clock::now()));
+
+  auto diff = (std::chrono::sys_days(now) - std::chrono::sys_days(ymd)).count();
+
+  if (diff <= 7) {
+    msg.append("\U0001F680");
+  }
+
+  klib::info(msg);
+}
 
 std::vector<Library> read_from_json() {
   std::string json(library, library_size);
@@ -184,6 +213,7 @@ std::vector<Library> read_from_json() {
     std::string tags_url(elem["tags_url"].get_string().value());
     std::string tag_name(elem["tag_name"].get_string().value());
     std::string download_url(elem["download_url"].get_string().value());
+    std::string published_at(elem["published_at"].get_string().value());
 
     std::vector<std::string> dependency;
     for (auto item : elem["dependency"].get_array()) {
@@ -196,7 +226,7 @@ std::vector<Library> read_from_json() {
     }
 
     ret.emplace_back(name, releases_url, tags_url, dependency, cmd, tag_name,
-                     download_url);
+                     download_url, published_at);
   }
 
   return ret;

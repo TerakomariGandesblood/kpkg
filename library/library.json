@@ -5,6 +5,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": ["zlib-ng", "BoringSSL"],
     "cmd": [
       "export LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lcrypto -lz\"",
@@ -18,6 +19,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": ["sudo make install"]
   },
@@ -27,6 +29,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "./configure --static --zlib-compat",
@@ -40,6 +43,7 @@
     "tags_url": "",
     "tag_name": "v3.6.0",
     "download_url": "https://github.com/libarchive/libarchive/releases/download/v3.6.0/libarchive-3.6.0.tar.gz",
+    "published_at": "2022-02-09",
     "dependency": ["zlib-ng", "zstd", "xz", "BoringSSL"],
     "cmd": [
       "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lcrypto -lz -pthread\" --disable-shared --enable-static --enable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --without-lz4 --with-zstd --with-lzma --without-lzo2 --without-cng --without-mbedtls --without-nettle --with-openssl --without-xml2 --without-expat",
@@ -51,8 +55,9 @@
     "name": "BoringSSL",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "BoringSSL-master-with-bazel",
+    "tag_name": "master-with-bazel",
     "download_url": "https://github.com/google/boringssl/archive/refs/heads/master-with-bazel.zip",
+    "published_at": "2022-04-02",
     "dependency": [],
     "cmd": [
       "patch -p1 < 0001-expose-ripemd160.patch",
@@ -73,6 +78,7 @@
     "tags_url": "",
     "tag_name": "v1.47.0",
     "download_url": "https://github.com/nghttp2/nghttp2/releases/download/v1.47.0/nghttp2-1.47.0.tar.gz",
+    "published_at": "2022-02-23",
     "dependency": ["zlib-ng", "BoringSSL"],
     "cmd": [
       "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lssl -lcrypto -lz\" --disable-shared --enable-static --disable-debug --disable-asio-lib --disable-failmalloc --enable-lib-only --disable-http3 --without-libxml2 --without-jansson --with-zlib --without-libevent-openssl --without-libcares --with-openssl --without-libev --without-cunit --without-jemalloc --without-systemd --without-mruby --without-neverbleed --without-cython --without-libngtcp2 --without-libnghttp3 --without-libbpf --without-boost",
@@ -86,6 +92,7 @@
     "tags_url": "",
     "tag_name": "v0.3.0",
     "download_url": "https://github.com/ngtcp2/ngtcp2/releases/download/v0.3.0/ngtcp2-0.3.0.tar.gz",
+    "published_at": "2022-04-03",
     "dependency": ["BoringSSL"],
     "cmd": [
       "./configure BORINGSSL_LIBS=\"-L/usr/local/lib -lssl -lcrypto -pthread\" --disable-shared --enable-static --disable-debug --disable-memdebug --enable-mempool --disable-asan --enable-lib-only --without-jemalloc --without-cunit --without-libnghttp3 --without-libev --without-openssl --without-gnutls --with-boringssl --without-picotls",
@@ -99,6 +106,7 @@
     "tags_url": "",
     "tag_name": "v0.3.0",
     "download_url": "https://github.com/ngtcp2/nghttp3/releases/download/v0.3.0/nghttp3-0.3.0.tar.gz",
+    "published_at": "2022-04-03",
     "dependency": [],
     "cmd": [
       "./configure --disable-shared --enable-static --disable-debug --disable-memdebug --disable-asan --enable-lib-only --without-cunit",
@@ -112,6 +120,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "cd quiche/deps",
@@ -135,6 +144,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "./bootstrap",
@@ -149,6 +159,7 @@
     "tags_url": "",
     "tag_name": "curl-7_82_0",
     "download_url": "https://github.com/curl/curl/releases/download/curl-7_82_0/curl-7.82.0.tar.gz",
+    "published_at": "2022-03-05",
     "dependency": [
       "zlib-ng",
       "brotli",
@@ -170,6 +181,7 @@
     "tags_url": "",
     "tag_name": "v8.1.1",
     "download_url": "https://github.com/fmtlib/fmt/releases/download/8.1.1/fmt-8.1.1.zip",
+    "published_at": "2022-01-07",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DFMT_DOC=OFF -DFMT_TEST=OFF -DFMT_CUDA_TEST=OFF -DFMT_MODULE=OFF",
@@ -183,6 +195,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": ["fmt"],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DSPDLOG_BUILD_ALL=OFF -DSPDLOG_BUILD_SHARED=OFF -DSPDLOG_BUILD_EXAMPLE=OFF -DSPDLOG_BUILD_EXAMPLE_HO=OFF -DSPDLOG_BUILD_TESTS=OFF -DSPDLOG_BUILD_TESTS_HO=OFF -DSPDLOG_BUILD_BENCH=OFF -DSPDLOG_SANITIZE_ADDRESS=OFF -DSPDLOG_INSTALL=ON -DSPDLOG_USE_STD_FORMAT=OFF -DSPDLOG_FMT_EXTERNAL=ON -DSPDLOG_FMT_EXTERNAL_HO=OFF -DSPDLOG_NO_EXCEPTIONS=OFF -DSPDLOG_TIDY=OFF",
@@ -196,6 +209,7 @@
     "tags_url": "https://api.github.com/repos/sqlcipher/sqlcipher/tags",
     "tag_name": "",
     "download_url": "",
+    "published_at": "2022-03-03",
     "dependency": ["zlib-ng", "BoringSSL"],
     "cmd": [
       "patch -p1 < 0001-fix-OPENSSL_VERSION_TEXT.patch",
@@ -210,6 +224,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "cd build/cmake",
@@ -226,6 +241,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DNAMEOF_OPT_BUILD_EXAMPLES=OFF -DNAMEOF_OPT_BUILD_TESTS=OFF",
@@ -239,6 +255,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DSEMVER_OPT_BUILD_EXAMPLES=OFF -DSEMVER_OPT_BUILD_TESTS=OFF",
@@ -252,6 +269,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DSCOPE_GUARD_OPT_BUILD_EXAMPLES=OFF -DSCOPE_GUARD_OPT_BUILD_TESTS=OFF",
@@ -265,6 +283,7 @@
     "tags_url": "",
     "tag_name": "boost-1.78.0",
     "download_url": "https://boostorg.jfrog.io/artifactory/main/release/1.78.0/source/boost_1_78_0.tar.gz",
+    "published_at": "2021-12-08",
     "dependency": [],
     "cmd": [
       "./bootstrap.sh",
@@ -277,6 +296,7 @@
     "tags_url": "",
     "tag_name": "v2021.6.0-rc1",
     "download_url": "https://github.com/oneapi-src/oneTBB/archive/refs/tags/v2021.6.0-rc1.zip",
+    "published_at": "2022-01-25",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DTBB_TEST=OFF -DTBB_EXAMPLES=OFF -DTBB4PY_BUILD=OFF -DTBB_BUILD=ON -DTBBMALLOC_BUILD=OFF -DTBBMALLOC_PROXY_BUILD=OFF -DTBB_CPF=OFF -DTBB_FIND_PACKAGE=OFF -DTBB_DISABLE_HWLOC_AUTOMATIC_SEARCH=ON -DTBB_ENABLE_IPO=OFF",
@@ -290,6 +310,7 @@
     "tags_url": "",
     "tag_name": "release-70-1",
     "download_url": "https://github.com/unicode-org/icu/releases/download/release-70-1/icu4c-70_1-src.tgz",
+    "published_at": "2021-10-28",
     "dependency": [],
     "cmd": [
       "cd source",
@@ -304,6 +325,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "export CFLAGS=\"$CFLAGS -DCATCH_CONFIG_ENABLE_BENCHMARKING\"",
@@ -319,6 +341,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DBUILD_SHARED_LIB=OFF -DBUILD_SAMPLE_CODE=OFF -DSUPPORT_CONSOLE_APP=OFF",
@@ -332,6 +355,7 @@
     "tags_url": "",
     "tag_name": "v1.12.1",
     "download_url": "https://github.com/zeux/pugixml/releases/download/v1.12.1/pugixml-1.12.1.tar.gz",
+    "published_at": "2022-02-16",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DPUGIXML_BUILD_TESTS=OFF -DPUGIXML_BUILD_SHARED_AND_STATIC_LIBS=OFF",
@@ -345,6 +369,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DCLI11_BUILD_DOCS=OFF -DCLI11_BUILD_TESTS=OFF -DCLI11_BUILD_EXAMPLES=OFF",
@@ -358,6 +383,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DINDICATORS_BUILD_TESTS=OFF -DINDICATORS_SAMPLES=OFF -DINDICATORS_DEMO=OFF",
@@ -371,6 +397,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DGSL_TEST=OFF",
@@ -384,6 +411,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DDBG_MACRO_ENABLE_TESTS=OFF",
@@ -397,6 +425,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DBACKWARD_SHARED=OFF",
@@ -410,6 +439,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "make PREFIX=/usr/local OPTTARGET=x86-64 LIBRARY_REL=lib LIB_SH= LINKED_LIB_SH= -j\"$(nproc)\"",
@@ -422,6 +452,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "patch -p1 < 0001-Reduce-compile-time.patch",
@@ -436,6 +467,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF",
@@ -449,6 +481,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "cd cmake_unofficial",
@@ -463,6 +496,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "autoreconf -i",
@@ -477,6 +511,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": ["marisa-trie"],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DBUILD_DOCUMENTATION=OFF -DENABLE_GTEST=OFF -DENABLE_BENCHMARK=OFF -DENABLE_DARTS=OFF -DBUILD_PYTHON=OFF -DUSE_SYSTEM_DARTS=OFF -DUSE_SYSTEM_GOOGLE_BENCHMARK=OFF -DUSE_SYSTEM_GTEST=OFF -DUSE_SYSTEM_MARISA=ON -DUSE_SYSTEM_PYBIND11=OFF -DUSE_SYSTEM_RAPIDJSON=OFF -DUSE_SYSTEM_TCLAP=OFF",
@@ -490,6 +525,7 @@
     "tags_url": "",
     "tag_name": "v2.0.5",
     "download_url": "https://github.com/microsoft/mimalloc/archive/refs/tags/v2.0.5.tar.gz",
+    "published_at": "2022-02-15",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DMI_SECURE=OFF -DMI_DEBUG_FULL=OFF -DMI_PADDING=OFF -DMI_OVERRIDE=ON -DMI_LOCAL_DYNAMIC_TLS=OFF -DMI_BUILD_SHARED=OFF -DMI_BUILD_STATIC=ON -DMI_BUILD_OBJECT=ON -DMI_BUILD_TESTS=OFF -DMI_DEBUG_TSAN=OFF -DMI_DEBUG_UBSAN=OFF -DMI_CHECK_FULL=OFF -DMI_INSTALL_TOPLEVEL=ON",
@@ -503,6 +539,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DCMARK_TESTS=OFF -DCMARK_STATIC=ON -DCMARK_SHARED=OFF",
@@ -516,6 +553,7 @@
     "tags_url": "",
     "tag_name": "v2.3.2",
     "download_url": "https://ftp.gnu.org/gnu/libidn/libidn2-2.3.2.tar.gz",
+    "published_at": "2021-07-20",
     "dependency": ["libunistring"],
     "cmd": [
       "patch -p1 < 0001-remove-HAVE_SYMVER_ALIAS_SUPPORT.patch",
@@ -530,6 +568,7 @@
     "tags_url": "",
     "tag_name": "v1.0",
     "download_url": "https://ftp.gnu.org/gnu/libunistring/libunistring-1.0.tar.gz",
+    "published_at": "2022-01-04",
     "dependency": [],
     "cmd": [
       "./configure --disable-shared --enable-static",
@@ -544,6 +583,7 @@
     "tags_url": "",
     "tag_name": "v0.21.1",
     "download_url": "https://github.com/rockdaboot/libpsl/releases/download/0.21.1/libpsl-0.21.1.tar.gz",
+    "published_at": "2020-07-18",
     "dependency": ["libidn2"],
     "cmd": [
       "./configure --disable-shared --enable-static --disable-nls --disable-gtk-doc --disable-gtk-doc-html --disable-gtk-doc-pdf --disable-man --disable-cfi --disable-ubsan --disable-asan --enable-runtime=libidn2 --enable-builtin=libidn2 --disable-valgrind-tests",
@@ -557,6 +597,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DUTF8_TESTS=OFF -DUTF8_INSTALL=ON -DUTF8_SAMPLES=OFF",
@@ -570,6 +611,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": ["brotli"],
     "cmd": [
       "patch -p1 < 0001-fix-brotli-link.patch",
@@ -584,6 +626,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": ["zlib-ng"],
     "cmd": [
       "export LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lz\"",
@@ -599,6 +642,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX=/usr/local -DENABLE_SHARED=OFF -DENABLE_STATIC=ON -DREQUIRE_SIMD=ON -DPNG_SUPPORTED=OFF -DWITH_JAVA=OFF -DWITH_JPEG8=ON -DWITH_SIMD=ON -DWITH_TURBOJPEG=OFF",
@@ -612,6 +656,7 @@
     "tags_url": "",
     "tag_name": "v1.2.2",
     "download_url": "https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-1.2.2.tar.gz",
+    "published_at": "2022-01-20",
     "dependency": [],
     "cmd": [
       "./configure --disable-shared --enable-static --enable-libwebpmux --enable-libwebpdemux --disable-libwebpdecoder --disable-libwebpextras --enable-threading --disable-gl --disable-sdl --disable-png --disable-jpeg --disable-tiff --disable-gif --disable-wic",
@@ -625,6 +670,7 @@
     "tags_url": "",
     "tag_name": "v3.4.2",
     "download_url": "https://github.com/libffi/libffi/releases/download/v3.4.2/libffi-3.4.2.tar.gz",
+    "published_at": "2021-06-29",
     "dependency": [],
     "cmd": [
       "./configure --disable-multi-os-directory --disable-shared --enable-static --disable-docs --disable-debug",
@@ -638,6 +684,7 @@
     "tags_url": "",
     "tag_name": "v2.38.0",
     "download_url": "https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.38/util-linux-2.38.tar.gz",
+    "published_at": "2022-03-28",
     "dependency": [],
     "cmd": [
       "./configure --prefix=/usr/local --disable-shared --enable-static --disable-gtk-doc --disable-nls --disable-all-programs --enable-libmount --enable-libblkid --without-util --without-selinux --without-audit --without-udev --without-ncursesw --without-ncurses --without-slang --without-tinfo --without-readline --without-utempter --without-cap-ng --without-libz --without-libmagic --without-user --without-btrfs --without-systemd --without-smack --without-econf --without-python --without-cryptsetup",
@@ -651,6 +698,7 @@
     "tags_url": "",
     "tag_name": "8.45",
     "download_url": "https://onboardcloud.dl.sourceforge.net/project/pcre/pcre/8.45/pcre-8.45.tar.gz",
+    "published_at": "2021-06-22",
     "dependency": [],
     "cmd": [
       "./configure --disable-shared --enable-static --disable-cpp --disable-valgrind --disable-coverage",
@@ -664,6 +712,7 @@
     "tags_url": "",
     "tag_name": "2.72.0",
     "download_url": "https://download.gnome.org/sources/glib/2.72/glib-2.72.0.tar.xz",
+    "published_at": "2022-03-17",
     "dependency": ["zlib-ng", "libpcre", "libffi", "util-linux"],
     "cmd": [
       "patch -p1 < 0001-fix-link-error.patch",
@@ -680,9 +729,10 @@
     "tags_url": "",
     "tag_name": "R_2_4_8",
     "download_url": "https://github.com/libexpat/libexpat/releases/download/R_2_4_8/expat-2.4.8.tar.gz",
+    "published_at": "2022-03-29",
     "dependency": [],
     "cmd": [
-      "./configure --disable-shared --enable-static --without-examples --without-tests",
+      "./configure --disable-shared --enable-static --without-examples --without-tests --without-libbsd --without-docbook",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
@@ -693,6 +743,7 @@
     "tags_url": "",
     "tag_name": "v8.12.2",
     "download_url": "https://github.com/libvips/libvips/releases/download/v8.12.2/vips-8.12.2.tar.gz",
+    "published_at": "2022-01-25",
     "dependency": ["libspng", "mozjpeg", "libwebp", "glib", "libexpat"],
     "cmd": [
       "patch -p1 < 0001-Add-spngsave.patch",
@@ -709,6 +760,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DUSEPCRE=OFF -DRE2_BUILD_TESTING=OFF",
@@ -722,6 +774,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DPHMAP_BUILD_TESTS=OFF -DPHMAP_BUILD_EXAMPLES=OFF",
@@ -735,6 +788,7 @@
     "tags_url": "",
     "tag_name": "",
     "download_url": "",
+    "published_at": "",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DHWY_FORCE_STATIC_LIBS=ON -DHWY_ENABLE_EXAMPLES=OFF",
@@ -748,6 +802,7 @@
     "tags_url": "",
     "tag_name": "5.2.5",
     "download_url": "https://onboardcloud.dl.sourceforge.net/project/lzmautils/xz-5.2.5.tar.gz",
+    "published_at": "2020-03-17",
     "dependency": [],
     "cmd": [
       "./configure --disable-debug --enable-assembler --disable-small --enable-threads=posix --enable-xz --enable-xzdec --enable-lzmadec --enable-lzmainfo --disable-doc --disable-shared --enable-static --disable-nls",
