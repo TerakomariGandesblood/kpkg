@@ -4,7 +4,7 @@
 
 #define KPKG_VER_MAJOR 1
 
-#define KPKG_VER_MINOR 8
+#define KPKG_VER_MINOR 9
 
 #define KPKG_VER_PATCH 0
 

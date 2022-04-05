@@ -809,5 +809,19 @@
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
+  },
+  {
+    "name": "libqrencode",
+    "releases_url": "",
+    "tags_url": "",
+    "tag_name": "v4.1.1",
+    "download_url": "https://fukuchi.org/works/qrencode/qrencode-4.1.1.tar.gz",
+    "published_at": "2020-09-28",
+    "dependency": [],
+    "cmd": [
+      "./configure --disable-shared --enable-static --enable-thread-safety --disable-gprof --disable-gcov --disable-mudflap --disable-asan --without-png --with-tools --without-tests",
+      "make -j\"$(nproc)\"",
+      "sudo make install"
+    ]
   }
 ]
