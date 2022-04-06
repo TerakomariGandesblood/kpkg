@@ -193,7 +193,7 @@ void Library::print() const {
   auto diff = (std::chrono::sys_days(now) - std::chrono::sys_days(ymd)).count();
 
   if (diff <= 7) {
-    msg.append("\U0001F680");
+    msg.append("🚀");
   }
 
   klib::info(msg);
