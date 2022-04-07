@@ -26,6 +26,8 @@
     .global simdjson_patch_size
     .global curl
     .global curl_size
+    .global curl2
+    .global curl2_size
     .section .rodata
 library:
     .incbin "library.json"
@@ -110,3 +112,9 @@ curl:
 curl_end:
 curl_size:
     .int curl_end - curl
+
+curl2:
+    .incbin "0001-Support-ngtcp2-with-CURLOPT_CAINFO_BLOB.patch"
+curl2_end:
+curl2_size:
+    .int curl2_end - curl2
