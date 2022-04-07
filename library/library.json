@@ -115,30 +115,6 @@
     ]
   },
   {
-    "name": "quiche",
-    "releases_url": "https://api.github.com/repos/cloudflare/quiche/releases/latest",
-    "tags_url": "",
-    "tag_name": "",
-    "download_url": "",
-    "published_at": "",
-    "dependency": [],
-    "cmd": [
-      "cd quiche/deps",
-      "git clone --depth 1 -b master-with-bazel https://github.com/google/boringssl",
-      "cd boringssl",
-      "patch -p1 < ../../../0001-expose-ripemd160.patch",
-      "cd ../../..",
-      "cargo build --package quiche --release --features ffi,pkg-config-meta,qlog",
-      "cd target/release",
-      "strip --strip-debug --strip-unneeded libquiche.a",
-      "sudo cp libquiche.a /usr/local/lib",
-      "sudo cp quiche.pc /usr/local/lib/pkgconfig",
-      "cd ../..",
-      "cd quiche/include",
-      "sudo cp quiche.h /usr/local/include"
-    ]
-  },
-  {
     "name": "brotli",
     "releases_url": "https://api.github.com/repos/google/brotli/releases/latest",
     "tags_url": "",
