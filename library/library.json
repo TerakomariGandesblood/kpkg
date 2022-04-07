@@ -142,11 +142,14 @@
       "zstd",
       "BoringSSL",
       "nghttp2",
+      "ngtcp2",
+      "nghttp3",
       "libidn2",
       "libpsl"
     ],
     "cmd": [
-      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lssl -lcrypto -lz\" LIBS=\"-L/usr/local/lib -lidn2 -lunistring\" --disable-debug --enable-optimize --disable-curldebug --enable-symbol-hiding --disable-ares --disable-ech --disable-code-coverage --disable-shared --enable-static --enable-http --disable-ftp --disable-file --disable-ldap --disable-ldaps --disable-rtsp --disable-dict --disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smb --disable-smtp --disable-gopher --disable-mqtt --disable-manual --enable-libcurl-option --enable-libgcc --enable-ipv6 --enable-openssl-auto-load-config --enable-threaded-resolver --enable-verbose --disable-sspi --enable-crypto-auth --disable-ntlm --disable-ntlm-wb --disable-tls-srp --disable-unix-sockets --enable-cookies --disable-socketpair --enable-http-auth --enable-doh --enable-mime --enable-dateparse --disable-netrc --enable-progress-meter --enable-dnsshuffle --disable-get-easy-options --enable-alt-svc --disable-hsts --with-openssl --without-hyper --with-zlib --with-brotli --with-zstd --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt' --with-ca-path='/etc/ssl/certs' --with-libpsl --without-libgsasl --without-libssh2 --without-libssh --without-librtmp --with-libidn2 --with-nghttp2 --without-ngtcp2 --without-nghttp3 --without-quiche",
+      "patch -p1 < 0001-Build-ngtcp2-with-BoringSSL.patch",
+      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lssl -lcrypto -lz\" LIBS=\"-L/usr/local/lib -lidn2 -lunistring -lngtcp2_crypto_boringssl\" --disable-debug --enable-optimize --disable-curldebug --enable-symbol-hiding --disable-ares --disable-ech --disable-code-coverage --disable-shared --enable-static --enable-http --disable-ftp --disable-file --disable-ldap --disable-ldaps --disable-rtsp --disable-dict --disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smb --disable-smtp --disable-gopher --disable-mqtt --disable-manual --enable-libcurl-option --enable-libgcc --enable-ipv6 --enable-openssl-auto-load-config --enable-threaded-resolver --enable-verbose --disable-sspi --enable-crypto-auth --disable-ntlm --disable-ntlm-wb --disable-tls-srp --disable-unix-sockets --enable-cookies --disable-socketpair --enable-http-auth --enable-doh --enable-mime --enable-dateparse --disable-netrc --enable-progress-meter --enable-dnsshuffle --disable-get-easy-options --enable-alt-svc --disable-hsts --with-openssl --without-hyper --with-zlib --with-brotli --with-zstd --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt' --with-ca-path='/etc/ssl/certs' --with-libpsl --without-libgsasl --without-libssh2 --without-libssh --without-librtmp --with-libidn2 --with-nghttp2 --with-ngtcp2 --with-nghttp3 --without-quiche",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
