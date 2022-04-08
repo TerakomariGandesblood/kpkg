@@ -45,7 +45,7 @@ std::string calc_command(const std::vector<std::string>& commands,
   // https://www.phoronix.com/scan.php?page=article&item=gcc11-rocket-opts&num=4
   const std::string flags = "-pipe -maes -march=haswell -O3 -g0 -DNDEBUG -fPIC";
   const std::string ld_flags =
-      "-fuse-ld=bfd -static-libgcc -static-libstdc++ -s -L/usr/local/lib";
+      "-fuse-ld=bfd -static-libgcc -static-libstdc++ -s";
 
   cmd = combine_command(
       cmd, fmt::format(FMT_COMPILE(R"(export CFLAGS="{}")"), flags));

@@ -294,7 +294,7 @@
     "dependency": [],
     "cmd": [
       "cd source",
-      "./runConfigureICU Linux --disable-icu-config --disable-debug --enable-release --disable-shared --enable-static --enable-auto-cleanup --disable-draft --disable-plugins --disable-dyload --disable-extras --enable-icuio --disable-layoutex --enable-tools --disable-fuzzer --disable-tests --disable-samples --with-data-packaging=static",
+      "./runConfigureICU Linux --disable-icu-config --disable-debug --enable-release --disable-shared --enable-static --enable-auto-cleanup --disable-draft --enable-renaming --disable-tracing --disable-plugins --disable-dyload --disable-extras --enable-icuio --disable-layoutex --enable-tools --disable-fuzzer --disable-tests --disable-samples --with-data-packaging=static",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
