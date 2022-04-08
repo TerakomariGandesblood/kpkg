@@ -41,9 +41,9 @@
     "name": "libarchive",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "v3.6.0",
-    "download_url": "https://github.com/libarchive/libarchive/releases/download/v3.6.0/libarchive-3.6.0.tar.gz",
-    "published_at": "2022-02-09",
+    "tag_name": "v3.6.1",
+    "download_url": "https://github.com/libarchive/libarchive/releases/download/v3.6.1/libarchive-3.6.1.tar.gz",
+    "published_at": "2022-04-08",
     "dependency": ["zlib-ng", "zstd", "xz", "BoringSSL"],
     "cmd": [
       "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lcrypto -lz -pthread\" --disable-shared --enable-static --enable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --without-lz4 --with-zstd --with-lzma --without-lzo2 --without-cng --without-mbedtls --without-nettle --with-openssl --without-xml2 --without-expat",
