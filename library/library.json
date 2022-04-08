@@ -288,9 +288,9 @@
     "name": "icu",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "release-70-1",
-    "download_url": "https://github.com/unicode-org/icu/releases/download/release-70-1/icu4c-70_1-src.tgz",
-    "published_at": "2021-10-28",
+    "tag_name": "release-71-1",
+    "download_url": "https://github.com/unicode-org/icu/releases/download/release-71-1/icu4c-71_1-src.tgz",
+    "published_at": "2022-04-07",
     "dependency": [],
     "cmd": [
       "cd source",
