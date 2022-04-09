@@ -6,6 +6,6 @@ includedir=${prefix}/include
 Name: BoringSSL-libssl
 Description: BoringSSL Secure Sockets Layer
 Version: 1.1.1.BoringSSL
-Requires.private: libcrypto
+Requires: libcrypto
 Libs: -L${libdir} -lssl
 Cflags: -I${includedir}

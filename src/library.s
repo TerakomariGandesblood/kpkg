@@ -16,8 +16,6 @@
     .global sqlcipher_size
     .global libidn2
     .global libidn2_size
-    .global libspng
-    .global libspng_size
     .global libvips
     .global libvips_size
     .global glib
@@ -82,12 +80,6 @@ libidn2:
 libidn2_end:
 libidn2_size:
     .int libidn2_end - libidn2
-
-libspng:
-    .incbin "libspng.pc"
-libspng_end:
-libspng_size:
-    .int libspng_end - libspng
 
 libvips:
     .incbin "0001-Add-spngsave.patch"

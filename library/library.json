@@ -8,7 +8,7 @@
     "published_at": "",
     "dependency": ["zlib-ng", "BoringSSL"],
     "cmd": [
-      "export LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lcrypto -lz\"",
+      "export LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lcrypto -lz -pthread\"",
       "make CFLAGS=\"$CFLAGS\" CXXFLAGS=\"$CXXFLAGS\" LDFLAGS=\"$LDFLAGS\" -j\"$(nproc)\"",
       "sudo make install"
     ]
@@ -48,7 +48,8 @@
     "cmd": [
       "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lcrypto -lz -pthread\" --disable-shared --enable-static --enable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --without-lz4 --with-zstd --with-lzma --without-lzo2 --without-cng --without-mbedtls --without-nettle --with-openssl --without-xml2 --without-expat",
       "make -j\"$(nproc)\"",
-      "sudo make install"
+      "sudo make install",
+      "sudo sed -i 's/-larchive/-larchive -lcrypto -llzma -lzstd -lz -pthread/g' /usr/local/lib/pkgconfig/libarchive.pc"
     ]
   },
   {
@@ -57,7 +58,7 @@
     "tags_url": "",
     "tag_name": "master-with-bazel",
     "download_url": "https://github.com/google/boringssl/archive/refs/heads/master-with-bazel.zip",
-    "published_at": "2022-04-02",
+    "published_at": "2022-04-09",
     "dependency": [],
     "cmd": [
       "patch -p1 < 0001-expose-ripemd160.patch",
@@ -81,9 +82,10 @@
     "published_at": "2022-02-23",
     "dependency": ["zlib-ng", "BoringSSL"],
     "cmd": [
-      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lssl -lcrypto -lz\" --disable-shared --enable-static --disable-debug --disable-asio-lib --disable-failmalloc --enable-lib-only --disable-http3 --without-libxml2 --without-jansson --with-zlib --without-libevent-openssl --without-libcares --with-openssl --without-libev --without-cunit --without-jemalloc --without-systemd --without-mruby --without-neverbleed --without-cython --without-libngtcp2 --without-libnghttp3 --without-libbpf --without-boost",
+      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lssl -lcrypto -lz -pthread\" --disable-shared --enable-static --disable-debug --disable-asio-lib --disable-failmalloc --enable-lib-only --disable-http3 --without-libxml2 --without-jansson --with-zlib --without-libevent-openssl --without-libcares --with-openssl --without-libev --without-cunit --without-jemalloc --without-systemd --without-mruby --without-neverbleed --without-cython --without-libngtcp2 --without-libnghttp3 --without-libbpf --without-boost",
       "make -j\"$(nproc)\"",
-      "sudo make install"
+      "sudo make install",
+      "sudo sed -i 's/-lnghttp2/-lnghttp2 -lssl -lcrypto -lz -pthread/g' /usr/local/lib/pkgconfig/libnghttp2.pc"
     ]
   },
   {
@@ -97,7 +99,8 @@
     "cmd": [
       "./configure BORINGSSL_LIBS=\"-L/usr/local/lib -lssl -lcrypto -pthread\" --disable-shared --enable-static --disable-debug --disable-memdebug --enable-mempool --disable-asan --enable-lib-only --without-jemalloc --without-cunit --without-libnghttp3 --without-libev --without-openssl --without-gnutls --with-boringssl --without-picotls",
       "make -j\"$(nproc)\"",
-      "sudo make install"
+      "sudo make install",
+      "sudo sed -i 's/-lngtcp2/-lngtcp2 -lssl -lcrypto -pthread/g' /usr/local/lib/pkgconfig/libngtcp2.pc"
     ]
   },
   {
@@ -126,7 +129,9 @@
       "./bootstrap",
       "./configure --disable-shared --enable-static",
       "make -j\"$(nproc)\"",
-      "sudo make install"
+      "sudo make install",
+      "sudo sed -i 's/-lbrotlidec/-lbrotlidec -lbrotlicommon/g' /usr/local/lib/pkgconfig/libbrotlidec.pc",
+      "sudo sed -i 's/-lbrotlienc/-lbrotlienc -lbrotlicommon/g' /usr/local/lib/pkgconfig/libbrotlienc.pc"
     ]
   },
   {
@@ -150,7 +155,7 @@
     "cmd": [
       "patch -p1 < 0001-Build-ngtcp2-with-BoringSSL.patch",
       "patch -p1 < 0001-Support-ngtcp2-with-CURLOPT_CAINFO_BLOB.patch",
-      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lssl -lcrypto -lz\" LIBS=\"-L/usr/local/lib -lidn2 -lunistring -lngtcp2_crypto_boringssl\" --disable-debug --enable-optimize --disable-curldebug --enable-symbol-hiding --disable-ares --disable-ech --disable-code-coverage --disable-shared --enable-static --enable-http --disable-ftp --disable-file --disable-ldap --disable-ldaps --disable-rtsp --disable-dict --disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smb --disable-smtp --disable-gopher --disable-mqtt --disable-manual --enable-libcurl-option --enable-libgcc --enable-ipv6 --enable-openssl-auto-load-config --enable-threaded-resolver --enable-verbose --disable-sspi --enable-crypto-auth --disable-ntlm --disable-ntlm-wb --disable-tls-srp --disable-unix-sockets --enable-cookies --disable-socketpair --enable-http-auth --enable-doh --enable-mime --enable-dateparse --disable-netrc --enable-progress-meter --enable-dnsshuffle --disable-get-easy-options --enable-alt-svc --disable-hsts --with-openssl --without-hyper --with-zlib --with-brotli --with-zstd --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt' --with-ca-path='/etc/ssl/certs' --with-libpsl --without-libgsasl --without-libssh2 --without-libssh --without-librtmp --with-libidn2 --with-nghttp2 --with-ngtcp2 --with-nghttp3 --without-quiche",
+      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lssl -lcrypto -lz -pthread\" LIBS=\"-L/usr/local/lib -lidn2 -lunistring -lngtcp2_crypto_boringssl\" --disable-debug --enable-optimize --disable-curldebug --enable-symbol-hiding --disable-ares --disable-ech --disable-code-coverage --disable-shared --enable-static --enable-http --disable-ftp --disable-file --disable-ldap --disable-ldaps --disable-rtsp --disable-dict --disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smb --disable-smtp --disable-gopher --disable-mqtt --disable-manual --enable-libcurl-option --enable-libgcc --enable-ipv6 --enable-openssl-auto-load-config --enable-threaded-resolver --enable-verbose --disable-sspi --enable-crypto-auth --disable-ntlm --disable-ntlm-wb --disable-tls-srp --disable-unix-sockets --enable-cookies --disable-socketpair --enable-http-auth --enable-doh --enable-mime --enable-dateparse --disable-netrc --enable-progress-meter --enable-dnsshuffle --disable-get-easy-options --enable-alt-svc --disable-hsts --with-openssl --without-hyper --with-zlib --with-brotli --with-zstd --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt' --with-ca-path='/etc/ssl/certs' --with-libpsl --without-libgsasl --without-libssh2 --without-libssh --without-librtmp --with-libidn2 --with-nghttp2 --with-ngtcp2 --with-nghttp3 --without-quiche",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
@@ -193,9 +198,10 @@
     "dependency": ["zlib-ng", "BoringSSL"],
     "cmd": [
       "patch -p1 < 0001-fix-OPENSSL_VERSION_TEXT.patch",
-      "./configure CFLAGS=\"$CFLAGS -DSQLITE_HAS_CODEC\" LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lcrypto -lz\" --disable-shared --enable-static --enable-releasemode --enable-tempstore=yes --disable-tcl --disable-readline --disable-debug --disable-load-extension",
+      "./configure CFLAGS=\"$CFLAGS -DSQLITE_HAS_CODEC\" LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lcrypto -lz -pthread\" --disable-shared --enable-static --enable-releasemode --enable-tempstore=yes --disable-tcl --disable-readline --disable-debug --disable-load-extension",
       "make -j\"$(nproc)\"",
-      "sudo make install"
+      "sudo make install",
+      "sudo sed -i 's/-lsqlcipher/-lsqlcipher -lcrypto -lz -lm -pthread/g' /usr/local/lib/pkgconfig/sqlcipher.pc"
     ]
   },
   {
@@ -212,7 +218,8 @@
       "export CXXFLAGS=\"$CXXFLAGS -DZSTD_MULTITHREAD\"",
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DZSTD_LEGACY_SUPPORT=OFF -DZSTD_MULTITHREAD_SUPPORT=ON -DZSTD_BUILD_PROGRAMS=ON -DZSTD_BUILD_CONTRIB=OFF -DZSTD_BUILD_TESTS=OFF -DZSTD_BUILD_SHARED=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
+      "sudo cmake --build build --config Release --target install",
+      "sudo sed -i 's/-lzstd/-lzstd -pthread/g' /usr/local/lib/pkgconfig/libzstd.pc"
     ]
   },
   {
@@ -496,7 +503,8 @@
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DBUILD_DOCUMENTATION=OFF -DENABLE_GTEST=OFF -DENABLE_BENCHMARK=OFF -DENABLE_DARTS=OFF -DBUILD_PYTHON=OFF -DUSE_SYSTEM_DARTS=OFF -DUSE_SYSTEM_GOOGLE_BENCHMARK=OFF -DUSE_SYSTEM_GTEST=OFF -DUSE_SYSTEM_MARISA=ON -DUSE_SYSTEM_PYBIND11=OFF -DUSE_SYSTEM_RAPIDJSON=OFF -DUSE_SYSTEM_TCLAP=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
+      "sudo cmake --build build --config Release --target install",
+      "sudo sed -i 's/Requires:/Requires: marisa/g' /usr/local/lib/pkgconfig/opencc.pc"
     ]
   },
   {
@@ -539,7 +547,8 @@
       "patch -p1 < 0001-remove-HAVE_SYMVER_ALIAS_SUPPORT.patch",
       "./configure --disable-shared --enable-static --disable-valgrind-tests --disable-gtk-doc --disable-gtk-doc-html --disable-gtk-doc-pdf --disable-nls --disable-code-coverage --disable-doc",
       "make -j\"$(nproc)\"",
-      "sudo make install"
+      "sudo make install",
+      "sudo sed -i 's/-lidn2/-lidn2 -lunistring/g' /usr/local/lib/pkgconfig/libidn2.pc"
     ]
   },
   {
@@ -568,7 +577,8 @@
     "cmd": [
       "./configure --disable-shared --enable-static --disable-nls --disable-gtk-doc --disable-gtk-doc-html --disable-gtk-doc-pdf --disable-man --disable-cfi --disable-ubsan --disable-asan --enable-runtime=libidn2 --enable-builtin=libidn2 --disable-valgrind-tests",
       "make -j\"$(nproc)\"",
-      "sudo make install"
+      "sudo make install",
+      "sudo sed -i 's/-lpsl/-lpsl -lunistring/g' /usr/local/lib/pkgconfig/libpsl.pc"
     ]
   },
   {
@@ -597,7 +607,9 @@
       "patch -p1 < 0001-fix-brotli-link.patch",
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DCANONICAL_PREFIXES=ON -DNOISY_LOGGING=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
-      "sudo cmake --build build --config Release --target install"
+      "sudo cmake --build build --config Release --target install",
+      "sudo sed -i 's/Requires: libbrotlidec/Requires: libbrotlidec libwoff2common/g' /usr/local/lib/pkgconfig/libwoff2dec.pc",
+      "sudo sed -i 's/Requires: libbrotlienc/Requires: libbrotlienc libwoff2common/g' /usr/local/lib/pkgconfig/libwoff2enc.pc"
     ]
   },
   {
@@ -613,7 +625,7 @@
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DENABLE_OPT=ON -DSPNG_SHARED=OFF -DSPNG_STATIC=ON -DBUILD_EXAMPLES=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install",
-      "sudo cp libspng.pc /usr/local/lib/pkgconfig"
+      "sudo sed -i 's/-lspng/-lspng_static -lz -lm/g' /usr/local/lib/pkgconfig/libspng.pc"
     ]
   },
   {
@@ -669,7 +681,8 @@
     "cmd": [
       "./configure --prefix=/usr/local --disable-shared --enable-static --disable-gtk-doc --disable-nls --disable-all-programs --enable-libmount --enable-libblkid --without-util --without-selinux --without-audit --without-udev --without-ncursesw --without-ncurses --without-slang --without-tinfo --without-readline --without-utempter --without-cap-ng --without-libz --without-libmagic --without-user --without-btrfs --without-systemd --without-smack --without-econf --without-python --without-cryptsetup",
       "make -j\"$(nproc)\"",
-      "sudo make install"
+      "sudo make install",
+      "sudo sed -i 's/-lmount/-lmount -lblkid/g' /usr/local/lib/pkgconfig/mount.pc"
     ]
   },
   {
@@ -681,7 +694,7 @@
     "published_at": "2021-06-22",
     "dependency": [],
     "cmd": [
-      "./configure --disable-shared --enable-static --disable-cpp --disable-valgrind --disable-coverage",
+      "./configure --disable-shared --enable-static --disable-cpp --enable-utf --enable-unicode-properties --disable-valgrind --disable-coverage",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
@@ -714,7 +727,8 @@
     "cmd": [
       "./configure --disable-shared --enable-static --without-examples --without-tests --without-libbsd --without-docbook",
       "make -j\"$(nproc)\"",
-      "sudo make install"
+      "sudo make install",
+      "sudo sed -i 's/-lexpat/-lexpat -lm/g' /usr/local/lib/pkgconfig/expat.pc"
     ]
   },
   {
@@ -731,7 +745,8 @@
       "automake",
       "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lgio-2.0 -lgmodule-2.0 -lgobject-2.0 -lglib-2.0\" --disable-debug --disable-deprecated --disable-shared --enable-static --disable-doxygen --disable-modules --disable-gtk-doc --disable-gtk-doc-html --disable-gtk-doc-pdf --disable-magickload --disable-magicksave --without-gsf --without-fftw --without-magick --without-magickpackage --without-orc --without-lcms --without-OpenEXR --without-nifti --without-x --without-libjxl --without-libopenjp2 --without-heif --without-pdfium --without-poppler --without-rsvg --without-zlib --without-openslide --without-matio --without-nsgif --without-ppm --without-analyze --without-radiance --without-cfitsio --with-libwebp --without-pangocairo --without-fontconfig --without-tiff --with-libspng --without-png --without-imagequant --with-jpeg --without-libexif --without-cgif",
       "make -j\"$(nproc)\"",
-      "sudo make install"
+      "sudo make install",
+      "sudo sed -i 's/Requires: gobject-2.0/Requires: glib-2.0 gmodule-no-export-2.0 gobject-2.0 gio-2.0 expat libwebp libwebpmux libwebpdemux libspng libjpeg/g' /usr/local/lib/pkgconfig/vips.pc"
     ]
   },
   {
@@ -801,7 +816,8 @@
     "cmd": [
       "./configure --disable-shared --enable-static --enable-thread-safety --disable-gprof --disable-gcov --disable-mudflap --disable-asan --without-png --with-tools --without-tests",
       "make -j\"$(nproc)\"",
-      "sudo make install"
+      "sudo make install",
+      "sudo sed -i 's/-lqrencode/-lqrencode -pthread/g' /usr/local/lib/pkgconfig/libqrencode.pc"
     ]
   }
 ]

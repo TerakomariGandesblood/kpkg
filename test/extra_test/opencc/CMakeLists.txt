@@ -6,10 +6,9 @@ include(../common.cmake)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(opencc REQUIRED IMPORTED_TARGET opencc)
-pkg_check_modules(marisa REQUIRED IMPORTED_TARGET marisa)
 
 add_executable(opencc main.cpp)
-target_link_libraries(opencc PRIVATE PkgConfig::opencc PkgConfig::marisa)
+target_link_libraries(opencc PRIVATE PkgConfig::opencc)
 
 add_custom_command(
   TARGET opencc

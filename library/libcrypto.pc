@@ -6,5 +6,5 @@ includedir=${prefix}/include
 Name: BoringSSL-libcrypto
 Description: BoringSSL cryptography library
 Version: 1.1.1.BoringSSL
-Libs: -L${libdir} -lcrypto -lpthread
+Libs: -L${libdir} -lcrypto -pthread
 Cflags: -I${includedir}

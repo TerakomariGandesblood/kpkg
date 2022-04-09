@@ -6,14 +6,10 @@ include(../common.cmake)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(libcurl REQUIRED IMPORTED_TARGET libcurl)
-pkg_check_modules(libbrotlicommon REQUIRED IMPORTED_TARGET libbrotlicommon)
-pkg_check_modules(libunistring REQUIRED IMPORTED_TARGET libunistring)
 add_definitions(-DCURL_NO_OLDIES)
 
 add_executable(curl main.cpp)
-target_link_libraries(
-  curl PRIVATE PkgConfig::libcurl PkgConfig::libbrotlicommon
-               PkgConfig::libunistring)
+target_link_libraries(curl PRIVATE PkgConfig::libcurl)
 
 add_custom_command(
   TARGET curl
