@@ -92,9 +92,9 @@
     "name": "ngtcp2",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "v0.3.0",
-    "download_url": "https://github.com/ngtcp2/ngtcp2/releases/download/v0.3.0/ngtcp2-0.3.0.tar.gz",
-    "published_at": "2022-04-03",
+    "tag_name": "v0.3.1",
+    "download_url": "https://github.com/ngtcp2/ngtcp2/releases/download/v0.3.1/ngtcp2-0.3.1.tar.gz",
+    "published_at": "2022-04-10",
     "dependency": ["BoringSSL"],
     "cmd": [
       "./configure BORINGSSL_LIBS=\"-L/usr/local/lib -lssl -lcrypto -pthread\" --disable-shared --enable-static --disable-debug --disable-memdebug --enable-mempool --disable-asan --enable-lib-only --without-jemalloc --without-cunit --without-libnghttp3 --without-libev --without-openssl --without-gnutls --with-boringssl --without-picotls",
