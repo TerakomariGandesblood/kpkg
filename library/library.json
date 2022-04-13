@@ -58,7 +58,7 @@
     "tags_url": "",
     "tag_name": "master-with-bazel",
     "download_url": "https://github.com/google/boringssl/archive/refs/heads/master-with-bazel.zip",
-    "published_at": "2022-04-09",
+    "published_at": "2022-04-12",
     "dependency": [],
     "cmd": [
       "patch -p1 < 0001-expose-ripemd160.patch",
