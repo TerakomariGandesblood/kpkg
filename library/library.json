@@ -274,7 +274,7 @@
     "dependency": [],
     "cmd": [
       "./bootstrap.sh",
-      "sudo ./b2 --with-json cflags=\"$CFLAGS\" cxxflags=\"$CXXFLAGS\" linkflags=\"$LDFLAGS\" toolset=$CC link=static install"
+      "sudo ./b2 -a --with-json cflags=\"$CFLAGS\" cxxflags=\"$CXXFLAGS\" linkflags=\"$LDFLAGS\" toolset=$CC link=static install"
     ]
   },
   {
