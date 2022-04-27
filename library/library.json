@@ -699,7 +699,7 @@
     "releases_url": "",
     "tags_url": "",
     "tag_name": "2.72.1",
-    "download_url": "https://download.gnome.org/sources/glib/2.72/glib-2.72.1.tar.xz",
+    "download_url": "https://ftp.acc.umu.se/pub/GNOME/sources/glib/2.72/glib-2.72.1.tar.xz",
     "published_at": "2022-04-14",
     "dependency": ["zlib-ng", "libpcre", "libffi", "util-linux"],
     "cmd": [
