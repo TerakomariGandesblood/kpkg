@@ -44,12 +44,12 @@
     "tag_name": "v3.6.1",
     "download_url": "https://github.com/libarchive/libarchive/releases/download/v3.6.1/libarchive-3.6.1.tar.gz",
     "published_at": "2022-04-08",
-    "dependency": ["zlib-ng", "zstd", "xz", "BoringSSL"],
+    "dependency": ["zlib-ng", "xz", "BoringSSL"],
     "cmd": [
-      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lcrypto -lz -pthread\" --disable-shared --enable-static --enable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --without-lz4 --with-zstd --with-lzma --without-lzo2 --without-cng --without-mbedtls --without-nettle --with-openssl --without-xml2 --without-expat",
+      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lcrypto -lz -pthread\" --disable-shared --enable-static --enable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-xattr --disable-acl --with-zlib --without-bz2lib --without-libb2 --without-lz4 --without-zstd --with-lzma --without-lzo2 --without-cng --without-mbedtls --without-nettle --with-openssl --without-xml2 --without-expat",
       "make -j\"$(nproc)\"",
       "sudo make install",
-      "sudo sed -i 's/-larchive/-larchive -lcrypto -llzma -lzstd -lz -pthread/g' /usr/local/lib/pkgconfig/libarchive.pc"
+      "sudo sed -i 's/-larchive/-larchive -lcrypto -llzma -lz -pthread/g' /usr/local/lib/pkgconfig/libarchive.pc"
     ]
   },
   {
@@ -58,7 +58,7 @@
     "tags_url": "",
     "tag_name": "master-with-bazel",
     "download_url": "https://github.com/google/boringssl/archive/refs/heads/master-with-bazel.zip",
-    "published_at": "2022-04-21",
+    "published_at": "2022-04-27",
     "dependency": [],
     "cmd": [
       "patch -p1 < 0001-expose-ripemd160.patch",
@@ -92,9 +92,9 @@
     "name": "ngtcp2",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "v0.3.1",
-    "download_url": "https://github.com/ngtcp2/ngtcp2/releases/download/v0.3.1/ngtcp2-0.3.1.tar.gz",
-    "published_at": "2022-04-10",
+    "tag_name": "v0.4.0",
+    "download_url": "https://github.com/ngtcp2/ngtcp2/releases/download/v0.4.0/ngtcp2-0.4.0.tar.gz",
+    "published_at": "2022-04-25",
     "dependency": ["BoringSSL"],
     "cmd": [
       "./configure BORINGSSL_LIBS=\"-L/usr/local/lib -lssl -lcrypto -pthread\" --disable-shared --enable-static --disable-debug --disable-memdebug --enable-mempool --disable-asan --enable-lib-only --without-jemalloc --without-cunit --without-libnghttp3 --without-libev --without-openssl --without-gnutls --with-boringssl --without-picotls",
@@ -107,9 +107,9 @@
     "name": "nghttp3",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "v0.3.0",
-    "download_url": "https://github.com/ngtcp2/nghttp3/releases/download/v0.3.0/nghttp3-0.3.0.tar.gz",
-    "published_at": "2022-04-03",
+    "tag_name": "v0.4.0",
+    "download_url": "https://github.com/ngtcp2/nghttp3/releases/download/v0.4.0/nghttp3-0.4.0.tar.gz",
+    "published_at": "2022-04-25",
     "dependency": [],
     "cmd": [
       "./configure --disable-shared --enable-static --disable-debug --disable-memdebug --disable-asan --enable-lib-only --without-cunit",
@@ -138,24 +138,19 @@
     "name": "curl",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "curl-7_82_0",
-    "download_url": "https://github.com/curl/curl/releases/download/curl-7_82_0/curl-7.82.0.tar.gz",
-    "published_at": "2022-03-05",
+    "tag_name": "curl-7_83_0",
+    "download_url": "https://github.com/curl/curl/releases/download/curl-7_83_0/curl-7.83.0.tar.gz",
+    "published_at": "2022-04-27",
     "dependency": [
       "zlib-ng",
       "brotli",
-      "zstd",
       "BoringSSL",
       "nghttp2",
-      "ngtcp2",
-      "nghttp3",
       "libidn2",
       "libpsl"
     ],
     "cmd": [
-      "patch -p1 < 0001-Build-ngtcp2-with-BoringSSL.patch",
-      "patch -p1 < 0001-Support-ngtcp2-with-CURLOPT_CAINFO_BLOB.patch",
-      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lssl -lcrypto -lz -pthread\" LIBS=\"-L/usr/local/lib -lidn2 -lunistring -lngtcp2_crypto_boringssl\" --disable-debug --enable-optimize --disable-curldebug --enable-symbol-hiding --disable-ares --disable-ech --disable-code-coverage --disable-shared --enable-static --enable-http --disable-ftp --disable-file --disable-ldap --disable-ldaps --disable-rtsp --disable-dict --disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smb --disable-smtp --disable-gopher --disable-mqtt --disable-manual --enable-libcurl-option --enable-libgcc --enable-ipv6 --enable-openssl-auto-load-config --enable-threaded-resolver --enable-verbose --disable-sspi --enable-crypto-auth --disable-ntlm --disable-ntlm-wb --disable-tls-srp --disable-unix-sockets --enable-cookies --disable-socketpair --enable-http-auth --enable-doh --enable-mime --enable-dateparse --disable-netrc --enable-progress-meter --enable-dnsshuffle --disable-get-easy-options --enable-alt-svc --disable-hsts --with-openssl --without-hyper --with-zlib --with-brotli --with-zstd --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt' --with-ca-path='/etc/ssl/certs' --with-libpsl --without-libgsasl --without-libssh2 --without-libssh --without-librtmp --with-libidn2 --with-nghttp2 --with-ngtcp2 --with-nghttp3 --without-quiche",
+      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lssl -lcrypto -lz -pthread\" LIBS=\"-L/usr/local/lib -lidn2 -lunistring\" --disable-debug --enable-optimize --disable-curldebug --enable-symbol-hiding --disable-ares --disable-ech --disable-code-coverage --disable-shared --enable-static --enable-http --disable-ftp --disable-file --disable-ldap --disable-ldaps --disable-rtsp --enable-proxy --disable-dict --disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smb --disable-smtp --disable-gopher --disable-mqtt --disable-manual --enable-libcurl-option --enable-libgcc --enable-ipv6 --enable-openssl-auto-load-config --enable-threaded-resolver --enable-verbose --disable-sspi --enable-crypto-auth --disable-ntlm --disable-ntlm-wb --disable-tls-srp --disable-unix-sockets --enable-cookies --disable-socketpair --enable-http-auth --enable-doh --enable-mime --enable-dateparse --disable-netrc --enable-progress-meter --enable-dnsshuffle --disable-get-easy-options --enable-alt-svc --enable-headers-api --disable-hsts --with-openssl --without-hyper --with-zlib --with-brotli --without-zstd --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt' --with-ca-path='/etc/ssl/certs' --with-libpsl --without-libgsasl --without-libssh2 --without-libssh --without-librtmp --with-libidn2 --with-nghttp2 --without-ngtcp2 --without-nghttp3 --without-quiche",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]

@@ -52,12 +52,6 @@ extern int glib_size;
 extern char simdjson_patch[];
 extern int simdjson_patch_size;
 
-extern char curl[];
-extern int curl_size;
-
-extern char curl2[];
-extern int curl2_size;
-
 namespace kpkg {
 
 namespace {
@@ -91,11 +85,6 @@ void write_files(const std::string& library_name, const std::string& dir_name) {
   } else if (library_name == "simdjson") {
     klib::write_file("0001-Reduce-compile-time.patch", false, simdjson_patch,
                      simdjson_patch_size);
-  } else if (library_name == "curl") {
-    klib::write_file("0001-Build-ngtcp2-with-BoringSSL.patch", false, curl,
-                     curl_size);
-    klib::write_file("0001-Support-ngtcp2-with-CURLOPT_CAINFO_BLOB.patch",
-                     false, curl2, curl2_size);
   }
 }
 

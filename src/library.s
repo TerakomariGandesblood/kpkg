@@ -22,10 +22,6 @@
     .global glib_size
     .global simdjson_patch
     .global simdjson_patch_size
-    .global curl
-    .global curl_size
-    .global curl2
-    .global curl2_size
     .section .rodata
 library:
     .incbin "library.json"
@@ -98,15 +94,3 @@ simdjson_patch:
 simdjson_patch_end:
 simdjson_patch_size:
     .int simdjson_patch_end - simdjson_patch
-
-curl:
-    .incbin "0001-Build-ngtcp2-with-BoringSSL.patch"
-curl_end:
-curl_size:
-    .int curl_end - curl
-
-curl2:
-    .incbin "0001-Support-ngtcp2-with-CURLOPT_CAINFO_BLOB.patch"
-curl2_end:
-curl2_size:
-    .int curl2_end - curl2
