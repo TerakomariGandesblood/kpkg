@@ -58,7 +58,7 @@
     "tags_url": "",
     "tag_name": "master-with-bazel",
     "download_url": "https://github.com/google/boringssl/archive/refs/heads/master-with-bazel.zip",
-    "published_at": "2022-04-30",
+    "published_at": "2022-05-03",
     "dependency": [],
     "cmd": [
       "patch -p1 < 0001-expose-ripemd160.patch",
@@ -813,6 +813,20 @@
       "make -j\"$(nproc)\"",
       "sudo make install",
       "sudo sed -i 's/-lqrencode/-lqrencode -pthread/g' /usr/local/lib/pkgconfig/libqrencode.pc"
+    ]
+  },
+  {
+    "name": "libmagic",
+    "releases_url": "",
+    "tags_url": "",
+    "tag_name": "5.41",
+    "download_url": "http://ftp.astron.com/pub/file/file-5.41.tar.gz",
+    "published_at": "2021-10-18",
+    "dependency": [],
+    "cmd": [
+      "./configure --disable-elf --disable-elf-core --disable-zlib --disable-bzlib --disable-xzlib --disable-libseccomp --disable-fsect-man5 --enable-static --disable-shared",
+      "make -j\"$(nproc)\"",
+      "sudo make install"
     ]
   }
 ]
