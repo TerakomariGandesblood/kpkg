@@ -58,7 +58,7 @@
     "tags_url": "",
     "tag_name": "master-with-bazel",
     "download_url": "https://github.com/google/boringssl/archive/refs/heads/master-with-bazel.zip",
-    "published_at": "2022-05-03",
+    "published_at": "2022-05-05",
     "dependency": [],
     "cmd": [
       "patch -p1 < 0001-expose-ripemd160.patch",
@@ -824,6 +824,7 @@
     "published_at": "2021-10-18",
     "dependency": [],
     "cmd": [
+      "patch -p1 < libmagic.patch",
       "./configure --disable-elf --disable-elf-core --disable-zlib --disable-bzlib --disable-xzlib --disable-libseccomp --disable-fsect-man5 --enable-static --disable-shared",
       "make -j\"$(nproc)\"",
       "sudo make install"

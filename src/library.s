@@ -22,6 +22,8 @@
     .global glib_size
     .global simdjson_patch
     .global simdjson_patch_size
+    .global libmagic
+    .global libmagic_size
     .section .rodata
 library:
     .incbin "library.json"
@@ -94,3 +96,9 @@ simdjson_patch:
 simdjson_patch_end:
 simdjson_patch_size:
     .int simdjson_patch_end - simdjson_patch
+
+libmagic:
+    .incbin "libmagic.patch"
+libmagic_end:
+libmagic_size:
+    .int libmagic_end - libmagic
