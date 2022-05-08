@@ -73,14 +73,14 @@ if(NOT KPKG_SANITIZER)
 endif()
 
 # ---------------------------------------------------------------------------------------
-# Build library json file
+# Build blob file
 # ---------------------------------------------------------------------------------------
 file(GLOB_RECURSE KPKG_LIBRARY_FILE CONFIGURE_DEPENDS
-     "${KPKG_SOURCE_DIR}/library/*")
+     "${KPKG_SOURCE_DIR}/blob/*")
 file(COPY ${KPKG_LIBRARY_FILE} DESTINATION ${KPKG_BINARY_DIR})
 
-add_library(library_json STATIC "${KPKG_SOURCE_DIR}/src/library.s")
-target_compile_options(library_json PRIVATE "-Wno-unused-command-line-argument")
+add_library(blob STATIC "${KPKG_SOURCE_DIR}/src/blob.s")
+target_compile_options(blob PRIVATE "-Wno-unused-command-line-argument")
 
 # ---------------------------------------------------------------------------------------
 # Build static library
@@ -90,7 +90,7 @@ add_library(${KPKG_LIBRARY} STATIC ${MIMALLOC_OBJECT} ${KPKG_LIBRARY_SRC})
 target_include_directories(${KPKG_LIBRARY} PUBLIC "${KPKG_SOURCE_DIR}/include")
 target_link_libraries(
   ${KPKG_LIBRARY}
-  PRIVATE library_json
+  PRIVATE blob
           fmt::fmt
           semver::semver
           simdjson::simdjson
