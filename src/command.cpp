@@ -2,7 +2,6 @@
 
 #include <fmt/compile.h>
 #include <fmt/format.h>
-#include <klib/exception.h>
 #include <klib/log.h>
 #include <klib/util.h>
 #include <gsl/assert>
@@ -23,21 +22,7 @@ std::string calc_command(const std::vector<std::string>& commands,
   std::string cmd = "cd " + dir;
 
   cmd = combine_command(cmd, "export CI=false");
-  // NOTE
-  // Change compiler version here
-  // TODO temp
-  bool gcc_12 = true;
-  try {
-    klib::exec("which gcc-12");
-  } catch (const klib::RuntimeError& err) {
-    gcc_12 = false;
-  }
-
-  if (gcc_12) {
-    cmd = combine_command(cmd, "export CC=gcc-12 && export CXX=g++-12");
-  } else {
-    cmd = combine_command(cmd, "export CC=gcc-11 && export CXX=g++-11");
-  }
+  cmd = combine_command(cmd, "export CC=gcc-12 && export CXX=g++-12");
 
   // NOTE
   // Change compiler flags here

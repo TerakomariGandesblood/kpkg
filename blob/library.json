@@ -274,6 +274,8 @@
     "published_at": "2022-01-25",
     "dependency": [],
     "cmd": [
+      "export CFLAGS=\"$CFLAGS -Wno-error=stringop-overflow\"",
+      "export CXXFLAGS=\"$CXXFLAGS -Wno-error=stringop-overflow\"",
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DTBB_TEST=OFF -DTBB_EXAMPLES=OFF -DTBB4PY_BUILD=OFF -DTBB_BUILD=ON -DTBBMALLOC_BUILD=OFF -DTBBMALLOC_PROXY_BUILD=OFF -DTBB_CPF=OFF -DTBB_FIND_PACKAGE=OFF -DTBB_DISABLE_HWLOC_AUTOMATIC_SEARCH=ON -DTBB_ENABLE_IPO=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
