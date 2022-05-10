@@ -6,16 +6,12 @@
     .global libssl_size
     .global openssl
     .global openssl_size
-    .global libunistring
-    .global libunistring_size
     .global boringssl
     .global boringssl_size
     .global woff2
     .global woff2_size
     .global sqlcipher
     .global sqlcipher_size
-    .global libidn2
-    .global libidn2_size
     .global libvips
     .global libvips_size
     .global glib
@@ -49,12 +45,6 @@ openssl_end:
 openssl_size:
     .int openssl_end - openssl
 
-libunistring:
-    .incbin "libunistring.pc"
-libunistring_end:
-libunistring_size:
-    .int libunistring_end - libunistring
-
 boringssl:
     .incbin "0001-expose-ripemd160.patch"
 boringssl_end:
@@ -72,12 +62,6 @@ sqlcipher:
 sqlcipher_end:
 sqlcipher_size:
     .int sqlcipher_end - sqlcipher
-
-libidn2:
-    .incbin "0001-remove-HAVE_SYMVER_ALIAS_SUPPORT.patch"
-libidn2_end:
-libidn2_size:
-    .int libidn2_end - libidn2
 
 libvips:
     .incbin "0001-Add-spngsave.patch"

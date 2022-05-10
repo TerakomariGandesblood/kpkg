@@ -141,16 +141,9 @@
     "tag_name": "curl-7_83_0",
     "download_url": "https://github.com/curl/curl/releases/download/curl-7_83_0/curl-7.83.0.tar.gz",
     "published_at": "2022-04-27",
-    "dependency": [
-      "zlib-ng",
-      "brotli",
-      "BoringSSL",
-      "nghttp2",
-      "libidn2",
-      "libpsl"
-    ],
+    "dependency": ["zlib-ng", "brotli", "BoringSSL", "nghttp2"],
     "cmd": [
-      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lssl -lcrypto -lz -pthread\" LIBS=\"-L/usr/local/lib -lidn2 -lunistring\" --disable-debug --enable-optimize --disable-curldebug --enable-symbol-hiding --disable-ares --disable-ech --disable-code-coverage --disable-shared --enable-static --enable-http --disable-ftp --disable-file --disable-ldap --disable-ldaps --disable-rtsp --enable-proxy --disable-dict --disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smb --disable-smtp --disable-gopher --disable-mqtt --disable-manual --enable-libcurl-option --enable-libgcc --enable-ipv6 --enable-openssl-auto-load-config --enable-threaded-resolver --enable-verbose --disable-sspi --enable-crypto-auth --disable-ntlm --disable-ntlm-wb --disable-tls-srp --disable-unix-sockets --enable-cookies --disable-socketpair --enable-http-auth --enable-doh --enable-mime --enable-dateparse --disable-netrc --enable-progress-meter --enable-dnsshuffle --disable-get-easy-options --enable-alt-svc --disable-headers-api --disable-hsts --with-openssl --without-hyper --with-zlib --with-brotli --without-zstd --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt' --with-ca-path='/etc/ssl/certs' --with-libpsl --without-libgsasl --without-libssh2 --without-libssh --without-librtmp --with-libidn2 --with-nghttp2 --without-ngtcp2 --without-nghttp3 --without-quiche",
+      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lssl -lcrypto -lz -pthread\" --disable-debug --enable-optimize --disable-curldebug --enable-symbol-hiding --disable-ares --disable-ech --disable-code-coverage --disable-shared --enable-static --enable-http --disable-ftp --disable-file --disable-ldap --disable-ldaps --disable-rtsp --enable-proxy --disable-dict --disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smb --disable-smtp --disable-gopher --disable-mqtt --disable-manual --enable-libcurl-option --enable-libgcc --enable-ipv6 --enable-openssl-auto-load-config --enable-threaded-resolver --enable-verbose --disable-sspi --enable-crypto-auth --disable-ntlm --disable-ntlm-wb --disable-tls-srp --disable-unix-sockets --enable-cookies --disable-socketpair --enable-http-auth --enable-doh --enable-mime --enable-dateparse --disable-netrc --enable-progress-meter --enable-dnsshuffle --disable-get-easy-options --enable-alt-svc --disable-headers-api --disable-hsts --with-openssl --without-hyper --with-zlib --with-brotli --without-zstd --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt' --with-ca-path='/etc/ssl/certs' --without-libpsl --without-libgsasl --without-libssh2 --without-libssh --without-librtmp --without-libidn2 --with-nghttp2 --without-ngtcp2 --without-nghttp3 --without-quiche",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
@@ -528,52 +521,6 @@
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DCMARK_TESTS=OFF -DCMARK_STATIC=ON -DCMARK_SHARED=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
-    ]
-  },
-  {
-    "name": "libidn2",
-    "releases_url": "",
-    "tags_url": "",
-    "tag_name": "v2.3.2",
-    "download_url": "https://ftp.gnu.org/gnu/libidn/libidn2-2.3.2.tar.gz",
-    "published_at": "2021-07-20",
-    "dependency": ["libunistring"],
-    "cmd": [
-      "patch -p1 < 0001-remove-HAVE_SYMVER_ALIAS_SUPPORT.patch",
-      "./configure --disable-shared --enable-static --disable-valgrind-tests --disable-gtk-doc --disable-gtk-doc-html --disable-gtk-doc-pdf --disable-nls --disable-code-coverage --disable-doc",
-      "make -j\"$(nproc)\"",
-      "sudo make install",
-      "sudo sed -i 's/-lidn2/-lidn2 -lunistring/g' /usr/local/lib/pkgconfig/libidn2.pc"
-    ]
-  },
-  {
-    "name": "libunistring",
-    "releases_url": "",
-    "tags_url": "",
-    "tag_name": "v1.0",
-    "download_url": "https://ftp.gnu.org/gnu/libunistring/libunistring-1.0.tar.gz",
-    "published_at": "2022-01-04",
-    "dependency": [],
-    "cmd": [
-      "./configure --disable-shared --enable-static",
-      "make -j\"$(nproc)\"",
-      "sudo make install",
-      "sudo cp libunistring.pc /usr/local/lib/pkgconfig"
-    ]
-  },
-  {
-    "name": "libpsl",
-    "releases_url": "",
-    "tags_url": "",
-    "tag_name": "v0.21.1",
-    "download_url": "https://github.com/rockdaboot/libpsl/releases/download/0.21.1/libpsl-0.21.1.tar.gz",
-    "published_at": "2020-07-18",
-    "dependency": ["libidn2"],
-    "cmd": [
-      "./configure --disable-shared --enable-static --disable-nls --disable-gtk-doc --disable-gtk-doc-html --disable-gtk-doc-pdf --disable-man --disable-cfi --disable-ubsan --disable-asan --enable-runtime=libidn2 --enable-builtin=libidn2 --disable-valgrind-tests",
-      "make -j\"$(nproc)\"",
-      "sudo make install",
-      "sudo sed -i 's/-lpsl/-lpsl -lunistring/g' /usr/local/lib/pkgconfig/libpsl.pc"
     ]
   },
   {
