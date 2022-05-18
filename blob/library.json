@@ -58,7 +58,7 @@
     "tags_url": "",
     "tag_name": "master-with-bazel",
     "download_url": "https://github.com/google/boringssl/archive/refs/heads/master-with-bazel.zip",
-    "published_at": "2022-05-14",
+    "published_at": "2022-05-17",
     "dependency": [],
     "cmd": [
       "patch -p1 < 0001-expose-ripemd160.patch",
@@ -92,9 +92,9 @@
     "name": "ngtcp2",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "v0.4.0",
-    "download_url": "https://github.com/ngtcp2/ngtcp2/releases/download/v0.4.0/ngtcp2-0.4.0.tar.gz",
-    "published_at": "2022-04-25",
+    "tag_name": "v0.5.0",
+    "download_url": "https://github.com/ngtcp2/ngtcp2/releases/download/v0.5.0/ngtcp2-0.5.0.tar.gz",
+    "published_at": "2022-05-16",
     "dependency": ["BoringSSL"],
     "cmd": [
       "./configure BORINGSSL_LIBS=\"-L/usr/local/lib -lssl -lcrypto -pthread\" --disable-shared --enable-static --disable-debug --disable-memdebug --enable-mempool --disable-asan --enable-lib-only --without-jemalloc --without-cunit --without-libnghttp3 --without-libev --without-openssl --without-gnutls --with-boringssl --without-picotls",
@@ -107,9 +107,9 @@
     "name": "nghttp3",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "v0.4.0",
-    "download_url": "https://github.com/ngtcp2/nghttp3/releases/download/v0.4.0/nghttp3-0.4.0.tar.gz",
-    "published_at": "2022-04-25",
+    "tag_name": "v0.4.1",
+    "download_url": "https://github.com/ngtcp2/nghttp3/releases/download/v0.4.1/nghttp3-0.4.1.tar.gz",
+    "published_at": "2022-05-16",
     "dependency": [],
     "cmd": [
       "./configure --disable-shared --enable-static --disable-debug --disable-memdebug --disable-asan --enable-lib-only --without-cunit",
@@ -305,9 +305,7 @@
     "published_at": "",
     "dependency": [],
     "cmd": [
-      "export CFLAGS=\"$CFLAGS -DCATCH_CONFIG_ENABLE_BENCHMARKING\"",
-      "export CXXFLAGS=\"$CXXFLAGS -DCATCH_CONFIG_ENABLE_BENCHMARKING\"",
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DCATCH_BUILD_TESTING=OFF -DCATCH_BUILD_EXAMPLES=OFF -DCATCH_BUILD_EXTRA_TESTS=OFF -DCATCH_BUILD_STATIC_LIBRARY=ON -DCATCH_INSTALL_DOCS=OFF -DCATCH_INSTALL_HELPERS=ON",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DCATCH_INSTALL_DOCS=OFF -DCATCH_INSTALL_EXTRAS=ON -DCATCH_DEVELOPMENT_BUILD=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]

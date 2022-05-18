@@ -1,7 +1,9 @@
 #include <cstdint>
 #include <vector>
 
-#include <catch2/catch.hpp>
+#include <catch2/benchmark/catch_benchmark.hpp>
+#include <catch2/catch_approx.hpp>
+#include <catch2/catch_test_macros.hpp>
 
 std::uint64_t factorial(std::uint64_t number) {
   return number > 1 ? factorial(number - 1) * number : 1;
@@ -29,7 +31,7 @@ TEST_CASE("factorial") {
 }
 
 TEST_CASE("float") {
-  REQUIRE([] { return 0.5 + 0.8; }() == Approx(1.3));
+  REQUIRE([] { return 0.5 + 0.8; }() == Catch::Approx(1.3));
 }
 
 SCENARIO("vectors can be sized and resized") {
