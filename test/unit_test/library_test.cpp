@@ -1,7 +1,7 @@
 #include <cstddef>
 #include <random>
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 
 #include "library.h"
 
