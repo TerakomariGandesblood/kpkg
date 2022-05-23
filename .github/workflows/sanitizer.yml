@@ -42,8 +42,8 @@ jobs:
 
       - name: Run executable
         run: |
-          ./kpkg install cmake ninja mold lcov \
-          icu boost catch2 curl fmt libarchive nameof zstd \
+          ./kpkg install cmake ninja mold lcov
+          ./kpkg install icu boost catch2 curl fmt libarchive nameof zstd \
           boringssl spdlog sqlcipher tidy-html5 pugixml onetbb cli11 indicators \
           semver gsl dbg-macro scope_guard argon2 simdjson opencc utfcpp \
           simdutf xxHash mimalloc cmark backward-cpp woff2 libvips highway \
