@@ -29,5 +29,7 @@ set(CPACK_GENERATOR "TXZ;DEB")
 set(CPACK_DEBIAN_COMPRESSION_TYPE "xz")
 # https://cmake.org/cmake/help/latest/module/CPack.html#variable:CPACK_THREADS
 set(CPACK_THREADS 0)
+# https://cmake.org/cmake/help/latest/cpack_gen/deb.html#variable:CPACK_DEBIAN_PACKAGE_SHLIBDEPS
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 
 include(CPack)
