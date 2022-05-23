@@ -143,8 +143,7 @@ void Library::build() const {
   }
 
   auto temp = klib::outermost_folder_name(file_name_);
-  // FIXME
-  if (!temp.has_value() || *temp == "ninja") {
+  if (!temp.has_value()) {
     klib::decompress(file_name_, dir_name_);
   } else [[likely]] {
     klib::decompress(file_name_);
