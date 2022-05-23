@@ -143,12 +143,13 @@ void Library::build() const {
   }
 
   auto temp = klib::outermost_folder_name(file_name_);
-  if (!temp.has_value()) {
-    klib::error("No outermost folder");
+  // FIXME
+  if (!temp.has_value() || *temp == "ninja") {
+    klib::decompress(file_name_, dir_name_);
+  } else [[likely]] {
+    klib::decompress(file_name_);
+    std::filesystem::rename(*temp, dir_name_);
   }
-  klib::decompress(file_name_);
-
-  std::filesystem::rename(*temp, dir_name_);
 
   write_files(name_, dir_name_);
 
