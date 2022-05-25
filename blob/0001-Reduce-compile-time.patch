@@ -1,40 +1,17 @@
-From 9a91c381583ae5b6608d5fc7bbdb60d3f1559486 Mon Sep 17 00:00:00 2001
+From 633459ffa9da55e85e7d8a1b62c9f3cf59e2768f Mon Sep 17 00:00:00 2001
 From: Kaiser <kaiserlancelot123@gmail.com>
-Date: Mon, 4 Apr 2022 10:48:03 +0800
+Date: Thu, 26 May 2022 01:05:36 +0800
 Subject: [PATCH] Reduce compile time
 
 ---
- include/simdjson/common_defs.h | 11 ++++++++++-
- singleheader/simdjson.h        | 11 ++++++++++-
- 2 files changed, 20 insertions(+), 2 deletions(-)
+ singleheader/simdjson.h | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/include/simdjson/common_defs.h b/include/simdjson/common_defs.h
-index 51210e1..a71a4dd 100644
---- a/include/simdjson/common_defs.h
-+++ b/include/simdjson/common_defs.h
-@@ -107,7 +107,16 @@ constexpr size_t DEFAULT_MAX_DEPTH = 1024;
- 
- #else // SIMDJSON_REGULAR_VISUAL_STUDIO
- 
--  #define simdjson_really_inline inline __attribute__((always_inline))
-+  #ifndef __has_feature
-+    #define __has_feature(feature) 0
-+  #endif
-+
-+  #if __has_feature(address_sanitizer) || defined(__SANITIZE_ADDRESS__)
-+    #define simdjson_really_inline inline
-+  #else
-+    #define simdjson_really_inline inline __attribute__((always_inline))
-+  #endif
-+
-   #define simdjson_never_inline inline __attribute__((noinline))
- 
-   #define simdjson_unused __attribute__((unused))
 diff --git a/singleheader/simdjson.h b/singleheader/simdjson.h
-index 026b6f1..64b92d4 100644
+index 502f58ff..40c026f9 100644
 --- a/singleheader/simdjson.h
 +++ b/singleheader/simdjson.h
-@@ -371,7 +371,16 @@ constexpr size_t DEFAULT_MAX_DEPTH = 1024;
+@@ -399,7 +399,16 @@ constexpr size_t DEFAULT_MAX_DEPTH = 1024;
  
  #else // SIMDJSON_REGULAR_VISUAL_STUDIO
  
@@ -53,5 +30,5 @@ index 026b6f1..64b92d4 100644
  
    #define simdjson_unused __attribute__((unused))
 -- 
-2.32.0
+2.34.1
 
