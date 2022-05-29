@@ -84,7 +84,7 @@
     "tags_url": "",
     "tag_name": "master-with-bazel",
     "download_url": "https://github.com/google/boringssl/archive/refs/heads/master-with-bazel.zip",
-    "published_at": "2022-05-24",
+    "published_at": "2022-05-27",
     "dependency": [],
     "cmd": [
       "patch -p1 < 0001-expose-ripemd160.patch",
@@ -671,14 +671,14 @@
     "name": "glib",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "2.72.1",
-    "download_url": "https://ftp.acc.umu.se/pub/GNOME/sources/glib/2.72/glib-2.72.1.tar.xz",
-    "published_at": "2022-04-14",
+    "tag_name": "2.73",
+    "download_url": "https://ftp.acc.umu.se/pub/GNOME/sources/glib/2.73/glib-2.73.0.tar.xz",
+    "published_at": "2022-05-27",
     "dependency": ["zlib-ng", "libpcre", "libffi", "util-linux"],
     "cmd": [
       "patch -p1 < 0001-fix-link-error.patch",
       "export LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lmount -lblkid -lpcre -lz\"",
-      "meson setup build --buildtype=release --default-library=static --libdir=lib -Dselinux=disabled -Dxattr=false -Dman=false -Ddtrace=false -Dsystemtap=false -Dsysprof=disabled -Dgtk_doc=false -Dfam=false -Dtests=false -Dinstalled_tests=false -Dnls=disabled -Doss_fuzz=disabled -Dglib_debug=disabled -Dlibelf=disabled",
+      "meson setup build --buildtype=release --default-library=static --libdir=lib -Dselinux=disabled -Dxattr=false -Dman=false -Ddtrace=false -Dsystemtap=false -Dsysprof=disabled -Dgtk_doc=false -Dtests=false -Dinstalled_tests=false -Dnls=disabled -Doss_fuzz=disabled -Dglib_debug=disabled -Dlibelf=disabled",
       "cd build",
       "meson compile",
       "sudo meson install"
