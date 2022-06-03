@@ -21,7 +21,8 @@ std::string version_str() {
   result +=
       fmt::format(FMT_COMPILE("mimalloc/{}.{}.{} "), MI_MALLOC_VERSION / 100,
                   MI_MALLOC_VERSION / 10 % 10, MI_MALLOC_VERSION % 10);
-  result += fmt::format("RE2/2022.04.01 ");
+  // NOTE
+  result += fmt::format("RE2/2022.06.01 ");
   result += fmt::format(FMT_COMPILE("Boost/{}.{}.{} "), BOOST_VERSION / 100000,
                         BOOST_VERSION / 100 % 1000, BOOST_VERSION % 100);
   // NOTE
