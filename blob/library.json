@@ -84,7 +84,7 @@
     "tags_url": "",
     "tag_name": "master-with-bazel",
     "download_url": "https://github.com/google/boringssl/archive/refs/heads/master-with-bazel.zip",
-    "published_at": "2022-05-27",
+    "published_at": "2022-06-03",
     "dependency": [],
     "cmd": [
       "patch -p1 < 0001-expose-ripemd160.patch",
@@ -672,7 +672,7 @@
     "releases_url": "",
     "tags_url": "",
     "tag_name": "2.73",
-    "download_url": "https://ftp.acc.umu.se/pub/GNOME/sources/glib/2.73/glib-2.73.0.tar.xz",
+    "download_url": "https://download.gnome.org/sources/glib/2.73/glib-2.73.0.tar.xz",
     "published_at": "2022-05-27",
     "dependency": ["zlib-ng", "libpcre", "libffi", "util-linux"],
     "cmd": [
