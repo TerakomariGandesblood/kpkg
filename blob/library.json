@@ -754,7 +754,7 @@
     "published_at": "",
     "dependency": [],
     "cmd": [
-      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DHWY_FORCE_STATIC_LIBS=ON -DHWY_ENABLE_EXAMPLES=OFF",
+      "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DHWY_FORCE_STATIC_LIBS=ON -DHWY_ENABLE_CONTRIB=OFF -DHWY_ENABLE_EXAMPLES=OFF",
       "cmake --build build --config Release -j\"$(nproc)\"",
       "sudo cmake --build build --config Release --target install"
     ]
