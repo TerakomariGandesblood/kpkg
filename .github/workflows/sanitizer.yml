@@ -47,7 +47,7 @@ jobs:
           boringssl spdlog sqlcipher tidy-html5 pugixml onetbb cli11 indicators \
           semver gsl dbg-macro scope_guard argon2 simdjson opencc utfcpp \
           simdutf xxHash mimalloc cmark backward-cpp woff2 libvips highway \
-          re2 parallel-hashmap libqrencode libmagic
+          re2 parallel-hashmap libqrencode libmagic cpp-httplib
         working-directory: build/tool
 
       - name: Test
