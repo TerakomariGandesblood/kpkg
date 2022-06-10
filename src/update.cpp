@@ -21,7 +21,7 @@ namespace {
 std::optional<std::string> get_curr_ver_str(const std::string &name) {
   std::string exec_output;
   try {
-    exec_output = klib::exec_with_output("dpkg -s " + name);
+    exec_output = klib::pipe("dpkg -s " + name);
   } catch (const klib::RuntimeError &err) {
     return {};
   }
