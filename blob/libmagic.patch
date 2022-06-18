@@ -1,7 +1,7 @@
-diff --color -urN old/magic/Makefile.in new/magic/Makefile.in
---- old/magic/Makefile.in	2021-10-19 00:40:49.000000000 +0800
-+++ new/magic/Makefile.in	2022-05-05 21:46:55.026097514 +0800
-@@ -284,332 +284,9 @@
+diff -urN old/magic/Makefile.in new/magic/Makefile.in
+--- old/magic/Makefile.in	2022-06-18 18:18:45.143757839 +0800
++++ new/magic/Makefile.in	2022-06-18 18:15:37.700454908 +0800
+@@ -284,338 +284,9 @@
  MAGIC_FRAGMENTS = \
  $(MAGIC_DIR)/Header \
  $(MAGIC_DIR)/Localstuff \
@@ -24,6 +24,7 @@ diff --color -urN old/magic/Makefile.in new/magic/Makefile.in
 -$(MAGIC_FRAGMENT_DIR)/applix \
 -$(MAGIC_FRAGMENT_DIR)/apt \
 -$(MAGIC_FRAGMENT_DIR)/archive \
+-$(MAGIC_FRAGMENT_DIR)/aria \
 -$(MAGIC_FRAGMENT_DIR)/arm \
 -$(MAGIC_FRAGMENT_DIR)/asf \
 -$(MAGIC_FRAGMENT_DIR)/assembler \
@@ -53,6 +54,7 @@ diff --color -urN old/magic/Makefile.in new/magic/Makefile.in
 -$(MAGIC_FRAGMENT_DIR)/cad \
 -$(MAGIC_FRAGMENT_DIR)/cafebabe \
 -$(MAGIC_FRAGMENT_DIR)/cbor \
+-$(MAGIC_FRAGMENT_DIR)/ccf \
 -$(MAGIC_FRAGMENT_DIR)/cddb \
 -$(MAGIC_FRAGMENT_DIR)/chord \
 -$(MAGIC_FRAGMENT_DIR)/cisco \
@@ -84,6 +86,7 @@ diff --color -urN old/magic/Makefile.in new/magic/Makefile.in
 -$(MAGIC_FRAGMENT_DIR)/diff \
 -$(MAGIC_FRAGMENT_DIR)/digital \
 -$(MAGIC_FRAGMENT_DIR)/dolby \
+-$(MAGIC_FRAGMENT_DIR)/dsf \
 -$(MAGIC_FRAGMENT_DIR)/dump \
 -$(MAGIC_FRAGMENT_DIR)/dyadic \
 -$(MAGIC_FRAGMENT_DIR)/ebml \
@@ -201,6 +204,7 @@ diff --color -urN old/magic/Makefile.in new/magic/Makefile.in
 -$(MAGIC_FRAGMENT_DIR)/netscape \
 -$(MAGIC_FRAGMENT_DIR)/netware \
 -$(MAGIC_FRAGMENT_DIR)/news \
+-$(MAGIC_FRAGMENT_DIR)/nifty \
 -$(MAGIC_FRAGMENT_DIR)/nim-lang \
 -$(MAGIC_FRAGMENT_DIR)/nitpicker \
 -$(MAGIC_FRAGMENT_DIR)/numpy \
@@ -211,6 +215,7 @@ diff --color -urN old/magic/Makefile.in new/magic/Makefile.in
 -$(MAGIC_FRAGMENT_DIR)/olf \
 -$(MAGIC_FRAGMENT_DIR)/openfst \
 -$(MAGIC_FRAGMENT_DIR)/opentimestamps \
+-$(MAGIC_FRAGMENT_DIR)/oric \
 -$(MAGIC_FRAGMENT_DIR)/os2 \
 -$(MAGIC_FRAGMENT_DIR)/os400 \
 -$(MAGIC_FRAGMENT_DIR)/os9 \
@@ -223,6 +228,7 @@ diff --color -urN old/magic/Makefile.in new/magic/Makefile.in
 -$(MAGIC_FRAGMENT_DIR)/pbm \
 -$(MAGIC_FRAGMENT_DIR)/pc88 \
 -$(MAGIC_FRAGMENT_DIR)/pc98 \
+-$(MAGIC_FRAGMENT_DIR)/pci_ids \
 -$(MAGIC_FRAGMENT_DIR)/pcjr \
 -$(MAGIC_FRAGMENT_DIR)/pdf \
 -$(MAGIC_FRAGMENT_DIR)/pdp \
