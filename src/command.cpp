@@ -2,6 +2,7 @@
 
 #include <fmt/compile.h>
 #include <fmt/format.h>
+#include <klib/exception.h>
 #include <klib/log.h>
 #include <klib/util.h>
 #include <gsl/assert>
@@ -20,6 +21,17 @@ std::string calc_command(const std::vector<std::string>& commands,
   Expects(!std::empty(commands) && !std::empty(dir));
 
   std::string cmd = "cd " + dir;
+
+  bool use_ninja = true;
+  try {
+    klib::exec("which ninja");
+  } catch (const klib::RuntimeError& err) {
+    use_ninja = false;
+  }
+
+  if (use_ninja) {
+    cmd = combine_command(cmd, "export CMAKE_GENERATOR=Ninja");
+  }
 
   cmd = combine_command(cmd, "export CI=false");
   cmd = combine_command(cmd, "export CC=gcc-12 && export CXX=g++-12");
