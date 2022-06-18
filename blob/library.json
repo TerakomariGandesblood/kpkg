@@ -82,8 +82,8 @@
     "name": "BoringSSL",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "master-with-bazel",
-    "download_url": "https://github.com/google/boringssl/archive/refs/heads/master-with-bazel.zip",
+    "tag_name": "2573f0b",
+    "download_url": "https://github.com/google/boringssl/archive/2573f0ba581021f66a48edb1492d490f0c3924f0.zip",
     "published_at": "2022-06-17",
     "dependency": [],
     "cmd": [
@@ -464,11 +464,11 @@
   },
   {
     "name": "simdutf",
-    "releases_url": "https://api.github.com/repos/simdutf/simdutf/releases/latest",
+    "releases_url": "",
     "tags_url": "",
-    "tag_name": "",
-    "download_url": "",
-    "published_at": "",
+    "tag_name": "9326418",
+    "download_url": "https://github.com/simdutf/simdutf/archive/9326418ac887bbf63c68691a3bd866872227e5e5.zip",
+    "published_at": "2022-06-18",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF",
