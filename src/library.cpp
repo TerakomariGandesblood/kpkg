@@ -37,9 +37,6 @@ extern int woff2_size;
 extern char sqlcipher[];
 extern int sqlcipher_size;
 
-extern char libvips[];
-extern int libvips_size;
-
 extern char glib[];
 extern int glib_size;
 
@@ -67,8 +64,6 @@ void write_files(const std::string& library_name, const std::string& dir_name) {
   } else if (library_name == "sqlcipher") {
     klib::write_file("0001-fix-OPENSSL_VERSION_TEXT.patch", false, sqlcipher,
                      sqlcipher_size);
-  } else if (library_name == "libvips") {
-    klib::write_file("0001-Add-spngsave.patch", false, libvips, libvips_size);
   } else if (library_name == "glib") {
     klib::write_file("0001-fix-link-error.patch", false, glib, glib_size);
   } else if (library_name == "simdjson") {

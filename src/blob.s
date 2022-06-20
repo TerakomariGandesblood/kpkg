@@ -12,8 +12,6 @@
     .global woff2_size
     .global sqlcipher
     .global sqlcipher_size
-    .global libvips
-    .global libvips_size
     .global glib
     .global glib_size
     .global simdjson_patch
@@ -62,12 +60,6 @@ sqlcipher:
 sqlcipher_end:
 sqlcipher_size:
     .int sqlcipher_end - sqlcipher
-
-libvips:
-    .incbin "0001-Add-spngsave.patch"
-libvips_end:
-libvips_size:
-    .int libvips_end - libvips
 
 glib:
     .incbin "0001-fix-link-error.patch"
