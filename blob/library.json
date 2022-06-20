@@ -727,7 +727,7 @@
     "tags_url": "",
     "tag_name": "v8.13.0-rc1",
     "download_url": "https://github.com/libvips/libvips/releases/download/v8.13.0-rc1/vips-8.13.0-rc1.tar.gz",
-    "published_at": "2022-01-25",
+    "published_at": "2022-06-19",
     "dependency": ["libspng", "mozjpeg", "libwebp", "glib", "libexpat"],
     "cmd": [
       "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lgio-2.0 -lgmodule-2.0 -lgobject-2.0 -lglib-2.0\" --disable-debug --disable-deprecated --disable-shared --enable-static --disable-doxygen --disable-modules --disable-gtk-doc --disable-gtk-doc-html --disable-gtk-doc-pdf --disable-magickload --disable-magicksave --without-gsf --without-fftw --without-magick --without-magickpackage --without-orc --without-lcms --without-OpenEXR --without-nifti --without-x --without-libjxl --without-libopenjp2 --without-heif --without-pdfium --without-poppler --without-rsvg --without-zlib --without-openslide --without-matio --without-nsgif --without-ppm --without-analyze --without-radiance --without-cfitsio --with-libwebp --without-pangocairo --without-fontconfig --without-tiff --with-libspng --without-png --without-imagequant --without-quantizr --with-jpeg --without-libexif --without-cgif",
