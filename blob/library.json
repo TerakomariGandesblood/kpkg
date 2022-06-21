@@ -175,28 +175,6 @@
     ]
   },
   {
-    "name": "curl-http3",
-    "releases_url": "",
-    "tags_url": "",
-    "tag_name": "d5dc362",
-    "download_url": "https://github.com/curl/curl/archive/d5dc3629eb69b916414f10db05f493a5625ad7ee.zip",
-    "published_at": "2022-06-20",
-    "dependency": [
-      "zlib-ng",
-      "brotli",
-      "BoringSSL",
-      "nghttp2",
-      "ngtcp2",
-      "nghttp3"
-    ],
-    "cmd": [
-      "autoreconf -fi",
-      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lssl -lcrypto -lz -pthread\" LIBS=\"-lngtcp2_crypto_boringssl\" --disable-debug --enable-optimize --disable-curldebug --enable-symbol-hiding --disable-ares --disable-ech --disable-code-coverage --disable-shared --enable-static --enable-http --disable-ftp --disable-file --disable-ldap --disable-ldaps --disable-rtsp --enable-proxy --disable-dict --disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smb --disable-smtp --disable-gopher --disable-mqtt --disable-manual --enable-libcurl-option --enable-libgcc --enable-ipv6 --enable-openssl-auto-load-config --enable-threaded-resolver --enable-verbose --disable-sspi --enable-crypto-auth --disable-ntlm --disable-ntlm-wb --disable-tls-srp --disable-unix-sockets --enable-cookies --disable-socketpair --enable-http-auth --enable-doh --enable-mime --enable-dateparse --disable-netrc --enable-progress-meter --enable-dnsshuffle --disable-get-easy-options --enable-alt-svc --disable-headers-api --disable-hsts --with-openssl --without-hyper --with-zlib --with-brotli --without-zstd --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt' --with-ca-path='/etc/ssl/certs' --without-libpsl --without-libgsasl --without-libssh2 --without-libssh --without-librtmp --without-libidn2 --with-nghttp2 --with-ngtcp2 --with-nghttp3 --without-quiche",
-      "make -j\"$(nproc)\"",
-      "sudo make install"
-    ]
-  },
-  {
     "name": "fmt",
     "releases_url": "",
     "tags_url": "",
@@ -488,9 +466,9 @@
     "name": "simdutf",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "9326418",
-    "download_url": "https://github.com/simdutf/simdutf/archive/9326418ac887bbf63c68691a3bd866872227e5e5.zip",
-    "published_at": "2022-06-18",
+    "tag_name": "43e2203",
+    "download_url": "https://github.com/NicolasJiaxin/simdutf/archive/43e22031bf7a1a8bfb47ab23cab949d97570b583.zip",
+    "published_at": "2022-06-21",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF",
