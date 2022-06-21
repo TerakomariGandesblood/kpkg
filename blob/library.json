@@ -466,8 +466,8 @@
     "name": "simdutf",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "43e2203",
-    "download_url": "https://github.com/NicolasJiaxin/simdutf/archive/43e22031bf7a1a8bfb47ab23cab949d97570b583.zip",
+    "tag_name": "c75ea98",
+    "download_url": "https://github.com/simdutf/simdutf/archive/c75ea98942e4b11d3c3b6edc674337077a1896bc.zip",
     "published_at": "2022-06-21",
     "dependency": [],
     "cmd": [
