@@ -82,9 +82,9 @@
     "name": "BoringSSL",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "2573f0b",
-    "download_url": "https://github.com/google/boringssl/archive/2573f0ba581021f66a48edb1492d490f0c3924f0.zip",
-    "published_at": "2022-06-17",
+    "tag_name": "ed2e74e",
+    "download_url": "https://github.com/google/boringssl/archive/ed2e74e737dc802ed9baad1af62c1514430a70d6.zip",
+    "published_at": "2022-06-26",
     "dependency": [],
     "cmd": [
       "patch -p1 < 0001-expose-ripemd160.patch",
@@ -103,12 +103,12 @@
     "name": "nghttp2",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "v1.47.0",
-    "download_url": "https://github.com/nghttp2/nghttp2/releases/download/v1.47.0/nghttp2-1.47.0.tar.gz",
-    "published_at": "2022-02-23",
+    "tag_name": "v1.48.0",
+    "download_url": "https://github.com/nghttp2/nghttp2/releases/download/v1.48.0/nghttp2-1.48.0.tar.gz",
+    "published_at": "2022-06-24",
     "dependency": ["zlib-ng", "BoringSSL"],
     "cmd": [
-      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lssl -lcrypto -lz -pthread\" --disable-shared --enable-static --disable-debug --disable-asio-lib --disable-failmalloc --enable-lib-only --disable-http3 --without-libxml2 --without-jansson --with-zlib --without-libevent-openssl --without-libcares --with-openssl --without-libev --without-cunit --without-jemalloc --without-systemd --without-mruby --without-neverbleed --without-cython --without-libngtcp2 --without-libnghttp3 --without-libbpf --without-boost",
+      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lssl -lcrypto -lz -pthread\" --disable-shared --enable-static --disable-debug --enable-threads --disable-asio-lib --disable-failmalloc --enable-lib-only --disable-http3 --without-libxml2 --without-jansson --with-zlib --without-libevent-openssl --without-libcares --with-openssl --without-libev --without-cunit --without-jemalloc --without-systemd --without-mruby --without-neverbleed --without-cython --without-libngtcp2 --without-libnghttp3 --without-libbpf --without-boost",
       "make -j\"$(nproc)\"",
       "sudo make install",
       "sudo sed -i 's/-lnghttp2/-lnghttp2 -lssl -lcrypto -lz -pthread/g' /usr/local/lib/pkgconfig/libnghttp2.pc"
@@ -164,12 +164,12 @@
     "name": "curl",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "curl-7_83_1",
-    "download_url": "https://github.com/curl/curl/releases/download/curl-7_83_1/curl-7.83.1.tar.gz",
-    "published_at": "2022-05-11",
+    "tag_name": "curl-7_84_0",
+    "download_url": "https://github.com/curl/curl/releases/download/curl-7_84_0/curl-7.84.0.tar.gz",
+    "published_at": "2022-06-27",
     "dependency": ["zlib-ng", "brotli", "BoringSSL", "nghttp2"],
     "cmd": [
-      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lssl -lcrypto -lz -pthread\" --disable-debug --enable-optimize --disable-curldebug --enable-symbol-hiding --disable-ares --disable-ech --disable-code-coverage --disable-shared --enable-static --enable-http --disable-ftp --disable-file --disable-ldap --disable-ldaps --disable-rtsp --enable-proxy --disable-dict --disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smb --disable-smtp --disable-gopher --disable-mqtt --disable-manual --enable-libcurl-option --enable-libgcc --enable-ipv6 --enable-openssl-auto-load-config --enable-threaded-resolver --enable-verbose --disable-sspi --enable-crypto-auth --disable-ntlm --disable-ntlm-wb --disable-tls-srp --disable-unix-sockets --enable-cookies --disable-socketpair --enable-http-auth --enable-doh --enable-mime --enable-dateparse --disable-netrc --enable-progress-meter --enable-dnsshuffle --disable-get-easy-options --enable-alt-svc --disable-headers-api --disable-hsts --with-openssl --without-hyper --with-zlib --with-brotli --without-zstd --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt' --with-ca-path='/etc/ssl/certs' --without-libpsl --without-libgsasl --without-libssh2 --without-libssh --without-librtmp --without-libidn2 --with-nghttp2 --without-ngtcp2 --without-nghttp3 --without-quiche",
+      "./configure LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lssl -lcrypto -lz -pthread\" --disable-debug --enable-optimize --disable-curldebug --enable-symbol-hiding --disable-ares --disable-ech --disable-code-coverage --disable-shared --enable-static --enable-http --disable-ftp --disable-file --disable-ldap --disable-ldaps --disable-rtsp --enable-proxy --disable-dict --disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smb --disable-smtp --disable-gopher --disable-mqtt --disable-manual --enable-libcurl-option --enable-libgcc --enable-ipv6 --enable-openssl-auto-load-config --enable-threaded-resolver --enable-pthreads --enable-verbose --disable-sspi --enable-crypto-auth --disable-ntlm --disable-ntlm-wb --disable-tls-srp --disable-unix-sockets --enable-cookies --disable-socketpair --enable-http-auth --enable-doh --enable-mime --enable-dateparse --disable-netrc --enable-progress-meter --enable-dnsshuffle --disable-get-easy-options --enable-alt-svc --enable-headers-api --disable-hsts --with-openssl --without-hyper --with-zlib --with-brotli --without-zstd --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt' --with-ca-path='/etc/ssl/certs' --without-ca-fallback --without-libpsl --without-libgsasl --without-libssh2 --without-libssh --without-wolfssh --without-librtmp --without-libidn2 --with-nghttp2 --without-ngtcp2 --without-nghttp3 --without-quiche --without-msh3",
       "make -j\"$(nproc)\"",
       "sudo make install"
     ]
@@ -466,9 +466,9 @@
     "name": "simdutf",
     "releases_url": "",
     "tags_url": "",
-    "tag_name": "c75ea98",
-    "download_url": "https://github.com/simdutf/simdutf/archive/c75ea98942e4b11d3c3b6edc674337077a1896bc.zip",
-    "published_at": "2022-06-21",
+    "tag_name": "030f6b4",
+    "download_url": "https://github.com/simdutf/simdutf/archive/030f6b46eee5907709086eeb58d4134d4def4fdd.zip",
+    "published_at": "2022-06-23",
     "dependency": [],
     "cmd": [
       "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF",
@@ -678,7 +678,7 @@
     "cmd": [
       "patch -p1 < 0001-fix-link-error.patch",
       "export LDFLAGS=\"$LDFLAGS -L/usr/local/lib -lmount -lblkid -lpcre -lz\"",
-      "meson setup build --buildtype=release --default-library=static --libdir=lib -Dselinux=disabled -Dxattr=false -Dman=false -Ddtrace=false -Dsystemtap=false -Dsysprof=disabled -Dgtk_doc=false -Dtests=false -Dinstalled_tests=false -Dnls=disabled -Doss_fuzz=disabled -Dglib_debug=disabled -Dlibelf=disabled",
+      "meson setup build --buildtype=release --default-library=static --libdir=lib -Dselinux=disabled -Dxattr=false -Dlibmount=enabled -Dman=false -Ddtrace=false -Dsystemtap=false -Dsysprof=disabled -Dgtk_doc=false -Dtests=false -Dinstalled_tests=false -Dnls=disabled -Doss_fuzz=disabled -Dglib_debug=disabled -Dlibelf=disabled",
       "cd build",
       "meson compile",
       "sudo meson install"
